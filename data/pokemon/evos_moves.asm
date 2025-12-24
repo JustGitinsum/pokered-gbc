@@ -3,6 +3,8 @@
 ;    * db EVOLVE_LEVEL, level, species
 ;    * db EVOLVE_ITEM, used item, min level (1), species
 ;    * db EVOLVE_TRADE, min level (1), species
+;	 * db EVOLVE_MOVE, MOVE, min level (1)
+;	 * dw species
 ; - db 0 ; no more evolutions
 ; - Learnset (in increasing level order):
 ;    * db level, move
@@ -1419,6 +1421,8 @@ DodrioEvosMoves:
 
 PrimeapeEvosMoves:
 ; Evolutions
+;	db EVOLVE_MOVE, RAGE_FIST, 1
+;	dw ANILAPE
 	db 0
 ; Learnset
 	db 15, KARATE_CHOP
@@ -1755,8 +1759,8 @@ BulbasaurEvosMoves:
 	db EVOLVE_LEVEL, 16, IVYSAUR
 	db 0
 ; Learnset
-	db 7, LEECH_SEED
-	db 13, VINE_WHIP
+	db 6, VINE_WHIP
+	db 13, LEECH_SEED
 	db 20, POISONPOWDER
 	db 27, RAZOR_LEAF
 	db 34, GROWTH
@@ -1987,7 +1991,7 @@ CharmanderEvosMoves:
 	db EVOLVE_LEVEL, 16, CHARMELEON
 	db 0
 ; Learnset
-	db 9, EMBER
+	db 6, EMBER
 	db 15, LEER
 	db 22, RAGE
 	db 30, SLASH
@@ -2000,7 +2004,7 @@ SquirtleEvosMoves:
 	db EVOLVE_LEVEL, 16, WARTORTLE
 	db 0
 ; Learnset
-	db 8, BUBBLE
+	db 6, BUBBLE
 	db 15, WATER_GUN
 	db 22, BITE
 	db 28, WITHDRAW

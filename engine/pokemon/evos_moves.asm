@@ -82,6 +82,8 @@ Evolution_PartyMonLoop: ; loop over party mons
 	ld a, b
 	cp EVOLVE_LEVEL
 	jr z, .checkLevel
+	cp EVOLVE_MOVE
+	jr z, .checkMoveset
 .checkTradeEvo
 	ld a, [wLinkState]
 	cp LINK_STATE_TRADING
@@ -100,6 +102,11 @@ Evolution_PartyMonLoop: ; loop over party mons
 	ld a, [wCurItem] ; same as [wCurPartySpecies]
 	cp b ; was the evolution item in this entry used?
 	jp nz, .nextEvoEntry1 ; if not, go to the next evolution entry
+.checkMoveset
+	ld a, [hli]						; load id of required move
+	call CheckMoveset				; sets carry flag if mon knows required move
+	jp nc, .nextEvoEntry1
+	; fallthrough
 .checkLevel
 	ld a, [hli] ; level requirement
 	ld b, a
@@ -508,6 +515,29 @@ WriteMonMoves_ShiftMoveData:
 	ld [hli], a
 	dec c
 	jr nz, .loop
+	ret
+
+; add this function to check if a mon that evolves when knowing a certain move has it in its moveset
+; sets carry if yes, unsets it if no
+CheckMoveset:
+	push hl
+	push bc
+	ld b, a
+	ld c, NUM_MOVES
+	ld hl, wLoadedMonMoves
+.loop
+	ld a, [hli]
+	cp b						; compare current move to required move
+	jr z, .yes					; if it's a match, return yes
+	dec c
+	jr nz, .loop
+	xor a
+	jr .done
+.yes
+	scf
+.done
+	pop bc
+	pop hl
 	ret
 
 Evolution_FlagAction:
