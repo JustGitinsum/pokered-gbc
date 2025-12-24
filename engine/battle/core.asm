@@ -315,7 +315,7 @@ MainInBattleLoop:
 	and a
 	ret nz ; return if pokedoll was used to escape from battle
 	ld a, [wBattleMonStatus]
-	and (1 << FRZ) | SLP_MASK
+	and (1 << FRZ)
 	jr nz, .selectEnemyMove ; if so, jump
 	ld a, [wPlayerBattleStatus1]
 	and (1 << STORING_ENERGY) | (1 << USING_TRAPPING_MOVE) ; check player is using Bide or using a multi-turn attack like wrap
@@ -2957,7 +2957,7 @@ SelectEnemyMove:
 	and (1 << CHARGING_UP) | (1 << THRASHING_ABOUT) ; using a charging move or thrash/petal dance
 	ret nz
 	ld a, [wEnemyMonStatus]
-	and (1 << FRZ) | SLP_MASK
+	and (1 << FRZ)
 	ret nz
 	ld a, [wEnemyBattleStatus1]
 	and (1 << USING_TRAPPING_MOVE) | (1 << STORING_ENERGY) ; using a trapping move like wrap or bide
@@ -3228,7 +3228,11 @@ MirrorMoveCheck:
 	ld hl, ResidualEffects2
 	ld de, 1
 	call IsInArray
-	jp c, JumpMoveEffect ; done here after executing effects of ResidualEffects2
+	jr nc, .notResidual2Effect
+	ld a, [wPlayerMovePower]
+	and a ; check if zero base power
+	jp z, JumpMoveEffect
+.notResidual2Effect
 	ld a, [wMoveMissed]
 	and a
 	jr z, .moveDidNotMiss
@@ -3360,6 +3364,7 @@ CheckPlayerStatusConditions:
 .WakeUp
 	ld hl, WokeUpText
 	call PrintText
+	jr .FrozenCheck
 .sleepDone
 	xor a
 	ld [wPlayerUsedMove], a
@@ -5760,7 +5765,11 @@ EnemyCheckIfMirrorMoveEffect:
 	ld hl, ResidualEffects2
 	ld de, $1
 	call IsInArray
-	jp c, JumpMoveEffect
+	jr nc, .notResidual2EffectEnemy
+	ld a, [wEnemyMovePower]
+	and a ; Check if zero base power
+	jp z, JumpMoveEffect
+.notResidual2EffectEnemy
 	ld a, [wMoveMissed]
 	and a
 	jr z, .moveDidNotMiss
@@ -5839,6 +5848,7 @@ CheckEnemyStatusConditions:
 .wokeUp
 	ld hl, WokeUpText
 	call PrintText
+	jr .checkIfFrozen
 .sleepDone
 	xor a
 	ld [wEnemyUsedMove], a
