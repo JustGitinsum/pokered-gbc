@@ -20,6 +20,9 @@ PewterMartYoungsterText:
 	text_far _PewterMartYoungsterText
 	text_end
 
+PewterMartClerkText:
+	script_mart POKE_BALL, POTION, ESCAPE_ROPE, FULL_HEAL
+
 PewterMartSuperNerdText:
 	text_asm
 	ld hl, .Text
