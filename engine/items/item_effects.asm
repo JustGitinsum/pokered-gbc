@@ -673,7 +673,7 @@ ItemUseSurfboard:
 	jr z, .tryToStopSurfing
 .tryToSurf
 	call IsNextTileShoreOrWater
-	jp c, SurfingAttemptFailed
+	jp nc, SurfingAttemptFailed
 	ld hl, TilePairCollisionsWater
 	call CheckForTilePairCollisions
 	jp c, SurfingAttemptFailed
@@ -2815,28 +2815,25 @@ SendNewMonToBox:
 ; checks if the tile in front of the player is a shore or water tile
 ; used for surfing and fishing
 ; unsets carry if it is, sets carry if not
-IsNextTileShoreOrWater:
+IsNextTileShoreOrWater::
 	ld a, [wCurMapTileset]
 	ld hl, WaterTilesets
 	ld de, 1
-	call IsInArray
-	jr nc, .notShoreOrWater
+	call IsInArray ; does the current map allow surfing?
+	ret nc ; if not, return
+	ld hl, WaterTile
 	ld a, [wCurMapTileset]
 	cp SHIP_PORT ; Vermilion Dock tileset
-	ld a, [wTileInFrontOfPlayer] ; tile in front of player
 	jr z, .skipShoreTiles ; if it's the Vermilion Dock tileset
-	cp $48 ; eastern shore tile in Safari Zone
-	jr z, .shoreOrWater
-	cp $32 ; usual eastern shore tile
-	jr z, .shoreOrWater
+	cp GYM ; eastern shore tile in Safari Zone
+	jr z, .skipShoreTiles
+	cp DOJO ; usual eastern shore tile
+	jr z, .skipShoreTiles
+	ld hl, ShoreTiles
 .skipShoreTiles
-	cp $14 ; water tile
-	jr z, .shoreOrWater
-.notShoreOrWater
-	scf
-	ret
-.shoreOrWater
-	and a
+	ld a, [wTileInFrontOfPlayer]
+	ld de, $1
+	call IsInArray
 	ret
 
 INCLUDE "data/tilesets/water_tilesets.asm"

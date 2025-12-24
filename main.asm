@@ -273,7 +273,7 @@ INCLUDE "engine/events/hidden_objects/indigo_plateau_hq.asm"
 SECTION "Battle Engine 9", ROMX
 
 INCLUDE "engine/battle/experience.asm"
-
+INCLUDE "engine/overworld/field_moves.asm"
 
 SECTION "Diploma", ROMX
 
