@@ -163,6 +163,9 @@ INCLUDE "data/maps/objects/LavenderCuboneHouse.asm"
 INCLUDE "data/maps/headers/NameRatersHouse.asm"
 INCLUDE "scripts/NameRatersHouse.asm"
 INCLUDE "data/maps/objects/NameRatersHouse.asm"
+; Mateo's move relearner/deleter files
+INCLUDE "scripts/move_deleter.asm"
+INCLUDE "scripts/move_relearner.asm"
 
 INCLUDE "data/maps/headers/VermilionPidgeyHouse.asm"
 INCLUDE "scripts/VermilionPidgeyHouse.asm"
