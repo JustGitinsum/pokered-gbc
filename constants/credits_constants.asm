@@ -73,3 +73,4 @@ DEF NUM_CRED_STRINGS EQU const_value
 	const CRED_TEXT          ; $FC
 	const CRED_COPYRIGHT     ; $FB
 	const CRED_THE_END       ; $FA
+
