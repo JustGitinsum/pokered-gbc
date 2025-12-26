@@ -1,8 +1,9 @@
 ; special effects that are part of move animations
 ; SpecialEffectPointers associates them with effect routines (see data/battle_anims/special_effect_pointers.asm)
 	const_def $C0
+	const_def $D8
 DEF FIRST_SE_ID EQU const_value
-	const_skip $18
+;	const_skip $18	(Attack Animation Tiles (Up to 79 more) Tutorial)
 	const SE_WAVY_SCREEN               ; $D8 used in Psywave/Night Shade/Psychic etc.
 	const SE_SUBSTITUTE_MON            ; $D9 used in Substitute (turns the pokemon into a mini sprite)
 	const SE_SHAKE_BACK_AND_FORTH      ; $DA used in Double Team

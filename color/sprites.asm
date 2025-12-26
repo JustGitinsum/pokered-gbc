@@ -248,6 +248,9 @@ LoadAnimationTilesetPalettes:
 	cp 1
 	ld hl, AnimationTileset2Palettes
 	jr z, .gotPalette
+	cp 3
+	ld hl, AnimationTileset3Palettes
+	jr z, .gotPalette
 	ld hl, AnimationTileset1Palettes
 .gotPalette
 	ld de, W2_SpritePaletteMap
@@ -535,6 +538,9 @@ AnimationTileset1Palettes:
 
 AnimationTileset2Palettes:
 	INCBIN "color/data/animtileset2palettes.bin"
+
+AnimationTileset3Palettes:
+	INCBIN "color/data/animtileset3palettes.bin"
 
 TypeColorTable: ; Used for a select few sprites to be colorized based on attack type
 	table_width 1, TypeColorTable
