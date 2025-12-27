@@ -203,27 +203,28 @@ StartMenu_Pokemon::
 	call GBPalWhiteOutWithDelay3
 	jp .goBackToMap
 .teleport
-	call CheckIfInOutsideMap
-	jr z, .canTeleport
-	ld a, [wWhichPokemon]
-	ld hl, wPartyMonNicks
-	call GetPartyMonName
-	ld hl, .cannotUseTeleportNowText
-	call PrintText
-	jp .loop
-.canTeleport
-	ld hl, .warpToLastPokemonCenterText
-	call PrintText
-	ld hl, wStatusFlags6
-	set BIT_FLY_WARP, [hl]
-	set BIT_ESCAPE_WARP, [hl]
-	ld hl, wStatusFlags4
-	set BIT_UNKNOWN_4_1, [hl]
-	res BIT_NO_BATTLES, [hl]
-	ld c, 60
-	call DelayFrames
-	call GBPalWhiteOutWithDelay3
-	jp .goBackToMap
+	jp .dig
+	;call CheckIfInOutsideMap
+	;jr z, .canTeleport
+	;ld a, [wWhichPokemon]
+	;ld hl, wPartyMonNicks
+	;call GetPartyMonName
+	;ld hl, .cannotUseTeleportNowText
+	;call PrintText
+	;jp .loop
+;.canTeleport
+	;ld hl, .warpToLastPokemonCenterText
+	;call PrintText
+	;ld hl, wStatusFlags6
+	;set BIT_FLY_WARP, [hl]
+	;set BIT_ESCAPE_WARP, [hl]
+	;ld hl, wStatusFlags4
+	;set BIT_UNKNOWN_4_1, [hl]
+	;res BIT_NO_BATTLES, [hl]
+	;ld c, 60
+	;call DelayFrames
+	;call GBPalWhiteOutWithDelay3
+	;jp .goBackToMap
 .warpToLastPokemonCenterText
 	text_far _WarpToLastPokemonCenterText
 	text_end

@@ -1494,7 +1494,13 @@ ItemUseEscapeRope:
 	and a
 	jr nz, .notUsable
 	ld a, [wCurMap]
+	cp LORELEIS_ROOM
+	jr z, .notUsable
+	cp BRUNOS_ROOM
+	jr z, .notUsable
 	cp AGATHAS_ROOM
+	jr z, .notUsable
+	cp LANCES_ROOM
 	jr z, .notUsable
 	ld a, [wCurMapTileset]
 	ld b, a
