@@ -53,7 +53,8 @@
 ; Cerulean City events
 	const_next $98
 	const EVENT_BEAT_CERULEAN_RIVAL
-	const_skip 14
+	const EVENT_GOT_BULBASAUR_IN_CERULEAN
+	const_skip 13
 	const EVENT_BEAT_CERULEAN_ROCKET_THIEF
 	const_skip 18
 	const EVENT_BEAT_CERULEAN_GYM_TRAINER_0
@@ -99,7 +100,7 @@
 
 ; Vermilion City events
 	const_next $150
-	const_skip
+	const EVENT_GOT_SQUIRTLE_FROM_OFFICER_JENNY
 	const EVENT_GOT_BIKE_VOUCHER
 	const_skip 4
 	const EVENT_SEEL_FAN_BOAST
