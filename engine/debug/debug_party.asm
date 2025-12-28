@@ -137,16 +137,23 @@ DebugSetPokedexEntries:
 
 DebugNewGameItemsList:
 	db BICYCLE, 1
+	db MAX_REPEL, 99
 	db FULL_RESTORE, 99
 	db FULL_HEAL, 99
 	db ESCAPE_ROPE, 99
 	db RARE_CANDY, 99
 	db MASTER_BALL, 99
 	db TOWN_MAP, 1
+	db NUGGET, 99
 	db SECRET_KEY, 1
 	db CARD_KEY, 1
 	db S_S_TICKET, 1
 	db LIFT_KEY, 1
+	db MOON_STONE, 5
+	db FIRE_STONE, 5
+	db THUNDER_STONE, 5
+	db WATER_STONE, 5
+	db LEAF_STONE, 5
 	db -1 ; end
 
 DebugUnusedList: ; unreferenced

@@ -45,3 +45,48 @@ SeafoamIslandsB2F_TextPointers:
 	def_text_pointers
 	dw_const BoulderText, TEXT_SEAFOAMISLANDSB2F_BOULDER1
 	dw_const BoulderText, TEXT_SEAFOAMISLANDSB2F_BOULDER2
+	dw_const SeaFoamIslandsB2F_FossilText, TEXT_SEAFOAMISLANDSB2F_FOSSIL
+
+SeaFoamIslandsB2F_FossilText:
+	text_asm
+	CheckEvent EVENT_GOT_DOME_FOSSIL
+	jr nz, .got_dome_fossil
+	lb bc, DOME_FOSSIL, 1
+	call GiveItem
+	jp nc, FossilNoRoomText
+	call SeaFoamIslandsB2FReceivedFossilText
+	ld a, HS_SEAFOAM_ISLANDS_B2F_FOSSIL
+	ld [wMissableObjectIndex], a
+	predef HideObject
+	jr .Done
+
+.got_dome_fossil
+	lb bc, HELIX_FOSSIL, 1
+	call GiveItem
+	jp nc, FossilNoRoomText
+	call SeaFoamIslandsB2FReceivedFossilText
+	ld a, HS_SEAFOAM_ISLANDS_B2F_FOSSIL
+	ld [wMissableObjectIndex], a
+	predef HideObject
+.Done
+	jp TextScriptEnd
+
+SeaFoamIslandsB2FReceivedFossilText:
+	ld hl, .Text
+	jp PrintText
+
+.Text:
+	text_far _MtMoonB2FReceivedFossilText
+	sound_get_key_item
+	text_waitbutton
+	text_end
+
+FossilNoRoomText:
+	ld hl, .Text
+		call PrintText
+		jp TextScriptEnd
+
+	.Text:
+		text_far _OopsYouDontHaveEnoughRoomText
+		text_waitbutton
+		text_end
