@@ -154,6 +154,9 @@ DebugNewGameItemsList:
 	db THUNDER_STONE, 5
 	db WATER_STONE, 5
 	db LEAF_STONE, 5
+	db OLD_ROD, 1
+	db GOOD_ROD, 1
+	db SUPER_ROD, 1
 	db -1 ; end
 
 DebugUnusedList: ; unreferenced

@@ -1904,7 +1904,7 @@ FishingInit:
 	ret
 .notInBattle
 	call IsNextTileShoreOrWater
-	ret c
+	jr nc, .nofish
 	ld a, [wWalkBikeSurfState]
 	cp 2 ; Surfing?
 	jr z, .surfing
@@ -1917,6 +1917,8 @@ FishingInit:
 	call DelayFrames
 	and a
 	ret
+.nofish
+	ret c
 .surfing
 	scf ; can't fish when surfing
 	ret
