@@ -805,6 +805,9 @@ LeaveMapAnim::
 	farjp _LeaveMapAnim
 
 LoadPlayerSpriteGraphics::
+; Reset flight state
+	ld a, $0
+	ld [wPlayerFlying], a 
 ; Load sprite graphics based on whether the player is standing, biking, or surfing.
 
 	; 0: standing

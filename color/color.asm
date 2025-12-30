@@ -239,8 +239,39 @@ FillBox:
 
 ; Load town map
 SetPal_TownMap:
+	ld a, [wWalkBikeSurfState]
+	cp a, 2
+	jr z, .surfMap
+	ld a, [wPlayerGender]
+	and a
+	jr z, .boyMap
 	ld a, 2
-	ldh [rWBK], a
+	ldh [rSVBK], a
+	ld hl, W2_SpritePaletteMap
+	ld bc, $4
+	ld a, SPR_PAL_GREEN
+	jr .doneMap
+.boyMap
+	ld a, 2
+	ldh [rSVBK], a
+	ld hl, W2_SpritePaletteMap
+	ld bc, $4
+	ld a, SPR_PAL_ORANGE
+	jr .doneMap
+.surfMap
+	ld a, 2
+	ldh [rSVBK], a
+	CALL_INDIRECT LoadOverworldSpritePalettes
+	xor a
+	ld [W2_UseOBP1], a
+	ld hl, W2_SpritePaletteMap
+	ld bc, $4
+	ld a, SPR_PAL_EMOJI
+.doneMap
+	call FillMemory
+	ld bc, $4
+	ld a, SPR_PAL_BROWN
+	call FillMemory
 
 	ld d, PAL_TOWNMAP
 	ld e, 0
@@ -834,23 +865,25 @@ SetPal_GameFreakIntro:
 
 ; Trainer card
 SetPal_TrainerCard:
-	ld a, 2
-	ldh [rWBK], a
+	ld a, [wPlayerGender] ; Gender check
+	and a
+	jr z, .BoyTrainerCard
 
-	ld d, PAL_MEWMON
-	ld e, 0
+	; Greens's palette
+	ld a, 2
+	ldh [rSVBK], a
+	ld d, PAL_ERIKA ; Green palette
+	ld e, 4
 	farcall LoadSGBPalette
-	ld d, PAL_BADGE
-	ld e, 1
+	ld d, PAL_GREENMON ; Border
+	ld e, 5
 	farcall LoadSGBPalette
-	ld d, PAL_REDMON
-	ld e, 2
-	farcall LoadSGBPalette
-	ld d, PAL_YELLOWMON
-	ld e, 3
-	farcall LoadSGBPalette
+	jr .EndTrainerCard
 
 	; Red's palette
+.BoyTrainerCard
+	ld a, 2
+	ldh [rSVBK], a
 IF GEN_2_GRAPHICS
 	ld d, PAL_HERO
 ELSE
@@ -866,6 +899,20 @@ ELSE ; _RED
 	ld d, PAL_REDMON
 ENDC
 	ld e, 5
+	farcall LoadSGBPalette
+
+.EndTrainerCard	
+	ld d, PAL_MEWMON
+	ld e, 0
+	farcall LoadSGBPalette
+	ld d, PAL_BADGE
+	ld e, 1
+	farcall LoadSGBPalette
+	ld d, PAL_REDMON
+	ld e, 2
+	farcall LoadSGBPalette
+	ld d, PAL_YELLOWMON
+	ld e, 3
 	farcall LoadSGBPalette
 
 	; Load palette map
