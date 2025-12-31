@@ -2856,7 +2856,7 @@ SwapMovesInMenu:
 	ld [wMenuItemToSwap], a ; select the current menu item for swapping
 	jp MoveSelectionMenu
 
-PrintMenuItem:
+PrintMenuItem:: ; edited, double colon
 	xor a
 	ldh [hAutoBGTransferEnabled], a
 	; changed the location and size of the box (taller, narrower)
@@ -2976,8 +2976,8 @@ PrintMenuItem:
 DisabledText:
 	db "disabled!@"
 
-TypeText:
-	db "TYPE@"
+;TypeText:
+;	db "TYPE@"
 
 PowerText:
 	db "PWR@"
@@ -6184,7 +6184,7 @@ CheckEnemyStatusConditions:
 	and a ; clear Z flag
 	ret
 
-GetCurrentMove:
+GetCurrentMove:: ; edited, double colon
 	ldh a, [hWhoseTurn]
 	and a
 	jp z, .player

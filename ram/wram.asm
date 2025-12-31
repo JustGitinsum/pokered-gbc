@@ -2048,6 +2048,8 @@ wPlayerGender::
 	
 	; unused
 		ds 55
+		
+wPlayerMoveAccuracyPercent:: db ; new, to host the accuracy in [0,100] rather than [0,255]
 
 wObtainedHiddenItemsFlags:: flag_array MAX_HIDDEN_ITEMS
 
