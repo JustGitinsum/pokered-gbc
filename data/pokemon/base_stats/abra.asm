@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw AbraPicFront, AbraPicBack
 
-	db TELEPORT, NO_MOVE, NO_MOVE, NO_MOVE ; level 1 learnset
+	db TELEPORT, SCRATCH, NO_MOVE, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_SLOW ; growth rate
 
 	; tm/hm learnset

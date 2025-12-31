@@ -232,12 +232,12 @@ NidoranMEvosMoves:
 	db EVOLVE_LEVEL, 16, NIDORINO
 	db 0
 ; Learnset
+	db 5, PECK
 	db 8, HORN_ATTACK
-	db 14, POISON_STING
-	db 21, FOCUS_ENERGY
+	db 10, FOCUS_ENERGY
+	db 12, DOUBLE_KICK
 	db 29, FURY_ATTACK
 	db 36, HORN_DRILL
-	db 43, DOUBLE_KICK
 	db 0
 
 ClefairyEvosMoves:
@@ -629,12 +629,12 @@ KadabraEvosMoves:
 	db EVOLVE_TRADE, 1, ALAKAZAM
 	db 0
 ; Learnset
-	db 16, CONFUSION
-	db 20, DISABLE
-	db 27, PSYBEAM
-	db 31, RECOVER
-	db 38, PSYCHIC_M
-	db 42, REFLECT
+	db 16, PSYBEAM
+	db 20, REFLECT
+	db 25, RECOVER
+	db 31, TRI_ATTACK
+	db 35, PSYCHIC_M
+	db 42, AMNESIA
 	db 0
 
 GravelerEvosMoves:
@@ -1390,6 +1390,7 @@ KakunaEvosMoves:
 	db EVOLVE_LEVEL, 10, BEEDRILL
 	db 0
 ; Learnset
+	db 7, HARDEN
 	db 0
 
 BeedrillEvosMoves:
@@ -1493,19 +1494,20 @@ MetapodEvosMoves:
 	db EVOLVE_LEVEL, 10, BUTTERFREE
 	db 0
 ; Learnset
+	db 7, HARDEN
 	db 0
 
 ButterfreeEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 12, CONFUSION
-	db 15, POISONPOWDER
+	db 10, CONFUSION
+	db 12, POISONPOWDER
+	db 14, SLEEP_POWDER
 	db 16, STUN_SPORE
-	db 17, SLEEP_POWDER
-	db 21, SUPERSONIC
-	db 26, WHIRLWIND
-	db 32, PSYBEAM
+	db 18, PSYBEAM
+	db 20, WHIRLWIND
+	db 32, 
 	db 0
 
 MachampEvosMoves:
@@ -1712,18 +1714,20 @@ AbraEvosMoves:
 	db EVOLVE_LEVEL, 16, KADABRA
 	db 0
 ; Learnset
+	db 6, CONFUSION
+	db 9, DISABLE
 	db 0
 
 AlakazamEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 16, CONFUSION
-	db 20, DISABLE
-	db 27, PSYBEAM
-	db 31, RECOVER
-	db 38, PSYCHIC_M
-	db 42, REFLECT
+	db 16, PSYBEAM
+	db 20, REFLECT
+	db 25, RECOVER
+	db 31, TRI_ATTACK
+	db 35, PSYCHIC_M
+	db 42, AMNESIA
 	db 0
 
 PidgeottoEvosMoves:
@@ -1908,12 +1912,12 @@ NidorinoEvosMoves:
 	db EVOLVE_ITEM, MOON_STONE, 1, NIDOKING
 	db 0
 ; Learnset
-	db 8, HORN_ATTACK
-	db 14, POISON_STING
+	db 1, HORN_ATTACK
+	db 1, DOUBLE_KICK
+	db 1, POISON_STING
 	db 23, FOCUS_ENERGY
 	db 32, FURY_ATTACK
 	db 41, HORN_DRILL
-	db 50, DOUBLE_KICK
 	db 0
 
 NidorinaEvosMoves:

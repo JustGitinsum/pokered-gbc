@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw ButterfreePicFront, ButterfreePicBack
 
-	db CONFUSION, NO_MOVE, NO_MOVE, NO_MOVE ; level 1 learnset
+	db CONFUSION, GUST, STRING_SHOT, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
