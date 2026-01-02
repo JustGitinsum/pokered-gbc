@@ -149,11 +149,8 @@ DebugNewGameItemsList:
 	db CARD_KEY, 1
 	db S_S_TICKET, 1
 	db LIFT_KEY, 1
-	db MOON_STONE, 5
-	db FIRE_STONE, 5
-	db THUNDER_STONE, 5
-	db WATER_STONE, 5
-	db LEAF_STONE, 5
+	db SILPH_SCOPE, 1
+	db POKE_FLUTE, 1
 	db OLD_ROD, 1
 	db GOOD_ROD, 1
 	db SUPER_ROD, 1
