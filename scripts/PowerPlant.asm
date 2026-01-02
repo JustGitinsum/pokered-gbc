@@ -22,6 +22,7 @@ PowerPlant_TextPointers:
 	dw_const PowerPlantVoltorb4Text,   TEXT_POWERPLANT_VOLTORB4
 	dw_const PowerPlantVoltorb5Text,   TEXT_POWERPLANT_VOLTORB5
 	dw_const PowerPlantElectrode2Text, TEXT_POWERPLANT_ELECTRODE2
+	dw_const PowerPlantVoltorb6Text,   TEXT_POWERPLANT_VOLTORB6
 	dw_const PowerPlantZapdosText,     TEXT_POWERPLANT_ZAPDOS
 	dw_const PickUpItemText,           TEXT_POWERPLANT_CARBOS
 	dw_const PickUpItemText,           TEXT_POWERPLANT_HP_UP
@@ -43,6 +44,8 @@ Voltorb4TrainerHeader:
 	trainer EVENT_BEAT_POWER_PLANT_VOLTORB_4, 0, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText
 Voltorb5TrainerHeader:
 	trainer EVENT_BEAT_POWER_PLANT_VOLTORB_5, 0, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText
+Voltorb6TrainerHeader:
+	trainer EVENT_BEAT_POWER_PLANT_VOLTORB_6, 0, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText
 Voltorb7TrainerHeader:
 	trainer EVENT_BEAT_POWER_PLANT_VOLTORB_7, 0, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText
 ZapdosTrainerHeader:
@@ -86,6 +89,11 @@ PowerPlantVoltorb5Text:
 	jr PowerPlantInitBattleScript
 
 PowerPlantElectrode2Text:
+	text_asm
+	ld hl, Voltorb6TrainerHeader
+	jr PowerPlantInitBattleScript
+
+PowerPlantVoltorb6Text:
 	text_asm
 	ld hl, Voltorb7TrainerHeader
 	jr PowerPlantInitBattleScript

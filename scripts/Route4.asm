@@ -18,24 +18,15 @@ Route4_TextPointers:
 	dw_const Route4CooltrainerF1Text, TEXT_ROUTE4_COOLTRAINER_F1
 	dw_const Route4CooltrainerF2Text, TEXT_ROUTE4_COOLTRAINER_F2
 	dw_const PickUpItemText,          TEXT_ROUTE4_TM_WHIRLWIND
-	dw_const Route4VoltorbText,       TEXT_ROUTE4_VOLTORB
 	dw_const PokeCenterSignText,      TEXT_ROUTE4_POKECENTER_SIGN
 	dw_const Route4MtMoonSignText,    TEXT_ROUTE4_MT_MOON_SIGN
 	dw_const Route4SignText,          TEXT_ROUTE4_SIGN
-	
+
 Route4TrainerHeaders:
 	def_trainers 2
 Route4TrainerHeader0:
 	trainer EVENT_BEAT_ROUTE_4_TRAINER_0, 3, Route4CooltrainerF2BattleText, Route4CooltrainerF2EndBattleText, Route4CooltrainerF2AfterBattleText
-Route4VoltorbTrainerHeader:
-	trainer EVENT_BEAT_ROUTE_4_VOLTORB, 0, Route4VoltorbBattleText, Route4VoltorbBattleText, Route4VoltorbBattleText
 	db -1 ; end
-
-Route4VoltorbInitBattleScript:
-	call TalkToTrainer
-	ld a, [wCurMapScript]
-	ld [wPowerPlantCurScript], a
-	jp TextScriptEnd
 
 Route4CooltrainerF1Text:
 	text_far _Route4CooltrainerF1Text
@@ -66,12 +57,3 @@ Route4MtMoonSignText:
 Route4SignText:
 	text_far _Route4SignText
 	text_end
-
-Route4VoltorbBattleText:
-	text_far _PowerPlantVoltorbBattleText
-	text_end
-
-Route4VoltorbText:
-	text_asm
-	ld hl, Route4VoltorbTrainerHeader
-	jr Route4VoltorbInitBattleScript
