@@ -1,4 +1,20 @@
 DisplayPokemonCenterDialogue_::
+; new, for setting Route 4 and Route 10 Pokecenters fly locations
+	ld a, [wCurMap]
+	cp MT_MOON_POKECENTER
+	jr nz, .checkRockTunnelPokecenter
+	lb bc, FLAG_SET, FLYLOC_ROUTE_4_CENTER
+	ld hl, wTownVisitedFlag   ; mark town as visited (for flying)
+	predef FlagActionPredef
+	jr .regularCenter
+.checkRockTunnelPokecenter
+	cp ROCK_TUNNEL_POKECENTER
+	jr nz, .regularCenter
+	lb bc, FLAG_SET, FLYLOC_ROUTE_10_CENTER
+	ld hl, wTownVisitedFlag   ; mark town as visited (for flying)
+	predef FlagActionPredef
+.regularCenter
+; back to vanilla
 	call SaveScreenTilesToBuffer1 ; save screen
 	ld hl, PokemonCenterWelcomeText
 	call PrintText
