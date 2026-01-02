@@ -1706,7 +1706,11 @@ wPseudoItemID:: db
 
 wUnusedAlreadyOwnedFlag:: db
 
-	ds 2
+;	ds 2 ;REMOVED for Trainers are not Pokemon
+
+wIsTrainerBattle:: db
+
+wWasTrainerBattle:: db
 
 wEvoStoneItemID:: db
 
