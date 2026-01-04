@@ -26,12 +26,12 @@ TrySurf:
 	res 1, [hl]
 	jr z, .no2
 	call InitializeFieldMoveTextBox
-	ld hl, PromptToSurfText
-	call PrintText
-	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
-	jr nz, .no2
+	; ld hl, PromptToSurfText
+	; call PrintText
+	; call YesNoChoice
+	; ld a, [wCurrentMenuItem]
+	; and a
+	; jr nz, .no2
 	call GetPartyMonName2
 	ld a, SURFBOARD
 	ld [wCurItem], a
@@ -53,21 +53,21 @@ TryCut:
 	call IsCutTile
 	jr nc, TrySurf.no
 	call InitializeFieldMoveTextBox
-	ld hl, ExplainCutText
-	call PrintText
-	call ManualTextScroll
+	; ld hl, ExplainCutText
+	; call PrintText
+	; call ManualTextScroll
 	ld d, CUT
 	call HasPartyMove
 	jr nz, TrySurf.no2
 	ld a, [wObtainedBadges]
 	bit 1, a ; CASCADE BADGE
 	jr z, TrySurf.no2
-	ld hl, PromptToCutText
-	call PrintText
-	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
-	jr nz, TrySurf.no2
+	; ld hl, PromptToCutText
+	; call PrintText
+	; call YesNoChoice
+	; ld a, [wCurrentMenuItem]
+	; and a
+	; jr nz, TrySurf.no2
 	call GetPartyMonName2
 	farcall Cut2
 	call CloseFieldMoveTextBox
