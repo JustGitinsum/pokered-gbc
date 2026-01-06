@@ -384,3 +384,31 @@
 	charmap "７", $fd
 	charmap "８", $fe
 	charmap "９", $ff
+
+; these IDs are unused in the non-japanese versions, so reuse them for types and categories symbols
+	charmap "<NORMAL>", $C0
+	charmap "<FIRE>", $C1
+	charmap "<WATER>", $C2
+	charmap "<ELECTRIC>", $C3
+	charmap "<GRASS>", $C4
+	charmap "<ICE>", $C5
+	charmap "<FIGHTING>", $C6
+	charmap "<POISON>", $C7
+	charmap "<GROUND>", $C8
+	charmap "<FLYING>", $C9
+	charmap "<PSYCHIC>", $CA
+	charmap "<BUG>", $CB
+	charmap "<ROCK>", $CC
+	charmap "<GHOST>", $CD
+	charmap "<DRAGON>", $CE
+	charmap "<DARK>", $CF
+	charmap "<STEEL>", $D0
+	charmap "<FAIRY>", $D1
+
+	charmap "<PHYSICAL>", $D2
+	charmap "<SPECIAL>", $D3
+	charmap "<STATUS>", $D4
+
+; UNUSED
+	charmap "->", $D5
+	charmap "=>", $D6
