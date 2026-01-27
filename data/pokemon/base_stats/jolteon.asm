@@ -19,8 +19,8 @@ ENDC
 
 	; tm/hm learnset
 	tmhm TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  HYPER_BEAM,   \
-	     RAGE,         THUNDERBOLT,  THUNDER,      MIMIC,        DOUBLE_TEAM,  \
-	     REFLECT,      BIDE,         SWIFT,        SKULL_BASH,   REST,         \
+	     RAGE,         THUNDERBOLT,  THUNDER,      MIMIC,        ICE_PUNCH,  \
+	     REFLECT,      BIDE,         SWIFT,        FIRE_PUNCH,   REST,         \
 	     THUNDER_WAVE, SUBSTITUTE,   FLASH
 	; end
 

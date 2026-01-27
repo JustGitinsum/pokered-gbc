@@ -71,8 +71,8 @@ MoveSoundTable:
 	db SFX_SUPER_EFFECTIVE,    $00, $e0 ; COUNTER
 	db SFX_BATTLE_26,          $01, $60 ; SEISMIC_TOSS
 	db SFX_BATTLE_26,          $20, $40 ; STRENGTH
-	db SFX_BATTLE_24,          $00, $80 ; ABSORB
-	db SFX_BATTLE_24,          $40, $c0 ; MEGA_DRAIN
+	db SFX_BATTLE_24,          $00, $80 ; MEGA_DRAIN
+	db SFX_BATTLE_24,          $40, $c0 ; GIGA_DRAIN
 	db SFX_BATTLE_1B,          $03, $60 ; LEECH_SEED
 	db SFX_BATTLE_25,          $11, $e0 ; GROWTH
 	db SFX_BATTLE_12,          $20, $e0 ; RAZOR_LEAF
@@ -88,7 +88,7 @@ MoveSoundTable:
 	db SFX_BATTLE_2F,          $20, $80 ; THUNDERBOLT
 	db SFX_BATTLE_2E,          $12, $60 ; THUNDER_WAVE
 	db SFX_BATTLE_26,          $00, $80 ; THUNDER
-	db SFX_BATTLE_14,          $01, $e0 ; ROCK_THROW
+	db SFX_BATTLE_14,          $01, $e0 ; ROCK_TOMB
 	db SFX_BATTLE_29,          $0f, $e0 ; EARTHQUAKE
 	db SFX_BATTLE_29,          $11, $20 ; FISSURE
 	db SFX_DAMAGE,             $10, $40 ; DIG
@@ -101,7 +101,7 @@ MoveSoundTable:
 	db SFX_BATTLE_25,          $00, $10 ; QUICK_ATTACK
 	db SFX_BATTLE_26,          $f0, $20 ; RAGE
 	db SFX_BATTLE_33,          $f0, $c0 ; TELEPORT
-	db SFX_NOT_VERY_EFFECTIVE, $f0, $e0 ; NIGHT_SHADE
+	db SFX_NOT_VERY_EFFECTIVE, $f0, $e0 ; OMINOUS_WIND
 	db SFX_BATTLE_09,          $f0, $40 ; MIMIC
 	db SFX_BATTLE_31,          $00, $80 ; SCREECH
 	db SFX_BATTLE_33,          $80, $40 ; DOUBLE_TEAM
@@ -165,6 +165,11 @@ MoveSoundTable:
 	db SFX_BATTLE_26,          $f0, $ff ; SUPER_FANG
 	db SFX_NOT_VERY_EFFECTIVE, $01, $ff ; SLASH
 	db SFX_BATTLE_2C,          $d8, $04 ; SUBSTITUTE
+	db SFX_BATTLE_0D,          $10, $60 ; FIRE_FANG
+	db SFX_BATTLE_0D,          $20, $80 ; ICE_FANG
+	db SFX_BATTLE_0D,          $00, $a0 ; THUNDERFANG
+	db SFX_BATTLE_36,          $f0, $20 ; ANCIENTPOWER
+	db SFX_DAMAGE,             $10, $40 ; BOUNCE
 	db SFX_BATTLE_0B,          $00, $80 ; STRUGGLE
 	assert_table_length NUM_ATTACKS
 	db SFX_BATTLE_0B,          $00, $80

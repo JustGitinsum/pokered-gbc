@@ -20,8 +20,8 @@ ENDC
 	; tm/hm learnset
 	tmhm SWORDS_DANCE, TOXIC,        TAKE_DOWN,    DOUBLE_EDGE,  BUBBLEBEAM,   \
 	     WATER_GUN,    ICE_BEAM,     BLIZZARD,     HYPER_BEAM,   RAGE,         \
-	     MEGA_DRAIN,   MIMIC,        DOUBLE_TEAM,  REFLECT,      BIDE,         \
-	     SKULL_BASH,   REST,         SUBSTITUTE,   CUT,          SURF
+	     GIGA_DRAIN,   MIMIC,        ICE_PUNCH,  REFLECT,      BIDE,         \
+	     FIRE_PUNCH,   REST,         SUBSTITUTE,   CUT,          SURF
 	; end
 
 	db BANK(TentacruelPicFront)

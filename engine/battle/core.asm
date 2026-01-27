@@ -517,7 +517,7 @@ HandlePoisonBurnLeechSeed:
 	ldh [hWhoseTurn], a
 	xor a
 	ld [wAnimationType], a
-	ld a, ABSORB
+	ld a, MEGA_DRAIN
 	call PlayMoveAnimation ; play leech seed animation (from opposing mon)
 	pop af
 	ldh [hWhoseTurn], a
@@ -4869,7 +4869,7 @@ ApplyAttackToEnemyPokemon:
 	ld a, [wPlayerMoveNum]
 	cp SEISMIC_TOSS
 	jr z, .storeDamage
-	cp NIGHT_SHADE
+	cp OMINOUS_WIND
 	jr z, .storeDamage
 	ld b, SONICBOOM_DAMAGE ; 20
 	cp SONICBOOM
@@ -4988,7 +4988,7 @@ ApplyAttackToPlayerPokemon:
 	ld a, [wEnemyMoveNum]
 	cp SEISMIC_TOSS
 	jr z, .storeDamage
-	cp NIGHT_SHADE
+	cp OMINOUS_WIND
 	jr z, .storeDamage
 	ld b, SONICBOOM_DAMAGE
 	cp SONICBOOM

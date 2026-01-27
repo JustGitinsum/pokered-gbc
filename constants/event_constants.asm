@@ -119,9 +119,9 @@
 	const_next $180
 	const EVENT_GOT_TM41
 	const_skip 11
-	const EVENT_GOT_TM13
-	const EVENT_GOT_TM48
-	const EVENT_GOT_TM49
+	const EVENT_GOT_TM37
+	const EVENT_GOT_TM32
+	const EVENT_GOT_TM40
 	const EVENT_GOT_TM18
 	const_skip 24
 	const EVENT_GOT_TM21

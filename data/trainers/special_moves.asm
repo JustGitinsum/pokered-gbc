@@ -7,7 +7,7 @@ LoneMoves:
 	db 1, BIDE
 	db 1, BUBBLEBEAM
 	db 2, THUNDERBOLT
-	db 2, MEGA_DRAIN
+	db 2, GIGA_DRAIN
 	db 3, TOXIC
 	db 3, PSYWAVE
 	db 3, FIRE_BLAST

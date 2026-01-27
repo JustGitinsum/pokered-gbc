@@ -872,7 +872,7 @@ SetPal_TrainerCard:
 	; Greens's palette
 	ld a, 2
 	ldh [rSVBK], a
-	ld d, PAL_ERIKA ; Green palette
+	ld d, PAL_SWIMMER ; Green palette
 	ld e, 4
 	farcall LoadSGBPalette
 	ld d, PAL_GREENMON ; Border

@@ -76,8 +76,8 @@
 	const COUNTER      ; 44
 	const SEISMIC_TOSS ; 45
 	const STRENGTH     ; 46
-	const ABSORB       ; 47
-	const MEGA_DRAIN   ; 48
+	const MEGA_DRAIN       ; 47
+	const GIGA_DRAIN   ; 48
 	const LEECH_SEED   ; 49
 	const GROWTH       ; 4a
 	const RAZOR_LEAF   ; 4b
@@ -93,7 +93,7 @@
 	const THUNDERBOLT  ; 55
 	const THUNDER_WAVE ; 56
 	const THUNDER      ; 57
-	const ROCK_THROW   ; 58
+	const ROCK_TOMB   ; 58
 	const EARTHQUAKE   ; 59
 	const FISSURE      ; 5a
 	const DIG          ; 5b
@@ -106,7 +106,7 @@
 	const QUICK_ATTACK ; 62
 	const RAGE         ; 63
 	const TELEPORT     ; 64
-	const NIGHT_SHADE  ; 65
+	const OMINOUS_WIND  ; 65
 	const MIMIC        ; 66
 	const SCREECH      ; 67
 	const DOUBLE_TEAM  ; 68
@@ -170,6 +170,11 @@
 	const SUPER_FANG   ; a2
 	const SLASH        ; a3
 	const SUBSTITUTE   ; a4
+	const FIRE_FANG
+	const ICE_FANG
+	const THUNDERFANG
+	const ANCIENTPOWER
+	const BOUNCE
 	const STRUGGLE     ; a5
 DEF NUM_ATTACKS EQU const_value - 1
 

@@ -19,7 +19,7 @@ ENDC
 
 	; tm/hm learnset
 	tmhm TOXIC,        TAKE_DOWN,    DOUBLE_EDGE,  HYPER_BEAM,   RAGE,         \
-	     THUNDERBOLT,  THUNDER,      TELEPORT,     MIMIC,        DOUBLE_TEAM,  \
+	     THUNDERBOLT,  THUNDER,      TELEPORT,     MIMIC,        ICE_PUNCH,  \
 	     REFLECT,      BIDE,         SWIFT,        REST,         THUNDER_WAVE, \
 	     SUBSTITUTE,   FLASH
 	; end

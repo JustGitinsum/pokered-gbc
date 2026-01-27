@@ -28,18 +28,18 @@ ItemPrices::
 	bcd3 0     ; MARSHBADGE
 	bcd3 0     ; VOLCANOBADGE
 	bcd3 0     ; EARTHBADGE
-	bcd3 550   ; ESCAPE_ROPE
-	bcd3 350   ; REPEL
+	bcd3 250   ; ESCAPE_ROPE
+	bcd3 150   ; REPEL
 	bcd3 0     ; OLD_AMBER
 	bcd3 2100  ; FIRE_STONE
 	bcd3 2100  ; THUNDER_STONE
 	bcd3 2100  ; WATER_STONE
-	bcd3 9800  ; HP_UP
-	bcd3 9800  ; PROTEIN
-	bcd3 9800  ; IRON
-	bcd3 9800  ; CARBOS
-	bcd3 9800  ; CALCIUM
-	bcd3 4800  ; RARE_CANDY
+	bcd3 4800  ; HP_UP
+	bcd3 4800  ; PROTEIN
+	bcd3 4800  ; IRON
+	bcd3 4800  ; CARBOS
+	bcd3 4800  ; CALCIUM
+	bcd3 9800  ; RARE_CANDY
 	bcd3 0     ; DOME_FOSSIL
 	bcd3 0     ; HELIX_FOSSIL
 	bcd3 0     ; SECRET_KEY
@@ -51,12 +51,12 @@ ItemPrices::
 	bcd3 10000 ; NUGGET
 	bcd3 9800  ; ITEM_32
 	bcd3 1000  ; POKE_DOLL
-	bcd3 600   ; FULL_HEAL
+	bcd3 250   ; FULL_HEAL
 	bcd3 1500  ; REVIVE
 	bcd3 4000  ; MAX_REVIVE
 	bcd3 700   ; GUARD_SPEC
-	bcd3 500   ; SUPER_REPEL
-	bcd3 700   ; MAX_REPEL
+	bcd3 400   ; SUPER_REPEL
+	bcd3 600   ; MAX_REPEL
 	bcd3 650   ; DIRE_HIT
 	bcd3 10    ; COIN
 	bcd3 200   ; FRESH_WATER

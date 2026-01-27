@@ -136,10 +136,10 @@ ColorOverworldSprite::
 	and a
 	ld a, SPR_PAL_ORANGE
 	jr z, .norandomColor
-	ld a, SPR_PAL_GREEN
+	ld a, SPR_PAL_ORANGE ; Overwork palette for Green (Girl player)
 	jr .norandomColor
 .surfing
-	ld a, SPR_PAL_EMOJI
+	ld a, SPR_PAL_ORANGE
     jr .norandomColor
 .flying
 	ld a, SPR_PAL_BROWN
@@ -195,7 +195,7 @@ ColorNonOverworldSprites::
 
 	; If the absorb animation is playing, it's always green. (Needed for leech seed)
 	ld a, d
-	cp ABSORB
+	cp MEGA_DRAIN
 	ld a, GRASS
 	jr z, .gotType
 

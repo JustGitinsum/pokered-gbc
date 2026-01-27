@@ -19,8 +19,8 @@ ENDC
 
 	; tm/hm learnset
 	tmhm SWORDS_DANCE, TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  \
-	     HYPER_BEAM,   RAGE,         MEGA_DRAIN,   SOLARBEAM,    DIG,          \
-	     MIMIC,        DOUBLE_TEAM,  REFLECT,      BIDE,         SKULL_BASH,   \
+	     HYPER_BEAM,   RAGE,         GIGA_DRAIN,   SOLARBEAM,    DIG,          \
+	     MIMIC,        ICE_PUNCH,  REFLECT,      BIDE,         FIRE_PUNCH,   \
 	     REST,         SUBSTITUTE,   CUT
 	; end
 

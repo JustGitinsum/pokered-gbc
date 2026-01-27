@@ -20,7 +20,7 @@ ENDC
 	; tm/hm learnset
 	tmhm TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  BUBBLEBEAM,   \
 	     WATER_GUN,    PAY_DAY,      RAGE,         THUNDERBOLT,  THUNDER,      \
-	     MIMIC,        DOUBLE_TEAM,  BIDE,         SWIFT,        SKULL_BASH,   \
+	     MIMIC,        ICE_PUNCH,  BIDE,         SWIFT,        FIRE_PUNCH,   \
 	     REST,         SUBSTITUTE
 	; end
 

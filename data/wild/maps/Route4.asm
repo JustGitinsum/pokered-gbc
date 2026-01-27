@@ -10,7 +10,6 @@ Route4WildMons:
 	db 12, MACHOP
 	db 11, VULPIX
 	db 12, ODDISH
-
 	end_grass_wildmons
 
 	def_water_wildmons 0 ; encounter rate

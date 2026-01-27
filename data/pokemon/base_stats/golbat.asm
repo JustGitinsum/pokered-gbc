@@ -14,12 +14,12 @@ ELSE
 ENDC
 	dw GolbatPicFront, GolbatPicBack
 
-	db LEECH_LIFE, SCREECH, BITE, NO_MOVE ; level 1 learnset
+	db MEGA_DRAIN, SUPERSONIC, GUST, BITE ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
 	tmhm RAZOR_WIND,   WHIRLWIND,    TOXIC,        TAKE_DOWN,    DOUBLE_EDGE,  \
-	     HYPER_BEAM,   RAGE,         MEGA_DRAIN,   MIMIC,        DOUBLE_TEAM,  \
+	     HYPER_BEAM,   RAGE,         GIGA_DRAIN,   MIMIC,        ICE_PUNCH,  \
 	     BIDE,         SWIFT,        REST,         SUBSTITUTE
 	; end
 

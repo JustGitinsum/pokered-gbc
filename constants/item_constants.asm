@@ -169,7 +169,7 @@ DEF TM01 EQU const_value
 	add_tm DOUBLE_EDGE  ; $D2
 	add_tm BUBBLEBEAM   ; $D3
 	add_tm WATER_GUN    ; $D4
-	add_tm ICE_BEAM     ; $D5
+	add_tm ICE_BEAM     ; $D5 ;moved to Safari Zone
 	add_tm BLIZZARD     ; $D6
 	add_tm HYPER_BEAM   ; $D7
 	add_tm PAY_DAY      ; $D8
@@ -177,7 +177,7 @@ DEF TM01 EQU const_value
 	add_tm COUNTER      ; $DA
 	add_tm SEISMIC_TOSS ; $DB
 	add_tm RAGE         ; $DC
-	add_tm MEGA_DRAIN   ; $DD
+	add_tm GIGA_DRAIN   ; $DD
 	add_tm SOLARBEAM    ; $DE
 	add_tm DRAGON_RAGE  ; $DF
 	add_tm THUNDERBOLT  ; $E0
@@ -188,15 +188,15 @@ DEF TM01 EQU const_value
 	add_tm PSYCHIC_M    ; $E5
 	add_tm TELEPORT     ; $E6
 	add_tm MIMIC        ; $E7
-	add_tm DOUBLE_TEAM  ; $E8
+	add_tm ICE_PUNCH    ; $E8 ;moved to Department Store roof
 	add_tm REFLECT      ; $E9
 	add_tm BIDE         ; $EA
 	add_tm METRONOME    ; $EB
 	add_tm SELFDESTRUCT ; $EC
-	add_tm EGG_BOMB     ; $ED
+	add_tm THUNDERPUNCH ; $ED ;moved to Department Store roof
 	add_tm FIRE_BLAST   ; $EE
 	add_tm SWIFT        ; $EF
-	add_tm SKULL_BASH   ; $F0
+	add_tm FIRE_PUNCH   ; $F0 ;moved to Department Store roof
 	add_tm SOFTBOILED   ; $F1
 	add_tm DREAM_EATER  ; $F2
 	add_tm SKY_ATTACK   ; $F3
@@ -204,8 +204,8 @@ DEF TM01 EQU const_value
 	add_tm THUNDER_WAVE ; $F5
 	add_tm PSYWAVE      ; $F6
 	add_tm EXPLOSION    ; $F7
-	add_tm ROCK_SLIDE   ; $F8
-	add_tm TRI_ATTACK   ; $F9
+	add_tm ROCK_SLIDE   ; $F8 ;moved to Safari Zone
+	add_tm FLAMETHROWER ; $F9 ;moved to Safari Zone
 	add_tm SUBSTITUTE   ; $FA
 ASSERT NUM_TMS == const_value - TM01, "NUM_TMS ({d:NUM_TMS}) does not match the number of add_tm definitions"
 

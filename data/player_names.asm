@@ -7,8 +7,8 @@ DefaultNamesPlayer:
 
 DefaultNamesGirl:
 	db   "NEW NAME"
-	next "GREEN"
-	next "LEAF"
+	next "DAWN"
+	next "HIKARI"
 	next "JESS"
 	db   "@"
 

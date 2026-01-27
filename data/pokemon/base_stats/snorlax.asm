@@ -22,8 +22,8 @@ ENDC
 	     DOUBLE_EDGE,  BUBBLEBEAM,   WATER_GUN,    ICE_BEAM,     BLIZZARD,     \
 	     HYPER_BEAM,   PAY_DAY,      SUBMISSION,   COUNTER,      SEISMIC_TOSS, \
 	     RAGE,         SOLARBEAM,    THUNDERBOLT,  THUNDER,      EARTHQUAKE,   \
-	     FISSURE,      PSYCHIC_M,    MIMIC,        DOUBLE_TEAM,  REFLECT,      \
-	     BIDE,         METRONOME,    SELFDESTRUCT, FIRE_BLAST,   SKULL_BASH,   \
+	     FISSURE,      PSYCHIC_M,    MIMIC,        ICE_PUNCH,  REFLECT,      \
+	     BIDE,         METRONOME,    SELFDESTRUCT, FIRE_BLAST,   FIRE_PUNCH,   \
 	     REST,         PSYWAVE,      ROCK_SLIDE,   SUBSTITUTE,   SURF,         \
 	     STRENGTH
 	; end

@@ -19,8 +19,8 @@ ENDC
 
 	; tm/hm learnset
 	tmhm TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  RAGE,         \
-	     MIMIC,        DOUBLE_TEAM,  REFLECT,      BIDE,         SWIFT,        \
-	     SKULL_BASH,   REST,         SUBSTITUTE
+	     MIMIC,        ICE_PUNCH,  REFLECT,      BIDE,         SWIFT,        \
+	     FIRE_PUNCH,   REST,         SUBSTITUTE
 	; end
 
 	db BANK(EeveePicFront)

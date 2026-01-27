@@ -41,7 +41,7 @@ ExclamationPointMoveSets:
 	db PECK
 	db COUNTER
 	db STRENGTH
-	db ABSORB
+	db MEGA_DRAIN
 	db STRING_SHOT
 	db EARTHQUAKE
 	db FISSURE

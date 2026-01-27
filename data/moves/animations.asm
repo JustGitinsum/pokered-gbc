@@ -70,8 +70,8 @@ AttackAnimationPointers:
 	dw CounterAnim
 	dw SeismicTossAnim
 	dw StrengthAnim
-	dw AbsorbAnim
 	dw MegaDrainAnim
+	dw GigaDrainAnim
 	dw LeechSeedAnim
 	dw GrowthAnim
 	dw RazorLeafAnim
@@ -87,7 +87,7 @@ AttackAnimationPointers:
 	dw ThunderBoltAnim
 	dw ThunderWaveAnim
 	dw ThunderAnim
-	dw RockThrowAnim
+	dw RockTombAnim
 	dw EarthquakeAnim
 	dw FissureAnim
 	dw DigAnim
@@ -100,7 +100,7 @@ AttackAnimationPointers:
 	dw QuickAttackAnim
 	dw RageAnim
 	dw TeleportAnim
-	dw NightShadeAnim
+	dw OminousWindAnim
 	dw MimicAnim
 	dw ScreechAnim
 	dw DoubleTeamAnim
@@ -164,6 +164,11 @@ AttackAnimationPointers:
 	dw SuperFangAnim
 	dw SlashAnim
 	dw SubstituteAnim
+	dw FireFangAnim
+	dw IceFangAnim
+	dw ThunderFangAnim
+	dw AncientPowerAnim
+	dw BounceAnim
 	dw StruggleAnim
 	assert_table_length NUM_ATTACKS
 	dw ShowPicAnim
@@ -260,16 +265,19 @@ PayDayAnim:
 	battle_anim PAY_DAY, SUBANIM_0_COIN_BOUNCE, 0, 4
 	db -1 ; end
 
+FireFangAnim:
 FirePunchAnim:
 	battle_anim FIRE_PUNCH, SUBANIM_0_STAR_THRICE, 0, 6
 	battle_anim NO_MOVE, SUBANIM_1_FLAMES, 1, 6
 	db -1 ; end
 
+IceFangAnim:
 IcePunchAnim:
 	battle_anim ICE_PUNCH, SUBANIM_0_STAR_THRICE, 0, 6
 	battle_anim NO_MOVE, SUBANIM_0_ICE_RISE, 0, 16
 	db -1 ; end
 
+ThunderFangAnim:
 ThunderPunchAnim:
 	battle_anim THUNDERPUNCH, SUBANIM_0_STAR_THRICE, 0, 6
 	battle_anim NO_MOVE, SE_DARK_SCREEN_PALETTE
@@ -606,15 +614,15 @@ StrengthAnim:
 	battle_anim FIRE_PUNCH, SUBANIM_1_STAR_BIG_MOVING, 1, 6
 	db -1 ; end
 
-AbsorbAnim:
-	battle_anim ABSORB, SE_LIGHT_SCREEN_PALETTE
+MegaDrainAnim:
+	battle_anim MEGA_DRAIN, SE_LIGHT_SCREEN_PALETTE
 	battle_anim NO_MOVE, SUBANIM_0_CIRCLES_1_SQUARES_CENTERING_ENEMY, 0, 6
 	battle_anim NO_MOVE, SUBANIM_0_CIRCLE_1_SQUARE_TOSS_BACK, 0, 6
 	battle_anim NO_MOVE, SE_RESET_SCREEN_PALETTE
 	db -1 ; end
 
-MegaDrainAnim:
-	battle_anim MEGA_DRAIN, SE_LIGHT_SCREEN_PALETTE
+GigaDrainAnim:
+	battle_anim GIGA_DRAIN, SE_LIGHT_SCREEN_PALETTE
 	battle_anim NO_MOVE, SE_DARK_SCREEN_FLASH
 	battle_anim NO_MOVE, SUBANIM_0_CIRCLES_1_SQUARES_CENTERING_ENEMY, 0, 6
 	battle_anim NO_MOVE, SUBANIM_0_CIRCLE_1_SQUARE_TOSS_BACK, 0, 6
@@ -703,8 +711,8 @@ ThunderAnim:
 	battle_anim NO_MOVE, SE_RESET_SCREEN_PALETTE
 	db -1 ; end
 
-RockThrowAnim:
-	battle_anim ROCK_THROW, SUBANIM_0_ROCKS_FALL_ENEMY, 0, 4
+RockTombAnim:
+	battle_anim ROCK_TOMB, SUBANIM_0_ROCKS_FALL_ENEMY, 0, 4
 	db -1 ; end
 
 EarthquakeAnim:
@@ -769,7 +777,7 @@ TeleportAnim:
 	battle_anim NO_MOVE, SE_SHOOT_BALLS_UPWARD
 	db -1 ; end
 
-NightShadeAnim:
+OminousWindAnim:
 	battle_anim CONFUSION, SE_FLASH_SCREEN_LONG
 	battle_anim NO_MOVE, SE_WAVY_SCREEN
 	db -1 ; end
@@ -1135,6 +1143,23 @@ SuperFangAnim:
 
 SlashAnim:
 	battle_anim SLASH, SUBANIM_0_SCRATCHES, 0, 6
+	db -1 ; end
+
+AncientPowerAnim:
+	battle_anim LEECH_SEED, SE_LIGHT_SCREEN_PALETTE
+	battle_anim ROCK_SLIDE, SUBANIM_0_ROCKS_LIFT, 0, 4
+	battle_anim ROCK_SLIDE, SUBANIM_0_ROCKS_TOSS, 0, 3
+	battle_anim NO_MOVE, SE_DARK_SCREEN_FLASH
+	battle_anim NO_MOVE, SE_RESET_SCREEN_PALETTE
+	db -1 ; end
+
+BounceAnim:
+	battle_anim SKY_ATTACK, SE_SQUISH_MON_PIC
+	battle_anim NO_MOVE, SE_SHOOT_BALLS_UPWARD
+	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
+	battle_anim SEISMIC_TOSS, SUBANIM_1_SPHERE_BIG_FALL, 1, 1
+	battle_anim NO_MOVE, SE_SHOW_MON_PIC
+	battle_anim NO_MOVE, SE_SHAKE_SCREEN
 	db -1 ; end
 
 SubstituteAnim:

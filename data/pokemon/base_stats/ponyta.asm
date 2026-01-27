@@ -14,13 +14,13 @@ ELSE
 ENDC
 	dw PonytaPicFront, PonytaPicBack
 
-	db EMBER, NO_MOVE, NO_MOVE, NO_MOVE ; level 1 learnset
+	db GROWL, TACKLE, TAIL_WHIP, EMBER ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
 	tmhm TOXIC,        HORN_DRILL,   BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  \
-	     RAGE,         MIMIC,        DOUBLE_TEAM,  REFLECT,      BIDE,         \
-	     FIRE_BLAST,   SWIFT,        SKULL_BASH,   REST,         SUBSTITUTE
+	     RAGE,         MIMIC,        ICE_PUNCH,  REFLECT,      BIDE,         \
+	     FIRE_BLAST,   SWIFT,        FIRE_PUNCH,   REST,         SUBSTITUTE
 	; end
 
 	db BANK(PonytaPicFront)

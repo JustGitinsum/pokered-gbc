@@ -19,8 +19,8 @@ ENDC
 
 	; tm/hm learnset
 	tmhm TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  RAGE,         \
-	     DIG,          MIMIC,        DOUBLE_TEAM,  REFLECT,      BIDE,         \
-	     FIRE_BLAST,   SWIFT,        SKULL_BASH,   REST,         SUBSTITUTE
+	     DIG,          MIMIC,        ICE_PUNCH,  REFLECT,      BIDE,         \
+	     FIRE_BLAST,   SWIFT,        FIRE_PUNCH,   REST,         SUBSTITUTE
 	; end
 
 	db BANK(VulpixPicFront)

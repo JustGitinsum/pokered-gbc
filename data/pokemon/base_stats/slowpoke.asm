@@ -21,9 +21,9 @@ ENDC
 	tmhm TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  BUBBLEBEAM,   \
 	     WATER_GUN,    ICE_BEAM,     BLIZZARD,     PAY_DAY,      RAGE,         \
 	     EARTHQUAKE,   FISSURE,      DIG,          PSYCHIC_M,    TELEPORT,     \
-	     MIMIC,        DOUBLE_TEAM,  REFLECT,      BIDE,         FIRE_BLAST,   \
-	     SWIFT,        SKULL_BASH,   REST,         THUNDER_WAVE, PSYWAVE,      \
-	     TRI_ATTACK,   SUBSTITUTE,   SURF,         STRENGTH,     FLASH
+	     MIMIC,        ICE_PUNCH,  REFLECT,      BIDE,         FIRE_BLAST,   \
+	     SWIFT,        FIRE_PUNCH,   REST,         THUNDER_WAVE, PSYWAVE,      \
+	     FLAMETHROWER,   SUBSTITUTE,   SURF,         STRENGTH,     FLASH
 	; end
 
 	db BANK(SlowpokePicFront)

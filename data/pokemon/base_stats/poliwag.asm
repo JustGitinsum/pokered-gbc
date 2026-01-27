@@ -20,7 +20,7 @@ ENDC
 	; tm/hm learnset
 	tmhm TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  BUBBLEBEAM,   \
 	     WATER_GUN,    ICE_BEAM,     BLIZZARD,     RAGE,         PSYCHIC_M,    \
-	     MIMIC,        DOUBLE_TEAM,  BIDE,         SKULL_BASH,   REST,         \
+	     MIMIC,        ICE_PUNCH,  BIDE,         FIRE_PUNCH,   REST,         \
 	     PSYWAVE,      SUBSTITUTE,   SURF
 	; end
 

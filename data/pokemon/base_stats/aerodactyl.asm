@@ -14,12 +14,12 @@ ELSE
 ENDC
 	dw AerodactylPicFront, AerodactylPicBack
 
-	db WING_ATTACK, AGILITY, NO_MOVE, NO_MOVE ; level 1 learnset
+	db WING_ATTACK, AGILITY, BITE, ANCIENTPOWER ; level 1 learnset
 	db GROWTH_SLOW ; growth rate
 
 	; tm/hm learnset
 	tmhm RAZOR_WIND,   WHIRLWIND,    TOXIC,        TAKE_DOWN,    DOUBLE_EDGE,  \
-	     HYPER_BEAM,   RAGE,         DRAGON_RAGE,  MIMIC,        DOUBLE_TEAM,  \
+	     HYPER_BEAM,   RAGE,         DRAGON_RAGE,  MIMIC,        ICE_PUNCH,  \
 	     REFLECT,      BIDE,         FIRE_BLAST,   SWIFT,        SKY_ATTACK,   \
 	     REST,         SUBSTITUTE,   FLY
 	; end

@@ -27,9 +27,9 @@ _CeladonMartRoofLittleGirlTM13ExplanationText::
 	para "@"
 	text_ram wStringBuffer
 	text " contains"
-	line "ICE BEAM!"
+	line "THUNDERPUNCH!@"
 
-	para "It can freeze the"
+	para "It may paralyze th"
 	line "target sometimes!@"
 	text_end
 
@@ -57,9 +57,9 @@ _CeladonMartRoofLittleGirlTM48ExplanationText::
 	para "@"
 	text_ram wStringBuffer
 	text " contains"
-	line "ROCK SLIDE!"
+	line "ICE PUNCH!"
 
-	para "It can spook the"
+	para "It may freeze the"
 	line "target sometimes!@"
 	text_end
 
@@ -83,7 +83,7 @@ _CeladonMartRoofLittleGirlTM49ExplanationText::
 	text_start
 
 	para "TM49 contains"
-	line "TRI ATTACK!@"
+	line "FIRE PUNCH!@"
 	text_end
 
 _CeladonMartRoofLittleGirlNoRoomText::

@@ -6,8 +6,8 @@ DefaultNamesPlayerList:
 
 DefaultNamesGirlList:
 	db "NEW NAME@"
-	db "GREEN@"
-	db "LEAF@"
+	db "DAWN@"
+	db "HIKARI@"
 	db "JESS@"
 
 DefaultNamesRivalList:

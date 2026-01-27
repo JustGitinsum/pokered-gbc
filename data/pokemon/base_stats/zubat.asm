@@ -14,12 +14,12 @@ ELSE
 ENDC
 	dw ZubatPicFront, ZubatPicBack
 
-	db LEECH_LIFE, NO_MOVE, NO_MOVE, NO_MOVE ; level 1 learnset
+	db MEGA_DRAIN, SUPERSONIC, GUST, BITE ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
 	tmhm RAZOR_WIND,   WHIRLWIND,    TOXIC,        TAKE_DOWN,    DOUBLE_EDGE,  \
-	     RAGE,         MEGA_DRAIN,   MIMIC,        DOUBLE_TEAM,  BIDE,         \
+	     RAGE,         GIGA_DRAIN,   MIMIC,        ICE_PUNCH,  BIDE,         \
 	     SWIFT,        REST,         SUBSTITUTE
 	; end
 

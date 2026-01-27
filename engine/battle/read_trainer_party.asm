@@ -132,7 +132,7 @@ ReadTrainer:
 ; starter
 	ld a, [wRivalStarter]
 	cp STARTER3
-	ld b, MEGA_DRAIN
+	ld b, GIGA_DRAIN
 	jr z, .GiveStarterMove
 	cp STARTER1
 	ld b, FIRE_BLAST

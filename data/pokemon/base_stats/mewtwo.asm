@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw MewtwoPicFront, MewtwoPicBack
 
-	db CONFUSION, DISABLE, SWIFT, PSYCHIC_M ; level 1 learnset
+	db CONFUSION, DISABLE, SWIFT, ANCIENTPOWER ; level 1 learnset
 	db GROWTH_SLOW ; growth rate
 
 	; tm/hm learnset
@@ -22,9 +22,9 @@ ENDC
 	     DOUBLE_EDGE,  BUBBLEBEAM,   WATER_GUN,    ICE_BEAM,     BLIZZARD,     \
 	     HYPER_BEAM,   PAY_DAY,      SUBMISSION,   COUNTER,      SEISMIC_TOSS, \
 	     RAGE,         SOLARBEAM,    THUNDERBOLT,  THUNDER,      PSYCHIC_M,    \
-	     TELEPORT,     MIMIC,        DOUBLE_TEAM,  REFLECT,      BIDE,         \
-	     METRONOME,    SELFDESTRUCT, FIRE_BLAST,   SKULL_BASH,   REST,         \
-	     THUNDER_WAVE, PSYWAVE,      TRI_ATTACK,   SUBSTITUTE,   STRENGTH,     \
+	     TELEPORT,     MIMIC,        ICE_PUNCH,  REFLECT,      BIDE,         \
+	     METRONOME,    SELFDESTRUCT, FIRE_BLAST,   FIRE_PUNCH,   REST,         \
+	     THUNDER_WAVE, PSYWAVE,      FLAMETHROWER,   SUBSTITUTE,   STRENGTH,     \
 	     FLASH
 	; end
 

@@ -21,8 +21,8 @@ ENDC
 	tmhm MEGA_PUNCH,   MEGA_KICK,    TOXIC,        BODY_SLAM,    TAKE_DOWN,    \
 	     DOUBLE_EDGE,  BUBBLEBEAM,   WATER_GUN,    ICE_BEAM,     BLIZZARD,     \
 	     SUBMISSION,   COUNTER,      SEISMIC_TOSS, RAGE,         EARTHQUAKE,   \
-	     FISSURE,      PSYCHIC_M,    MIMIC,        DOUBLE_TEAM,  BIDE,         \
-	     METRONOME,    SKULL_BASH,   REST,         PSYWAVE,      SUBSTITUTE,   \
+	     FISSURE,      PSYCHIC_M,    MIMIC,        ICE_PUNCH,  BIDE,         \
+	     METRONOME,    FIRE_PUNCH,   REST,         PSYWAVE,      SUBSTITUTE,   \
 	     SURF,         STRENGTH
 	; end
 

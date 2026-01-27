@@ -19,8 +19,8 @@ ENDC
 
 	; tm/hm learnset
 	tmhm TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  RAGE,         \
-	     MEGA_DRAIN,   EARTHQUAKE,   FISSURE,      DIG,          MIMIC,        \
-	     DOUBLE_TEAM,  BIDE,         SKULL_BASH,   REST,         ROCK_SLIDE,   \
+	     GIGA_DRAIN,   EARTHQUAKE,   FISSURE,      DIG,          MIMIC,        \
+	     ICE_PUNCH,  BIDE,         FIRE_PUNCH,   REST,         ROCK_SLIDE,   \
 	     SUBSTITUTE,   STRENGTH
 	; end
 
