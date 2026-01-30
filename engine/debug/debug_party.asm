@@ -106,6 +106,22 @@ IF DEF(_DEBUG)
 	jr .items_loop
 .items_end
 
+	; Get some more debug items. ; marcelnote - new for Key items pocket
+	ld hl, wNumBagKeyItems
+	ld de, DebugKeyItemsList
+.key_items_loop
+	ld a, [de]
+	cp -1
+	jr z, .key_items_end
+	ld [wCurItem], a
+	inc de
+	ld a, [de]
+	inc de
+	ld [wItemQuantity], a
+	call AddItemToInventory
+	jr .key_items_loop
+.key_items_end
+
 	; Complete the Pokédex.
 	ld hl, wPokedexOwned
 	call DebugSetPokedexEntries
@@ -136,28 +152,35 @@ DebugSetPokedexEntries:
 	ret
 
 DebugNewGameItemsList:
-	db BICYCLE, 1
 	db MAX_REPEL, 99
 	db FULL_RESTORE, 99
 	db FULL_HEAL, 99
 	db ESCAPE_ROPE, 99
 	db RARE_CANDY, 99
 	db MASTER_BALL, 99
-	db TOWN_MAP, 1
 	db NUGGET, 99
+	db -1 ; end
+
+DebugKeyItemsList:    ; new for Key Items pocket
+	db BICYCLE, 1
+	db TOWN_MAP, 1
+	db OLD_ROD, 1
+	db ITEMFINDER, 1
+	db POKE_FLUTE, 1
 	db SECRET_KEY, 1
 	db CARD_KEY, 1
 	db S_S_TICKET, 1
 	db LIFT_KEY, 1
-	db SILPH_SCOPE, 1
-	db POKE_FLUTE, 1
-	db OLD_ROD, 1
-	db GOOD_ROD, 1
-	db SUPER_ROD, 1
+	db SILPH_SCOPE, 1 
+	db HM_CUT, 1 
+	db HM_FLY, 1 
+	db HM_SURF, 1 
+	db HM_STRENGTH, 1 
+	db HM_FLASH, 1 
 	db -1 ; end
 
-DebugUnusedList: ; unreferenced
-	db -1 ; end
+; DebugUnusedList: ; unreferenced
+; 	db -1 ; end
 ELSE
 	ret
 ENDC

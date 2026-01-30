@@ -99,4 +99,4 @@ ViridianMartCooltrainerMText:
 	text_end
 
 ViridianMartClerkText:
-   script_mart POKE_BALL, POTION, FULL_HEAL
+   script_mart POKE_BALL, POTION, FULL_HEAL, MASTER_BALL, EXP_ALL

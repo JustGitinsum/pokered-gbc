@@ -319,7 +319,7 @@ PrintInfoCurrentMove: ; new
 	call PrintNumber ; prints the c-digit, b-byte value at de
 	jr .afterDamagePrinting
 .OHKOMove
-	ld [hl], "INFINITE"
+	ld [hl], "◀"
 	jr .afterDamagePrinting
 .specialDamage
 	ld [hl], "?"
@@ -397,7 +397,7 @@ PrintInfoNewMove: ; new
 	call PrintNumber ; prints the c-digit, b-byte value at de
 	jr .afterDamagePrinting
 .OHKOMove
-	ld [hl], "INFINITE"
+	ld [hl], "◀"
 	jr .afterDamagePrinting
 .specialDamage
 	ld [hl], "?"

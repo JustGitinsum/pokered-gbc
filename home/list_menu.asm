@@ -9,6 +9,7 @@ DisplayListMenuID::
 	ld a, [wBattleType]
 	and a ; is it the Old Man battle?
 	jr nz, .specialBattleType
+	call PrintBagInfoText ; marcelnote - new for bag pockets
 	ld a, $01 ; hardcoded bank
 	jr .bankswitch
 .specialBattleType ; Old Man battle
@@ -50,7 +51,7 @@ DisplayListMenuID::
 	ld [wTopMenuItemY], a
 	ld a, 5
 	ld [wTopMenuItemX], a
-	ld a, PAD_A | PAD_B | PAD_SELECT
+	ld a, PAD_A | PAD_B | PAD_SELECT | PAD_RIGHT | PAD_LEFT ; marcelnote - added PAD_RIGHT for bag pockets
 	ld [wMenuWatchedKeys], a
 	ld c, 10
 	call DelayFrames
@@ -82,6 +83,7 @@ DisplayListMenuIDLoop::
 	call LoadGBPal
 	call HandleMenuInput
 	push af
+	;call PrintBagInfoText ; marcelnote - new for bag pockets, should be placed around here if expect to display TM moves
 	call PlaceMenuCursor
 	pop af
 	bit B_PAD_A, a
@@ -91,9 +93,9 @@ DisplayListMenuIDLoop::
 	call PlaceUnfilledArrowMenuCursor
 
 ; pointless because both values are overwritten before they are read
-	ld a, $01
-	ld [wMenuExitMethod], a
-	ld [wChosenMenuItem], a
+	; ld a, $01
+	; ld [wMenuExitMethod], a
+	; ld [wChosenMenuItem], a
 
 	xor a
 	ld [wMenuWatchMovingOutOfBounds], a
@@ -180,8 +182,14 @@ DisplayListMenuIDLoop::
 	jp nz, ExitListMenu ; if so, exit the menu
 	bit B_PAD_SELECT, a
 	jp nz, HandleItemListSwapping ; if so, allow the player to swap menu entries
-	ld b, a
-	bit B_PAD_DOWN, b
+	;;;;;;;;;; marcelnote - for bag pockets
+	bit B_PAD_RIGHT, a
+	jr nz, .switchBagPocket
+	bit B_PAD_LEFT, a
+	jr nz, .switchBagPocket
+	;;;;;;;;;;
+	;ld b, a
+	bit B_PAD_DOWN, a ; marcelnote - changed from bit B_PAD_DOWN, b (no point in using b)
 	ld hl, wListScrollOffset
 	jr z, .upPressed
 .downPressed
@@ -199,6 +207,30 @@ DisplayListMenuIDLoop::
 	jp z, DisplayListMenuIDLoop
 	dec [hl]
 	jp DisplayListMenuIDLoop
+.switchBagPocket ; marcelnote - new for bag pockets
+	ld a, [wListMenuID]
+	cp ITEMLISTMENU
+	jp nz, DisplayListMenuIDLoop
+	ld hl, wBagPocketsFlags
+	bit BIT_PC_WITHDRAWING, [hl] ; if withdrawing from PC then cannot switch pocket
+	jp nz, DisplayListMenuIDLoop
+	ld bc, wNumBagItems
+	ld a, [wBagPocketsFlags]
+	bit BIT_KEY_ITEMS_POCKET, a
+	jr nz, .switchToMainPocket
+	ld bc, wNumBagKeyItems
+.switchToMainPocket
+	xor (1 << BIT_KEY_ITEMS_POCKET) ; this switches bit BIT_KEY_ITEMS_POCKET of a
+	ld [wBagPocketsFlags], a
+	ld a, c
+	ld hl, wListPointer
+	ld [hli], a
+	ld [hl], b ; store item bag pointer in wListPointer (for DisplayListMenuID)
+	xor a
+	ld [wCurrentMenuItem], a
+	ld [wListScrollOffset], a
+	call ExitListMenu ; this is to prevent an issue with BankswitchHome in DisplayListMenuID
+	jp DisplayListMenuID
 
 DisplayChooseQuantityMenu::
 ; text box dimensions/coordinates for just quantity
@@ -530,5 +562,31 @@ PrintListMenuEntries::
 	ld de, ListMenuCancelText
 	jp PlaceString
 
+PrintBagInfoText: ; marcelnote - new for bag pockets
+	ld hl, wBagPocketsFlags
+	bit BIT_PRINT_INFO_BOX, [hl]
+	ret z ; do not display the info box
+	hlcoord 5, 1
+	ld de, BagItemsText
+	ld a, [wBagPocketsFlags]
+	bit BIT_KEY_ITEMS_POCKET, a
+	jr z, .mainPocket
+	ld de, BagKeyItemsText
+.mainPocket
+	;ld a, [wCurListMenuItem]
+	;cp $ff
+	;ret z
+	;cp TM_MEGA_PUNCH ; first TM (TMs are last items)
+	;jp c, .notTM
+	;ld de, IsTMText
+;.notTM
+	jp PlaceString
+
 ListMenuCancelText::
 	db "CANCEL@"
+
+BagItemsText:
+	db "◀   ITEMS    ▶@"
+
+BagKeyItemsText:
+	db "◀ KEY ITEMS  ▶@" ; ▶

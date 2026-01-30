@@ -1762,6 +1762,13 @@ wNumBagItems:: db
 ; item, quantity
 wBagItems:: ds BAG_ITEM_CAPACITY * 2 + 1
 
+wNumBagKeyItems:: db ; marcelnote - for Key Items pocket
+; item, quantity (but quantity will always be 1 so could look into decreasing it)
+wBagKeyItems:: ds BAG_KEY_ITEM_CAPACITY * 2 + 1
+
+; bits related to bag pockets (see ram_constants.asm) ; marcelnote - new for bag pockets
+wBagPocketsFlags:: db
+
 wPlayerMoney:: ds 3 ; BCD
 
 wRivalName:: ds NAME_LENGTH

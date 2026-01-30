@@ -249,7 +249,7 @@ SetPal_TownMap:
 	ldh [rSVBK], a
 	ld hl, W2_SpritePaletteMap
 	ld bc, $4
-	ld a, SPR_PAL_GREEN
+	ld a, SPR_PAL_ORANGE ; Girl Player SPrite palette
 	jr .doneMap
 .boyMap
 	ld a, 2

@@ -38,8 +38,8 @@ DisplayPokemartDialogue_::
 .sellMenu
 
 ; the same variables are set again below, so this code has no effect
-	xor a
-	ld [wPrintItemPrices], a
+	;xor a
+	;ld [wPrintItemPrices], a
 	ld a, INIT_BAG_ITEM_LIST
 	ld [wInitListType], a
 	callfar InitList
@@ -56,6 +56,13 @@ DisplayPokemartDialogue_::
 	ld [wTextBoxID], a
 	call DisplayTextBoxID ; draw money text box
 	ld hl, wNumBagItems
+	;;;;;;;;;; marcelnote - check which pocket we were last in, new for bag pockets
+	ld a, [wBagPocketsFlags]
+	bit BIT_KEY_ITEMS_POCKET, a
+	jr z, .gotBagPocket
+	ld hl, wNumBagKeyItems
+.gotBagPocket
+	;;;;;;;;;;
 	ld a, l
 	ld [wListPointer], a
 	ld a, h
