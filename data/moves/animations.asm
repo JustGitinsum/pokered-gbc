@@ -1208,7 +1208,7 @@ PlayerFlashAnim:
 	db -1 ; end
 
 EnemyHUDShakeAnim:
-	battle_anim NO_MOVE, SE_SHAKE_ENEMY_HUD
+	battle_anim NO_MOVE, SE_SHAKE_SCREEN ; SE_SHAKE_ENEMY_HUD is broken idk why
 	db -1 ; end
 
 TradeBallDropAnim:
