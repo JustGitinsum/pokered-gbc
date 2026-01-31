@@ -1208,6 +1208,11 @@ INCLUDE "scripts/ChampionsRoom.asm"
 INCLUDE "data/maps/objects/ChampionsRoom.asm"
 ChampionsRoom_Blocks: INCBIN "maps/ChampionsRoom.blk"
 
+INCLUDE "data/maps/headers/Route10FossilRoom.asm"
+INCLUDE "scripts/Route10FossilRoom.asm"
+INCLUDE "data/maps/objects/Route10FossilRoom.asm"
+Route10FossilRoom_Blocks: INCBIN "maps/Route10FossilRoom.blk"
+
 INCLUDE "data/maps/headers/LoreleisRoom.asm"
 INCLUDE "scripts/LoreleisRoom.asm"
 INCLUDE "data/maps/objects/LoreleisRoom.asm"

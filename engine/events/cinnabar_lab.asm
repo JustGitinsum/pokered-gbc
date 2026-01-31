@@ -40,13 +40,26 @@ GiveFossilToCinnabarLab::
 	jr z, .choseDomeFossil
 	cp HELIX_FOSSIL
 	jr z, .choseHelixFossil
-	ld b, AERODACTYL
-	jr .fossilSelected
+	cp OLD_AMBER
+	jr z, .choseOldAmber
+	; cp JAW_FOSSIL
+	; jr z, .choseJawFossil
+	; cp SAIL_FOSSIL
+	; jr z, .choseSailFossil
 .choseHelixFossil
 	ld b, OMANYTE
 	jr .fossilSelected
 .choseDomeFossil
 	ld b, KABUTO
+	jr .fossilSelected
+.choseOldAmber
+	ld b, AERODACTYL
+	jr .fossilSelected
+; .choseJawFossil
+; 	ld b, TYRUNT
+; 	jr .fossilSelected
+; .choseSailFossil
+; 	ld b, AMAURA
 .fossilSelected
 	ld [wFossilItem], a
 	ld a, b
@@ -63,8 +76,8 @@ GiveFossilToCinnabarLab::
 	ld a, [wFossilItem]
 	ldh [hItemToRemoveID], a
 	farcall RemoveItemByID
-	ld hl, .GoForAWalkText
-	call PrintText
+	; ld hl, .GoForAWalkText
+	; call PrintText
 	SetEvents EVENT_GAVE_FOSSIL_TO_LAB, EVENT_LAB_STILL_REVIVING_FOSSIL
 	ret
 .cancelledGivingFossil
@@ -80,9 +93,9 @@ GiveFossilToCinnabarLab::
 	text_far _CinnabarLabFossilRoomScientist1TakesFossilText
 	text_end
 
-.GoForAWalkText:
-	text_far _CinnabarLabFossilRoomScientist1GoForAWalkText2
-	text_end
+; .GoForAWalkText:
+; 	text_far _CinnabarLabFossilRoomScientist1GoForAWalkText2
+; 	text_end
 
 .ComeAgainText:
 	text_far _CinnabarLabFossilRoomScientist1ComeAgainText

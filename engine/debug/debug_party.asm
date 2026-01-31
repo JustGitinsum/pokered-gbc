@@ -177,6 +177,9 @@ DebugKeyItemsList:    ; new for Key Items pocket
 	db HM_SURF, 1 
 	db HM_STRENGTH, 1 
 	db HM_FLASH, 1 
+	db OLD_AMBER, 1
+	db HELIX_FOSSIL, 1
+	db DOME_FOSSIL, 1
 	db -1 ; end
 
 ; DebugUnusedList: ; unreferenced
