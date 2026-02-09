@@ -14,15 +14,15 @@ ELSE
 ENDC
 	dw MachokePicFront, MachokePicBack
 
-	db KARATE_CHOP, LOW_KICK, LEER, NO_MOVE ; level 1 learnset
+	db KARATE_CHOP, LOW_SWEEP, LEER, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm MEGA_PUNCH,   MEGA_KICK,    TOXIC,        BODY_SLAM,    TAKE_DOWN,    \
+	tmhm AERIAL_ACE,   MEGA_KICK,    TOXIC,        FIRE_FANG,    TAKE_DOWN,    \
 	     DOUBLE_EDGE,  SUBMISSION,   COUNTER,      SEISMIC_TOSS, RAGE,         \
-	     EARTHQUAKE,   FISSURE,      DIG,          MIMIC,        ICE_PUNCH,  \
-	     BIDE,         METRONOME,    FIRE_BLAST,   FIRE_PUNCH,   REST,         \
-	     ROCK_SLIDE,   SUBSTITUTE,   STRENGTH
+	     EARTHQUAKE,   EARTH_POWER,      DIG,          MIMIC,        ICE_PUNCH,  \
+	     ACCELEROCK,         METRONOME,    FIRE_BLAST,   FIRE_PUNCH,   ICE_FANG,         \
+	     THUNDERBOLT,   SUBSTITUTE,   STRENGTH
 	; end
 
 	db BANK(MachokePicFront)

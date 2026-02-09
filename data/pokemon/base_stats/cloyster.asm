@@ -18,10 +18,10 @@ ENDC
 	db GROWTH_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        TAKE_DOWN,    DOUBLE_EDGE,  BUBBLEBEAM,   WATER_GUN,    \
+	tmhm TOXIC,        TAKE_DOWN,    DOUBLE_EDGE,  BUBBLEBEAM,   TRAILBLAZE,    \
 	     ICE_BEAM,     BLIZZARD,     HYPER_BEAM,   RAGE,         TELEPORT,     \
-	     MIMIC,        ICE_PUNCH,  REFLECT,      BIDE,         SELFDESTRUCT, \
-	     SWIFT,        REST,         EXPLOSION,    FLAMETHROWER,   SUBSTITUTE,   \
+	     MIMIC,        ICE_PUNCH,  REFLECT,      ACCELEROCK,         SELFDESTRUCT, \
+	     SWIFT,        ICE_FANG,         EXPLOSION,    FLAMETHROWER,   SUBSTITUTE,   \
 	     SURF
 	; end
 

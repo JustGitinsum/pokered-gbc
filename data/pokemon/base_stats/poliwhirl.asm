@@ -14,15 +14,15 @@ ELSE
 ENDC
 	dw PoliwhirlPicFront, PoliwhirlPicBack
 
-	db BUBBLE, HYPNOSIS, WATER_GUN, NO_MOVE ; level 1 learnset
+	db BUBBLE, HYPNOSIS, TRAILBLAZE, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm MEGA_PUNCH,   MEGA_KICK,    TOXIC,        BODY_SLAM,    TAKE_DOWN,    \
-	     DOUBLE_EDGE,  BUBBLEBEAM,   WATER_GUN,    ICE_BEAM,     BLIZZARD,     \
+	tmhm AERIAL_ACE,   MEGA_KICK,    TOXIC,        FIRE_FANG,    TAKE_DOWN,    \
+	     DOUBLE_EDGE,  BUBBLEBEAM,   TRAILBLAZE,    ICE_BEAM,     BLIZZARD,     \
 	     SUBMISSION,   COUNTER,      SEISMIC_TOSS, RAGE,         EARTHQUAKE,   \
-	     FISSURE,      PSYCHIC_M,    MIMIC,        ICE_PUNCH,  BIDE,         \
-	     METRONOME,    FIRE_PUNCH,   REST,         PSYWAVE,      SUBSTITUTE,   \
+	     EARTH_POWER,      PSYCHIC_M,    MIMIC,        ICE_PUNCH,  ACCELEROCK,         \
+	     METRONOME,    FIRE_PUNCH,   ICE_FANG,         EXTRASENSORY,      SUBSTITUTE,   \
 	     SURF,         STRENGTH
 	; end
 

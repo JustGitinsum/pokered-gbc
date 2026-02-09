@@ -199,13 +199,13 @@ ColorNonOverworldSprites::
 	ld a, GRASS
 	jr z, .gotType
 
-	; Make stun spore and solarbeam yellow, despite being grass moves
+	; Make stun spore and ENERGY_BALL yellow, despite being grass moves
 	ld a, d
 	cp STUN_SPORE
 	ld a, ELECTRIC
 	jr z, .gotType
 	ld a, d
-	cp SOLARBEAM
+	cp ENERGY_BALL
 	ld a, ELECTRIC
 	jr z, .gotType
 

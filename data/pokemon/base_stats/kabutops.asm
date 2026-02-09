@@ -14,15 +14,15 @@ ELSE
 ENDC
 	dw KabutopsPicFront, KabutopsPicBack
 
-	db WATER_GUN, HARDEN, SLASH, ANCIENTPOWER ; level 1 learnset
+	db TRAILBLAZE, HARDEN, SLASH, ANCIENTPOWER ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm RAZOR_WIND,   SWORDS_DANCE, MEGA_KICK,    TOXIC,        BODY_SLAM,    \
-	     TAKE_DOWN,    DOUBLE_EDGE,  BUBBLEBEAM,   WATER_GUN,    ICE_BEAM,     \
+	tmhm AIR_SLASH,   SWORDS_DANCE, MEGA_KICK,    TOXIC,        FIRE_FANG,    \
+	     TAKE_DOWN,    DOUBLE_EDGE,  BUBBLEBEAM,   TRAILBLAZE,    ICE_BEAM,     \
 	     BLIZZARD,     HYPER_BEAM,   SUBMISSION,   SEISMIC_TOSS, RAGE,         \
-	     MIMIC,        ICE_PUNCH,  REFLECT,      BIDE,         FIRE_PUNCH,   \
-	     REST,         SUBSTITUTE,   SURF
+	     MIMIC,        ICE_PUNCH,  REFLECT,      ACCELEROCK,         FIRE_PUNCH,   \
+	     ICE_FANG,         SUBSTITUTE,   SURF
 	; end
 
 	db BANK(KabutopsPicFront)

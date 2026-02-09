@@ -10,7 +10,7 @@
 	const KARATE_CHOP  ; 02
 	const DOUBLESLAP   ; 03
 	const COMET_PUNCH  ; 04
-	const MEGA_PUNCH   ; 05
+	const AERIAL_ACE   ; 05
 	const PAY_DAY      ; 06
 	const FIRE_PUNCH   ; 07
 	const ICE_PUNCH    ; 08
@@ -18,7 +18,7 @@
 	const SCRATCH      ; 0a
 	const VICEGRIP     ; 0b
 	const GUILLOTINE   ; 0c
-	const RAZOR_WIND   ; 0d
+	const AIR_SLASH   ; 0d
 	const SWORDS_DANCE ; 0e
 	const CUT          ; 0f
 	const GUST         ; 10
@@ -32,7 +32,7 @@
 	const DOUBLE_KICK  ; 18
 	const MEGA_KICK    ; 19
 	const JUMP_KICK    ; 1a
-	const ROLLING_KICK ; 1b
+	const BRICK_BREAK ; 1b
 	const SAND_ATTACK  ; 1c
 	const HEADBUTT     ; 1d
 	const HORN_ATTACK  ; 1e
@@ -72,7 +72,7 @@
 	const PECK         ; 40
 	const DRILL_PECK   ; 41
 	const SUBMISSION   ; 42
-	const LOW_KICK     ; 43
+	const LOW_SWEEP     ; 43
 	const COUNTER      ; 44
 	const SEISMIC_TOSS ; 45
 	const STRENGTH     ; 46
@@ -80,8 +80,8 @@
 	const GIGA_DRAIN   ; 48
 	const LEECH_SEED   ; 49
 	const GROWTH       ; 4a
-	const RAZOR_LEAF   ; 4b
-	const SOLARBEAM    ; 4c
+	const MAGICAL_LEAF   ; 4b
+	const ENERGY_BALL    ; 4c
 	const POISONPOWDER ; 4d
 	const STUN_SPORE   ; 4e
 	const SLEEP_POWDER ; 4f
@@ -95,7 +95,7 @@
 	const THUNDER      ; 57
 	const ROCK_TOMB   ; 58
 	const EARTHQUAKE   ; 59
-	const FISSURE      ; 5a
+	const EARTH_POWER      ; 5a
 	const DIG          ; 5b
 	const TOXIC        ; 5c
 	const CONFUSION    ; 5d
@@ -130,12 +130,12 @@
 	const LICK         ; 7a
 	const SMOG         ; 7b
 	const SLUDGE       ; 7c
-	const BONE_CLUB    ; 7d
+	const SHADOW_BONE    ; 7d
 	const FIRE_BLAST   ; 7e
 	const WATERFALL    ; 7f
 	const CLAMP        ; 80
 	const SWIFT        ; 81
-	const SKULL_BASH   ; 82
+	const IRON_HEAD   ; 82
 	const SPIKE_CANNON ; 83
 	const CONSTRICT    ; 84
 	const AMNESIA      ; 85
@@ -154,7 +154,7 @@
 	const DIZZY_PUNCH  ; 92
 	const SPORE        ; 93
 	const FLASH        ; 94
-	const PSYWAVE      ; 95
+	const EXTRASENSORY      ; 95
 	const SPLASH       ; 96
 	const ACID_ARMOR   ; 97
 	const CRABHAMMER   ; 98
@@ -175,6 +175,14 @@
 	const THUNDERFANG
 	const ANCIENTPOWER
 	const BOUNCE
+	const FLAME_WHEEL
+	const SHOCK_WAVE
+	const ACCELEROCK
+	const TRAILBLAZE
+	const ROLLOUT
+	const FLASH_CANNON
+	const DRAGONBREATH
+	const HEAT_CRASH
 	const STRUGGLE     ; a5
 DEF NUM_ATTACKS EQU const_value - 1
 

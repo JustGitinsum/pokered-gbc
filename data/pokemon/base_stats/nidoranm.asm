@@ -18,9 +18,9 @@ ENDC
 	db GROWTH_MEDIUM_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        HORN_DRILL,   BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  \
-	     BLIZZARD,     RAGE,         THUNDERBOLT,  THUNDER,      MIMIC,        \
-	     ICE_PUNCH,  REFLECT,      BIDE,         FIRE_PUNCH,   REST,         \
+	tmhm TOXIC,        HORN_DRILL,   FIRE_FANG,    TAKE_DOWN,    DOUBLE_EDGE,  \
+	     BLIZZARD,     RAGE,         THUNDERFANG,  THUNDER,      MIMIC,        \
+	     ICE_PUNCH,  REFLECT,      ACCELEROCK,         FIRE_PUNCH,   ICE_FANG,         \
 	     SUBSTITUTE
 	; end
 

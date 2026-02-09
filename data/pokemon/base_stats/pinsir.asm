@@ -18,9 +18,9 @@ ENDC
 	db GROWTH_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm SWORDS_DANCE, TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  \
+	tmhm SWORDS_DANCE, TOXIC,        FIRE_FANG,    TAKE_DOWN,    DOUBLE_EDGE,  \
 	     HYPER_BEAM,   SUBMISSION,   SEISMIC_TOSS, RAGE,         MIMIC,        \
-	     ICE_PUNCH,  BIDE,         REST,         SUBSTITUTE,   CUT,          \
+	     ICE_PUNCH,  ACCELEROCK,         ICE_FANG,         SUBSTITUTE,   CUT,          \
 	     STRENGTH
 	; end
 

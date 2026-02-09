@@ -44,7 +44,7 @@ ExclamationPointMoveSets:
 	db MEGA_DRAIN
 	db STRING_SHOT
 	db EARTHQUAKE
-	db FISSURE
+	db EARTH_POWER
 	db DIG
 	db TOXIC
 	db SCREECH

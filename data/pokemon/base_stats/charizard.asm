@@ -18,11 +18,11 @@ ENDC
 	db GROWTH_MEDIUM_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm MEGA_PUNCH,   SWORDS_DANCE, MEGA_KICK,    TOXIC,        BODY_SLAM,    \
+	tmhm AERIAL_ACE,   SWORDS_DANCE, MEGA_KICK,    TOXIC,        FIRE_FANG,    \
 	     TAKE_DOWN,    DOUBLE_EDGE,  HYPER_BEAM,   SUBMISSION,   COUNTER,      \
-	     SEISMIC_TOSS, RAGE,         DRAGON_RAGE,  EARTHQUAKE,   FISSURE,      \
-	     DIG,          MIMIC,        ICE_PUNCH,  REFLECT,      BIDE,         \
-	     FIRE_BLAST,   SWIFT,        FIRE_PUNCH,   REST,         SUBSTITUTE,   \
+	     SEISMIC_TOSS, RAGE,         DRAGON_RAGE,  EARTHQUAKE,   EARTH_POWER,      \
+	     DIG,          MIMIC,        ICE_PUNCH,  REFLECT,      ACCELEROCK,         \
+	     FIRE_BLAST,   SWIFT,        FIRE_PUNCH,   ICE_FANG,         SUBSTITUTE,   \
 	     CUT,          STRENGTH
 	; end
 

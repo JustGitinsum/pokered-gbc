@@ -18,11 +18,11 @@ ENDC
 	db GROWTH_MEDIUM_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm MEGA_PUNCH,   MEGA_KICK,    TOXIC,        BODY_SLAM,    TAKE_DOWN,    \
+	tmhm AERIAL_ACE,   MEGA_KICK,    TOXIC,        FIRE_FANG,    TAKE_DOWN,    \
 	     DOUBLE_EDGE,  HYPER_BEAM,   SUBMISSION,   COUNTER,      SEISMIC_TOSS, \
-	     RAGE,         EARTHQUAKE,   FISSURE,      DIG,          MIMIC,        \
-	     ICE_PUNCH,  BIDE,         METRONOME,    SELFDESTRUCT, FIRE_BLAST,   \
-	     REST,         EXPLOSION,    ROCK_SLIDE,   SUBSTITUTE,   STRENGTH
+	     RAGE,         EARTHQUAKE,   EARTH_POWER,      DIG,          MIMIC,        \
+	     ICE_PUNCH,  ACCELEROCK,         METRONOME,    SELFDESTRUCT, FIRE_BLAST,   \
+	     ICE_FANG,         EXPLOSION,    THUNDERBOLT,   SUBSTITUTE,   STRENGTH
 	; end
 
 	db BANK(GolemPicFront)

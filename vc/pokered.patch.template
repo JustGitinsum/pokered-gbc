@@ -182,8 +182,8 @@ Type = 98
 
 
 ;rsm033659 
-;no151 mega punch
-[FPA 001 Begin@Reduce_move_anim_flashing_Mega_Punch_Self_Destruct_Explosion]               
+;no151 aerial ace
+[FPA 001 Begin@Reduce_move_anim_flashing_AERIAL_ACE_Self_Destruct_Explosion]               
 Mode = 3                      
 Type = 0                      
 Address = {HEX @}            
@@ -194,17 +194,17 @@ MotionBlur1 = 21
 ConditionType = 11             
 ConditionValueA = {dws_ wStringBuffer wStringBuffer+1 wStringBuffer+2 wStringBuffer+3 wStringBuffer+5 wAnimationID  00  wStringBuffer wStringBuffer+1 wStringBuffer+2 wStringBuffer+3 wStringBuffer+4 wAnimationID  00  wStringBuffer wStringBuffer+1 wStringBuffer+2 wStringBuffer+3 wAnimationID}  
 ConditionValueB = {dws_ ==            ==              ==              ==              ==              ==            ||  ==            ==              ==              ==              ==              ==            ||  ==            ==              ==              ==              ==          }  
-ConditionValueC = {dws_ M_CHAR        E_CHAR          G_CHAR          A_CHAR          P_CHAR          MEGA_PUNCH    00  S_CHAR        E_CHAR          L_CHAR          F_CHAR          D_CHAR          MEGA_PUNCH    00  E_CHAR        X_CHAR          P_CHAR          L_CHAR          MEGA_PUNCH  }  
+ConditionValueC = {dws_ M_CHAR        E_CHAR          G_CHAR          A_CHAR          P_CHAR          AERIAL_ACE    00  S_CHAR        E_CHAR          L_CHAR          F_CHAR          D_CHAR          AERIAL_ACE    00  E_CHAR        X_CHAR          P_CHAR          L_CHAR          AERIAL_ACE  }  
 
 
-[FPA 001 End@Stop_reducing_move_anim_flashing_Mega_Punch]                                               
+[FPA 001 End@Stop_reducing_move_anim_flashing_AERIAL_ACE]                                               
 Mode = 3                                                    
 Type = 1                                                    
 Address = {HEX @}                                           
 ConditionType = 0                                           
 ConditionValueA = {dws_ wStringBuffer wStringBuffer+1 wStringBuffer+2 wStringBuffer+3 wStringBuffer+5 wAnimationID} 
 ConditionValueB = {dws_ ==            ==              ==              ==              ==              ==          } 
-ConditionValueC = {dws_ M_CHAR        E_CHAR          G_CHAR          A_CHAR          P_CHAR          MEGA_PUNCH  } 
+ConditionValueC = {dws_ M_CHAR        E_CHAR          G_CHAR          A_CHAR          P_CHAR          AERIAL_ACE  } 
                                     
                                     
 ;rsm032916    
@@ -403,7 +403,7 @@ Address = {HEX @}
 ConditionType = 11                     
 ConditionValueA = {dws_ wStringBuffer wStringBuffer+1 wStringBuffer+2 wStringBuffer+3 wAnimationID  00  wStringBuffer wStringBuffer+1 wStringBuffer+2 wStringBuffer+3 wAnimationID  00  wStringBuffer wStringBuffer+1 wStringBuffer+2 wStringBuffer+3 wAnimationID  00  wStringBuffer wStringBuffer+1 wStringBuffer+2 wStringBuffer+3 wStringBuffer+4 wAnimationID  00  wStringBuffer wStringBuffer+1 wStringBuffer+2 wStringBuffer+3 wStringBuffer+4 wAnimationID  00  wStringBuffer wStringBuffer+1 wStringBuffer+2 wStringBuffer+3 wStringBuffer+5 wAnimationID  00  wStringBuffer wStringBuffer+1 wStringBuffer+2 wStringBuffer+3 wAnimationID  00  wStringBuffer wStringBuffer+1 wStringBuffer+2 wStringBuffer+3 wAnimationID}  
 ConditionValueB = {dws_ ==            ==              ==              ==              ==            ||  ==            ==              ==              ==              ==            ||  ==            ==              ==              ==              ==            ||  ==            ==              ==              ==              ==              ==            ||  ==            ==              ==              ==              ==              ==            ||  ==            ==              ==              ==              ==              ==            ||  ==            ==              ==              ==              ==            ||  ==            ==              ==              ==              ==          }
-ConditionValueC = {dws_ D_CHAR        R_CHAR          E_CHAR          A_CHAR          DREAM_EATER   00  R_CHAR        O_CHAR          C_CHAR          K_CHAR          ROCK_SLIDE    00  S_CHAR        P_CHAR          O_CHAR          R_CHAR          SPORE         00  S_CHAR        E_CHAR          L_CHAR          F_CHAR          D_CHAR          MEGA_PUNCH    00  S_CHAR        E_CHAR          L_CHAR          F_CHAR          D_CHAR          SELFDESTRUCT  00  C_CHAR        O_CHAR          N_CHAR          F_CHAR          S_CHAR          CONFUSION     00  E_CHAR        X_CHAR          P_CHAR          L_CHAR          EXPLOSION     00  E_CHAR        X_CHAR          P_CHAR          L_CHAR          MEGA_PUNCH  }
+ConditionValueC = {dws_ D_CHAR        R_CHAR          E_CHAR          A_CHAR          DREAM_EATER   00  R_CHAR        O_CHAR          C_CHAR          K_CHAR          ROCK_SLIDE    00  S_CHAR        P_CHAR          O_CHAR          R_CHAR          SPORE         00  S_CHAR        E_CHAR          L_CHAR          F_CHAR          D_CHAR          AERIAL_ACE    00  S_CHAR        E_CHAR          L_CHAR          F_CHAR          D_CHAR          SELFDESTRUCT  00  C_CHAR        O_CHAR          N_CHAR          F_CHAR          S_CHAR          CONFUSION     00  E_CHAR        X_CHAR          P_CHAR          L_CHAR          EXPLOSION     00  E_CHAR        X_CHAR          P_CHAR          L_CHAR          AERIAL_ACE  }
 
 
 ;explosion  

@@ -18,10 +18,10 @@ ENDC
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  RAGE,         \
-	     EARTHQUAKE,   FISSURE,      DIG,          MIMIC,        ICE_PUNCH,  \
-	     BIDE,         SELFDESTRUCT, FIRE_PUNCH,   REST,         EXPLOSION,    \
-	     ROCK_SLIDE,   SUBSTITUTE,   STRENGTH
+	tmhm TOXIC,        FIRE_FANG,    TAKE_DOWN,    DOUBLE_EDGE,  RAGE,         \
+	     EARTHQUAKE,   EARTH_POWER,      DIG,          MIMIC,        ICE_PUNCH,  \
+	     ACCELEROCK,         SELFDESTRUCT, FIRE_PUNCH,   ICE_FANG,         EXPLOSION,    \
+	     THUNDERBOLT,   SUBSTITUTE,   STRENGTH
 	; end
 
 	db BANK(OnixPicFront)

@@ -18,12 +18,12 @@ ENDC
 	db GROWTH_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm MEGA_PUNCH,   MEGA_KICK,    TOXIC,        BODY_SLAM,    TAKE_DOWN,    \
-	     DOUBLE_EDGE,  BUBBLEBEAM,   WATER_GUN,    ICE_BEAM,     BLIZZARD,     \
-	     SUBMISSION,   COUNTER,      SEISMIC_TOSS, RAGE,         SOLARBEAM,    \
-	     THUNDERBOLT,  THUNDER,      PSYCHIC_M,    TELEPORT,     MIMIC,        \
-	     ICE_PUNCH,  REFLECT,      BIDE,         METRONOME,    FIRE_BLAST,   \
-	     FIRE_PUNCH,   REST,         THUNDER_WAVE, PSYWAVE,      FLAMETHROWER,   \
+	tmhm AERIAL_ACE,   MEGA_KICK,    TOXIC,        FIRE_FANG,    TAKE_DOWN,    \
+	     DOUBLE_EDGE,  BUBBLEBEAM,   TRAILBLAZE,    ICE_BEAM,     BLIZZARD,     \
+	     SUBMISSION,   COUNTER,      SEISMIC_TOSS, RAGE,         ENERGY_BALL,    \
+	     THUNDERFANG,  THUNDER,      PSYCHIC_M,    TELEPORT,     MIMIC,        \
+	     ICE_PUNCH,  REFLECT,      ACCELEROCK,         METRONOME,    FIRE_BLAST,   \
+	     FIRE_PUNCH,   ICE_FANG,         THUNDER_WAVE, EXTRASENSORY,      FLAMETHROWER,   \
 	     SUBSTITUTE,   STRENGTH,     FLASH
 	; end
 

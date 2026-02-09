@@ -14,13 +14,13 @@ ELSE
 ENDC
 	dw VoltorbPicFront, VoltorbPicBack
 
-	db TACKLE, SCREECH, NO_MOVE, NO_MOVE ; level 1 learnset
+	db TACKLE, LIGHT_SCREEN, SONICBOOM, THUNDERSHOCK ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        TAKE_DOWN,    RAGE,         THUNDERBOLT,  THUNDER,      \
-	     TELEPORT,     MIMIC,        ICE_PUNCH,  REFLECT,      BIDE,         \
-	     SELFDESTRUCT, SWIFT,        REST,         THUNDER_WAVE, EXPLOSION,    \
+	tmhm TOXIC,        TAKE_DOWN,    RAGE,         THUNDERFANG,  THUNDER,      \
+	     TELEPORT,     MIMIC,        ICE_PUNCH,  REFLECT,      ACCELEROCK,         \
+	     SELFDESTRUCT, SWIFT,        ICE_FANG,         THUNDER_WAVE, EXPLOSION,    \
 	     SUBSTITUTE,   FLASH
 	; end
 

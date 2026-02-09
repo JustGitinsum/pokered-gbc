@@ -18,9 +18,9 @@ ENDC
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  RAGE,         \
-	     MIMIC,        ICE_PUNCH,  REFLECT,      BIDE,         SWIFT,        \
-	     FIRE_PUNCH,   REST,         SUBSTITUTE
+	tmhm TOXIC,        FIRE_FANG,    TAKE_DOWN,    DOUBLE_EDGE,  RAGE,         \
+	     MIMIC,        ICE_PUNCH,  REFLECT,      ACCELEROCK,         SWIFT,        \
+	     FIRE_PUNCH,   ICE_FANG,         SUBSTITUTE
 	; end
 
 	db BANK(EeveePicFront)

@@ -14,14 +14,14 @@ ELSE
 ENDC
 	dw RaichuPicFront, RaichuPicBack
 
-	db THUNDERSHOCK, GROWL, THUNDER_WAVE, NO_MOVE ; level 1 learnset
+	db THUNDERSHOCK, GROWL, THUNDER_WAVE, QUICK_ATTACK ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm MEGA_PUNCH,   MEGA_KICK,    TOXIC,        BODY_SLAM,    TAKE_DOWN,    \
+	tmhm AERIAL_ACE,   MEGA_KICK,    TOXIC,        FIRE_FANG,    TAKE_DOWN,    \
 	     DOUBLE_EDGE,  HYPER_BEAM,   PAY_DAY,      SUBMISSION,   SEISMIC_TOSS, \
-	     RAGE,         THUNDERBOLT,  THUNDER,      MIMIC,        ICE_PUNCH,  \
-	     REFLECT,      BIDE,         SWIFT,        FIRE_PUNCH,   REST,         \
+	     RAGE,         THUNDERFANG,  THUNDER,      MIMIC,        ICE_PUNCH,  \
+	     REFLECT,      ACCELEROCK,         SWIFT,        FIRE_PUNCH,   ICE_FANG,         \
 	     THUNDER_WAVE, SUBSTITUTE,   FLASH
 	; end
 

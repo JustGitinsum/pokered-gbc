@@ -18,11 +18,11 @@ ENDC
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm MEGA_PUNCH,   MEGA_KICK,    TOXIC,        BODY_SLAM,    TAKE_DOWN,    \
+	tmhm AERIAL_ACE,   MEGA_KICK,    TOXIC,        FIRE_FANG,    TAKE_DOWN,    \
 	     DOUBLE_EDGE,  HYPER_BEAM,   SUBMISSION,   COUNTER,      SEISMIC_TOSS, \
 	     RAGE,         PSYCHIC_M,    TELEPORT,     MIMIC,        ICE_PUNCH,  \
-	     BIDE,         METRONOME,    FIRE_BLAST,   FIRE_PUNCH,   REST,         \
-	     PSYWAVE,      SUBSTITUTE,   STRENGTH
+	     ACCELEROCK,         METRONOME,    FIRE_BLAST,   FIRE_PUNCH,   ICE_FANG,         \
+	     EXTRASENSORY,      SUBSTITUTE,   STRENGTH
 	; end
 
 	db BANK(MagmarPicFront)

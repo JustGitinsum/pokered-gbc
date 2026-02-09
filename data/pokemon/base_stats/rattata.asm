@@ -18,10 +18,10 @@ ENDC
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  BUBBLEBEAM,   \
-	     WATER_GUN,    BLIZZARD,     RAGE,         THUNDERBOLT,  THUNDER,      \
-	     DIG,          MIMIC,        ICE_PUNCH,  BIDE,         SWIFT,        \
-	     FIRE_PUNCH,   REST,         SUBSTITUTE
+	tmhm TOXIC,        FIRE_FANG,    TAKE_DOWN,    DOUBLE_EDGE,  BUBBLEBEAM,   \
+	     TRAILBLAZE,    BLIZZARD,     RAGE,         THUNDERFANG,  THUNDER,      \
+	     DIG,          MIMIC,        ICE_PUNCH,  ACCELEROCK,         SWIFT,        \
+	     FIRE_PUNCH,   ICE_FANG,         SUBSTITUTE
 	; end
 
 	db BANK(RattataPicFront)

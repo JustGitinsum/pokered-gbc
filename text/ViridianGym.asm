@@ -69,11 +69,11 @@ _ViridianGymGiovanniReceivedTM27Text::
 _ViridianGymGiovanniTM27ExplanationText::
 	text_start
 
-	para "TM27 is FISSURE!"
-	line "It will take out"
-	cont "#MON with just"
-	cont "one hit!"
-
+	para "TM26 EARTHQUAKE!"
+	line "It is a powerful"
+	cont "attack that causes"
+	cont "a massive tremor"
+  
 	para "I made it when I"
 	line "ran the GYM here,"
 	cont "too long ago..."

@@ -14,13 +14,13 @@ ELSE
 ENDC
 	dw ExeggcutePicFront, ExeggcutePicBack
 
-	db BARRAGE, HYPNOSIS, NO_MOVE, NO_MOVE ; level 1 learnset
+	db BARRAGE, HYPNOSIS, REFLECT, LEECH_SEED ; level 1 learnset
 	db GROWTH_SLOW ; growth rate
 
 	; tm/hm learnset
 	tmhm TOXIC,        TAKE_DOWN,    DOUBLE_EDGE,  RAGE,         PSYCHIC_M,    \
-	     TELEPORT,     MIMIC,        ICE_PUNCH,  REFLECT,      BIDE,         \
-	     SELFDESTRUCT, THUNDERPUNCH,     REST,         PSYWAVE,      EXPLOSION,    \
+	     TELEPORT,     MIMIC,        ICE_PUNCH,  REFLECT,      ACCELEROCK,         \
+	     SELFDESTRUCT, THUNDERPUNCH,     ICE_FANG,         EXTRASENSORY,      EXPLOSION,    \
 	     SUBSTITUTE
 	; end
 

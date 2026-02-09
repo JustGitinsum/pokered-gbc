@@ -38,12 +38,12 @@ _TM34ExplanationText::
 	cont "carefully!"
 
 	para "TM34 contains"
-	line "BIDE!"
+	line "ACCELEROCK!"
 
 	para "Your #MON will"
-	line "absorb damage in"
-	cont "battle then pay"
-	cont "it back double!"
+	line "Strike first!"
+	cont "Strike hard!"
+	cont "Show no mercy!"
 	done
 
 _PewterGymTM34NoRoomText::

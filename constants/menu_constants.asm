@@ -1,5 +1,5 @@
-DEF BAG_ITEM_CAPACITY EQU 20     ; marcelnote - increased from 20
-DEF BAG_KEY_ITEM_CAPACITY EQU 30 ; marcelnote - new for bag pockets, a bit less than 30 key items currently
+DEF BAG_ITEM_CAPACITY EQU 30
+DEF BAG_KEY_ITEM_CAPACITY EQU 20 ; marcelnote - new for bag pockets, a bit less than 30 key items currently
 DEF PC_ITEM_CAPACITY  EQU 20
 
 ; text box IDs

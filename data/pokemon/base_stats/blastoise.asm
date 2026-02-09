@@ -14,15 +14,15 @@ ELSE
 ENDC
 	dw BlastoisePicFront, BlastoisePicBack
 
-	db TACKLE, TAIL_WHIP, BUBBLE, WATER_GUN ; level 1 learnset
+	db TACKLE, TAIL_WHIP, BUBBLE, TRAILBLAZE ; level 1 learnset
 	db GROWTH_MEDIUM_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm MEGA_PUNCH,   MEGA_KICK,    TOXIC,        BODY_SLAM,    TAKE_DOWN,    \
-	     DOUBLE_EDGE,  BUBBLEBEAM,   WATER_GUN,    ICE_BEAM,     BLIZZARD,     \
+	tmhm AERIAL_ACE,   MEGA_KICK,    TOXIC,        FIRE_FANG,    TAKE_DOWN,    \
+	     DOUBLE_EDGE,  BUBBLEBEAM,   TRAILBLAZE,    ICE_BEAM,     BLIZZARD,     \
 	     HYPER_BEAM,   SUBMISSION,   COUNTER,      SEISMIC_TOSS, RAGE,         \
-	     EARTHQUAKE,   FISSURE,      DIG,          MIMIC,        ICE_PUNCH,  \
-	     REFLECT,      BIDE,         FIRE_PUNCH,   REST,         SUBSTITUTE,   \
+	     EARTHQUAKE,   EARTH_POWER,      DIG,          MIMIC,        ICE_PUNCH,  \
+	     REFLECT,      ACCELEROCK,         FIRE_PUNCH,   ICE_FANG,         SUBSTITUTE,   \
 	     SURF,         STRENGTH
 	; end
 

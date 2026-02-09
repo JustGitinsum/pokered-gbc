@@ -18,10 +18,10 @@ ENDC
 	db GROWTH_MEDIUM_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        HORN_DRILL,   BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  \
-	     BUBBLEBEAM,   WATER_GUN,    ICE_BEAM,     BLIZZARD,     RAGE,         \
-	     THUNDERBOLT,  THUNDER,      MIMIC,        ICE_PUNCH,  REFLECT,      \
-	     BIDE,         FIRE_PUNCH,   REST,         SUBSTITUTE
+	tmhm TOXIC,        HORN_DRILL,   FIRE_FANG,    TAKE_DOWN,    DOUBLE_EDGE,  \
+	     BUBBLEBEAM,   TRAILBLAZE,    ICE_BEAM,     BLIZZARD,     RAGE,         \
+	     THUNDERFANG,  THUNDER,      MIMIC,        ICE_PUNCH,  REFLECT,      \
+	     ACCELEROCK,         FIRE_PUNCH,   ICE_FANG,         SUBSTITUTE
 	; end
 
 	db BANK(NidorinoPicFront)

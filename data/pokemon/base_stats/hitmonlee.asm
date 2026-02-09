@@ -18,10 +18,10 @@ ENDC
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm MEGA_PUNCH,   MEGA_KICK,    TOXIC,        BODY_SLAM,    TAKE_DOWN,    \
+	tmhm AERIAL_ACE,   MEGA_KICK,    TOXIC,        FIRE_FANG,    TAKE_DOWN,    \
 	     DOUBLE_EDGE,  SUBMISSION,   COUNTER,      SEISMIC_TOSS, RAGE,         \
-	     MIMIC,        ICE_PUNCH,  BIDE,         METRONOME,    SWIFT,        \
-	     FIRE_PUNCH,   REST,         SUBSTITUTE,   STRENGTH
+	     MIMIC,        ICE_PUNCH,  ACCELEROCK,         METRONOME,    SWIFT,        \
+	     FIRE_PUNCH,   ICE_FANG,         SUBSTITUTE,   STRENGTH
 	; end
 
 	db BANK(HitmonleePicFront)

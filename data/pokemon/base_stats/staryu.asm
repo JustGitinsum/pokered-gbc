@@ -18,11 +18,11 @@ ENDC
 	db GROWTH_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        TAKE_DOWN,    DOUBLE_EDGE,  BUBBLEBEAM,   WATER_GUN,    \
-	     ICE_BEAM,     BLIZZARD,     RAGE,         THUNDERBOLT,  THUNDER,      \
+	tmhm TOXIC,        TAKE_DOWN,    DOUBLE_EDGE,  BUBBLEBEAM,   TRAILBLAZE,    \
+	     ICE_BEAM,     BLIZZARD,     RAGE,         THUNDERFANG,  THUNDER,      \
 	     PSYCHIC_M,    TELEPORT,     MIMIC,        ICE_PUNCH,  REFLECT,      \
-	     BIDE,         SWIFT,        FIRE_PUNCH,   REST,         THUNDER_WAVE, \
-	     PSYWAVE,      FLAMETHROWER,   SUBSTITUTE,   SURF,         FLASH
+	     ACCELEROCK,         SWIFT,        FIRE_PUNCH,   ICE_FANG,         THUNDER_WAVE, \
+	     EXTRASENSORY,      FLAMETHROWER,   SUBSTITUTE,   SURF,         FLASH
 	; end
 
 	db BANK(StaryuPicFront)

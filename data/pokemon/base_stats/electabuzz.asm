@@ -14,15 +14,15 @@ ELSE
 ENDC
 	dw ElectabuzzPicFront, ElectabuzzPicBack
 
-	db QUICK_ATTACK, LEER, NO_MOVE, NO_MOVE ; level 1 learnset
+	db QUICK_ATTACK, LEER, THUNDERSHOCK, SWIFT ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm MEGA_PUNCH,   MEGA_KICK,    TOXIC,        BODY_SLAM,    TAKE_DOWN,    \
+	tmhm AERIAL_ACE,   MEGA_KICK,    TOXIC,        FIRE_FANG,    TAKE_DOWN,    \
 	     DOUBLE_EDGE,  HYPER_BEAM,   SUBMISSION,   COUNTER,      SEISMIC_TOSS, \
-	     RAGE,         THUNDERBOLT,  THUNDER,      PSYCHIC_M,    TELEPORT,     \
-	     MIMIC,        ICE_PUNCH,  REFLECT,      BIDE,         METRONOME,    \
-	     SWIFT,        FIRE_PUNCH,   REST,         THUNDER_WAVE, PSYWAVE,      \
+	     RAGE,         THUNDERFANG,  THUNDER,      PSYCHIC_M,    TELEPORT,     \
+	     MIMIC,        ICE_PUNCH,  REFLECT,      ACCELEROCK,         METRONOME,    \
+	     SWIFT,        FIRE_PUNCH,   ICE_FANG,         THUNDER_WAVE, EXTRASENSORY,      \
 	     SUBSTITUTE,   STRENGTH,     FLASH
 	; end
 

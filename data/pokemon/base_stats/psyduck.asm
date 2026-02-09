@@ -18,11 +18,11 @@ ENDC
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm MEGA_PUNCH,   MEGA_KICK,    TOXIC,        BODY_SLAM,    TAKE_DOWN,    \
-	     DOUBLE_EDGE,  BUBBLEBEAM,   WATER_GUN,    ICE_BEAM,     BLIZZARD,     \
+	tmhm AERIAL_ACE,   MEGA_KICK,    TOXIC,        FIRE_FANG,    TAKE_DOWN,    \
+	     DOUBLE_EDGE,  BUBBLEBEAM,   TRAILBLAZE,    ICE_BEAM,     BLIZZARD,     \
 	     PAY_DAY,      SUBMISSION,   COUNTER,      SEISMIC_TOSS, RAGE,         \
-	     DIG,          MIMIC,        ICE_PUNCH,  BIDE,         SWIFT,        \
-	     FIRE_PUNCH,   REST,         SUBSTITUTE,   SURF,         STRENGTH
+	     DIG,          MIMIC,        ICE_PUNCH,  ACCELEROCK,         SWIFT,        \
+	     FIRE_PUNCH,   ICE_FANG,         SUBSTITUTE,   SURF,         STRENGTH
 	; end
 
 	db BANK(PsyduckPicFront)

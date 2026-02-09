@@ -158,7 +158,7 @@ Type = 98
 
 ;rsm003758
 ;No151
-[FPA 001 Begin@Reduce_move_anim_flashing_Mega_Punch_Self_Destruct_Explosion]               
+[FPA 001 Begin@Reduce_move_anim_flashing_AERIAL_ACE_Self_Destruct_Explosion]               
 Mode = 3                      
 Type = 0                      
 Address = {HEX @}            
@@ -167,16 +167,16 @@ MotionBlur0 = 27
 ConditionType = 11             
 ConditionValueA = {dws_ wStringBuffer wStringBuffer+1 wStringBuffer+2 wStringBuffer+3 wStringBuffer+5 wAnimationID  00  wStringBuffer wStringBuffer+1 wStringBuffer+2 wStringBuffer+3 wAnimationID  00  wStringBuffer wStringBuffer+1 wStringBuffer+2 wStringBuffer+3 wAnimationID}     
 ConditionValueB = {dws_ ==            ==              ==              ==              ==              ==            ||  ==            ==              ==              ==              ==            ||  ==            ==              ==              ==              ==          }     
-ConditionValueC = {dws_ M_CHAR        E_CHAR          G_CHAR          A_CHAR          P_CHAR          MEGA_PUNCH    00  S_CHAR        E_CHAR          L_CHAR          F_CHAR          MEGA_PUNCH    00  E_CHAR        X_CHAR          P_CHAR          L_CHAR          MEGA_PUNCH  }     
+ConditionValueC = {dws_ M_CHAR        E_CHAR          G_CHAR          A_CHAR          P_CHAR          AERIAL_ACE    00  S_CHAR        E_CHAR          L_CHAR          F_CHAR          AERIAL_ACE    00  E_CHAR        X_CHAR          P_CHAR          L_CHAR          AERIAL_ACE  }     
 
-[FPA 001 End@Stop_reducing_move_anim_flashing_Mega_Punch_Explosion]               
+[FPA 001 End@Stop_reducing_move_anim_flashing_AERIAL_ACE_Explosion]               
 Mode = 3                    
 Type = 1                    
 Address = {HEX @}           
 ConditionType = 11           
 ConditionValueA = {dws_ wStringBuffer wStringBuffer+1 wStringBuffer+2 wStringBuffer+3 wStringBuffer+5 wAnimationID  00  wStringBuffer wStringBuffer+1 wStringBuffer+2 wStringBuffer+3 wAnimationID  00  wStringBuffer wStringBuffer+1 wStringBuffer+2 wStringBuffer+3 wAnimationID}              
 ConditionValueB = {dws_ ==            ==              ==              ==              ==              ==            ||  ==            ==              ==              ==              ==            ||  ==            ==              ==              ==              ==          }              
-ConditionValueC = {dws_ M_CHAR        E_CHAR          G_CHAR          A_CHAR          P_CHAR          MEGA_PUNCH    00  E_CHAR        X_CHAR          P_CHAR          L_CHAR          EXPLOSION     00  E_CHAR        X_CHAR          P_CHAR          L_CHAR          MEGA_PUNCH  }              
+ConditionValueC = {dws_ M_CHAR        E_CHAR          G_CHAR          A_CHAR          P_CHAR          AERIAL_ACE    00  E_CHAR        X_CHAR          P_CHAR          L_CHAR          EXPLOSION     00  E_CHAR        X_CHAR          P_CHAR          L_CHAR          AERIAL_ACE  }              
 
                                     
                                     
@@ -346,7 +346,7 @@ Address = {HEX @}
 ConditionType = 11               
 ConditionValueA = {dws_ wStringBuffer wStringBuffer+1 wStringBuffer+2 wStringBuffer+3 wAnimationID  00  wStringBuffer wStringBuffer+1 wStringBuffer+2 wStringBuffer+3 wAnimationID}     
 ConditionValueB = {dws_ ==            ==              ==              ==              ==            ||  ==            ==              ==              ==              ==          }     
-ConditionValueC = {dws_ S_CHAR        E_CHAR          L_CHAR          F_CHAR          MEGA_PUNCH    00  S_CHAR        E_CHAR          L_CHAR          F_CHAR          SELFDESTRUCT}  
+ConditionValueC = {dws_ S_CHAR        E_CHAR          L_CHAR          F_CHAR          AERIAL_ACE    00  S_CHAR        E_CHAR          L_CHAR          F_CHAR          SELFDESTRUCT}  
 
 ;rsm150211 
 ;No156                              

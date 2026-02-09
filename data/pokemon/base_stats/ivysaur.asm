@@ -18,9 +18,9 @@ ENDC
 	db GROWTH_MEDIUM_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm SWORDS_DANCE, TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  \
-	     RAGE,         GIGA_DRAIN,   SOLARBEAM,    MIMIC,        ICE_PUNCH,  \
-	     REFLECT,      BIDE,         REST,         SUBSTITUTE,   CUT
+	tmhm SWORDS_DANCE, TOXIC,        FIRE_FANG,    TAKE_DOWN,    DOUBLE_EDGE,  \
+	     RAGE,         GIGA_DRAIN,   ENERGY_BALL,    MIMIC,        ICE_PUNCH,  \
+	     REFLECT,      ACCELEROCK,         ICE_FANG,         SUBSTITUTE,   CUT
 	; end
 
 	db BANK(IvysaurPicFront)

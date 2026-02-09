@@ -19,8 +19,8 @@ ENDC
 
 	; tm/hm learnset
 	tmhm TOXIC,        TAKE_DOWN,    DOUBLE_EDGE,  RAGE,         GIGA_DRAIN,   \
-	     SOLARBEAM,    PSYCHIC_M,    MIMIC,        ICE_PUNCH,  REFLECT,      \
-	     BIDE,         REST,         PSYWAVE,      SUBSTITUTE
+	     ENERGY_BALL,    PSYCHIC_M,    MIMIC,        ICE_PUNCH,  REFLECT,      \
+	     ACCELEROCK,         ICE_FANG,         EXTRASENSORY,      SUBSTITUTE
 	; end
 
 	db BANK(VenonatPicFront)

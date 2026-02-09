@@ -18,10 +18,10 @@ ENDC
 	db GROWTH_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm RAZOR_WIND,   WHIRLWIND,    TOXIC,        TAKE_DOWN,    DOUBLE_EDGE,  \
+	tmhm AIR_SLASH,   WHIRLWIND,    TOXIC,        TAKE_DOWN,    DOUBLE_EDGE,  \
 	     HYPER_BEAM,   RAGE,         DRAGON_RAGE,  MIMIC,        ICE_PUNCH,  \
-	     REFLECT,      BIDE,         FIRE_BLAST,   SWIFT,        SKY_ATTACK,   \
-	     REST,         SUBSTITUTE,   FLY
+	     REFLECT,      ACCELEROCK,         FIRE_BLAST,   SWIFT,        SKY_ATTACK,   \
+	     ICE_FANG,         SUBSTITUTE,   FLY
 	; end
 
 	db BANK(AerodactylPicFront)

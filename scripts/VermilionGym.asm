@@ -67,7 +67,7 @@ VermilionGymLTSurgeReceiveTM24Script:
 	ldh [hTextID], a
 	call DisplayTextID
 	SetEvent EVENT_BEAT_LT_SURGE
-	lb bc, TM_THUNDERBOLT, 1
+	lb bc, TM_THUNDERFANG, 1
 	call GiveItem
 	jr nc, .bag_full
 	ld a, TEXT_VERMILIONGYM_LT_SURGE_RECEIVED_TM24

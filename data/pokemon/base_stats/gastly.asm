@@ -18,9 +18,9 @@ ENDC
 	db GROWTH_MEDIUM_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        RAGE,         GIGA_DRAIN,   THUNDERBOLT,  THUNDER,      \
-	     PSYCHIC_M,    MIMIC,        ICE_PUNCH,  BIDE,         SELFDESTRUCT, \
-	     DREAM_EATER,  REST,         PSYWAVE,      EXPLOSION,    SUBSTITUTE
+	tmhm TOXIC,        RAGE,         GIGA_DRAIN,   THUNDERFANG,  THUNDER,      \
+	     PSYCHIC_M,    MIMIC,        ICE_PUNCH,  ACCELEROCK,         SELFDESTRUCT, \
+	     DREAM_EATER,  ICE_FANG,         EXTRASENSORY,      EXPLOSION,    SUBSTITUTE
 	; end
 
 	db BANK(GastlyPicFront)

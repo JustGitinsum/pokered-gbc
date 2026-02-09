@@ -20,7 +20,7 @@ ENDC
 	; tm/hm learnset
 	tmhm SWORDS_DANCE, TOXIC,        TAKE_DOWN,    DOUBLE_EDGE,  HYPER_BEAM,   \
 	     RAGE,         GIGA_DRAIN,   MIMIC,        ICE_PUNCH,  REFLECT,      \
-	     BIDE,         SWIFT,        FIRE_PUNCH,   REST,         SUBSTITUTE,   \
+	     ACCELEROCK,         SWIFT,        FIRE_PUNCH,   ICE_FANG,         SUBSTITUTE,   \
 	     CUT
 	; end
 

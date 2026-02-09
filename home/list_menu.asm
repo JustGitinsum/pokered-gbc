@@ -576,7 +576,7 @@ PrintBagInfoText: ; marcelnote - new for bag pockets
 	;ld a, [wCurListMenuItem]
 	;cp $ff
 	;ret z
-	;cp TM_MEGA_PUNCH ; first TM (TMs are last items)
+	;cp TM_AERIAL_ACE ; first TM (TMs are last items)
 	;jp c, .notTM
 	;ld de, IsTMText
 ;.notTM

@@ -14,13 +14,13 @@ ELSE
 ENDC
 	dw MagnetonPicFront, MagnetonPicBack
 
-	db TACKLE, SONICBOOM, THUNDERSHOCK, NO_MOVE ; level 1 learnset
+	db TACKLE, SUPERSONIC, THUNDERSHOCK, THUNDER_WAVE ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
 	tmhm TOXIC,        TAKE_DOWN,    DOUBLE_EDGE,  HYPER_BEAM,   RAGE,         \
-	     THUNDERBOLT,  THUNDER,      TELEPORT,     MIMIC,        ICE_PUNCH,  \
-	     REFLECT,      BIDE,         SWIFT,        REST,         THUNDER_WAVE, \
+	     THUNDERFANG,  THUNDER,      TELEPORT,     MIMIC,        ICE_PUNCH,  \
+	     REFLECT,      ACCELEROCK,         SWIFT,        ICE_FANG,         THUNDER_WAVE, \
 	     SUBSTITUTE,   FLASH
 	; end
 

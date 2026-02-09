@@ -18,11 +18,11 @@ ENDC
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  BUBBLEBEAM,   \
-	     WATER_GUN,    ICE_BEAM,     BLIZZARD,     PAY_DAY,      RAGE,         \
-	     EARTHQUAKE,   FISSURE,      DIG,          PSYCHIC_M,    TELEPORT,     \
-	     MIMIC,        ICE_PUNCH,  REFLECT,      BIDE,         FIRE_BLAST,   \
-	     SWIFT,        FIRE_PUNCH,   REST,         THUNDER_WAVE, PSYWAVE,      \
+	tmhm TOXIC,        FIRE_FANG,    TAKE_DOWN,    DOUBLE_EDGE,  BUBBLEBEAM,   \
+	     TRAILBLAZE,    ICE_BEAM,     BLIZZARD,     PAY_DAY,      RAGE,         \
+	     EARTHQUAKE,   EARTH_POWER,      DIG,          PSYCHIC_M,    TELEPORT,     \
+	     MIMIC,        ICE_PUNCH,  REFLECT,      ACCELEROCK,         FIRE_BLAST,   \
+	     SWIFT,        FIRE_PUNCH,   ICE_FANG,         THUNDER_WAVE, EXTRASENSORY,      \
 	     FLAMETHROWER,   SUBSTITUTE,   SURF,         STRENGTH,     FLASH
 	; end
 

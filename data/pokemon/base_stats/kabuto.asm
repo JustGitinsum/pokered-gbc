@@ -14,13 +14,13 @@ ELSE
 ENDC
 	dw KabutoPicFront, KabutoPicBack
 
-	db WATER_GUN, HARDEN, SLASH, ANCIENTPOWER ; level 1 learnset
+	db TRAILBLAZE, HARDEN, SLASH, ANCIENTPOWER ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  BUBBLEBEAM,   \
-	     WATER_GUN,    ICE_BEAM,     BLIZZARD,     RAGE,         MIMIC,        \
-	     ICE_PUNCH,  REFLECT,      BIDE,         REST,         SUBSTITUTE,   \
+	tmhm TOXIC,        FIRE_FANG,    TAKE_DOWN,    DOUBLE_EDGE,  BUBBLEBEAM,   \
+	     TRAILBLAZE,    ICE_BEAM,     BLIZZARD,     RAGE,         MIMIC,        \
+	     ICE_PUNCH,  REFLECT,      ACCELEROCK,         ICE_FANG,         SUBSTITUTE,   \
 	     SURF
 	; end
 

@@ -14,16 +14,16 @@ ELSE
 ENDC
 	dw KangaskhanPicFront, KangaskhanPicBack
 
-	db COMET_PUNCH, RAGE, NO_MOVE, NO_MOVE ; level 1 learnset
+	db DOUBLESLAP, RAGE, NO_MOVE, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm MEGA_PUNCH,   MEGA_KICK,    TOXIC,        BODY_SLAM,    TAKE_DOWN,    \
-	     DOUBLE_EDGE,  BUBBLEBEAM,   WATER_GUN,    ICE_BEAM,     BLIZZARD,     \
+	tmhm AERIAL_ACE,   MEGA_KICK,    TOXIC,        FIRE_FANG,    TAKE_DOWN,    \
+	     DOUBLE_EDGE,  BUBBLEBEAM,   TRAILBLAZE,    ICE_BEAM,     BLIZZARD,     \
 	     HYPER_BEAM,   SUBMISSION,   COUNTER,      SEISMIC_TOSS, RAGE,         \
-	     THUNDERBOLT,  THUNDER,      EARTHQUAKE,   FISSURE,      MIMIC,        \
-	     ICE_PUNCH,  BIDE,         FIRE_BLAST,   FIRE_PUNCH,   REST,         \
-	     ROCK_SLIDE,   SUBSTITUTE,   SURF,         STRENGTH
+	     THUNDERFANG,  THUNDER,      EARTHQUAKE,   EARTH_POWER,      MIMIC,        \
+	     ICE_PUNCH,  ACCELEROCK,         FIRE_BLAST,   FIRE_PUNCH,   ICE_FANG,         \
+	     THUNDERBOLT,   SUBSTITUTE,   SURF,         STRENGTH
 	; end
 
 	db BANK(KangaskhanPicFront)

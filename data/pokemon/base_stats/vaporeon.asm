@@ -14,14 +14,14 @@ ELSE
 ENDC
 	dw VaporeonPicFront, VaporeonPicBack
 
-	db TACKLE, SAND_ATTACK, QUICK_ATTACK, WATER_GUN ; level 1 learnset
+	db TACKLE, SAND_ATTACK, QUICK_ATTACK, TRAILBLAZE ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  BUBBLEBEAM,   \
-	     WATER_GUN,    ICE_BEAM,     BLIZZARD,     HYPER_BEAM,   RAGE,         \
-	     MIMIC,        ICE_PUNCH,  REFLECT,      BIDE,         SWIFT,        \
-	     FIRE_PUNCH,   REST,         SUBSTITUTE,   SURF
+	tmhm TOXIC,        FIRE_FANG,    TAKE_DOWN,    DOUBLE_EDGE,  BUBBLEBEAM,   \
+	     TRAILBLAZE,    ICE_BEAM,     BLIZZARD,     HYPER_BEAM,   RAGE,         \
+	     MIMIC,        ICE_PUNCH,  REFLECT,      ACCELEROCK,         SWIFT,        \
+	     FIRE_PUNCH,   ICE_FANG,         SUBSTITUTE,   SURF
 	; end
 
 	db BANK(VaporeonPicFront)

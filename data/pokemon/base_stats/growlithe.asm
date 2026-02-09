@@ -14,13 +14,13 @@ ELSE
 ENDC
 	dw GrowlithePicFront, GrowlithePicBack
 
-	db BITE, ROAR, NO_MOVE, NO_MOVE ; level 1 learnset
+	db BITE, ROAR, EMBER, LEER ; level 1 learnset
 	db GROWTH_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  RAGE,         \
+	tmhm TOXIC,        FIRE_FANG,    TAKE_DOWN,    DOUBLE_EDGE,  RAGE,         \
 	     DRAGON_RAGE,  DIG,          MIMIC,        ICE_PUNCH,  REFLECT,      \
-	     BIDE,         FIRE_BLAST,   SWIFT,        FIRE_PUNCH,   REST,         \
+	     ACCELEROCK,         FIRE_BLAST,   SWIFT,        FIRE_PUNCH,   ICE_FANG,         \
 	     SUBSTITUTE
 	; end
 

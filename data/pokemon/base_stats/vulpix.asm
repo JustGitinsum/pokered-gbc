@@ -14,13 +14,13 @@ ELSE
 ENDC
 	dw VulpixPicFront, VulpixPicBack
 
-	db EMBER, TAIL_WHIP, NO_MOVE, NO_MOVE ; level 1 learnset
+	db EMBER, TAIL_WHIP, DISABLE, QUICK_ATTACK ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  RAGE,         \
-	     DIG,          MIMIC,        ICE_PUNCH,  REFLECT,      BIDE,         \
-	     FIRE_BLAST,   SWIFT,        FIRE_PUNCH,   REST,         SUBSTITUTE
+	tmhm TOXIC,        FIRE_FANG,    TAKE_DOWN,    DOUBLE_EDGE,  RAGE,         \
+	     DIG,          MIMIC,        ICE_PUNCH,  REFLECT,      ACCELEROCK,         \
+	     FIRE_BLAST,   SWIFT,        FIRE_PUNCH,   ICE_FANG,         SUBSTITUTE
 	; end
 
 	db BANK(VulpixPicFront)

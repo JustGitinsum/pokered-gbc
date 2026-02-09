@@ -14,15 +14,15 @@ ELSE
 ENDC
 	dw StarmiePicFront, StarmiePicBack
 
-	db TACKLE, WATER_GUN, HARDEN, NO_MOVE ; level 1 learnset
+	db TACKLE, TRAILBLAZE, HARDEN, NO_MOVE ; level 1 learnset
 	db GROWTH_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        TAKE_DOWN,    DOUBLE_EDGE,  BUBBLEBEAM,   WATER_GUN,    \
-	     ICE_BEAM,     BLIZZARD,     HYPER_BEAM,   RAGE,         THUNDERBOLT,  \
+	tmhm TOXIC,        TAKE_DOWN,    DOUBLE_EDGE,  BUBBLEBEAM,   TRAILBLAZE,    \
+	     ICE_BEAM,     BLIZZARD,     HYPER_BEAM,   RAGE,         THUNDERFANG,  \
 	     THUNDER,      PSYCHIC_M,    TELEPORT,     MIMIC,        ICE_PUNCH,  \
-	     REFLECT,      BIDE,         SWIFT,        FIRE_PUNCH,   REST,         \
-	     THUNDER_WAVE, PSYWAVE,      FLAMETHROWER,   SUBSTITUTE,   SURF,         \
+	     REFLECT,      ACCELEROCK,         SWIFT,        FIRE_PUNCH,   ICE_FANG,         \
+	     THUNDER_WAVE, EXTRASENSORY,      FLAMETHROWER,   SUBSTITUTE,   SURF,         \
 	     FLASH
 	; end
 

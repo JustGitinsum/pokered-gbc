@@ -14,14 +14,14 @@ ELSE
 ENDC
 	dw PikachuPicFront, PikachuPicBack
 
-	db THUNDERSHOCK, GROWL, NO_MOVE, NO_MOVE ; level 1 learnset
+	db THUNDERSHOCK, GROWL, QUICK_ATTACK, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm MEGA_PUNCH,   MEGA_KICK,    TOXIC,        BODY_SLAM,    TAKE_DOWN,    \
+	tmhm AERIAL_ACE,   MEGA_KICK,    TOXIC,        FIRE_FANG,    TAKE_DOWN,    \
 	     DOUBLE_EDGE,  PAY_DAY,      SUBMISSION,   SEISMIC_TOSS, RAGE,         \
-	     THUNDERBOLT,  THUNDER,      MIMIC,        ICE_PUNCH,  REFLECT,      \
-	     BIDE,         SWIFT,        FIRE_PUNCH,   REST,         THUNDER_WAVE, \
+	     THUNDERFANG,  THUNDER,      MIMIC,        ICE_PUNCH,  REFLECT,      \
+	     ACCELEROCK,         SWIFT,        FIRE_PUNCH,   ICE_FANG,         THUNDER_WAVE, \
 	     SUBSTITUTE,   FLASH
 	; end
 

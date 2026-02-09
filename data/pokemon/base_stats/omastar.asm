@@ -14,14 +14,14 @@ ELSE
 ENDC
 	dw OmastarPicFront, OmastarPicBack
 
-	db WATER_GUN, WITHDRAW, HORN_ATTACK, ANCIENTPOWER ; level 1 learnset
+	db TRAILBLAZE, WITHDRAW, HORN_ATTACK, ANCIENTPOWER ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        HORN_DRILL,   BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  \
-	     BUBBLEBEAM,   WATER_GUN,    ICE_BEAM,     BLIZZARD,     HYPER_BEAM,   \
+	tmhm TOXIC,        HORN_DRILL,   FIRE_FANG,    TAKE_DOWN,    DOUBLE_EDGE,  \
+	     BUBBLEBEAM,   TRAILBLAZE,    ICE_BEAM,     BLIZZARD,     HYPER_BEAM,   \
 	     SUBMISSION,   SEISMIC_TOSS, RAGE,         MIMIC,        ICE_PUNCH,  \
-	     REFLECT,      BIDE,         FIRE_PUNCH,   REST,         SUBSTITUTE,   \
+	     REFLECT,      ACCELEROCK,         FIRE_PUNCH,   ICE_FANG,         SUBSTITUTE,   \
 	     SURF
 	; end
 

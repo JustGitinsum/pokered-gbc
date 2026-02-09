@@ -19,8 +19,8 @@ ENDC
 
 	; tm/hm learnset
 	tmhm SWORDS_DANCE, TOXIC,        TAKE_DOWN,    DOUBLE_EDGE,  RAGE,         \
-	     GIGA_DRAIN,   SOLARBEAM,    MIMIC,        ICE_PUNCH,  REFLECT,      \
-	     BIDE,         REST,         SUBSTITUTE,   CUT
+	     GIGA_DRAIN,   ENERGY_BALL,    MIMIC,        ICE_PUNCH,  REFLECT,      \
+	     ACCELEROCK,         ICE_FANG,         SUBSTITUTE,   CUT
 	; end
 
 	db BANK(WeepinbellPicFront)

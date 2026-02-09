@@ -18,9 +18,9 @@ ENDC
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm RAZOR_WIND,   WHIRLWIND,    TOXIC,        TAKE_DOWN,    DOUBLE_EDGE,  \
+	tmhm AIR_SLASH,   WHIRLWIND,    TOXIC,        TAKE_DOWN,    DOUBLE_EDGE,  \
 	     HYPER_BEAM,   RAGE,         GIGA_DRAIN,   MIMIC,        ICE_PUNCH,  \
-	     BIDE,         SWIFT,        REST,         SUBSTITUTE
+	     ACCELEROCK,         SWIFT,        ICE_FANG,         SUBSTITUTE
 	; end
 
 	db BANK(GolbatPicFront)

@@ -264,11 +264,11 @@ PlayAnimation:
 	nop
 	nop
 	call LoadMoveAnimationTiles
-	vc_hook Reduce_move_anim_flashing_Mega_Punch_Self_Destruct_Explosion
+	vc_hook Reduce_move_anim_flashing_AERIAL_ACE_Self_Destruct_Explosion
 	call LoadSubanimation
 	call PlaySubanimation
-	vc_hook_red Stop_reducing_move_anim_flashing_Mega_Punch
-	vc_hook_blue Stop_reducing_move_anim_flashing_Mega_Punch_Explosion
+	vc_hook_red Stop_reducing_move_anim_flashing_AERIAL_ACE
+	vc_hook_blue Stop_reducing_move_anim_flashing_AERIAL_ACE_Explosion
 	pop af
 	vc_hook_red Stop_reducing_move_anim_flashing_Blizzard
 	ldh [rOBP0], a
@@ -1102,7 +1102,7 @@ AnimationShakeScreenVertically:
 	predef_jump PredefShakeScreenVertically
 
 AnimationShakeScreen:
-; Shakes the screen for a while. Used in Earthquake/Fissure/etc. animations.
+; Shakes the screen for a while. Used in Earthquake/EARTH_POWER/etc. animations.
 	ld b, $8
 
 AnimationShakeScreenHorizontallyFast:
@@ -1870,7 +1870,7 @@ CopyTempPicToMonPic:
 	jp CopyVideoData
 
 AnimationWavyScreen:
-; used in Psywave/Psychic etc.
+; used in EXTRASENSORY/Psychic etc.
 	ld hl, vBGMap0
 	call BattleAnimCopyTileMapToVRAM
 	call Delay3
@@ -2310,7 +2310,7 @@ INCLUDE "data/tilemaps.asm"
 
 AnimationLeavesFalling:
 ; Makes leaves float down from the top of the screen. This is used
-; in Razor Leaf's animation.
+; in MAGICAL LEAF's animation.
 	ldh a, [rOBP0]
 	push af
 	ld a, [wAnimPalette]

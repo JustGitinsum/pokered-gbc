@@ -1056,13 +1056,13 @@ ChargeMoveEffectText:
 	text_far _ChargeMoveEffectText
 	text_asm
 	ld a, [wChargeMoveNum]
-	cp RAZOR_WIND
+	cp AIR_SLASH
 	ld hl, MadeWhirlwindText
 	jr z, .gotText
-	cp SOLARBEAM
+	cp ENERGY_BALL
 	ld hl, TookInSunlightText
 	jr z, .gotText
-	cp SKULL_BASH
+	cp IRON_HEAD
 	ld hl, LoweredItsHeadText
 	jr z, .gotText
 	cp SKY_ATTACK

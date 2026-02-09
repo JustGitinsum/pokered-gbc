@@ -5,7 +5,7 @@ MoveSoundTable:
 	db SFX_BATTLE_0C,          $10, $80 ; KARATE_CHOP
 	db SFX_DOUBLESLAP,         $00, $80 ; DOUBLESLAP
 	db SFX_BATTLE_0B,          $01, $80 ; COMET_PUNCH
-	db SFX_BATTLE_0D,          $00, $40 ; MEGA_PUNCH
+	db SFX_BATTLE_0D,          $00, $40 ; AERIAL_ACE
 	db SFX_SILPH_SCOPE,        $00, $ff ; PAY_DAY
 	db SFX_BATTLE_0D,          $10, $60 ; FIRE_PUNCH
 	db SFX_BATTLE_0D,          $20, $80 ; ICE_PUNCH
@@ -13,7 +13,7 @@ MoveSoundTable:
 	db SFX_DAMAGE,             $00, $80 ; SCRATCH
 	db SFX_BATTLE_0F,          $20, $40 ; VICEGRIP
 	db SFX_BATTLE_0F,          $00, $80 ; GUILLOTINE
-	db SFX_BATTLE_0E,          $00, $a0 ; RAZOR_WIND
+	db SFX_BATTLE_0E,          $00, $a0 ; AIR_SLASH
 	db SFX_NOT_VERY_EFFECTIVE, $10, $c0 ; SWORDS_DANCE
 	db SFX_NOT_VERY_EFFECTIVE, $00, $a0 ; CUT
 	db SFX_BATTLE_12,          $00, $c0 ; GUST
@@ -27,7 +27,7 @@ MoveSoundTable:
 	db SFX_BATTLE_17,          $f0, $40 ; DOUBLE_KICK
 	db SFX_SUPER_EFFECTIVE,    $00, $80 ; MEGA_KICK
 	db SFX_BATTLE_17,          $00, $80 ; JUMP_KICK
-	db SFX_BATTLE_21,          $10, $80 ; ROLLING_KICK
+	db SFX_BATTLE_21,          $10, $80 ; BRICK_BREAK
 	db SFX_BATTLE_1B,          $01, $a0 ; SAND_ATTACK
 	db SFX_BATTLE_18,          $00, $80 ; HEADBUTT
 	db SFX_BATTLE_1E,          $00, $60 ; HORN_ATTACK
@@ -67,7 +67,7 @@ MoveSoundTable:
 	db SFX_PECK,               $01, $a0 ; PECK
 	db SFX_BATTLE_13,          $f0, $20 ; DRILL_PECK
 	db SFX_BATTLE_23,          $01, $c0 ; SUBMISSION
-	db SFX_BATTLE_23,          $00, $80 ; LOW_KICK
+	db SFX_BATTLE_23,          $00, $80 ; LOW_SWEEP
 	db SFX_SUPER_EFFECTIVE,    $00, $e0 ; COUNTER
 	db SFX_BATTLE_26,          $01, $60 ; SEISMIC_TOSS
 	db SFX_BATTLE_26,          $20, $40 ; STRENGTH
@@ -75,8 +75,8 @@ MoveSoundTable:
 	db SFX_BATTLE_24,          $40, $c0 ; GIGA_DRAIN
 	db SFX_BATTLE_1B,          $03, $60 ; LEECH_SEED
 	db SFX_BATTLE_25,          $11, $e0 ; GROWTH
-	db SFX_BATTLE_12,          $20, $e0 ; RAZOR_LEAF
-	db SFX_BATTLE_2E,          $00, $80 ; SOLARBEAM
+	db SFX_BATTLE_12,          $20, $e0 ; MAGICAL_LEAF
+	db SFX_BATTLE_2E,          $00, $80 ; ENERGY_BALL
 	db SFX_BATTLE_1C,          $00, $80 ; POISONPOWDER
 	db SFX_BATTLE_1C,          $11, $a0 ; STUN_SPORE
 	db SFX_BATTLE_1C,          $01, $c0 ; SLEEP_POWDER
@@ -90,7 +90,7 @@ MoveSoundTable:
 	db SFX_BATTLE_26,          $00, $80 ; THUNDER
 	db SFX_BATTLE_14,          $01, $e0 ; ROCK_TOMB
 	db SFX_BATTLE_29,          $0f, $e0 ; EARTHQUAKE
-	db SFX_BATTLE_29,          $11, $20 ; FISSURE
+	db SFX_BATTLE_29,          $11, $20 ; EARTH_POWER
 	db SFX_DAMAGE,             $10, $40 ; DIG
 	db SFX_BATTLE_0F,          $10, $c0 ; TOXIC
 	db SFX_BATTLE_14,          $00, $20 ; CONFUSION
@@ -125,12 +125,12 @@ MoveSoundTable:
 	db SFX_BATTLE_09,          $00, $40 ; LICK
 	db SFX_NOT_VERY_EFFECTIVE, $10, $ff ; SMOG
 	db SFX_BATTLE_2A,          $20, $20 ; SLUDGE
-	db SFX_BATTLE_32,          $00, $80 ; BONE_CLUB
+	db SFX_BATTLE_32,          $00, $80 ; SHADOW_BONE
 	db SFX_BATTLE_29,          $1f, $20 ; FIRE_BLAST
 	db SFX_BATTLE_25,          $2f, $80 ; WATERFALL
 	db SFX_BATTLE_0F,          $1f, $ff ; CLAMP
 	db SFX_BATTLE_2B,          $1f, $60 ; SWIFT
-	db SFX_BATTLE_26,          $1e, $20 ; SKULL_BASH
+	db SFX_BATTLE_26,          $1e, $20 ; IRON_HEAD
 	db SFX_BATTLE_26,          $1f, $18 ; SPIKE_CANNON
 	db SFX_BATTLE_14,          $0f, $80 ; CONSTRICT
 	db SFX_BATTLE_09,          $f8, $10 ; AMNESIA
@@ -149,7 +149,7 @@ MoveSoundTable:
 	db SFX_FAINT_FALL,         $ff, $04 ; DIZZY_PUNCH
 	db SFX_BATTLE_1C,          $01, $ff ; SPORE
 	db SFX_BATTLE_13,          $f8, $ff ; FLASH
-	db SFX_BATTLE_0C,          $f0, $f0 ; PSYWAVE
+	db SFX_BATTLE_0C,          $f0, $f0 ; EXTRASENSORY
 	db SFX_BATTLE_0F,          $08, $10 ; SPLASH
 	db SFX_BATTLE_0D,          $f0, $ff ; ACID_ARMOR
 	db SFX_SUPER_EFFECTIVE,    $f0, $ff ; CRABHAMMER
@@ -170,6 +170,14 @@ MoveSoundTable:
 	db SFX_BATTLE_0D,          $00, $a0 ; THUNDERFANG
 	db SFX_BATTLE_36,          $f0, $20 ; ANCIENTPOWER
 	db SFX_DAMAGE,             $10, $40 ; BOUNCE
+	db SFX_BATTLE_0D,          $10, $60 ; FLAME_WHEEL
+	db SFX_BATTLE_2F,          $00, $20 ; SHOCK_WAVE
+	db SFX_BATTLE_36,          $f0, $20 ; ACCELEROCK
+	db SFX_FAINT_FALL,         $ff, $04 ; TRAILBLAZE
+	db SFX_BATTLE_0F,          $08, $10 ; ROLLOUT
+	db SFX_BATTLE_36,          $00, $80 ; FLASH_CANNON
+	db SFX_BATTLE_29,          $f0, $80 ; DRAGONBREATH
+	db SFX_BATTLE_0D,          $10, $60 ; HEAT_CRASH
 	db SFX_BATTLE_0B,          $00, $80 ; STRUGGLE
 	assert_table_length NUM_ATTACKS
 	db SFX_BATTLE_0B,          $00, $80

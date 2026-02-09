@@ -18,8 +18,8 @@ ENDC
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        RAGE,         THUNDERBOLT,  THUNDER,      MIMIC,        \
-	     ICE_PUNCH,  BIDE,         SELFDESTRUCT, FIRE_BLAST,   REST,         \
+	tmhm TOXIC,        RAGE,         THUNDERFANG,  THUNDER,      MIMIC,        \
+	     ICE_PUNCH,  ACCELEROCK,         SELFDESTRUCT, FIRE_BLAST,   ICE_FANG,         \
 	     EXPLOSION,    SUBSTITUTE
 	; end
 

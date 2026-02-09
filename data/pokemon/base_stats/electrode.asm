@@ -14,13 +14,13 @@ ELSE
 ENDC
 	dw ElectrodePicFront, ElectrodePicBack
 
-	db TACKLE, SCREECH, SONICBOOM, NO_MOVE ; level 1 learnset
+	db TACKLE, LIGHT_SCREEN, SONICBOOM, THUNDERSHOCK ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        TAKE_DOWN,    HYPER_BEAM,   RAGE,         THUNDERBOLT,  \
+	tmhm TOXIC,        TAKE_DOWN,    HYPER_BEAM,   RAGE,         THUNDERFANG,  \
 	     THUNDER,      TELEPORT,     MIMIC,        ICE_PUNCH,  REFLECT,      \
-	     BIDE,         SELFDESTRUCT, SWIFT,        FIRE_PUNCH,   REST,         \
+	     ACCELEROCK,         SELFDESTRUCT, SWIFT,        FIRE_PUNCH,   ICE_FANG,         \
 	     THUNDER_WAVE, EXPLOSION,    SUBSTITUTE,   FLASH
 	; end
 

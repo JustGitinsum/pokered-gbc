@@ -18,10 +18,10 @@ ENDC
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  HYPER_BEAM,   \
-	     RAGE,         GIGA_DRAIN,   EARTHQUAKE,   FISSURE,      DIG,          \
-	     MIMIC,        ICE_PUNCH,  BIDE,         FIRE_PUNCH,   REST,         \
-	     ROCK_SLIDE,   SUBSTITUTE,   STRENGTH
+	tmhm TOXIC,        FIRE_FANG,    TAKE_DOWN,    DOUBLE_EDGE,  HYPER_BEAM,   \
+	     RAGE,         GIGA_DRAIN,   EARTHQUAKE,   EARTH_POWER,      DIG,          \
+	     MIMIC,        ICE_PUNCH,  ACCELEROCK,         FIRE_PUNCH,   ICE_FANG,         \
+	     THUNDERBOLT,   SUBSTITUTE,   STRENGTH
 	; end
 
 	db BANK(ArbokPicFront)

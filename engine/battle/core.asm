@@ -4895,7 +4895,7 @@ ApplyAttackToEnemyPokemon:
 	ld b, DRAGON_RAGE_DAMAGE ; 40
 	cp DRAGON_RAGE
 	jr z, .storeDamage
-; Psywave
+; EXTRASENSORY
 	ld a, [hl]
 	ld b, a
 	srl a
@@ -5014,7 +5014,7 @@ ApplyAttackToPlayerPokemon:
 	ld b, DRAGON_RAGE_DAMAGE
 	cp DRAGON_RAGE
 	jr z, .storeDamage
-; Psywave
+; EXTRASENSORY
 	ld a, [hl]
 	ld b, a
 	srl a
@@ -5022,7 +5022,7 @@ ApplyAttackToPlayerPokemon:
 	ld b, a ; b = attacker's level * 1.5
 ; loop until a random number in the range [0, b) is found
 ; this differs from the range when the player attacks, which is [1, b)
-; it's possible for the enemy to do 0 damage with Psywave, but the player always does at least 1 damage
+; it's possible for the enemy to do 0 damage with EXTRASENSORY, but the player always does at least 1 damage
 .loop
 	call BattleRandom
 	cp b
@@ -6907,8 +6907,8 @@ HandleExplodingAnimation:
 	ret nz
 	ld a, ANIMATIONTYPE_SHAKE_SCREEN_HORIZONTALLY_LIGHT
 	ld [wAnimationType], a
-	ASSERT ANIMATIONTYPE_SHAKE_SCREEN_HORIZONTALLY_LIGHT == MEGA_PUNCH
-	; ld a, MEGA_PUNCH
+	ASSERT ANIMATIONTYPE_SHAKE_SCREEN_HORIZONTALLY_LIGHT == AERIAL_ACE
+	; ld a, AERIAL_ACE
 ; fallthrough
 PlayMoveAnimation:
 	ld [wAnimationID], a

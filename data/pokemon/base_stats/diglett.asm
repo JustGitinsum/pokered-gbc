@@ -18,9 +18,9 @@ ENDC
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        BODY_SLAM,    TAKE_DOWN,    DOUBLE_EDGE,  RAGE,         \
-	     EARTHQUAKE,   FISSURE,      DIG,          MIMIC,        ICE_PUNCH,  \
-	     BIDE,         REST,         ROCK_SLIDE,   SUBSTITUTE
+	tmhm TOXIC,        FIRE_FANG,    TAKE_DOWN,    DOUBLE_EDGE,  RAGE,         \
+	     EARTHQUAKE,   EARTH_POWER,      DIG,          MIMIC,        ICE_PUNCH,  \
+	     ACCELEROCK,         ICE_FANG,         THUNDERBOLT,   SUBSTITUTE
 	; end
 
 	db BANK(DiglettPicFront)

@@ -18,9 +18,9 @@ ENDC
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        HYPER_BEAM,   RAGE,         THUNDERBOLT,  THUNDER,      \
-	     MIMIC,        ICE_PUNCH,  BIDE,         SELFDESTRUCT, FIRE_BLAST,   \
-	     REST,         EXPLOSION,    SUBSTITUTE
+	tmhm TOXIC,        HYPER_BEAM,   RAGE,         THUNDERFANG,  THUNDER,      \
+	     MIMIC,        ICE_PUNCH,  ACCELEROCK,         SELFDESTRUCT, FIRE_BLAST,   \
+	     ICE_FANG,         EXPLOSION,    SUBSTITUTE
 	; end
 
 	db BANK(WeezingPicFront)

@@ -14,14 +14,14 @@ ELSE
 ENDC
 	dw ZapdosPicFront, ZapdosPicBack
 
-	db THUNDERBOLT, DRILL_PECK, ANCIENTPOWER, AGILITY ; level 1 learnset
+	db THUNDERFANG, DRILL_PECK, ANCIENTPOWER, AGILITY ; level 1 learnset
 	db GROWTH_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm RAZOR_WIND,   WHIRLWIND,    TOXIC,        TAKE_DOWN,    DOUBLE_EDGE,  \
-	     HYPER_BEAM,   RAGE,         THUNDERBOLT,  THUNDER,      MIMIC,        \
-	     ICE_PUNCH,  REFLECT,      BIDE,         SWIFT,        SKY_ATTACK,   \
-	     REST,         THUNDER_WAVE, SUBSTITUTE,   FLY,          FLASH
+	tmhm AIR_SLASH,   WHIRLWIND,    TOXIC,        TAKE_DOWN,    DOUBLE_EDGE,  \
+	     HYPER_BEAM,   RAGE,         THUNDERFANG,  THUNDER,      MIMIC,        \
+	     ICE_PUNCH,  REFLECT,      ACCELEROCK,         SWIFT,        SKY_ATTACK,   \
+	     ICE_FANG,         THUNDER_WAVE, SUBSTITUTE,   FLY,          FLASH
 	; end
 
 	db BANK(ZapdosPicFront)
