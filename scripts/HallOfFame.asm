@@ -99,6 +99,7 @@ HallOfFameOakCongratulationsScript:
 	ld a, HS_CERULEAN_CAVE_GUY
 	ld [wMissableObjectIndex], a
 	predef HideObject
+	SetEvent EVENT_BECAME_CHAMPION ; new event which marks postgame
 	ld a, SCRIPT_HALLOFFAME_RESET_EVENTS_AND_SAVE
 	ld [wHallOfFameCurScript], a
 	ret
