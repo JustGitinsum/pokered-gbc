@@ -89,6 +89,6 @@
 	const MIMIC_EFFECT               ; $52
 	const METRONOME_EFFECT           ; $53
 	const LEECH_SEED_EFFECT          ; $54
-	const SPLASH_EFFECT              ; $55
+	const SPLASH_EFFECT              ; $55 unused
 	const DISABLE_EFFECT             ; $56
 DEF NUM_MOVE_EFFECTS EQU const_value - 1

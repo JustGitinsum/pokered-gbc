@@ -42,7 +42,7 @@ DEF FIRST_SE_ID EQU const_value
 	const SE_SHAKE_SCREEN              ; $FB used in Earthquake/EARTH_POWER/etc.
 	const SE_RESET_SCREEN_PALETTE      ; $FC used in Leer/Thunderpunch/etc.
 	const SE_DARK_SCREEN_PALETTE       ; $FD used in Hyper Beam/Thunderpunch/etc.
-	const SE_DARK_SCREEN_FLASH         ; $FE used in Cut/Take Down/etc.
+	const SE_DARK_SCREEN_FLASH         ; $FE used in Cut/Bulldoze/etc.
 
 ; subanimations that are part of move animations
 ; SubanimationPointers indexes (see data/battle_anims/subanimations.asm)

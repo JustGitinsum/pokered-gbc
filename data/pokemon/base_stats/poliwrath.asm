@@ -18,9 +18,9 @@ ENDC
 	db GROWTH_MEDIUM_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm AERIAL_ACE,   MEGA_KICK,    TOXIC,        FIRE_FANG,    TAKE_DOWN,    \
+	tmhm AERIAL_ACE,   CLOSE_COMBAT,    TOXIC,        FIRE_FANG,    BULLDOZE,    \
 	     DOUBLE_EDGE,  BUBBLEBEAM,   TRAILBLAZE,    ICE_BEAM,     BLIZZARD,     \
-	     HYPER_BEAM,   SUBMISSION,   COUNTER,      SEISMIC_TOSS, RAGE,         \
+	     HYPER_BEAM,   EXTREMESPEED,   COUNTER,      SEISMIC_TOSS, RAGE,         \
 	     EARTHQUAKE,   EARTH_POWER,      PSYCHIC_M,    MIMIC,        ICE_PUNCH,  \
 	     ACCELEROCK,         METRONOME,    FIRE_PUNCH,   ICE_FANG,         EXTRASENSORY,      \
 	     SUBSTITUTE,   SURF,         STRENGTH

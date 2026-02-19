@@ -287,7 +287,7 @@ PlayAnimation:
 LoadSubanimation:
 	vc_hook Reduce_move_anim_flashing_Guillotine
 	ld a, [wSubAnimAddrPtr + 1]
-	vc_hook Reduce_move_anim_flashing_Mega_Kick
+	vc_hook Reduce_move_anim_flashing_CLOSE_COMBAT
 	ld h, a
 	vc_hook_red Reduce_move_anim_flashing_Blizzard
 	ld a, [wSubAnimAddrPtr]
@@ -415,7 +415,7 @@ MoveAnimation:
 	jr nz, .animationsDisabled
 	call ShareMoveAnimations
 	call PlayAnimation
-	vc_hook_red Stop_reducing_move_anim_flashing_Bubblebeam_Mega_Kick
+	vc_hook_red Stop_reducing_move_anim_flashing_Bubblebeam_CLOSE_COMBAT
 	vc_hook_blue Stop_reducing_move_anim_flashing_Spore
 	jr .next4
 .animationsDisabled

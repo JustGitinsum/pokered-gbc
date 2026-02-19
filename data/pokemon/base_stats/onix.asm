@@ -14,11 +14,11 @@ ELSE
 ENDC
 	dw OnixPicFront, OnixPicBack
 
-	db TACKLE, SCREECH, NO_MOVE, NO_MOVE ; level 1 learnset
+	db TACKLE, HARDEN, ROCK_TOMB, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        FIRE_FANG,    TAKE_DOWN,    DOUBLE_EDGE,  RAGE,         \
+	tmhm TOXIC,        FIRE_FANG,    BULLDOZE,    DOUBLE_EDGE,  RAGE,         \
 	     EARTHQUAKE,   EARTH_POWER,      DIG,          MIMIC,        ICE_PUNCH,  \
 	     ACCELEROCK,         SELFDESTRUCT, FIRE_PUNCH,   ICE_FANG,         EXPLOSION,    \
 	     THUNDERBOLT,   SUBSTITUTE,   STRENGTH

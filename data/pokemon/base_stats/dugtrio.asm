@@ -14,11 +14,11 @@ ELSE
 ENDC
 	dw DugtrioPicFront, DugtrioPicBack
 
-	db SCRATCH, GROWL, DIG, NO_MOVE ; level 1 learnset
+	db SCRATCH, GROWL, DIG, SAND_ATTACK ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        FIRE_FANG,    TAKE_DOWN,    DOUBLE_EDGE,  HYPER_BEAM,   \
+	tmhm TOXIC,        FIRE_FANG,    BULLDOZE,    DOUBLE_EDGE,  HYPER_BEAM,   \
 	     RAGE,         EARTHQUAKE,   EARTH_POWER,      DIG,          MIMIC,        \
 	     ICE_PUNCH,  ACCELEROCK,         ICE_FANG,         THUNDERBOLT,   SUBSTITUTE
 	; end

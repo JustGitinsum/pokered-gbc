@@ -25,7 +25,7 @@ MoveSoundTable:
 	db SFX_VINE_WHIP,          $01, $80 ; VINE_WHIP
 	db SFX_BATTLE_20,          $00, $80 ; STOMP
 	db SFX_BATTLE_17,          $f0, $40 ; DOUBLE_KICK
-	db SFX_SUPER_EFFECTIVE,    $00, $80 ; MEGA_KICK
+	db SFX_SUPER_EFFECTIVE,    $00, $80 ; CLOSE_COMBAT
 	db SFX_BATTLE_17,          $00, $80 ; JUMP_KICK
 	db SFX_BATTLE_21,          $10, $80 ; BRICK_BREAK
 	db SFX_BATTLE_1B,          $01, $a0 ; SAND_ATTACK
@@ -36,7 +36,7 @@ MoveSoundTable:
 	db SFX_SUPER_EFFECTIVE,    $10, $a0 ; TACKLE
 	db SFX_BATTLE_20,          $00, $c0 ; BODY_SLAM
 	db SFX_BATTLE_14,          $10, $60 ; WRAP
-	db SFX_SUPER_EFFECTIVE,    $00, $a0 ; TAKE_DOWN
+	db SFX_SUPER_EFFECTIVE,    $00, $a0 ; BULLDOZE
 	db SFX_BATTLE_22,          $11, $c0 ; THRASH
 	db SFX_SUPER_EFFECTIVE,    $20, $c0 ; DOUBLE_EDGE
 	db SFX_BATTLE_21,          $00, $80 ; TAIL_WHIP
@@ -66,7 +66,7 @@ MoveSoundTable:
 	db SFX_BATTLE_36,          $00, $80 ; HYPER_BEAM
 	db SFX_PECK,               $01, $a0 ; PECK
 	db SFX_BATTLE_13,          $f0, $20 ; DRILL_PECK
-	db SFX_BATTLE_23,          $01, $c0 ; SUBMISSION
+	db SFX_BATTLE_23,          $01, $c0 ; EXTREMESPEED
 	db SFX_BATTLE_23,          $00, $80 ; LOW_SWEEP
 	db SFX_SUPER_EFFECTIVE,    $00, $e0 ; COUNTER
 	db SFX_BATTLE_26,          $01, $60 ; SEISMIC_TOSS
@@ -140,7 +140,7 @@ MoveSoundTable:
 	db SFX_NOT_VERY_EFFECTIVE, $09, $ff ; GLARE
 	db SFX_BATTLE_35,          $42, $01 ; DREAM_EATER
 	db SFX_BATTLE_1C,          $00, $ff ; POISON_GAS
-	db SFX_BATTLE_32,          $08, $e0 ; BARRAGE
+	db SFX_BATTLE_32,          $08, $e0 ; BULLET_SEED
 	db SFX_BATTLE_24,          $00, $80 ; LEECH_LIFE
 	db SFX_BATTLE_09,          $88, $10 ; LOVELY_KISS
 	db SFX_BATTLE_25,          $48, $ff ; SKY_ATTACK
@@ -150,7 +150,7 @@ MoveSoundTable:
 	db SFX_BATTLE_1C,          $01, $ff ; SPORE
 	db SFX_BATTLE_13,          $f8, $ff ; FLASH
 	db SFX_BATTLE_0C,          $f0, $f0 ; EXTRASENSORY
-	db SFX_BATTLE_0F,          $08, $10 ; SPLASH
+	db SFX_BATTLE_0F,          $08, $10 ; RAPID_SPIN
 	db SFX_BATTLE_0D,          $f0, $ff ; ACID_ARMOR
 	db SFX_SUPER_EFFECTIVE,    $f0, $ff ; CRABHAMMER
 	db SFX_BATTLE_34,          $10, $ff ; EXPLOSION
@@ -178,6 +178,7 @@ MoveSoundTable:
 	db SFX_BATTLE_36,          $00, $80 ; FLASH_CANNON
 	db SFX_BATTLE_29,          $f0, $80 ; DRAGONBREATH
 	db SFX_BATTLE_0D,          $10, $60 ; HEAT_CRASH
+	db SFX_NOT_VERY_EFFECTIVE, $01, $ff ; DRAGON_CLAW
 	db SFX_BATTLE_0B,          $00, $80 ; STRUGGLE
 	assert_table_length NUM_ATTACKS
 	db SFX_BATTLE_0B,          $00, $80

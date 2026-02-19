@@ -14,12 +14,12 @@ ELSE
 ENDC
 	dw MankeyPicFront, MankeyPicBack
 
-	db SCRATCH, LEER, NO_MOVE, NO_MOVE ; level 1 learnset
+	db SCRATCH, LEER, FOCUS_ENERGY, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm AERIAL_ACE,   MEGA_KICK,    TOXIC,        FIRE_FANG,    TAKE_DOWN,    \
-	     DOUBLE_EDGE,  PAY_DAY,      SUBMISSION,   COUNTER,      SEISMIC_TOSS, \
+	tmhm AERIAL_ACE,   CLOSE_COMBAT,    TOXIC,        FIRE_FANG,    BULLDOZE,    \
+	     DOUBLE_EDGE,  PAY_DAY,      EXTREMESPEED,   COUNTER,      SEISMIC_TOSS, \
 	     RAGE,         THUNDERFANG,  THUNDER,      DIG,          MIMIC,        \
 	     ICE_PUNCH,  ACCELEROCK,         METRONOME,    SWIFT,        FIRE_PUNCH,   \
 	     ICE_FANG,         THUNDERBOLT,   SUBSTITUTE,   STRENGTH

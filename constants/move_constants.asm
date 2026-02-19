@@ -30,7 +30,7 @@
 	const VINE_WHIP    ; 16
 	const STOMP        ; 17
 	const DOUBLE_KICK  ; 18
-	const MEGA_KICK    ; 19
+	const CLOSE_COMBAT    ; 19
 	const JUMP_KICK    ; 1a
 	const BRICK_BREAK ; 1b
 	const SAND_ATTACK  ; 1c
@@ -41,7 +41,7 @@
 	const TACKLE       ; 21
 	const BODY_SLAM    ; 22
 	const WRAP         ; 23
-	const TAKE_DOWN    ; 24
+	const BULLDOZE    ; 24
 	const THRASH       ; 25
 	const DOUBLE_EDGE  ; 26
 	const TAIL_WHIP    ; 27
@@ -71,7 +71,7 @@
 	const HYPER_BEAM   ; 3f
 	const PECK         ; 40
 	const DRILL_PECK   ; 41
-	const SUBMISSION   ; 42
+	const EXTREMESPEED   ; 42
 	const LOW_SWEEP     ; 43
 	const COUNTER      ; 44
 	const SEISMIC_TOSS ; 45
@@ -145,7 +145,7 @@
 	const GLARE        ; 89
 	const DREAM_EATER  ; 8a
 	const POISON_GAS   ; 8b
-	const BARRAGE      ; 8c
+	const BULLET_SEED      ; 8c
 	const LEECH_LIFE   ; 8d
 	const LOVELY_KISS  ; 8e
 	const SKY_ATTACK   ; 8f
@@ -155,7 +155,7 @@
 	const SPORE        ; 93
 	const FLASH        ; 94
 	const EXTRASENSORY      ; 95
-	const SPLASH       ; 96
+	const RAPID_SPIN       ; 96
 	const ACID_ARMOR   ; 97
 	const CRABHAMMER   ; 98
 	const EXPLOSION    ; 99
@@ -183,6 +183,7 @@
 	const FLASH_CANNON
 	const DRAGONBREATH
 	const HEAT_CRASH
+	const DRAGON_CLAW
 	const STRUGGLE     ; a5
 DEF NUM_ATTACKS EQU const_value - 1
 

@@ -17,7 +17,7 @@ ExclamationPointMoveSets:
 	db TELEPORT
 	db MIMIC
 	db DOUBLE_TEAM
-	db BARRAGE
+	db BULLET_SEED
 	db 0 ; end set
 
 ; set 3
@@ -60,7 +60,7 @@ ExclamationPointMoveSets:
 	db LEECH_LIFE
 	db BUBBLE
 	db FLASH
-	db SPLASH
+	db RAPID_SPIN
 	db ACID_ARMOR
 	db FURY_SWIPES
 	db REST

@@ -18,7 +18,7 @@ ENDC
 	db GROWTH_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm AIR_SLASH,   WHIRLWIND,    TOXIC,        TAKE_DOWN,    DOUBLE_EDGE,  \
+	tmhm AIR_SLASH,   WHIRLWIND,    TOXIC,        BULLDOZE,    DOUBLE_EDGE,  \
 	     HYPER_BEAM,   RAGE,         THUNDERFANG,  THUNDER,      MIMIC,        \
 	     ICE_PUNCH,  REFLECT,      ACCELEROCK,         SWIFT,        SKY_ATTACK,   \
 	     ICE_FANG,         THUNDER_WAVE, SUBSTITUTE,   FLY,          FLASH

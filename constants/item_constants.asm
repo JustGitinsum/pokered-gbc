@@ -161,11 +161,11 @@ DEF TM01 EQU const_value
 	add_tm AIR_SLASH    ; $CA TM02
 	add_tm SWORDS_DANCE ; $CB TM03
 	add_tm WHIRLWIND    ; $CC TM04
-	add_tm MEGA_KICK    ; $CD TM05
+	add_tm CLOSE_COMBAT    ; $CD TM05
 	add_tm TOXIC        ; $CE TM06
 	add_tm HORN_DRILL   ; $CF TM07
 	add_tm FIRE_FANG    ; $D0 TM08
-	add_tm TAKE_DOWN    ; $D1 TM09
+	add_tm BULLDOZE    ; $D1 TM09
 	add_tm DOUBLE_EDGE  ; $D2 TM10
 	add_tm BUBBLEBEAM   ; $D3 TM11
 	add_tm TRAILBLAZE   ; $D4 TM12
@@ -173,7 +173,7 @@ DEF TM01 EQU const_value
 	add_tm BLIZZARD     ; $D6 TM14
 	add_tm HYPER_BEAM   ; $D7 TM15
 	add_tm PAY_DAY      ; $D8 TM16
-	add_tm SUBMISSION   ; $D9 TM17
+	add_tm EXTREMESPEED   ; $D9 TM17
 	add_tm COUNTER      ; $DA TM18
 	add_tm SEISMIC_TOSS ; $DB TM19
 	add_tm RAGE         ; $DC TM20

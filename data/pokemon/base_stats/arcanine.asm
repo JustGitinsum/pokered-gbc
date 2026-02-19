@@ -18,7 +18,7 @@ ENDC
 	db GROWTH_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        FIRE_FANG,    TAKE_DOWN,    DOUBLE_EDGE,  HYPER_BEAM,   \
+	tmhm TOXIC,        FIRE_FANG,    BULLDOZE,    DOUBLE_EDGE,  HYPER_BEAM,   \
 	     RAGE,         DRAGON_RAGE,  DIG,          TELEPORT,     MIMIC,        \
 	     ICE_PUNCH,  REFLECT,      ACCELEROCK,         FIRE_BLAST,   SWIFT,        \
 	     FIRE_PUNCH,   ICE_FANG,         SUBSTITUTE

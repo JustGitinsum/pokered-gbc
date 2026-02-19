@@ -14,11 +14,11 @@ ELSE
 ENDC
 	dw StaryuPicFront, StaryuPicBack
 
-	db TACKLE, NO_MOVE, NO_MOVE, NO_MOVE ; level 1 learnset
+	db TACKLE, HARDEN, WATER_GUN, CONFUSE_RAY ; level 1 learnset
 	db GROWTH_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        TAKE_DOWN,    DOUBLE_EDGE,  BUBBLEBEAM,   TRAILBLAZE,    \
+	tmhm TOXIC,        BULLDOZE,    DOUBLE_EDGE,  BUBBLEBEAM,   TRAILBLAZE,    \
 	     ICE_BEAM,     BLIZZARD,     RAGE,         THUNDERFANG,  THUNDER,      \
 	     PSYCHIC_M,    TELEPORT,     MIMIC,        ICE_PUNCH,  REFLECT,      \
 	     ACCELEROCK,         SWIFT,        FIRE_PUNCH,   ICE_FANG,         THUNDER_WAVE, \

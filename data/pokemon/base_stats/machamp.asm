@@ -14,12 +14,12 @@ ELSE
 ENDC
 	dw MachampPicFront, MachampPicBack
 
-	db KARATE_CHOP, LOW_SWEEP, LEER, NO_MOVE ; level 1 learnset
+	db KARATE_CHOP, LOW_SWEEP, LEER, FOCUS_ENERGY ; level 1 learnset
 	db GROWTH_MEDIUM_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm AERIAL_ACE,   MEGA_KICK,    TOXIC,        FIRE_FANG,    TAKE_DOWN,    \
-	     DOUBLE_EDGE,  HYPER_BEAM,   SUBMISSION,   COUNTER,      SEISMIC_TOSS, \
+	tmhm AERIAL_ACE,   CLOSE_COMBAT,    TOXIC,        FIRE_FANG,    BULLDOZE,    \
+	     DOUBLE_EDGE,  HYPER_BEAM,   EXTREMESPEED,   COUNTER,      SEISMIC_TOSS, \
 	     RAGE,         EARTHQUAKE,   EARTH_POWER,      DIG,          MIMIC,        \
 	     ICE_PUNCH,  ACCELEROCK,         METRONOME,    FIRE_BLAST,   FIRE_PUNCH,   \
 	     ICE_FANG,         THUNDERBOLT,   SUBSTITUTE,   STRENGTH

@@ -490,7 +490,7 @@ SilphCo5FHiddenObjects:
 	db -1 ; end
 
 SilphCo9FHiddenObjects:
-	hidden_object  2, 15, MAX_POTION, HiddenItems
+	hidden_object  2, 15, HYPER_POTION, HiddenItems
 	db -1 ; end
 
 CopycatsHouse2FHiddenObjects:

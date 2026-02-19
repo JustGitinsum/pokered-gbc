@@ -18,8 +18,8 @@ ENDC
 	db GROWTH_MEDIUM_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm AERIAL_ACE,   TOXIC,        FIRE_FANG,    TAKE_DOWN,    DOUBLE_EDGE,  \
-	     SUBMISSION,   COUNTER,      SEISMIC_TOSS, RAGE,         EARTHQUAKE,   \
+	tmhm AERIAL_ACE,   TOXIC,        FIRE_FANG,    BULLDOZE,    DOUBLE_EDGE,  \
+	     EXTREMESPEED,   COUNTER,      SEISMIC_TOSS, RAGE,         EARTHQUAKE,   \
 	     EARTH_POWER,      DIG,          MIMIC,        ICE_PUNCH,  ACCELEROCK,         \
 	     METRONOME,    SELFDESTRUCT, FIRE_BLAST,   ICE_FANG,         EXPLOSION,    \
 	     THUNDERBOLT,   SUBSTITUTE,   STRENGTH

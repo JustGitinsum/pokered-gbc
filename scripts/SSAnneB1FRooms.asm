@@ -25,7 +25,7 @@ SSAnneB1FRooms_TextPointers:
 	dw_const SSAnneB1FRoomsMachokeText,   TEXT_SSANNEB1FROOMS_MACHOKE
 	dw_const PickUpItemText,              TEXT_SSANNEB1FROOMS_ETHER
 	dw_const PickUpItemText,              TEXT_SSANNEB1FROOMS_TM_ICE_FANG
-	dw_const PickUpItemText,              TEXT_SSANNEB1FROOMS_MAX_POTION
+	dw_const PickUpItemText,              TEXT_SSANNEB1FROOMS_HYPER_POTION
 
 SSAnne10TrainerHeaders:
 	def_trainers
