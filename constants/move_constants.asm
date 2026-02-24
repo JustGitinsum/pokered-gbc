@@ -184,6 +184,8 @@
 	const DRAGONBREATH
 	const HEAT_CRASH
 	const DRAGON_CLAW
+	const SUCKER_PUNCH
+	const CRUNCH
 	const STRUGGLE     ; a5
 DEF NUM_ATTACKS EQU const_value - 1
 

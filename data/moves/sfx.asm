@@ -179,6 +179,8 @@ MoveSoundTable:
 	db SFX_BATTLE_29,          $f0, $80 ; DRAGONBREATH
 	db SFX_BATTLE_0D,          $10, $60 ; HEAT_CRASH
 	db SFX_NOT_VERY_EFFECTIVE, $01, $ff ; DRAGON_CLAW
+	db SFX_SUPER_EFFECTIVE,    $00, $e0 ; SUCKER_PUNCH
+	db SFX_BATTLE_1E,          $00, $80 ; CRUNCH
 	db SFX_BATTLE_0B,          $00, $80 ; STRUGGLE
 	assert_table_length NUM_ATTACKS
 	db SFX_BATTLE_0B,          $00, $80

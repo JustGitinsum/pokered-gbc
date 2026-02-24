@@ -402,7 +402,7 @@ CuboneEvosMoves:
 ; Learnset ;from ZA
 	db 12, HEADBUTT
 	db 24, BULLDOZE
-;;;	db 28, SUCKER_PUNCH
+	db 28, SUCKER_PUNCH
 	db 32, FOCUS_ENERGY
 	db 38, THRASH
 	db 40, BONEMERANG
@@ -439,13 +439,12 @@ ArcanineEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 17, FLAME_WHEEL
-	db 23, FIRE_FANG
-	db 26, BODY_SLAM
-	db 30, AGILITY
-	db 40, FLAMETHROWER
+	db 17, FIRE_FANG
+	db 23, BODY_SLAM
+	db 26, AGILITY
+	db 32, CRUNCH
+	db 40, HEAT_CRASH
 	db 50, EXTREMESPEED
-	db 56, HEAT_CRASH
 	db 0
 
 MewEvosMoves:
@@ -461,13 +460,16 @@ MewEvosMoves:
 GyaradosEvosMoves:
 ; Evolutions
 	db 0
-; Learnset
-	db 15, DRAGON_RAGE
+; Learnset ;from SM mix LGPE
+	db 11, DRAGON_RAGE
 	db 20, BITE
 	db 24, DRAGONBREATH
 	db 27, ICE_FANG
-	db 41, HYDRO_PUMP
-	db 52, HYPER_BEAM
+	db 31, WATERFALL
+	db 36, CRUNCH
+;;;	db 41, OUTRAGE
+	db 46, HYDRO_PUMP
+	db 51, HYPER_BEAM
 	db 0
 
 ShellderEvosMoves:
@@ -593,12 +595,12 @@ GrowlitheEvosMoves:
 	db EVOLVE_ITEM, FIRE_STONE, 1, ARCANINE
 	db 0
 ; Learnset
-	db 17, FLAME_WHEEL
-	db 23, FIRE_FANG
-	db 26, BODY_SLAM
-	db 30, AGILITY
-	db 34, FLAMETHROWER
-	db 56, HEAT_CRASH
+	db 17, FIRE_FANG
+	db 23, BODY_SLAM
+	db 26, AGILITY
+	db 32, CRUNCH
+	db 40, HEAT_CRASH
+	db 50, EXTREMESPEED
 	db 0
 
 OnixEvosMoves:
@@ -702,7 +704,7 @@ MachokeEvosMoves:
 	db 0
 ; Learnset ;From ZA
 ;;;	db 16, BULLET_PUNCH
-;;;	db 18, SUCKER_PUNCH
+	db 18, SUCKER_PUNCH
 	db 25, BRICK_BREAK
 	db 30, BULLDOZE
 	db 36, SEISMIC_TOSS
@@ -882,7 +884,7 @@ MankeyEvosMoves:
 	db 6, KARATE_CHOP
 	db 10, ROCK_TOMB
 	db 16, LOW_SWEEP
-;;;	db 18, SUCKER_PUNCH
+	db 18, SUCKER_PUNCH
 	db 22, BULLDOZE
 	db 28, HEADBUTT
 	db 40, SCREECH
@@ -908,7 +910,7 @@ DiglettEvosMoves:
 	db 0
 ; Learnset
 	db 12, BULLDOZE
-;;;	db 20, SUCKER_PUNCH
+	db 20, SUCKER_PUNCH
 	db 24, SLASH
 	db 32, DIG
 	db 36, EARTH_POWER
@@ -1394,7 +1396,7 @@ MachopEvosMoves:
 	db 0
 ; Learnset ;From ZA
 ;;;	db 16, BULLET_PUNCH
-;;;	db 18, SUCKER_PUNCH
+	db 18, SUCKER_PUNCH
 	db 25, BRICK_BREAK
 	db 30, BULLDOZE
 	db 36, SEISMIC_TOSS
@@ -1516,7 +1518,7 @@ PrimeapeEvosMoves:
 	db 6, KARATE_CHOP
 	db 10, ROCK_TOMB
 	db 16, LOW_SWEEP
-;;;	db 18, SUCKER_PUNCH
+	db 18, SUCKER_PUNCH
 	db 22, BULLDOZE
 	db 28, HEADBUTT
 ;;;	db 35, RAGE_FIST
@@ -1530,7 +1532,7 @@ DugtrioEvosMoves:
 	db 0
 ; Learnset
 	db 12, BULLDOZE
-;;;	db 20, SUCKER_PUNCH
+	db 20, SUCKER_PUNCH
 	db 24, SLASH
 	db 32, DIG
 	db 38, EARTH_POWER
@@ -1606,7 +1608,7 @@ MachampEvosMoves:
 	db 0
 ; Learnset
 ;;;	db 16, BULLET_PUNCH
-;;;	db 18, SUCKER_PUNCH
+	db 18, SUCKER_PUNCH
 	db 25, BRICK_BREAK
 	db 30, BULLDOZE
 	db 36, SEISMIC_TOSS
@@ -1678,7 +1680,7 @@ SnorlaxEvosMoves:
 	db 15, BULLDOZE
 	db 21, BODY_SLAM
 ;;;	db 29, ZENHEADBUTT
-;;;	db 35, CRUNCH
+	db 35, CRUNCH
 	db 46, DOUBLE_EDGE
 	db 57, HYPER_BEAM
 	db 0
@@ -1791,7 +1793,7 @@ MarowakEvosMoves:
 ; Learnset ;from ZA
 	db 12, HEADBUTT
 	db 24, BULLDOZE
-;;;	db 28, SUCKER_PUNCH
+	db 28, SUCKER_PUNCH
 	db 30, SHADOW_BONE
 	db 32, FOCUS_ENERGY
 	db 38, THRASH

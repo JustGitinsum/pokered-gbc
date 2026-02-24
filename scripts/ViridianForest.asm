@@ -22,7 +22,7 @@ ViridianForest_TextPointers:
 	dw_const PickUpItemText,                    TEXT_VIRIDIANFOREST_FULL_HEAL
 	dw_const PickUpItemText,                    TEXT_VIRIDIANFOREST_POTION
 	dw_const PickUpItemText,                    TEXT_VIRIDIANFOREST_POKE_BALL
-	dw_const ViridianForestYoungster5Text,      TEXT_VIRIDIANFOREST_YOUNGSTER5
+	dw_const ViridianForestNurseText,           TEXT_VIRIDIANFOREST_NURSE
 	dw_const ViridianForestTrainerTips1Text,    TEXT_VIRIDIANFOREST_TRAINER_TIPS1
 	dw_const ViridianForestUseAntidoteSignText, TEXT_VIRIDIANFOREST_USE_ANTIDOTE_SIGN
 	dw_const ViridianForestTrainerTips2Text,    TEXT_VIRIDIANFOREST_TRAINER_TIPS2
@@ -98,8 +98,24 @@ ViridianForestYoungster4AfterBattleText:
 	text_far _ViridianForestYoungster4AfterBattleText
 	text_end
 
-ViridianForestYoungster5Text:
-	text_far _ViridianForestYoungster5Text
+ViridianForestNurseText:
+	text_asm
+	ld hl, .YouLookTiredText
+	call PrintText
+	predef HealParty
+	call GBFadeOutToWhite
+	call Delay3
+	call GBFadeInFromWhite
+	ld hl, .DontGiveUpText
+	call PrintText
+	jp TextScriptEnd
+
+.YouLookTiredText:
+	text_far SilphCo9FNurseYouLookTiredText
+	text_end
+
+.DontGiveUpText:
+	text_far SilphCo9FNurseDontGiveUpText
 	text_end
 
 ViridianForestTrainerTips1Text:

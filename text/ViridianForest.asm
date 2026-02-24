@@ -62,14 +62,14 @@ _ViridianForestYoungster4AfterBattleText::
 	cont "dropped!"
 	done
 
-_ViridianForestYoungster5Text::
-	text "I ran out of #"
-	line "BALLs to catch"
-	cont "#MON with!"
+; _ViridianForestYoungster5Text::
+; 	text "I ran out of #"
+; 	line "BALLs to catch"
+; 	cont "#MON with!"
 
-	para "You should carry"
-	line "extras!"
-	done
+; 	para "You should carry"
+; 	line "extras!"
+; 	done
 
 _ViridianForestTrainerTips1Text::
 	text "TRAINER TIPS"

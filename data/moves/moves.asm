@@ -189,5 +189,7 @@ Moves:
 	move DRAGONBREATH, PARALYZE_SIDE_EFFECT1,       60, DRAGON,       100, 20
 	move HEAT_CRASH,   BURN_SIDE_EFFECT1,          100, FIRE,         100, 10
 	move DRAGON_CLAW,  NO_ADDITIONAL_EFFECT,        80, DRAGON,       100, 15
+	move SUCKER_PUNCH, NO_ADDITIONAL_EFFECT,        70, DARK,         100,  5
+	move CRUNCH,       DEFENSE_DOWN_SIDE_EFFECT,    80, DARK,         100, 15
 	move STRUGGLE,     RECOIL_EFFECT,               50, NORMAL,       100, 10
 	assert_table_length NUM_ATTACKS

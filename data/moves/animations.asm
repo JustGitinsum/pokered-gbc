@@ -178,6 +178,8 @@ AttackAnimationPointers:
 	dw DragonBreathAnim
 	dw HeatCrashAnim
 	dw DragonClawAnim
+	dw SuckerPunchAnim
+	dw CrunchAnim
 	dw StruggleAnim
 	assert_table_length NUM_ATTACKS
 
@@ -600,6 +602,7 @@ LowSweepAnim:
 	battle_anim NO_MOVE, SE_SHOW_MON_PIC
 	db -1 ; end
 
+SuckerPunchAnim:
 CounterAnim:
 	battle_anim COUNTER, SE_SLIDE_MON_OFF
 	battle_anim NO_MOVE, SUBANIM_1_STAR_BIG_MOVING, 1, 6
@@ -1215,6 +1218,12 @@ RolloutAnim:
 
 DragonBreathAnim:
 	battle_anim FLAMETHROWER, SUBANIM_1_FLAME_BEAM, 1, 6
+	db -1 ; end
+
+CrunchAnim:
+	battle_anim NO_MOVE, SE_DARKEN_MON_PALETTE
+	battle_anim HYPER_FANG, SUBANIM_0_STAR_THRICE, 0, 6
+	battle_anim NO_MOVE, SE_RESET_SCREEN_PALETTE
 	db -1 ; end
 
 HeatCrashAnim:

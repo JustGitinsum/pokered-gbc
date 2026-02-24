@@ -1,7 +1,7 @@
 SilphCo9FNurseYouLookTiredText::
 	text "You look tired!"
 	line "You should take a"
-	cont "quick nap!"
+	cont "quick rest!"
 	prompt
 
 SilphCo9FNurseDontGiveUpText::

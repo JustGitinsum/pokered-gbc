@@ -19,7 +19,7 @@ SSAnne1FRooms_TextPointers:
 	dw_const SSAnne1FRoomsGentleman2Text,    TEXT_SSANNE1FROOMS_GENTLEMAN2
 	dw_const SSAnne1FRoomsYoungsterText,     TEXT_SSANNE1FROOMS_YOUNGSTER
 	dw_const SSAnne1FRoomsCooltrainerFText,  TEXT_SSANNE1FROOMS_COOLTRAINER_F
-	dw_const SSAnne1FRoomsGirl1Text,         TEXT_SSANNE1FROOMS_GIRL1
+	dw_const SSAnne1FRoomsGirl1Text,         TEXT_SSANNE1FROOMS_NURSE
 	dw_const SSAnne1FRoomsMiddleAgedManText, TEXT_SSANNE1FROOMS_MIDDLE_AGED_MAN
 	dw_const SSAnne1FRoomsLittleGirlText,    TEXT_SSANNE1FROOMS_LITTLE_GIRL
 	dw_const SSAnne1FRoomsWigglytuffText,    TEXT_SSANNE1FROOMS_WIGGLYTUFF
@@ -119,8 +119,27 @@ SSAnne1FRoomsCooltrainerFAfterBattleText:
 	text_end
 
 SSAnne1FRoomsGirl1Text:
-	text_far _SSAnne1FRoomsGirl1Text
+	text_asm
+	ld hl, .YouLookTiredText
+	call PrintText
+	predef HealParty
+	call GBFadeOutToWhite
+	call Delay3
+	call GBFadeInFromWhite
+	ld hl, .DontGiveUpText
+	call PrintText
+	jp TextScriptEnd
+
+.YouLookTiredText:
+	text_far SilphCo9FNurseYouLookTiredText
 	text_end
+
+.DontGiveUpText:
+	text_far SilphCo9FNurseDontGiveUpText
+	text_end
+
+	; text_far _SSAnne1FRoomsGirl1Text
+	; text_end
 
 SSAnne1FRoomsMiddleAgedManText:
 	text_far _SSAnne1FRoomsMiddleAgedManText

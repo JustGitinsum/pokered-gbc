@@ -178,5 +178,7 @@ MoveNames::
 	li "DRAGONBREATH"
 	li "HEAT CRASH"
 	li "DRAGON CLAW"
+	li "SUCKER PUNCH"
+	li "CRUNCH"
 	li "STRUGGLE"
 	assert_list_length NUM_ATTACKS
