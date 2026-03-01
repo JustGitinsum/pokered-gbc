@@ -81,7 +81,7 @@ DynamicTMSellerConditions:
 	db 1 << BIT_CASCADEBADGE ; TM01 MEGA_PUNCH (default list)
 	db 1 << BIT_SOULBADGE    ; TM02 AIR_SLASH (was on default list but not anymore)
 	db -2                    ; TM03 SWORDS_DANCE ; elite 4
-	db 1 << BIT_CASCADEBADGE ; TM04 WHIRLWIND
+	db 1 << BIT_CASCADEBADGE ; TM04 SILVER_WIND
 	db -2                    ; TM05 CLOSE_COMBAT (default list)
 	db 1 << BIT_SOULBADGE    ; TM06 TOXIC
 	db 1 << BIT_MARSHBADGE   ; TM07 HORN_DRILL (default list)

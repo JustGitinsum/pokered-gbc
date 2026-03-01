@@ -20,7 +20,7 @@ ENDC
 	; tm/hm learnset
 	tmhm TOXIC,        BULLDOZE,    DOUBLE_EDGE,  RAGE,         PSYCHIC_M,    \
 	     TELEPORT,     MIMIC,        ICE_PUNCH,  REFLECT,      ACCELEROCK,         \
-	     SELFDESTRUCT, THUNDERPUNCH,     ICE_FANG,         EXTRASENSORY,      EXPLOSION,    \
+	     SELFDESTRUCT, THUNDERPUNCH,     ICE_FANG,         PSYCHO_CUT,      EXPLOSION,    \
 	     SUBSTITUTE
 	; end
 

@@ -18,10 +18,10 @@ ENDC
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm AIR_SLASH,   WHIRLWIND,    TOXIC,        BULLDOZE,    DOUBLE_EDGE,  \
+	tmhm AIR_SLASH,   SILVER_WIND,    TOXIC,        BULLDOZE,    DOUBLE_EDGE,  \
 	     HYPER_BEAM,   RAGE,         GIGA_DRAIN,   ENERGY_BALL,    PSYCHIC_M,    \
 	     TELEPORT,     MIMIC,        ICE_PUNCH,  REFLECT,      ACCELEROCK,         \
-	     SWIFT,        ICE_FANG,         EXTRASENSORY,      SUBSTITUTE
+	     SWIFT,        ICE_FANG,         PSYCHO_CUT,      SUBSTITUTE
 	; end
 
 	db BANK(VenomothPicFront)

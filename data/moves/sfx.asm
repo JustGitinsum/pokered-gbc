@@ -18,7 +18,7 @@ MoveSoundTable:
 	db SFX_NOT_VERY_EFFECTIVE, $00, $a0 ; CUT
 	db SFX_BATTLE_12,          $00, $c0 ; GUST
 	db SFX_BATTLE_12,          $10, $a0 ; WING_ATTACK
-	db SFX_BATTLE_13,          $00, $e0 ; WHIRLWIND
+	db SFX_BATTLE_13,          $00, $e0 ; SILVER_WIND
 	db SFX_NOT_VERY_EFFECTIVE, $20, $c0 ; FLY
 	db SFX_BATTLE_14,          $00, $80 ; BIND
 	db SFX_BATTLE_22,          $00, $80 ; SLAM
@@ -181,6 +181,14 @@ MoveSoundTable:
 	db SFX_NOT_VERY_EFFECTIVE, $01, $ff ; DRAGON_CLAW
 	db SFX_SUPER_EFFECTIVE,    $00, $e0 ; SUCKER_PUNCH
 	db SFX_BATTLE_1E,          $00, $80 ; CRUNCH
+	db SFX_BATTLE_18,          $00, $80 ; ZEN_HEADBUTT
+	db SFX_NOT_VERY_EFFECTIVE, $00, $a0 ; PSYCHO_CUT
+	db SFX_BATTLE_35,          $42, $01 ; SHADOW_BALL
+	db SFX_BATTLE_2E,          $00, $80 ; Aura Sphere
+	db SFX_SUPER_EFFECTIVE,    $10, $a0 ; POUNCE
+	db SFX_BATTLE_36,          $00, $80 ; SIGNAL_BEAM
+	db SFX_BATTLE_20,          $00, $c0 ; LUNGE
+	db SFX_BATTLE_09,          $00, $40 ; ELECTROWEB	
 	db SFX_BATTLE_0B,          $00, $80 ; STRUGGLE
 	assert_table_length NUM_ATTACKS
 	db SFX_BATTLE_0B,          $00, $80

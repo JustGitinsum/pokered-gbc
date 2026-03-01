@@ -22,7 +22,7 @@ ENDC
 	     ICE_BEAM,     BLIZZARD,     RAGE,         THUNDERFANG,  THUNDER,      \
 	     PSYCHIC_M,    TELEPORT,     MIMIC,        ICE_PUNCH,  REFLECT,      \
 	     ACCELEROCK,         SWIFT,        FIRE_PUNCH,   ICE_FANG,         THUNDER_WAVE, \
-	     EXTRASENSORY,      FLAMETHROWER,   SUBSTITUTE,   SURF,         FLASH
+	     PSYCHO_CUT,      FLAMETHROWER,   SUBSTITUTE,   SURF,         FLASH
 	; end
 
 	db BANK(StaryuPicFront)

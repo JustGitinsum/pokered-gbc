@@ -20,7 +20,7 @@ ENDC
 	; tm/hm learnset
 	tmhm TOXIC,        BULLDOZE,    DOUBLE_EDGE,  RAGE,         GIGA_DRAIN,   \
 	     ENERGY_BALL,    PSYCHIC_M,    MIMIC,        ICE_PUNCH,  REFLECT,      \
-	     ACCELEROCK,         ICE_FANG,         EXTRASENSORY,      SUBSTITUTE
+	     ACCELEROCK,         ICE_FANG,         PSYCHO_CUT,      SUBSTITUTE
 	; end
 
 	db BANK(VenonatPicFront)

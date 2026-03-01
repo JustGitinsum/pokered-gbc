@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw HypnoPicFront, HypnoPicBack
 
-	db POUND, HYPNOSIS, DISABLE, CONFUSION ; level 1 learnset
+	db POUND, HYPNOSIS, DISABLE, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
@@ -22,7 +22,7 @@ ENDC
 	     DOUBLE_EDGE,  HYPER_BEAM,   EXTREMESPEED,   COUNTER,      SEISMIC_TOSS, \
 	     RAGE,         PSYCHIC_M,    TELEPORT,     MIMIC,        ICE_PUNCH,  \
 	     REFLECT,      ACCELEROCK,         METRONOME,    FIRE_PUNCH,   DREAM_EATER,  \
-	     ICE_FANG,         THUNDER_WAVE, EXTRASENSORY,      FLAMETHROWER,   SUBSTITUTE,   \
+	     ICE_FANG,         THUNDER_WAVE, PSYCHO_CUT,      FLAMETHROWER,   SUBSTITUTE,   \
 	     FLASH
 	; end
 

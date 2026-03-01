@@ -63,9 +63,9 @@ _SaffronGymSabrinaReceivedTM46Text::
 _TM46ExplanationText::
 	text_start
 
-	para "TM46 is EXTRASENSORY!"
-	line "It uses powerful"
-	cont "psychic waves to"
+	para "TM46 is PSYCHO CUT"
+	line "It uses a powerful"
+	cont "psychic slash to"
 	cont "inflict damage!"
 	done
 

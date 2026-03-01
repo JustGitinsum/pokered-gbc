@@ -22,7 +22,7 @@ ENDC
 	     DOUBLE_EDGE,  BUBBLEBEAM,   TRAILBLAZE,    ICE_BEAM,     BLIZZARD,     \
 	     HYPER_BEAM,   EXTREMESPEED,   COUNTER,      SEISMIC_TOSS, RAGE,         \
 	     PSYCHIC_M,    TELEPORT,     MIMIC,        ICE_PUNCH,  REFLECT,      \
-	     ACCELEROCK,         METRONOME,    FIRE_PUNCH,   ICE_FANG,         EXTRASENSORY,      \
+	     ACCELEROCK,         METRONOME,    FIRE_PUNCH,   ICE_FANG,         PSYCHO_CUT,      \
 	     SUBSTITUTE
 	; end
 

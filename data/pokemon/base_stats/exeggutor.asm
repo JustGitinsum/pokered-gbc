@@ -21,7 +21,7 @@ ENDC
 	tmhm TOXIC,        BULLDOZE,    DOUBLE_EDGE,  HYPER_BEAM,   RAGE,         \
 	     GIGA_DRAIN,   ENERGY_BALL,    PSYCHIC_M,    TELEPORT,     MIMIC,        \
 	     ICE_PUNCH,  REFLECT,      ACCELEROCK,         SELFDESTRUCT, THUNDERPUNCH,     \
-	     ICE_FANG,         EXTRASENSORY,      EXPLOSION,    SUBSTITUTE,   STRENGTH
+	     ICE_FANG,         PSYCHO_CUT,      EXPLOSION,    SUBSTITUTE,   STRENGTH
 	; end
 
 	db BANK(ExeggutorPicFront)

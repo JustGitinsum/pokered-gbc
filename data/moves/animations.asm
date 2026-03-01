@@ -17,7 +17,7 @@ AttackAnimationPointers:
 	dw CutAnim
 	dw GustAnim
 	dw WingAttackAnim
-	dw WhirlwindAnim
+	dw SilverWindAnim
 	dw FlyAnim
 	dw BindAnim
 	dw SlamAnim
@@ -180,6 +180,14 @@ AttackAnimationPointers:
 	dw DragonClawAnim
 	dw SuckerPunchAnim
 	dw CrunchAnim
+	dw ZenHeadbuttAnim
+	dw PsychoCutAnim
+	dw ShadowBallAnim
+	dw AuraSphereAnim
+	dw PounceAnim
+	dw SignalBeamAnim
+	dw LungeAnim
+	dw ElectrowebAnim
 	dw StruggleAnim
 	assert_table_length NUM_ATTACKS
 
@@ -335,9 +343,14 @@ WingAttackAnim:
 	battle_anim WING_ATTACK, SUBANIM_1_STAR_BIG_MOVING, 1, 6
 	db -1 ; end
 
-WhirlwindAnim:
-	battle_anim WHIRLWIND, SUBANIM_1_TORNADO, 1, 6
-	battle_anim NO_MOVE, SE_SLIDE_ENEMY_MON_OFF
+; WhirlwindAnim:
+; 	battle_anim SILVER_WIND, SUBANIM_1_TORNADO, 1, 6
+; 	battle_anim NO_MOVE, SE_SLIDE_ENEMY_MON_OFF
+; 	db -1 ; end
+
+SilverWindAnim:
+	battle_anim SILVER_WIND, SUBANIM_1_TORNADO, 1, 6
+	battle_anim CONFUSION, SE_FLASH_SCREEN_LONG
 	db -1 ; end
 
 FlyAnim:
@@ -412,6 +425,7 @@ TackleAnim:
 	battle_anim NO_MOVE, SE_RESET_MON_POSITION
 	db -1 ; end
 
+LungeAnim:
 BodySlamAnim:
 	battle_anim LEECH_SEED, SE_MOVE_MON_HORIZONTALLY
 	battle_anim NO_MOVE, SE_DARK_SCREEN_FLASH
@@ -623,6 +637,7 @@ SeismicTossAnim:
 	battle_anim NO_MOVE, SE_SHAKE_SCREEN
 	db -1 ; end
 
+PounceAnim:
 StrengthAnim:
 	battle_anim LEECH_SEED, SE_MOVE_MON_HORIZONTALLY
 	battle_anim NO_MOVE, SE_RESET_MON_POSITION
@@ -662,6 +677,7 @@ MagicalLeafAnim:
 	battle_anim AIR_SLASH, SUBANIM_0_SLICE, 0, 1
 	db -1 ; end
 
+SignalBeamAnim:
 EnergyBallAnim:
 	battle_anim ENERGY_BALL, SUBANIM_0_BEAM, 0, 6
 	battle_anim NO_MOVE, SUBANIM_0_STAR_TWICE, 0, 6
@@ -1226,11 +1242,40 @@ CrunchAnim:
 	battle_anim NO_MOVE, SE_RESET_SCREEN_PALETTE
 	db -1 ; end
 
+ZenHeadbuttAnim:
+	battle_anim PSYCHIC_M, SE_FLASH_SCREEN_LONG
+	battle_anim HEADBUTT, SUBANIM_1_STAR_BIG, 1, 6
+	db -1 ; end
+
+PsychoCutAnim:
+	battle_anim CUT, SE_DARK_SCREEN_FLASH
+	battle_anim NO_MOVE, SUBANIM_0_SLICE, 0, 4
+	battle_anim CONFUSION, SE_WAVY_SCREEN
+	db -1 ; end
+
+ShadowBallAnim:
+	battle_anim AURORA_BEAM, SUBANIM_1_CIRCLE_BLACK_TOSS, 1, 3
+	battle_anim NO_MOVE, SE_DARK_SCREEN_FLASH
+	battle_anim CONFUSION, SE_WAVY_SCREEN
+	db -1 ; end
+
+AuraSphereAnim:
+	battle_anim GROWTH, SUBANIM_0_CIRCLES_CENTERING, 0, 6
+	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
+	battle_anim NO_MOVE, SE_DARK_SCREEN_FLASH
+	battle_anim SEISMIC_TOSS, SUBANIM_0_BEAM, 0, 2
+	db -1 ; end
+
 HeatCrashAnim:
 	battle_anim LEECH_SEED, SE_MOVE_MON_HORIZONTALLY
 	battle_anim BULLDOZE, SE_DARK_SCREEN_FLASH
 	battle_anim FIRE_SPIN, SUBANIM_1_FLAME_COLUMN_3, 1, 6
 	battle_anim NO_MOVE, SE_RESET_MON_POSITION
+	db -1 ; end
+
+ElectrowebAnim:
+	battle_anim STRING_SHOT, SUBANIM_0_STRING_SHOT, 0, 8
+	battle_anim THUNDERSHOCK, SUBANIM_1_LIGHTNING_BALL, 1, 2
 	db -1 ; end
 
 SubstituteAnim:

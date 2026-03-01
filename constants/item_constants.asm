@@ -160,7 +160,7 @@ DEF TM01 EQU const_value
 	add_tm AERIAL_ACE   ; $C9 TM01
 	add_tm AIR_SLASH    ; $CA TM02
 	add_tm SWORDS_DANCE ; $CB TM03
-	add_tm WHIRLWIND    ; $CC TM04
+	add_tm SILVER_WIND    ; $CC TM04
 	add_tm CLOSE_COMBAT    ; $CD TM05
 	add_tm TOXIC        ; $CE TM06
 	add_tm HORN_DRILL   ; $CF TM07
@@ -202,7 +202,7 @@ DEF TM01 EQU const_value
 	add_tm SKY_ATTACK   ; $F3 TM43
 	add_tm ICE_FANG     ; $F4 TM44
 	add_tm THUNDER_WAVE ; $F5 TM45
-	add_tm EXTRASENSORY ; $F6 TM46
+	add_tm PSYCHO_CUT   ; $F6 TM46
 	add_tm EXPLOSION    ; $F7 TM47
 	add_tm THUNDERBOLT  ; $F8 TM48 ;moved to Safari Zone
 	add_tm FLAMETHROWER ; $F9 TM49 ;moved to Safari Zone

@@ -21,7 +21,7 @@ ENDC
 	tmhm TOXIC,        FIRE_FANG,    BULLDOZE,    DOUBLE_EDGE,  BUBBLEBEAM,   \
 	     TRAILBLAZE,    ICE_BEAM,     BLIZZARD,     RAGE,         PSYCHIC_M,    \
 	     MIMIC,        ICE_PUNCH,  ACCELEROCK,         FIRE_PUNCH,   ICE_FANG,         \
-	     EXTRASENSORY,      SUBSTITUTE,   SURF
+	     PSYCHO_CUT,      SUBSTITUTE,   SURF
 	; end
 
 	db BANK(PoliwagPicFront)

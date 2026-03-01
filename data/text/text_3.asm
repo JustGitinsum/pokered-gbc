@@ -144,7 +144,7 @@ _ChargeMoveEffectText::
 
 _MadeWhirlwindText::
 	text_start
-	line "made a whirlwind!"
+	line "made a WHIRLWIND!"
 	prompt
 
 _TookInSunlightText::

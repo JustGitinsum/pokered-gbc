@@ -14,11 +14,11 @@ ELSE
 ENDC
 	dw MewPicFront, MewPicBack
 
-	db POUND, AMNESIA, NO_MOVE, NO_MOVE ; level 1 learnset
+	db POUND, REFLECT, NO_MOVE, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm AERIAL_ACE,   AIR_SLASH,   SWORDS_DANCE, WHIRLWIND,    CLOSE_COMBAT,    \
+	tmhm AERIAL_ACE,   AIR_SLASH,   SWORDS_DANCE, SILVER_WIND,    CLOSE_COMBAT,    \
 	     TOXIC,        HORN_DRILL,   FIRE_FANG,    BULLDOZE,    DOUBLE_EDGE,  \
 	     BUBBLEBEAM,   TRAILBLAZE,    ICE_BEAM,     BLIZZARD,     HYPER_BEAM,   \
 	     PAY_DAY,      EXTREMESPEED,   COUNTER,      SEISMIC_TOSS, RAGE,         \
@@ -27,7 +27,7 @@ ENDC
 	     MIMIC,        ICE_PUNCH,  REFLECT,      ACCELEROCK,         METRONOME,    \
 	     SELFDESTRUCT, THUNDERPUNCH,     FIRE_BLAST,   SWIFT,        FIRE_PUNCH,   \
 	     SOFTBOILED,   DREAM_EATER,  SKY_ATTACK,   ICE_FANG,         THUNDER_WAVE, \
-	     EXTRASENSORY,      EXPLOSION,    THUNDERBOLT,   FLAMETHROWER,   SUBSTITUTE,   \
+	     PSYCHO_CUT,      EXPLOSION,    THUNDERBOLT,   FLAMETHROWER,   SUBSTITUTE,   \
 	     CUT,          FLY,          SURF,         STRENGTH,     FLASH,        \
 	     UNUSED
 	; end

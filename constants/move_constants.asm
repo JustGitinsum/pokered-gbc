@@ -23,7 +23,7 @@
 	const CUT          ; 0f
 	const GUST         ; 10
 	const WING_ATTACK  ; 11
-	const WHIRLWIND    ; 12
+	const SILVER_WIND    ; 12
 	const FLY          ; 13
 	const BIND         ; 14
 	const SLAM         ; 15
@@ -186,6 +186,14 @@
 	const DRAGON_CLAW
 	const SUCKER_PUNCH
 	const CRUNCH
+	const ZEN_HEADBUTT
+	const PSYCHO_CUT
+	const SHADOW_BALL
+	const AURA_SPHERE
+	const POUNCE
+	const SIGNAL_BEAM
+	const LUNGE
+	const ELECTROWEB
 	const STRUGGLE     ; a5
 DEF NUM_ATTACKS EQU const_value - 1
 

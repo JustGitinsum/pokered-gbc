@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw SlowbroPicFront, SlowbroPicBack
 
-	db CONFUSION, DISABLE, HEADBUTT, NO_MOVE ; level 1 learnset
+	db TACKLE, GROWL, TAIL_WHIP, ANCIENTPOWER ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
@@ -24,7 +24,7 @@ ENDC
 	     RAGE,         EARTHQUAKE,   EARTH_POWER,      DIG,          PSYCHIC_M,    \
 	     TELEPORT,     MIMIC,        ICE_PUNCH,  REFLECT,      ACCELEROCK,         \
 	     FIRE_BLAST,   SWIFT,        FIRE_PUNCH,   ICE_FANG,         THUNDER_WAVE, \
-	     EXTRASENSORY,      FLAMETHROWER,   SUBSTITUTE,   SURF,         STRENGTH,     \
+	     PSYCHO_CUT,      FLAMETHROWER,   SUBSTITUTE,   SURF,         STRENGTH,     \
 	     FLASH
 	; end
 

@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw MewtwoPicFront, MewtwoPicBack
 
-	db CONFUSION, DISABLE, SWIFT, ANCIENTPOWER ; level 1 learnset
+	db CONFUSION, DISABLE, SWIFT, NO_MOVE ; level 1 learnset
 	db GROWTH_SLOW ; growth rate
 
 	; tm/hm learnset
@@ -24,7 +24,7 @@ ENDC
 	     RAGE,         ENERGY_BALL,    THUNDERFANG,  THUNDER,      PSYCHIC_M,    \
 	     TELEPORT,     MIMIC,        ICE_PUNCH,  REFLECT,      ACCELEROCK,         \
 	     METRONOME,    SELFDESTRUCT, FIRE_BLAST,   FIRE_PUNCH,   ICE_FANG,         \
-	     THUNDER_WAVE, EXTRASENSORY,      FLAMETHROWER,   SUBSTITUTE,   STRENGTH,     \
+	     THUNDER_WAVE, PSYCHO_CUT,      FLAMETHROWER,   SUBSTITUTE,   STRENGTH,     \
 	     FLASH
 	; end
 

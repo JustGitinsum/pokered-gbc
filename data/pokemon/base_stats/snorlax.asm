@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw SnorlaxPicFront, SnorlaxPicBack
 
-	db BITE, NO_MOVE, NO_MOVE, NO_MOVE ; level 1 learnset
+	db BITE, DEFENSE_CURL, LICK, NO_MOVE ; level 1 learnset
 	db GROWTH_SLOW ; growth rate
 
 	; tm/hm learnset
@@ -24,7 +24,7 @@ ENDC
 	     RAGE,         ENERGY_BALL,    THUNDERFANG,  THUNDER,      EARTHQUAKE,   \
 	     EARTH_POWER,      PSYCHIC_M,    MIMIC,        ICE_PUNCH,  REFLECT,      \
 	     ACCELEROCK,         METRONOME,    SELFDESTRUCT, FIRE_BLAST,   FIRE_PUNCH,   \
-	     ICE_FANG,         EXTRASENSORY,      THUNDERBOLT,   SUBSTITUTE,   SURF,         \
+	     ICE_FANG,         PSYCHO_CUT,      THUNDERBOLT,   SUBSTITUTE,   SURF,         \
 	     STRENGTH
 	; end
 

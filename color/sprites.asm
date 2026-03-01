@@ -209,6 +209,12 @@ ColorNonOverworldSprites::
 	ld a, ELECTRIC
 	jr z, .gotType
 
+; Make Aura Sphere Light Blue, despite being a fighting move
+	ld a, d
+	cp AURA_SPHERE
+	ld a, ICE
+	jr z, .gotType
+
 	; Make tri-attack yellow, despite being a normal move
 	ld a, d
 	cp TRI_ATTACK
@@ -601,7 +607,7 @@ AnimationTileset3Palettes:
 TypeColorTable: ; Used for a select few sprites to be colorized based on attack type
 	table_width 1, TypeColorTable
 	db 0 ; NORMAL EQU $00
-	db 0 ; FIGHTING EQU $01
+	db 2 ; FIGHTING EQU $01
 	db 0 ; FLYING EQU $02
 	db 7 ; POISON EQU $03
 	db 3 ; GROUND EQU $04

@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw GrowlithePicFront, GrowlithePicBack
 
-	db BITE, ROAR, EMBER, LEER ; level 1 learnset
+	db EMBER, LEER, NO_MOVE, NO_MOVE ; level 1 learnset
 	db GROWTH_SLOW ; growth rate
 
 	; tm/hm learnset

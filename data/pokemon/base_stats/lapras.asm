@@ -22,7 +22,7 @@ ENDC
 	     BUBBLEBEAM,   TRAILBLAZE,    ICE_BEAM,     BLIZZARD,     HYPER_BEAM,   \
 	     RAGE,         ENERGY_BALL,    DRAGON_RAGE,  THUNDERFANG,  THUNDER,      \
 	     PSYCHIC_M,    MIMIC,        ICE_PUNCH,  REFLECT,      ACCELEROCK,         \
-	     FIRE_PUNCH,   ICE_FANG,         EXTRASENSORY,      SUBSTITUTE,   SURF,         \
+	     FIRE_PUNCH,   ICE_FANG,         PSYCHO_CUT,      SUBSTITUTE,   SURF,         \
 	     STRENGTH
 	; end
 

@@ -22,7 +22,7 @@ ENDC
 	     DOUBLE_EDGE,  HYPER_BEAM,   EXTREMESPEED,   COUNTER,      SEISMIC_TOSS, \
 	     RAGE,         PSYCHIC_M,    TELEPORT,     MIMIC,        ICE_PUNCH,  \
 	     ACCELEROCK,         METRONOME,    FIRE_BLAST,   FIRE_PUNCH,   ICE_FANG,         \
-	     EXTRASENSORY,      SUBSTITUTE,   STRENGTH
+	     PSYCHO_CUT,      SUBSTITUTE,   STRENGTH
 	; end
 
 	db BANK(MagmarPicFront)

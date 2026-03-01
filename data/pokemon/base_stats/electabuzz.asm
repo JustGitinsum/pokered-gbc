@@ -22,7 +22,7 @@ ENDC
 	     DOUBLE_EDGE,  HYPER_BEAM,   EXTREMESPEED,   COUNTER,      SEISMIC_TOSS, \
 	     RAGE,         THUNDERFANG,  THUNDER,      PSYCHIC_M,    TELEPORT,     \
 	     MIMIC,        ICE_PUNCH,  REFLECT,      ACCELEROCK,         METRONOME,    \
-	     SWIFT,        FIRE_PUNCH,   ICE_FANG,         THUNDER_WAVE, EXTRASENSORY,      \
+	     SWIFT,        FIRE_PUNCH,   ICE_FANG,         THUNDER_WAVE, PSYCHO_CUT,      \
 	     SUBSTITUTE,   STRENGTH,     FLASH
 	; end
 
