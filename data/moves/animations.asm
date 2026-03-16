@@ -31,7 +31,7 @@ AttackAnimationPointers:
 	dw HeadbuttAnim
 	dw HornAttackAnim
 	dw FuryAttackAnim
-	dw HornDrillAnim
+	dw PlayRoughAnim
 	dw TackleAnim
 	dw BodySlamAnim
 	dw WrapAnim
@@ -74,12 +74,12 @@ AttackAnimationPointers:
 	dw GigaDrainAnim
 	dw LeechSeedAnim
 	dw GrowthAnim
-	dw MagicalLeafAnim
+	dw RazorLeafAnim
 	dw EnergyBallAnim
 	dw PoisonPowderAnim
 	dw StunSporeAnim
 	dw SleepPowderAnim
-	dw PetalDanceAnim
+	dw MagicalLeafAnim
 	dw StringShotAnim
 	dw DragonRageAnim
 	dw FireSpinAnim
@@ -188,6 +188,13 @@ AttackAnimationPointers:
 	dw SignalBeamAnim
 	dw LungeAnim
 	dw ElectrowebAnim
+	dw SteelWingAnim
+	dw LeafBladeAnim
+	dw RageFistAnim
+	dw SludgeBombAnim
+	dw DarkPulseAnim
+	dw MoonblastAnim
+	dw DragonPulseAnim
 	dw StruggleAnim
 	assert_table_length NUM_ATTACKS
 
@@ -290,7 +297,7 @@ PayDayAnim:
 FireFangAnim:
 FirePunchAnim:
 	battle_anim FIRE_PUNCH, SUBANIM_0_STAR_THRICE, 0, 6
-	battle_anim NO_MOVE, SUBANIM_1_FLAMES, 1, 6
+	battle_anim FLAMETHROWER, SUBANIM_1_FLAME_COLUMN_2, 1, 6
 	db -1 ; end
 
 IceFangAnim:
@@ -347,6 +354,17 @@ WingAttackAnim:
 ; 	battle_anim SILVER_WIND, SUBANIM_1_TORNADO, 1, 6
 ; 	battle_anim NO_MOVE, SE_SLIDE_ENEMY_MON_OFF
 ; 	db -1 ; end
+
+SteelWingAnim:
+	battle_anim AURORA_BEAM, SE_DARK_SCREEN_FLASH
+	battle_anim WING_ATTACK, SUBANIM_1_STAR_BIG_MOVING, 1, 6
+	db -1 ; end
+
+LeafBladeAnim:
+	battle_anim SWIFT, SUBANIM_1_LEAVES_TOSS, 1, 1
+	battle_anim NO_MOVE, SE_DARK_SCREEN_FLASH
+	battle_anim AIR_SLASH, SUBANIM_0_SLICE, 0, 1
+	db -1 ; end
 
 SilverWindAnim:
 	battle_anim SILVER_WIND, SUBANIM_1_TORNADO, 1, 6
@@ -412,8 +430,8 @@ FuryAttackAnim:
 	battle_anim NO_MOVE, SUBANIM_0_HORN_JAB_THRICE, 0, 2
 	db -1 ; end
 
-HornDrillAnim:
-	battle_anim HORN_DRILL, SUBANIM_1_STAR_BIG, 1, 2
+PlayRoughAnim:
+	battle_anim PLAY_ROUGH, SUBANIM_1_STAR_BIG, 1, 2
 	battle_anim NO_MOVE, SUBANIM_1_STAR_BIG, 1, 2
 	battle_anim NO_MOVE, SUBANIM_1_STAR_BIG, 1, 2
 	battle_anim NO_MOVE, SUBANIM_1_STAR_BIG, 1, 2
@@ -535,10 +553,21 @@ EmberAnim:
 	battle_anim EMBER, SUBANIM_1_FLAMES, 1, 6
 	db -1 ; end
 
-FlamethrowerAnim:
+DragonBreathAnim:
 	battle_anim FLAMETHROWER, SUBANIM_1_FLAME_BEAM, 1, 6
 	battle_anim FLAMETHROWER, SUBANIM_1_FLAME_COLUMN_1, 1, 6
-	battle_anim FLAMETHROWER, SUBANIM_1_FLAME_COLUMN_2, 1, 6
+	db -1 ; end
+
+RageFistAnim:
+	battle_anim DOUBLESLAP, SUBANIM_0_STAR_THRICE, 0, 6
+	battle_anim CONFUSION, SE_FLASH_SCREEN_LONG
+	battle_anim NO_MOVE, SE_WAVY_SCREEN
+	db -1 ; end
+
+SludgeBombAnim:
+	battle_anim SLUDGE, SUBANIM_1_BLOB_TOSS, 1, 6
+	battle_anim EGG_BOMB, SUBANIM_1_EXPLOSION_SMALL_ENEMY, 1, 4
+	battle_anim SLUDGE, SUBANIM_1_BLOB_DRIP_ENEMY, 1, 6
 	db -1 ; end
 
 MistAnim:
@@ -586,6 +615,9 @@ AuroraBeamAnim:
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
 	db -1 ; end
 
+DarkPulseAnim:
+MoonblastAnim:
+DragonPulseAnim:
 HyperBeamAnim:
 	battle_anim LEECH_SEED, SE_DARK_SCREEN_PALETTE
 	battle_anim NO_MOVE, SE_SPIRAL_BALLS_INWARD
@@ -671,7 +703,7 @@ GrowthAnim:
 	battle_anim NO_MOVE, SE_RESET_SCREEN_PALETTE
 	db -1 ; end
 
-MagicalLeafAnim:
+RazorLeafAnim:
 	battle_anim MAGICAL_LEAF, SE_LEAVES_FALLING
 	battle_anim SWIFT, SUBANIM_1_LEAVES_TOSS, 1, 1
 	battle_anim AIR_SLASH, SUBANIM_0_SLICE, 0, 1
@@ -695,8 +727,8 @@ SleepPowderAnim:
 	battle_anim SLEEP_POWDER, SUBANIM_0_CIRCLES_FALLING, 0, 6
 	db -1 ; end
 
-PetalDanceAnim:
-	battle_anim PETAL_DANCE, SE_LIGHT_SCREEN_PALETTE
+MagicalLeafAnim:
+	battle_anim MAGICAL_LEAF, SE_LIGHT_SCREEN_PALETTE
 	battle_anim NO_MOVE, SE_PETALS_FALLING
 	battle_anim NO_MOVE, SE_RESET_SCREEN_PALETTE
 	db -1 ; end
@@ -705,6 +737,7 @@ StringShotAnim:
 	battle_anim STRING_SHOT, SUBANIM_0_STRING_SHOT, 0, 8
 	db -1 ; end
 
+FlamethrowerAnim:
 DragonRageAnim:
 	battle_anim DRAGON_RAGE, SUBANIM_1_FLAME_BEAM, 1, 6
 	battle_anim NO_MOVE, SUBANIM_1_FLAME_COLUMN_1, 1, 6
@@ -1230,10 +1263,6 @@ RolloutAnim:
 	battle_anim ROLLOUT, SE_BOUNCE_UP_AND_DOWN
 	battle_anim LEECH_SEED, SE_MOVE_MON_HORIZONTALLY
 	battle_anim NO_MOVE, SE_RESET_MON_POSITION
-	db -1 ; end
-
-DragonBreathAnim:
-	battle_anim FLAMETHROWER, SUBANIM_1_FLAME_BEAM, 1, 6
 	db -1 ; end
 
 CrunchAnim:

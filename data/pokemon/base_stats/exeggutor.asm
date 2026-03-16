@@ -18,10 +18,10 @@ ENDC
 	db GROWTH_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        BULLDOZE,    DOUBLE_EDGE,  HYPER_BEAM,   RAGE,         \
-	     GIGA_DRAIN,   ENERGY_BALL,    PSYCHIC_M,    TELEPORT,     MIMIC,        \
-	     ICE_PUNCH,  REFLECT,      ACCELEROCK,         SELFDESTRUCT, THUNDERPUNCH,     \
-	     ICE_FANG,         PSYCHO_CUT,      EXPLOSION,    SUBSTITUTE,   STRENGTH
+	tmhm TOXIC,        BODY_SLAM,    DOUBLE_EDGE,  HYPER_BEAM,   RAGE,         \
+	     GIGA_DRAIN,   ENERGY_BALL,    PSYCHIC_M,    BRICK_BREAK,     MIMIC,        \
+	     ICE_PUNCH,  REFLECT,      ACCELEROCK,         LEAF_BLADE, THUNDERPUNCH,     \
+	     ICE_FANG,         PSYCHO_CUT,      AURA_SPHERE,    SUBSTITUTE,   STRENGTH
 	; end
 
 	db BANK(ExeggutorPicFront)

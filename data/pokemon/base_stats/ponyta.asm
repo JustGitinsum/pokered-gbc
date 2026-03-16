@@ -18,9 +18,9 @@ ENDC
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        HORN_DRILL,   FIRE_FANG,    BULLDOZE,    DOUBLE_EDGE,  \
+	tmhm TOXIC,        PLAY_ROUGH,   FIRE_FANG,    BODY_SLAM,    DOUBLE_EDGE,  \
 	     RAGE,         MIMIC,        ICE_PUNCH,  REFLECT,      ACCELEROCK,         \
-	     FIRE_BLAST,   SWIFT,        FIRE_PUNCH,   ICE_FANG,         SUBSTITUTE
+	     FIRE_BLAST,   STEEL_WING,        FIRE_PUNCH,   ICE_FANG,         SUBSTITUTE
 	; end
 
 	db BANK(PonytaPicFront)

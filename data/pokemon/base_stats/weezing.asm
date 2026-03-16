@@ -19,8 +19,8 @@ ENDC
 
 	; tm/hm learnset
 	tmhm TOXIC,        HYPER_BEAM,   RAGE,         THUNDERFANG,  THUNDER,      \
-	     MIMIC,        ICE_PUNCH,  ACCELEROCK,         SELFDESTRUCT, FIRE_BLAST,   \
-	     ICE_FANG,         EXPLOSION,    SUBSTITUTE
+	     MIMIC,        ICE_PUNCH,  ACCELEROCK,         LEAF_BLADE, FIRE_BLAST,   \
+	     ICE_FANG,         AURA_SPHERE,    SUBSTITUTE
 	; end
 
 	db BANK(WeezingPicFront)

@@ -14,13 +14,13 @@ ELSE
 ENDC
 	dw AlakazamPicFront, AlakazamPicBack
 
-	db TELEPORT, CONFUSION, DISABLE, NO_MOVE ; level 1 learnset
+	db BRICK_BREAK, CONFUSION, DISABLE, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm AERIAL_ACE,   CLOSE_COMBAT,    TOXIC,        FIRE_FANG,    BULLDOZE,    \
-	     DOUBLE_EDGE,  HYPER_BEAM,   EXTREMESPEED,   COUNTER,      SEISMIC_TOSS, \
-	     RAGE,         DIG,          PSYCHIC_M,    TELEPORT,     MIMIC,        \
+	tmhm AERIAL_ACE,   CLOSE_COMBAT,    TOXIC,        FIRE_FANG,    BODY_SLAM,    \
+	     DOUBLE_EDGE,  HYPER_BEAM,   EXTREMESPEED,   WATERFALL,      SEISMIC_TOSS, \
+	     RAGE,         DIG,          PSYCHIC_M,    BRICK_BREAK,     MIMIC,        \
 	     ICE_PUNCH,  REFLECT,      ACCELEROCK,         METRONOME,    FIRE_PUNCH,   \
 	     ICE_FANG,         THUNDER_WAVE, PSYCHO_CUT,      FLAMETHROWER,   SUBSTITUTE,   \
 	     FLASH

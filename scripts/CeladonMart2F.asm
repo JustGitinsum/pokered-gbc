@@ -28,7 +28,7 @@ CeladonMart2FClerk2Text:
 	text_asm
 	call MartTMClerkDialogue
 	jp TextScriptEnd ; PureRGB - rst TextScriptEnd
-;	script_mart ICE_PUNCH, TM_REFLECT, TM_AIR_SLASH, TM_HORN_DRILL, TM_THUNDERPUNCH, TM_AERIAL_ACE, TM_CLOSE_COMBAT, TM_BULLDOZE, TM_EXTREMESPEED
+;	script_mart ICE_PUNCH, TM_REFLECT, TM_AIR_SLASH, TM_PLAY_ROUGH, TM_THUNDERPUNCH, TM_AERIAL_ACE, TM_CLOSE_COMBAT, TM_BODY_SLAM, TM_EXTREMESPEED
 
 MartTMClerkDialogue: ; marcelnote - this fills the TM seller list dynamically
 	ld a, 1
@@ -84,7 +84,7 @@ DynamicTMSellerConditions:
 	db 1 << BIT_CASCADEBADGE ; TM04 SILVER_WIND
 	db -2                    ; TM05 CLOSE_COMBAT (default list)
 	db 1 << BIT_SOULBADGE    ; TM06 TOXIC
-	db 1 << BIT_MARSHBADGE   ; TM07 HORN_DRILL (default list)
+	db 1 << BIT_MARSHBADGE   ; TM07 PLAY_ROUGH (default list)
 	db 1 << BIT_RAINBOWBADGE ; TM08 FIRE_FANG
 	db 1 << BIT_MARSHBADGE   ; TM09 BULLDOZE (default list)
 	db 1 << BIT_MARSHBADGE   ; TM10 DOUBLE_EDGE

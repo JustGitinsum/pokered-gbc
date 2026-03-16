@@ -27,7 +27,7 @@ CeladonMart3FClerkText:
 	jr nz, .got_item
 	ld hl, .TM18PreReceiveText
 	call PrintText
-	lb bc, TM_COUNTER, 1
+	lb bc, TM_WATERFALL, 1
 	call GiveItem
 	jr nc, .bag_full
 	SetEvent EVENT_GOT_TM18

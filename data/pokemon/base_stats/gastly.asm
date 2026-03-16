@@ -19,8 +19,8 @@ ENDC
 
 	; tm/hm learnset
 	tmhm TOXIC,        RAGE,         GIGA_DRAIN,   THUNDERFANG,  THUNDER,      \
-	     PSYCHIC_M,    MIMIC,        ICE_PUNCH,  ACCELEROCK,         SELFDESTRUCT, \
-	     DREAM_EATER,  ICE_FANG,         PSYCHO_CUT,      EXPLOSION,    SUBSTITUTE
+	     PSYCHIC_M,    MIMIC,        ICE_PUNCH,  ACCELEROCK,         LEAF_BLADE, \
+	     SHADOW_BALL,  ICE_FANG,         PSYCHO_CUT,      AURA_SPHERE,    SUBSTITUTE
 	; end
 
 	db BANK(GastlyPicFront)

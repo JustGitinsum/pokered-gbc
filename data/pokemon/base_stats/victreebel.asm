@@ -14,11 +14,11 @@ ELSE
 ENDC
 	dw VictreebelPicFront, VictreebelPicBack
 
-	db SLEEP_POWDER, STUN_SPORE, ACID, MAGICAL_LEAF ; level 1 learnset
+	db VINE_WHIP, GROWTH, ACID, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm SWORDS_DANCE, TOXIC,        FIRE_FANG,    BULLDOZE,    DOUBLE_EDGE,  \
+	tmhm SWORDS_DANCE, TOXIC,        FIRE_FANG,    BODY_SLAM,    DOUBLE_EDGE,  \
 	     HYPER_BEAM,   RAGE,         GIGA_DRAIN,   ENERGY_BALL,    MIMIC,        \
 	     ICE_PUNCH,  REFLECT,      ACCELEROCK,         ICE_FANG,         SUBSTITUTE,   \
 	     CUT

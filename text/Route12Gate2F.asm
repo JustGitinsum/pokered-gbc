@@ -15,14 +15,14 @@ _Route12Gate2FBrunetteGirlReceivedTM39Text::
 
 _Route12Gate2FBrunetteGirlTM39ExplanationText::
 	text "TM39 is a move"
-	line "called SWIFT."
+	line "called STEEL WING."
 
-	para "It's very accurate,"
-	line "so use it during"
-	cont "battles you can't"
-	cont "afford to lose."
+	para "Use it to strike"
+	line "your foes with"
+	cont "hard wings"
+	cont "spread wide."
 	done
-
+ 
 _Route12Gate2FBrunetteGirlTM39NoRoomText::
 	text "You don't have"
 	line "room for this."

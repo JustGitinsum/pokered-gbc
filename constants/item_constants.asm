@@ -160,21 +160,21 @@ DEF TM01 EQU const_value
 	add_tm AERIAL_ACE   ; $C9 TM01
 	add_tm AIR_SLASH    ; $CA TM02
 	add_tm SWORDS_DANCE ; $CB TM03
-	add_tm SILVER_WIND    ; $CC TM04
-	add_tm CLOSE_COMBAT    ; $CD TM05
+	add_tm SILVER_WIND  ; $CC TM04
+	add_tm CLOSE_COMBAT ; $CD TM05
 	add_tm TOXIC        ; $CE TM06
-	add_tm HORN_DRILL   ; $CF TM07
+	add_tm METRONOME    ; $CF TM07
 	add_tm FIRE_FANG    ; $D0 TM08
-	add_tm BULLDOZE    ; $D1 TM09
+	add_tm BODY_SLAM    ; $D1 TM09
 	add_tm DOUBLE_EDGE  ; $D2 TM10
 	add_tm BUBBLEBEAM   ; $D3 TM11
 	add_tm TRAILBLAZE   ; $D4 TM12
 	add_tm ICE_BEAM     ; $D5 TM13 ;moved to Safari Zone
 	add_tm BLIZZARD     ; $D6 TM14
 	add_tm HYPER_BEAM   ; $D7 TM15
-	add_tm PAY_DAY      ; $D8 TM16
-	add_tm EXTREMESPEED   ; $D9 TM17
-	add_tm COUNTER      ; $DA TM18
+	add_tm SIGNAL_BEAM  ; $D8 TM16
+	add_tm EXTREMESPEED ; $D9 TM17
+	add_tm WATERFALL    ; $DA TM18
 	add_tm SEISMIC_TOSS ; $DB TM19
 	add_tm RAGE         ; $DC TM20
 	add_tm GIGA_DRAIN   ; $DD TM21
@@ -186,24 +186,24 @@ DEF TM01 EQU const_value
 	add_tm EARTH_POWER  ; $E3 TM27
 	add_tm DIG          ; $E4 TM28
 	add_tm PSYCHIC_M    ; $E5 TM29
-	add_tm TELEPORT     ; $E6 TM30
+	add_tm BRICK_BREAK  ; $E6 TM30
 	add_tm MIMIC        ; $E7 TM31
 	add_tm ICE_PUNCH    ; $E8 TM32 ;moved to Department Store roof
 	add_tm REFLECT      ; $E9 TM33
 	add_tm ACCELEROCK   ; $EA TM34
-	add_tm METRONOME    ; $EB TM35
-	add_tm SELFDESTRUCT ; $EC TM36
+	add_tm PLAY_ROUGH   ; $EB TM35
+	add_tm LEAF_BLADE   ; $EC TM36
 	add_tm THUNDERPUNCH ; $ED TM37 ;moved to Department Store roof
 	add_tm FIRE_BLAST   ; $EE TM38
-	add_tm SWIFT        ; $EF TM39
+	add_tm STEEL_WING   ; $EF TM39
 	add_tm FIRE_PUNCH   ; $F0 TM40 ;moved to Department Store roof
 	add_tm SOFTBOILED   ; $F1 TM41
-	add_tm DREAM_EATER  ; $F2 TM42
-	add_tm SKY_ATTACK   ; $F3 TM43
+	add_tm SHADOW_BALL  ; $F2 TM42
+	add_tm DRAGON_CLAW  ; $F3 TM43
 	add_tm ICE_FANG     ; $F4 TM44
 	add_tm THUNDER_WAVE ; $F5 TM45
 	add_tm PSYCHO_CUT   ; $F6 TM46
-	add_tm EXPLOSION    ; $F7 TM47
+	add_tm AURA_SPHERE  ; $F7 TM47
 	add_tm THUNDERBOLT  ; $F8 TM48 ;moved to Safari Zone
 	add_tm FLAMETHROWER ; $F9 TM49 ;moved to Safari Zone
 	add_tm SUBSTITUTE   ; $FA TM50

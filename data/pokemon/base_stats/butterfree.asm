@@ -18,10 +18,10 @@ ENDC
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm AIR_SLASH,   SILVER_WIND,    TOXIC,        BULLDOZE,    DOUBLE_EDGE,  \
+	tmhm AIR_SLASH,   SILVER_WIND,    TOXIC,        BODY_SLAM,    DOUBLE_EDGE,  \
 	     HYPER_BEAM,   RAGE,         GIGA_DRAIN,   ENERGY_BALL,    PSYCHIC_M,    \
-	     TELEPORT,     MIMIC,        ICE_PUNCH,  REFLECT,      ACCELEROCK,         \
-	     SWIFT,        ICE_FANG,         PSYCHO_CUT,      SUBSTITUTE
+	     BRICK_BREAK,     MIMIC,        ICE_PUNCH,  REFLECT,      ACCELEROCK,         \
+	     STEEL_WING,        ICE_FANG,         PSYCHO_CUT,      SUBSTITUTE
 	; end
 
 	db BANK(ButterfreePicFront)

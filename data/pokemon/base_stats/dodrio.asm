@@ -18,9 +18,9 @@ ENDC
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm SILVER_WIND,    TOXIC,        FIRE_FANG,    BULLDOZE,    DOUBLE_EDGE,  \
+	tmhm SILVER_WIND,    TOXIC,        FIRE_FANG,    BODY_SLAM,    DOUBLE_EDGE,  \
 	     HYPER_BEAM,   RAGE,         MIMIC,        ICE_PUNCH,  REFLECT,      \
-	     ACCELEROCK,         FIRE_PUNCH,   SKY_ATTACK,   ICE_FANG,         FLAMETHROWER,   \
+	     ACCELEROCK,         FIRE_PUNCH,   DRAGON_CLAW,   ICE_FANG,         FLAMETHROWER,   \
 	     SUBSTITUTE,   FLY
 	; end
 

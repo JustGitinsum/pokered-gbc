@@ -19,7 +19,7 @@ DEF FIRST_SE_ID EQU const_value
 	const SE_SHAKE_ENEMY_HUD           ; $E4
 	const SE_SLIDE_MON_HALF_OFF        ; $E5 used in Softboiled
 	const SE_PETALS_FALLING            ; $E6 used in Petal Dance
-	const SE_LEAVES_FALLING            ; $E7 used in MAGICAL LEAF
+	const SE_LEAVES_FALLING            ; $E7 used in RAZOR LEAF
 	const SE_TRANSFORM_MON             ; $E8 used in Transform
 	const SE_SLIDE_MON_DOWN_AND_HIDE   ; $E9 used in Acid Armor
 	const SE_MINIMIZE_MON              ; $EA used in Minimize

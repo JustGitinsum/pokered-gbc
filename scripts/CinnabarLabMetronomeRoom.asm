@@ -15,7 +15,7 @@ CinnabarLabMetronomeRoomScientist1Text:
 	jr nz, .got_item
 	ld hl, .Text
 	call PrintText
-	lb bc, TM_METRONOME, 1
+	lb bc, TM_PLAY_ROUGH, 1
 	call GiveItem
 	jr nc, .bag_full
 	ld hl, .ReceivedTM35Text

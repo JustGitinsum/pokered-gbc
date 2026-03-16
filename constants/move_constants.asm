@@ -37,7 +37,7 @@
 	const HEADBUTT     ; 1d
 	const HORN_ATTACK  ; 1e
 	const FURY_ATTACK  ; 1f
-	const HORN_DRILL   ; 20
+	const PLAY_ROUGH   ; 20
 	const TACKLE       ; 21
 	const BODY_SLAM    ; 22
 	const WRAP         ; 23
@@ -80,12 +80,12 @@
 	const GIGA_DRAIN   ; 48
 	const LEECH_SEED   ; 49
 	const GROWTH       ; 4a
-	const MAGICAL_LEAF   ; 4b
+	const RAZOR_LEAF   ; 4b
 	const ENERGY_BALL    ; 4c
 	const POISONPOWDER ; 4d
 	const STUN_SPORE   ; 4e
 	const SLEEP_POWDER ; 4f
-	const PETAL_DANCE  ; 50
+	const MAGICAL_LEAF  ; 50
 	const STRING_SHOT  ; 51
 	const DRAGON_RAGE  ; 52
 	const FIRE_SPIN    ; 53
@@ -194,6 +194,13 @@
 	const SIGNAL_BEAM
 	const LUNGE
 	const ELECTROWEB
+	const STEEL_WING
+	const LEAF_BLADE
+	const RAGE_FIST
+	const SLUDGE_BOMB
+	const DARK_PULSE
+	const MOONBLAST
+	const DRAGON_PULSE
 	const STRUGGLE     ; a5
 DEF NUM_ATTACKS EQU const_value - 1
 

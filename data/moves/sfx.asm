@@ -80,7 +80,7 @@ MoveSoundTable:
 	db SFX_BATTLE_1C,          $00, $80 ; POISONPOWDER
 	db SFX_BATTLE_1C,          $11, $a0 ; STUN_SPORE
 	db SFX_BATTLE_1C,          $01, $c0 ; SLEEP_POWDER
-	db SFX_BATTLE_13,          $14, $c0 ; PETAL_DANCE
+	db SFX_BATTLE_13,          $14, $c0 ; MAGICAL_LEAF
 	db SFX_BATTLE_1B,          $02, $a0 ; STRING_SHOT
 	db SFX_BATTLE_29,          $f0, $80 ; DRAGON_RAGE
 	db SFX_BATTLE_29,          $20, $c0 ; FIRE_SPIN
@@ -188,7 +188,14 @@ MoveSoundTable:
 	db SFX_SUPER_EFFECTIVE,    $10, $a0 ; POUNCE
 	db SFX_BATTLE_36,          $00, $80 ; SIGNAL_BEAM
 	db SFX_BATTLE_20,          $00, $c0 ; LUNGE
-	db SFX_BATTLE_09,          $00, $40 ; ELECTROWEB	
+	db SFX_BATTLE_09,          $00, $40 ; ELECTROWEB
+	db SFX_BATTLE_12,          $10, $a0 ; STEEL_WING
+	db SFX_BATTLE_34,          $00, $80 ; LEAF_BLADE
+	db SFX_FAINT_FALL,         $ff, $04 ; RAGE_FIST
+	db SFX_BATTLE_34,          $00, $40 ; SLUDGE_BOMB
+	db SFX_BATTLE_09,          $f0, $40 ; DARK_PULSE
+	db SFX_BATTLE_36,          $00, $80 ; MoonblastAnim
+	db SFX_BATTLE_36,          $00, $80 ; DRAGON_PULSE
 	db SFX_BATTLE_0B,          $00, $80 ; STRUGGLE
 	assert_table_length NUM_ATTACKS
 	db SFX_BATTLE_0B,          $00, $80

@@ -14,11 +14,11 @@ ELSE
 ENDC
 	dw BellsproutPicFront, BellsproutPicBack
 
-	db VINE_WHIP, GROWTH, NO_MOVE, NO_MOVE ; level 1 learnset
+	db VINE_WHIP, GROWTH, ACID, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm SWORDS_DANCE, TOXIC,        BULLDOZE,    DOUBLE_EDGE,  RAGE,         \
+	tmhm SWORDS_DANCE, TOXIC,        BODY_SLAM,    DOUBLE_EDGE,  RAGE,         \
 	     GIGA_DRAIN,   ENERGY_BALL,    MIMIC,        ICE_PUNCH,  REFLECT,      \
 	     ACCELEROCK,         ICE_FANG,         SUBSTITUTE,   CUT
 	; end

@@ -18,10 +18,10 @@ ENDC
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        BULLDOZE,    HYPER_BEAM,   RAGE,         THUNDERFANG,  \
-	     THUNDER,      TELEPORT,     MIMIC,        ICE_PUNCH,  REFLECT,      \
-	     ACCELEROCK,         SELFDESTRUCT, SWIFT,        FIRE_PUNCH,   ICE_FANG,         \
-	     THUNDER_WAVE, EXPLOSION,    SUBSTITUTE,   FLASH
+	tmhm TOXIC,        BODY_SLAM,    HYPER_BEAM,   RAGE,         THUNDERFANG,  \
+	     THUNDER,      BRICK_BREAK,     MIMIC,        ICE_PUNCH,  REFLECT,      \
+	     ACCELEROCK,         LEAF_BLADE, STEEL_WING,        FIRE_PUNCH,   ICE_FANG,         \
+	     THUNDER_WAVE, AURA_SPHERE,    SUBSTITUTE,   FLASH
 	; end
 
 	db BANK(ElectrodePicFront)

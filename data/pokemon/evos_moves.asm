@@ -211,7 +211,7 @@ RhydonEvosMoves:
 	db 30, STOMP
 	db 35, TAIL_WHIP
 	db 40, FURY_ATTACK
-	db 48, HORN_DRILL
+	db 48, PLAY_ROUGH
 	db 55, LEER
 	db 64, BODY_SLAM
 	db 0
@@ -237,7 +237,7 @@ NidoranMEvosMoves:
 	db 10, FOCUS_ENERGY
 	db 12, DOUBLE_KICK
 	db 29, FURY_ATTACK
-	db 36, HORN_DRILL
+	db 36, PLAY_ROUGH
 	db 0
 
 ClefairyEvosMoves:
@@ -426,7 +426,7 @@ RhyhornEvosMoves:
 	db 30, STOMP
 	db 35, TAIL_WHIP
 	db 40, FURY_ATTACK
-	db 45, HORN_DRILL
+	db 45, PLAY_ROUGH
 	db 50, LEER
 	db 55, BODY_SLAM
 	db 0
@@ -773,12 +773,16 @@ HitmonchanEvosMoves:
 ArbokEvosMoves:
 ; Evolutions
 	db 0
-; Learnset
-	db 10, POISON_STING
-	db 17, BITE
-	db 27, GLARE
-	db 36, SCREECH
-	db 47, ACID
+; Learnset from gen9
+	db 4, POISON_STING
+	db 9, BITE
+	db 12, GLARE
+	db 17, SCREECH
+	db 20, ACID
+	db 22, CRUNCH
+	db 33, LEECH_LIFE
+	db 39, SLUDGE_BOMB
+	db 51, HAZE
 	db 0
 
 ParasectEvosMoves:
@@ -1459,12 +1463,14 @@ EkansEvosMoves:
 ; Evolutions
 	db EVOLVE_LEVEL, 22, ARBOK
 	db 0
-; Learnset
-	db 10, POISON_STING
-	db 17, BITE
-	db 24, GLARE
-	db 31, SCREECH
-	db 38, ACID
+; Learnset from gen9
+	db 4, POISON_STING
+	db 9, BITE
+	db 12, GLARE
+	db 17, SCREECH
+	db 20, ACID
+	db 33, SLUDGE_BOMB
+	db 41, HAZE
 	db 0
 
 ParasEvosMoves:
@@ -1559,7 +1565,7 @@ PrimeapeEvosMoves:
 	db 18, SUCKER_PUNCH
 	db 22, BULLDOZE
 	db 28, HEADBUTT
-;;;	db 35, RAGE_FIST
+	db 35, RAGE_FIST
 	db 40, SCREECH
 	db 44, CLOSE_COMBAT
 ;;;	db 50, OUTRAGE
@@ -1999,7 +2005,7 @@ GoldeenEvosMoves:
 	db 24, HORN_ATTACK
 	db 30, FURY_ATTACK
 	db 37, WATERFALL
-	db 45, HORN_DRILL
+	db 45, PLAY_ROUGH
 	db 54, AGILITY
 	db 0
 
@@ -2011,7 +2017,7 @@ SeakingEvosMoves:
 	db 24, HORN_ATTACK
 	db 30, FURY_ATTACK
 	db 39, WATERFALL
-	db 48, HORN_DRILL
+	db 48, PLAY_ROUGH
 	db 54, AGILITY
 	db 0
 
@@ -2104,7 +2110,7 @@ NidorinoEvosMoves:
 	db 1, POISON_STING
 	db 23, FOCUS_ENERGY
 	db 32, FURY_ATTACK
-	db 41, HORN_DRILL
+	db 41, PLAY_ROUGH
 	db 0
 
 NidorinaEvosMoves:
@@ -2293,7 +2299,7 @@ OddishEvosMoves:
 	db 17, STUN_SPORE
 	db 19, SLEEP_POWDER
 	db 24, ACID
-	db 33, PETAL_DANCE
+	db 33, MAGICAL_LEAF
 	db 46, ENERGY_BALL
 	db 0
 
@@ -2306,7 +2312,7 @@ GloomEvosMoves:
 	db 17, STUN_SPORE
 	db 19, SLEEP_POWDER
 	db 28, ACID
-	db 38, PETAL_DANCE
+	db 38, MAGICAL_LEAF
 	db 52, ENERGY_BALL
 	db 0
 
@@ -2324,13 +2330,15 @@ BellsproutEvosMoves:
 	db EVOLVE_LEVEL, 21, WEEPINBELL
 	db 0
 ; Learnset
-	db 13, WRAP
+	db 10, VINE_WHIP
+	db 13, SLEEP_POWDER
 	db 15, POISONPOWDER
-	db 18, SLEEP_POWDER
-	db 21, STUN_SPORE
-	db 26, ACID
-	db 33, MAGICAL_LEAF
-	db 42, SLAM
+	db 17, STUN_SPORE
+	db 19, SLUDGE
+	db 23, MAGICAL_LEAF
+	db 33, LEECH_LIFE
+	db 40, SLUDGE_BOMB
+	db 44, LEAF_BLADE
 	db 0
 
 WeepinbellEvosMoves:
@@ -2338,20 +2346,28 @@ WeepinbellEvosMoves:
 	db EVOLVE_ITEM, LEAF_STONE, 1, VICTREEBEL
 	db 0
 ; Learnset
-	db 13, WRAP
+	db 10, VINE_WHIP
+	db 13, SLEEP_POWDER
 	db 15, POISONPOWDER
-	db 18, SLEEP_POWDER
-	db 23, STUN_SPORE
-	db 29, ACID
-	db 38, MAGICAL_LEAF
-	db 49, SLAM
+	db 17, STUN_SPORE
+	db 19, SLUDGE
+	db 23, MAGICAL_LEAF
+	db 33, LEECH_LIFE
+	db 40, SLUDGE_BOMB
+	db 44, LEAF_BLADE
 	db 0
 
 VictreebelEvosMoves:
 ; Evolutions
 	db 0
-; Learnset
-	db 13, WRAP
+; Learnset from gen9
+	db 10, VINE_WHIP
+	db 13, SLEEP_POWDER
 	db 15, POISONPOWDER
-	db 18, SLEEP_POWDER
+	db 17, STUN_SPORE
+	db 19, SLUDGE
+	db 23, MAGICAL_LEAF
+	db 33, LEECH_LIFE
+	db 40, SLUDGE_BOMB
+	db 44, LEAF_BLADE
 	db 0

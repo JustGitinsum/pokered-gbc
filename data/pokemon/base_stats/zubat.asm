@@ -18,9 +18,9 @@ ENDC
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm AIR_SLASH,   SILVER_WIND,    TOXIC,        BULLDOZE,    DOUBLE_EDGE,  \
+	tmhm AIR_SLASH,   SILVER_WIND,    TOXIC,        BODY_SLAM,    DOUBLE_EDGE,  \
 	     RAGE,         GIGA_DRAIN,   MIMIC,        ICE_PUNCH,  ACCELEROCK,         \
-	     SWIFT,        ICE_FANG,         SUBSTITUTE
+	     STEEL_WING,        ICE_FANG,         SUBSTITUTE
 	; end
 
 	db BANK(ZubatPicFront)

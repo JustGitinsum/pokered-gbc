@@ -18,10 +18,10 @@ ENDC
 	db GROWTH_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm AIR_SLASH,   SILVER_WIND,    TOXIC,        BULLDOZE,    DOUBLE_EDGE,  \
+	tmhm AIR_SLASH,   SILVER_WIND,    TOXIC,        BODY_SLAM,    DOUBLE_EDGE,  \
 	     BUBBLEBEAM,   TRAILBLAZE,    ICE_BEAM,     BLIZZARD,     HYPER_BEAM,   \
 	     RAGE,         MIMIC,        ICE_PUNCH,  REFLECT,      ACCELEROCK,         \
-	     SWIFT,        SKY_ATTACK,   ICE_FANG,         SUBSTITUTE,   FLY
+	     STEEL_WING,        DRAGON_CLAW,   ICE_FANG,         SUBSTITUTE,   FLY
 	; end
 
 	db BANK(ArticunoPicFront)
