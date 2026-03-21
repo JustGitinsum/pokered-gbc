@@ -50,7 +50,7 @@ Moves:
 	move THRASH,       THRASH_PETAL_DANCE_EFFECT,   90, NORMAL,       100, 20
 	move DOUBLE_EDGE,  RECOIL_EFFECT,              100, NORMAL,       100, 15
 	move TAIL_WHIP,    DEFENSE_DOWN1_EFFECT,         0, NORMAL,       100, 30
-	move POISON_STING, POISON_SIDE_EFFECT1,         15, POISON,       100, 35
+	move POISON_FANG,  POISON_SIDE_EFFECT1,         50, POISON,       100, 35
 	move TWINEEDLE,    TWINEEDLE_EFFECT,            25, BUG,          100, 20
 	move PIN_MISSILE,  TWO_TO_FIVE_ATTACKS_EFFECT,  25, BUG,           95, 20
 	move LEER,         DEFENSE_DOWN1_EFFECT,         0, NORMAL,       100, 30
@@ -206,5 +206,8 @@ Moves:
 	move DARK_PULSE,   FLINCH_SIDE_EFFECT1,         80, DARK,         100, 15
 	move MOONBLAST,    SPECIAL_DOWN_SIDE_EFFECT,    95, FAIRY,        100, 10
 	move DRAGON_PULSE, NO_ADDITIONAL_EFFECT,        90, DRAGON,       100, 10
+	move MIGHTY_CLEAVE,NO_ADDITIONAL_EFFECT,        95, ROCK,         100, 10
+	move POWER_GEM,    NO_ADDITIONAL_EFFECT,        80, ROCK,         100, 20
+	move THIEF,        PAY_DAY_EFFECT,              60, DARK,         100, 25
 	move STRUGGLE,     RECOIL_EFFECT,               50, NORMAL,       100, 10
 	assert_table_length NUM_ATTACKS

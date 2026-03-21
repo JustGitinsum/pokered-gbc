@@ -39,7 +39,7 @@ AttackAnimationPointers:
 	dw ThrashAnim
 	dw DoubleEdgeAnim
 	dw TailWhipAnim
-	dw PoisonStingAnim
+	dw PoisonFangAnim
 	dw TwineedleAnim
 	dw PinMissileAnim
 	dw LeerAnim
@@ -195,6 +195,9 @@ AttackAnimationPointers:
 	dw DarkPulseAnim
 	dw MoonblastAnim
 	dw DragonPulseAnim
+	dw MightyCleaveAnim
+	dw PowerGemAnim
+	dw ThiefAnim
 	dw StruggleAnim
 	assert_table_length NUM_ATTACKS
 
@@ -289,8 +292,10 @@ AerialAceAnim:
 	battle_anim AERIAL_ACE, SUBANIM_1_STAR_BIG_MOVING, 1, 6
 	db -1 ; end
 
+ThiefAnim:
 PayDayAnim:
 	battle_anim POUND, SUBANIM_0_STAR_TWICE, 0, 8
+	battle_anim NO_MOVE, SE_DARK_SCREEN_FLASH
 	battle_anim PAY_DAY, SUBANIM_0_COIN_BOUNCE, 0, 4
 	db -1 ; end
 
@@ -467,6 +472,7 @@ ThrashAnim:
 	battle_anim THRASH, SUBANIM_1_STAR_BIG_MOVING, 1, 6
 	db -1 ; end
 
+MightyCleaveAnim:
 DoubleEdgeAnim:
 	battle_anim LEECH_SEED, SE_LIGHT_SCREEN_PALETTE
 	battle_anim NO_MOVE, SUBANIM_0_CIRCLES_CENTERING, 0, 6
@@ -486,8 +492,8 @@ TailWhipAnim:
 	battle_anim AMNESIA, SE_RESET_MON_POSITION
 	db -1 ; end
 
-PoisonStingAnim:
-	battle_anim POISON_STING, SUBANIM_0_STAR, 0, 6
+PoisonFangAnim:
+	battle_anim POISON_FANG, SUBANIM_0_STAR, 0, 6
 	db -1 ; end
 
 TwineedleAnim:
@@ -616,8 +622,6 @@ AuroraBeamAnim:
 	db -1 ; end
 
 DarkPulseAnim:
-MoonblastAnim:
-DragonPulseAnim:
 HyperBeamAnim:
 	battle_anim LEECH_SEED, SE_DARK_SCREEN_PALETTE
 	battle_anim NO_MOVE, SE_SPIRAL_BALLS_INWARD
@@ -626,6 +630,14 @@ HyperBeamAnim:
 	battle_anim NO_MOVE, SE_DARK_SCREEN_FLASH
 	battle_anim AERIAL_ACE, SUBANIM_1_STAR_BIG_MOVING, 1, 6
 	battle_anim NO_MOVE, SE_RESET_SCREEN_PALETTE
+	db -1 ; end
+
+MoonblastAnim:
+DragonPulseAnim:
+	battle_anim NO_MOVE, SE_SPIRAL_BALLS_INWARD
+	battle_anim ENERGY_BALL, SUBANIM_0_BEAM, 0, 2
+	battle_anim NO_MOVE, SE_DARK_SCREEN_FLASH
+	battle_anim AERIAL_ACE, SUBANIM_1_STAR_BIG_MOVING, 1, 6
 	db -1 ; end
 
 PeckAnim:
@@ -1134,6 +1146,7 @@ SporeAnim:
 	battle_anim SPORE, SUBANIM_0_CIRCLES_FALLING, 0, 6
 	db -1 ; end
 
+PowerGemAnim:
 FlashCannonAnim:
 FlashAnim:
 	battle_anim LEECH_SEED, SE_LIGHT_SCREEN_PALETTE

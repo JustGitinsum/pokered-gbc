@@ -160,7 +160,7 @@ DEF TM01 EQU const_value
 	add_tm AERIAL_ACE   ; $C9 TM01
 	add_tm AIR_SLASH    ; $CA TM02
 	add_tm SWORDS_DANCE ; $CB TM03
-	add_tm SILVER_WIND  ; $CC TM04
+	add_tm THIEF        ; $CC TM04
 	add_tm CLOSE_COMBAT ; $CD TM05
 	add_tm TOXIC        ; $CE TM06
 	add_tm METRONOME    ; $CF TM07

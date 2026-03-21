@@ -39,7 +39,7 @@ MoveNames::
 	li "THRASH"
 	li "DOUBLE-EDGE"
 	li "TAIL WHIP"
-	li "POISON STING"
+	li "POISON FANG"
 	li "TWINEEDLE"
 	li "PIN MISSILE"
 	li "LEER"
@@ -195,5 +195,8 @@ MoveNames::
 	li "DARK PULSE"
 	li "MOON BLAST"
 	li "DRAGON PULSE"
+	li "MIGHTYCLEAVE"
+	li "POWER GEM"
+	li "THIEF"
 	li "STRUGGLE"
 	assert_list_length NUM_ATTACKS

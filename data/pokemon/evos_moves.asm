@@ -283,7 +283,7 @@ NidokingEvosMoves:
 	db 0
 ; Learnset
 	db 8, HORN_ATTACK
-	db 14, POISON_STING
+	db 14, POISON_FANG
 	db 35, THRASH
 	db 0
 
@@ -387,7 +387,7 @@ NidoranFEvosMoves:
 	db 0
 ; Learnset
 	db 8, SCRATCH
-	db 14, POISON_STING
+	db 14, POISON_FANG
 	db 21, TAIL_WHIP
 	db 29, BITE
 	db 36, FURY_SWIPES
@@ -399,7 +399,7 @@ NidoqueenEvosMoves:
 	db 0
 ; Learnset
 	db 8, SCRATCH
-	db 14, POISON_STING
+	db 14, POISON_FANG
 	db 23, BODY_SLAM
 	db 0
 
@@ -503,7 +503,7 @@ TentacoolEvosMoves:
 ; Learnset
 	db 7, SUPERSONIC
 	db 13, WRAP
-	db 18, POISON_STING
+	db 18, POISON_FANG
 	db 22, WATER_GUN
 	db 27, CONSTRICT
 	db 33, BARRIER
@@ -550,7 +550,7 @@ StaryuEvosMoves:
 	db 24, PSYBEAM
 	db 28, BUBBLEBEAM
 	db 32, LIGHT_SCREEN
-;;;	db 36, POWER_GEM
+	db 36, POWER_GEM
 	db 40, PSYCHIC_M
 	db 48, RECOVER
 	db 56, HYDRO_PUMP
@@ -715,7 +715,7 @@ ChanseyEvosMoves:
 	db 38, MINIMIZE
 	db 44, DEFENSE_CURL
 	db 48, LIGHT_SCREEN
-	db 54, DOUBLE_EDGE
+	db 54, BODY_SLAM
 	db 0
 
 MachokeEvosMoves:
@@ -774,7 +774,7 @@ ArbokEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset from gen9
-	db 4, POISON_STING
+	db 4, POISON_FANG
 	db 9, BITE
 	db 12, GLARE
 	db 17, SCREECH
@@ -1005,7 +1005,7 @@ VenonatEvosMoves:
 	db 29, SLEEP_POWDER
 	db 35, LEECH_LIFE
 	db 37, ZEN_HEADBUTT
-	db 41, POISON_STING
+	db 41, POISON_FANG
 	db 47, PSYCHIC_M
 	db 0
 
@@ -1304,7 +1304,7 @@ SandshrewEvosMoves:
 	db EVOLVE_LEVEL, 22, SANDSLASH
 	db 0
 ; Learnset
-	db 3, POISON_STING
+	db 3, POISON_FANG
 	db 6, SAND_ATTACK
 	db 9, BULLDOZE
 	db 15, RAPID_SPIN
@@ -1321,7 +1321,7 @@ SandslashEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 3, POISON_STING
+	db 3, POISON_FANG
 	db 6, SAND_ATTACK
 	db 9, BULLDOZE
 	db 15, RAPID_SPIN
@@ -1455,7 +1455,7 @@ ZubatEvosMoves:
 	db 22, HYPNOSIS
 	db 26, HAZE
 	db 30, CONFUSE_RAY
-	db 34, POISON_STING
+	db 34, POISON_FANG
 	db 50, LEECH_LIFE
 	db 0
 
@@ -1464,7 +1464,7 @@ EkansEvosMoves:
 	db EVOLVE_LEVEL, 22, ARBOK
 	db 0
 ; Learnset from gen9
-	db 4, POISON_STING
+	db 4, POISON_FANG
 	db 9, BITE
 	db 12, GLARE
 	db 17, SCREECH
@@ -1593,7 +1593,7 @@ VenomothEvosMoves:
 	db 29, SLEEP_POWDER
 	db 37, LEECH_LIFE
 	db 41, ZEN_HEADBUTT
-	db 47, POISON_STING
+	db 47, POISON_FANG
 	db 55, PSYCHIC_M
 	db 0
 
@@ -1709,7 +1709,7 @@ GolbatEvosMoves:
 	db 22, HYPNOSIS
 	db 26, HAZE
 	db 30, CONFUSE_RAY
-	db 34, POISON_STING
+	db 34, POISON_FANG
 	db 50, LEECH_LIFE
 	db 0
 
@@ -1858,7 +1858,6 @@ MarowakEvosMoves:
 	db 38, THRASH
 	db 40, BONEMERANG
 	db 44, SWORDS_DANCE
-	db 48, DOUBLE_EDGE
 	db 0
 
 MissingNo92EvosMoves:
@@ -1939,7 +1938,7 @@ StarmieEvosMoves:
 	db 24, PSYBEAM
 	db 28, BUBBLEBEAM
 	db 32, LIGHT_SCREEN
-;;;	db 36, POWER_GEM
+	db 36, POWER_GEM
 	db 40, PSYCHIC_M
 	db 48, RECOVER
 	db 56, HYDRO_PUMP
@@ -1982,7 +1981,7 @@ TentacruelEvosMoves:
 ; Learnset
 	db 7, SUPERSONIC
 	db 13, WRAP
-	db 18, POISON_STING
+	db 18, POISON_FANG
 	db 22, WATER_GUN
 	db 27, CONSTRICT
 	db 35, BARRIER
@@ -2085,7 +2084,7 @@ RattataEvosMoves:
 	db 16, HYPER_FANG
 	db 23, FOCUS_ENERGY
 	db 28, SUPER_FANG
-	db 31, DOUBLE_EDGE
+	db 31, BODY_SLAM
 	db 0
 
 RaticateEvosMoves:
@@ -2097,7 +2096,7 @@ RaticateEvosMoves:
 	db 16, HYPER_FANG
 	db 23, FOCUS_ENERGY
 	db 28, SUPER_FANG
-	db 31, DOUBLE_EDGE
+	db 31, BODY_SLAM
 	db 0
 
 NidorinoEvosMoves:
@@ -2107,7 +2106,7 @@ NidorinoEvosMoves:
 ; Learnset
 	db 1, HORN_ATTACK
 	db 1, DOUBLE_KICK
-	db 1, POISON_STING
+	db 1, POISON_FANG
 	db 23, FOCUS_ENERGY
 	db 32, FURY_ATTACK
 	db 41, PLAY_ROUGH
@@ -2119,7 +2118,7 @@ NidorinaEvosMoves:
 	db 0
 ; Learnset
 	db 8, SCRATCH
-	db 14, POISON_STING
+	db 14, POISON_FANG
 	db 23, TAIL_WHIP
 	db 32, BITE
 	db 41, FURY_SWIPES
@@ -2138,7 +2137,6 @@ GeodudeEvosMoves:
 	db 28, ROLLOUT
 	db 34, EARTHQUAKE
 	db 36, EXPLOSION
-	db 40, DOUBLE_EDGE
 	db 42, ROCK_SLIDE
 	db 0
 

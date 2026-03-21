@@ -18,7 +18,7 @@
 	const SCRATCH      ; 0a
 	const VICEGRIP     ; 0b
 	const GUILLOTINE   ; 0c
-	const AIR_SLASH   ; 0d
+	const AIR_SLASH    ; 0d
 	const SWORDS_DANCE ; 0e
 	const CUT          ; 0f
 	const GUST         ; 10
@@ -41,11 +41,11 @@
 	const TACKLE       ; 21
 	const BODY_SLAM    ; 22
 	const WRAP         ; 23
-	const BULLDOZE    ; 24
+	const BULLDOZE     ; 24
 	const THRASH       ; 25
 	const DOUBLE_EDGE  ; 26
 	const TAIL_WHIP    ; 27
-	const POISON_STING ; 28
+	const POISON_FANG  ; 28
 	const TWINEEDLE    ; 29
 	const PIN_MISSILE  ; 2a
 	const LEER         ; 2b
@@ -201,6 +201,9 @@
 	const DARK_PULSE
 	const MOONBLAST
 	const DRAGON_PULSE
+	const MIGHTY_CLEAVE
+	const POWER_GEM
+	const THIEF
 	const STRUGGLE     ; a5
 DEF NUM_ATTACKS EQU const_value - 1
 

@@ -40,7 +40,7 @@ MoveSoundTable:
 	db SFX_BATTLE_22,          $11, $c0 ; THRASH
 	db SFX_SUPER_EFFECTIVE,    $20, $c0 ; DOUBLE_EDGE
 	db SFX_BATTLE_21,          $00, $80 ; TAIL_WHIP
-	db SFX_BATTLE_1B,          $00, $80 ; POISON_STING
+	db SFX_BATTLE_1B,          $00, $80 ; POISON_FANG
 	db SFX_BATTLE_1B,          $20, $c0 ; TWINEEDLE
 	db SFX_BATTLE_19,          $00, $80 ; PIN_MISSILE
 	db SFX_BATTLE_31,          $ff, $40 ; LEER
@@ -196,6 +196,9 @@ MoveSoundTable:
 	db SFX_BATTLE_09,          $f0, $40 ; DARK_PULSE
 	db SFX_BATTLE_36,          $00, $80 ; MoonblastAnim
 	db SFX_BATTLE_36,          $00, $80 ; DRAGON_PULSE
+	db SFX_BATTLE_36,          $f0, $20 ; MIGHTY_CLEAVE
+	db SFX_BATTLE_36,          $f0, $20 ; POWER_GEM
+	db SFX_SILPH_SCOPE,        $00, $ff ; THIEF
 	db SFX_BATTLE_0B,          $00, $80 ; STRUGGLE
 	assert_table_length NUM_ATTACKS
 	db SFX_BATTLE_0B,          $00, $80

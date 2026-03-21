@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw WeedlePicFront, WeedlePicBack
 
-	db POISON_STING, STRING_SHOT, NO_MOVE, NO_MOVE ; level 1 learnset
+	db POISON_FANG, STRING_SHOT, NO_MOVE, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset

@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw NidokingPicFront, NidokingPicBack
 
-	db TACKLE, HORN_ATTACK, POISON_STING, THRASH ; level 1 learnset
+	db TACKLE, HORN_ATTACK, POISON_FANG, THRASH ; level 1 learnset
 	db GROWTH_MEDIUM_SLOW ; growth rate
 
 	; tm/hm learnset
