@@ -198,6 +198,8 @@ Moves:
 	move POUNCE,       SPEED_DOWN_SIDE_EFFECT,      50, BUG,          100, 20
 	move SIGNAL_BEAM,  CONFUSION_SIDE_EFFECT,       90, BUG,          100, 15
 	move LUNGE,        ATTACK_DOWN_SIDE_EFFECT,     80, BUG,          100, 15
+	move X_SCISSOR,	   NO_ADDITIONAL_EFFECT,	    95,	BUG,	      100, 15
+	move OUTRAGE,	   THRASH_PETAL_DANCE_EFFECT,  120,	DRAGON,	      100, 10
 	move ELECTROWEB,   SPEED_DOWN_SIDE_EFFECT,      55, ELECTRIC,      95, 15
 	move STEEL_WING,   NO_ADDITIONAL_EFFECT,        70, STEEL,        100, 15
 	move LEAF_BLADE,   NO_ADDITIONAL_EFFECT,        90, GRASS,        100, 15
@@ -209,5 +211,8 @@ Moves:
 	move MIGHTY_CLEAVE,NO_ADDITIONAL_EFFECT,        95, ROCK,         100, 10
 	move POWER_GEM,    NO_ADDITIONAL_EFFECT,        80, ROCK,         100, 20
 	move THIEF,        PAY_DAY_EFFECT,              60, DARK,         100, 25
+	move POISON_JAB,   POISON_SIDE_EFFECT2,         80, POISON,       100, 20
+	move DRAIN_KISS,   DRAIN_HP_EFFECT,             50, FAIRY,        100, 35
+	move METAL_CLAW,   NO_ADDITIONAL_EFFECT,        50, STEEL,         95, 35
 	move STRUGGLE,     RECOIL_EFFECT,               50, NORMAL,       100, 10
 	assert_table_length NUM_ATTACKS

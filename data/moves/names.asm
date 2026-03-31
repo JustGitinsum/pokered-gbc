@@ -187,6 +187,8 @@ MoveNames::
 	li "POUNCE"
 	li "SIGNAL BEAM"
 	li "LUNGE"
+	li "X-SCISSOR"
+	li "OUTRAGE"
 	li "ELECTROWEB"
 	li "STEEL WING"
 	li "LEAF BLADE"
@@ -198,5 +200,8 @@ MoveNames::
 	li "MIGHTYCLEAVE"
 	li "POWER GEM"
 	li "THIEF"
+	li "POISON JAB"
+	li "DRAIN KISS"
+	li "METAL CLAW"
 	li "STRUGGLE"
 	assert_list_length NUM_ATTACKS

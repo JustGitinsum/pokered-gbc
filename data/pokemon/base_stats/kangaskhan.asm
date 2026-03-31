@@ -14,12 +14,12 @@ ELSE
 ENDC
 	dw KangaskhanPicFront, KangaskhanPicBack
 
-	db DOUBLESLAP, RAGE, NO_MOVE, NO_MOVE ; level 1 learnset
+	db COMET_PUNCH, LEER, NO_MOVE, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
 	tmhm AERIAL_ACE,   CLOSE_COMBAT,    TOXIC,        FIRE_FANG,    BODY_SLAM,    \
-	     DOUBLE_EDGE,  BUBBLEBEAM,   TRAILBLAZE,    ICE_BEAM,     BLIZZARD,     \
+	     SLUDGE_BOMB,  BUBBLEBEAM,   TRAILBLAZE,    ICE_BEAM,     BLIZZARD,     \
 	     HYPER_BEAM,   EXTREMESPEED,   WATERFALL,      SEISMIC_TOSS, RAGE,         \
 	     THUNDERFANG,  THUNDER,      EARTHQUAKE,   EARTH_POWER,      MIMIC,        \
 	     ICE_PUNCH,  ACCELEROCK,         FIRE_BLAST,   FIRE_PUNCH,   ICE_FANG,         \

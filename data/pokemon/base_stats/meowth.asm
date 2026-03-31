@@ -14,11 +14,11 @@ ELSE
 ENDC
 	dw MeowthPicFront, MeowthPicBack
 
-	db SCRATCH, GROWL, NO_MOVE, NO_MOVE ; level 1 learnset
+	db SCRATCH, GROWL, PAY_DAY, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        FIRE_FANG,    BODY_SLAM,    DOUBLE_EDGE,  BUBBLEBEAM,   \
+	tmhm TOXIC,        FIRE_FANG,    BODY_SLAM,    SLUDGE_BOMB,  BUBBLEBEAM,   \
 	     TRAILBLAZE,    SIGNAL_BEAM,      RAGE,         THUNDERFANG,  THUNDER,      \
 	     MIMIC,        ICE_PUNCH,  ACCELEROCK,         STEEL_WING,        FIRE_PUNCH,   \
 	     ICE_FANG,         SUBSTITUTE

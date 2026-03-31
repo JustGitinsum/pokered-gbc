@@ -14,11 +14,11 @@ ELSE
 ENDC
 	dw SandshrewPicFront, SandshrewPicBack
 
-	db SCRATCH, DEFENSE_CURL, NO_MOVE, NO_MOVE ; level 1 learnset
+	db SCRATCH, DEFENSE_CURL, POUNCE, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm SWORDS_DANCE, TOXIC,        FIRE_FANG,    BODY_SLAM,    DOUBLE_EDGE,  \
+	tmhm SWORDS_DANCE, TOXIC,        FIRE_FANG,    BODY_SLAM,    SLUDGE_BOMB,  \
 	     EXTREMESPEED,   SEISMIC_TOSS, RAGE,         EARTHQUAKE,   EARTH_POWER,      \
 	     DIG,          MIMIC,        ICE_PUNCH,  ACCELEROCK,         STEEL_WING,        \
 	     FIRE_PUNCH,   ICE_FANG,         THUNDERBOLT,   SUBSTITUTE,   CUT,          \

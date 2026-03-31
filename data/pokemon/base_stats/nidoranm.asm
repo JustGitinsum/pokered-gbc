@@ -14,11 +14,11 @@ ELSE
 ENDC
 	dw NidoranMPicFront, NidoranMPicBack
 
-	db LEER, TACKLE, POISON_FANG, NO_MOVE ; level 1 learnset
+	db LEER, TACKLE, PECK, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        PLAY_ROUGH,   FIRE_FANG,    BODY_SLAM,    DOUBLE_EDGE,  \
+	tmhm TOXIC,        PLAY_ROUGH,   FIRE_FANG,    BODY_SLAM,    SLUDGE_BOMB,  \
 	     BLIZZARD,     RAGE,         THUNDERFANG,  THUNDER,      MIMIC,        \
 	     ICE_PUNCH,  REFLECT,      ACCELEROCK,         FIRE_PUNCH,   ICE_FANG,         \
 	     SUBSTITUTE

@@ -14,15 +14,15 @@ ELSE
 ENDC
 	dw ChanseyPicFront, ChanseyPicBack
 
-	db POUND, DOUBLESLAP, NO_MOVE, NO_MOVE ; level 1 learnset
+	db POUND, DOUBLESLAP, DEFENSE_CURL, NO_MOVE ; level 1 learnset
 	db GROWTH_FAST ; growth rate
 
 	; tm/hm learnset
 	tmhm AERIAL_ACE,   CLOSE_COMBAT,    TOXIC,        FIRE_FANG,    BODY_SLAM,    \
-	     DOUBLE_EDGE,  BUBBLEBEAM,   TRAILBLAZE,    ICE_BEAM,     BLIZZARD,     \
+	     SLUDGE_BOMB,  BUBBLEBEAM,   TRAILBLAZE,    ICE_BEAM,     BLIZZARD,     \
 	     HYPER_BEAM,   EXTREMESPEED,   WATERFALL,      SEISMIC_TOSS, RAGE,         \
 	     ENERGY_BALL,    THUNDERFANG,  THUNDER,      PSYCHIC_M,    BRICK_BREAK,     \
-	     MIMIC,        ICE_PUNCH,  REFLECT,      ACCELEROCK,         METRONOME,    \
+	     MIMIC,        ICE_PUNCH,  REFLECT,      ACCELEROCK,         X_SCISSOR,    \
 	     THUNDERPUNCH,     FIRE_BLAST,   FIRE_PUNCH,   SOFTBOILED,   ICE_FANG,         \
 	     THUNDER_WAVE, PSYCHO_CUT,      FLAMETHROWER,   SUBSTITUTE,   STRENGTH,     \
 	     FLASH

@@ -44,14 +44,14 @@ _LavenderTownSignText::
 	done
 
 _LavenderTownSilphScopeSignText::
-	text "New SILPH SCOPE!"
+	text "LAVENDER #MON"
+	line "Specialists"
 
-	para "Make the Invisible"
-	line "Plain to See!"
-
-	para "SILPH CO."
+	para "The NAME RATER"
+	line "MOVE RELEARNER"
+	cont "and MOVE DELETER!"
 	done
-
+  
 _LavenderTownPokemonHouseSignText::
 	text "LAVENDER VOLUNTEER"
 	line "#MON HOUSE"

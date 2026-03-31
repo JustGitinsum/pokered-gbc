@@ -19,10 +19,10 @@ ENDC
 
 	; tm/hm learnset
 	tmhm AERIAL_ACE,   CLOSE_COMBAT,    TOXIC,        FIRE_FANG,    BODY_SLAM,    \
-	     DOUBLE_EDGE,  BUBBLEBEAM,   TRAILBLAZE,    ICE_BEAM,     BLIZZARD,     \
+	     SLUDGE_BOMB,  BUBBLEBEAM,   TRAILBLAZE,    ICE_BEAM,     BLIZZARD,     \
 	     EXTREMESPEED,   WATERFALL,      SEISMIC_TOSS, RAGE,         EARTHQUAKE,   \
 	     EARTH_POWER,      PSYCHIC_M,    MIMIC,        ICE_PUNCH,  ACCELEROCK,         \
-	     METRONOME,    FIRE_PUNCH,   ICE_FANG,         PSYCHO_CUT,      SUBSTITUTE,   \
+	     X_SCISSOR,    FIRE_PUNCH,   ICE_FANG,         PSYCHO_CUT,      SUBSTITUTE,   \
 	     SURF,         STRENGTH
 	; end
 

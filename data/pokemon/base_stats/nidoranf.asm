@@ -14,11 +14,11 @@ ELSE
 ENDC
 	dw NidoranFPicFront, NidoranFPicBack
 
-	db GROWL, TACKLE, NO_MOVE, NO_MOVE ; level 1 learnset
+	db GROWL, SCRATCH, NO_MOVE, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        FIRE_FANG,    BODY_SLAM,    DOUBLE_EDGE,  BLIZZARD,     \
+	tmhm TOXIC,        FIRE_FANG,    BODY_SLAM,    SLUDGE_BOMB,  BLIZZARD,     \
 	     RAGE,         THUNDERFANG,  THUNDER,      MIMIC,        ICE_PUNCH,  \
 	     REFLECT,      ACCELEROCK,         FIRE_PUNCH,   ICE_FANG,         SUBSTITUTE
 	; end

@@ -188,6 +188,8 @@ MoveSoundTable:
 	db SFX_SUPER_EFFECTIVE,    $10, $a0 ; POUNCE
 	db SFX_BATTLE_36,          $00, $80 ; SIGNAL_BEAM
 	db SFX_BATTLE_20,          $00, $c0 ; LUNGE
+	db SFX_BATTLE_32,          $08, $e0 ; X_SCISSOR
+	db SFX_BATTLE_36,          $00, $80 ; OUTRAGE
 	db SFX_BATTLE_09,          $00, $40 ; ELECTROWEB
 	db SFX_BATTLE_12,          $10, $a0 ; STEEL_WING
 	db SFX_BATTLE_34,          $00, $80 ; LEAF_BLADE
@@ -199,6 +201,9 @@ MoveSoundTable:
 	db SFX_BATTLE_36,          $f0, $20 ; MIGHTY_CLEAVE
 	db SFX_BATTLE_36,          $f0, $20 ; POWER_GEM
 	db SFX_SILPH_SCOPE,        $00, $ff ; THIEF
+	db SFX_BATTLE_0D,          $f0, $ff ; POISON_JAB
+	db SFX_BATTLE_09,          $88, $10 ; DRAIN_KISS
+	db SFX_NOT_VERY_EFFECTIVE, $01, $ff ; METAL_CLAW
 	db SFX_BATTLE_0B,          $00, $80 ; STRUGGLE
 	assert_table_length NUM_ATTACKS
 	db SFX_BATTLE_0B,          $00, $80

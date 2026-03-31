@@ -14,15 +14,15 @@ ELSE
 ENDC
 	dw JynxPicFront, JynxPicBack
 
-	db POUND, LOVELY_KISS, NO_MOVE, NO_MOVE ; level 1 learnset
+	db POUND, LICK, MIMIC, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
 	tmhm AERIAL_ACE,   CLOSE_COMBAT,    TOXIC,        FIRE_FANG,    BODY_SLAM,    \
-	     DOUBLE_EDGE,  BUBBLEBEAM,   TRAILBLAZE,    ICE_BEAM,     BLIZZARD,     \
+	     SLUDGE_BOMB,  BUBBLEBEAM,   TRAILBLAZE,    ICE_BEAM,     BLIZZARD,     \
 	     HYPER_BEAM,   EXTREMESPEED,   WATERFALL,      SEISMIC_TOSS, RAGE,         \
 	     PSYCHIC_M,    BRICK_BREAK,     MIMIC,        ICE_PUNCH,  REFLECT,      \
-	     ACCELEROCK,         METRONOME,    FIRE_PUNCH,   ICE_FANG,         PSYCHO_CUT,      \
+	     ACCELEROCK,         X_SCISSOR,    FIRE_PUNCH,   ICE_FANG,         PSYCHO_CUT,      \
 	     SUBSTITUTE
 	; end
 

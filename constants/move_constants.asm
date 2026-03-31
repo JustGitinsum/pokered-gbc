@@ -193,6 +193,8 @@
 	const POUNCE
 	const SIGNAL_BEAM
 	const LUNGE
+	const X_SCISSOR
+	const OUTRAGE
 	const ELECTROWEB
 	const STEEL_WING
 	const LEAF_BLADE
@@ -204,6 +206,9 @@
 	const MIGHTY_CLEAVE
 	const POWER_GEM
 	const THIEF
+	const POISON_JAB
+	const DRAIN_KISS
+	const METAL_CLAW
 	const STRUGGLE     ; a5
 DEF NUM_ATTACKS EQU const_value - 1
 

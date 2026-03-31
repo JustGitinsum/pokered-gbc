@@ -18,10 +18,10 @@ ENDC
 	db GROWTH_MEDIUM_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm AERIAL_ACE,   TOXIC,        FIRE_FANG,    BODY_SLAM,    DOUBLE_EDGE,  \
+	tmhm AERIAL_ACE,   TOXIC,        FIRE_FANG,    BODY_SLAM,    SLUDGE_BOMB,  \
 	     EXTREMESPEED,   WATERFALL,      SEISMIC_TOSS, RAGE,         EARTHQUAKE,   \
 	     EARTH_POWER,      DIG,          MIMIC,        ICE_PUNCH,  ACCELEROCK,         \
-	     METRONOME,    LEAF_BLADE, FIRE_BLAST,   ICE_FANG,         AURA_SPHERE,    \
+	     X_SCISSOR,    LEAF_BLADE, FIRE_BLAST,   ICE_FANG,         AURA_SPHERE,    \
 	     THUNDERBOLT,   SUBSTITUTE,   STRENGTH
 	; end
 

@@ -187,6 +187,8 @@ AttackAnimationPointers:
 	dw PounceAnim
 	dw SignalBeamAnim
 	dw LungeAnim
+	dw XScissorAnim
+	dw OutrageAnim
 	dw ElectrowebAnim
 	dw SteelWingAnim
 	dw LeafBladeAnim
@@ -198,6 +200,9 @@ AttackAnimationPointers:
 	dw MightyCleaveAnim
 	dw PowerGemAnim
 	dw ThiefAnim
+	dw PoisonJabAnim
+	dw DrainKissAnim
+	dw MetalClawAnim
 	dw StruggleAnim
 	assert_table_length NUM_ATTACKS
 
@@ -319,6 +324,7 @@ ThunderPunchAnim:
 	battle_anim NO_MOVE, SE_RESET_SCREEN_PALETTE
 	db -1 ; end
 
+MetalClawAnim:
 ScratchAnim:
 	battle_anim SCRATCH, SUBANIM_0_SCRATCHES, 0, 6
 	db -1 ; end
@@ -327,8 +333,20 @@ VicegripAnim:
 	battle_anim VICEGRIP, SUBANIM_0_SLICE_BOTH_SIDES, 0, 8
 	db -1 ; end
 
+DrainKissAnim:
+	battle_anim LOVELY_KISS, SUBANIM_0_HEART_1_MUSIC, 0, 6
+	battle_anim NO_MOVE, SUBANIM_0_CIRCLES_1_SQUARES_CENTERING_ENEMY, 0, 6
+	battle_anim NO_MOVE, SUBANIM_0_CIRCLE_1_SQUARE_TOSS_BACK, 0, 6
+	db -1 ; end
+
 GuillotineAnim:
 	battle_anim GUILLOTINE, SUBANIM_0_SLICE_BOTH_SIDES, 0, 6
+	db -1 ; end
+
+PoisonJabAnim:
+	battle_anim FIRE_PUNCH, SUBANIM_0_STAR_THRICE, 0, 6
+	battle_anim SLUDGE, SUBANIM_1_BLOB_DRIP_ENEMY, 1, 6
+	battle_anim CUT, SE_DARK_SCREEN_FLASH
 	db -1 ; end
 
 AirSlashAnim:
@@ -344,6 +362,13 @@ SwordsDanceAnim:
 CutAnim:
 	battle_anim CUT, SE_DARK_SCREEN_FLASH
 	battle_anim NO_MOVE, SUBANIM_0_SLICE, 0, 4
+	db -1 ; end
+
+XScissorAnim:
+	battle_anim CUT, SE_DARK_SCREEN_FLASH
+	battle_anim NO_MOVE, SUBANIM_0_SLICE, 0, 4
+	battle_anim CUT, SE_DARK_SCREEN_FLASH
+	battle_anim NO_MOVE, SUBANIM2_0_SLICE_HMIRRORED, 0, 4
 	db -1 ; end
 
 GustAnim:
@@ -472,6 +497,11 @@ ThrashAnim:
 	battle_anim THRASH, SUBANIM_1_STAR_BIG_MOVING, 1, 6
 	db -1 ; end
 
+OutrageAnim:
+	battle_anim DRAGON_RAGE, SUBANIM2_0_FIRESPIN_SELF, 1, 10
+	battle_anim THRASH, SUBANIM_1_STAR_BIG_MOVING, 1, 6
+	db -1 ; end
+
 MightyCleaveAnim:
 DoubleEdgeAnim:
 	battle_anim LEECH_SEED, SE_LIGHT_SCREEN_PALETTE
@@ -560,6 +590,7 @@ EmberAnim:
 	db -1 ; end
 
 DragonBreathAnim:
+	battle_anim DRAGON_RAGE, SUBANIM2_0_FIRESPIN_SELF, 1, 10
 	battle_anim FLAMETHROWER, SUBANIM_1_FLAME_BEAM, 1, 6
 	battle_anim FLAMETHROWER, SUBANIM_1_FLAME_COLUMN_1, 1, 6
 	db -1 ; end
@@ -633,8 +664,14 @@ HyperBeamAnim:
 	db -1 ; end
 
 MoonblastAnim:
-DragonPulseAnim:
 	battle_anim NO_MOVE, SE_SPIRAL_BALLS_INWARD
+	battle_anim ENERGY_BALL, SUBANIM_0_BEAM, 0, 2
+	battle_anim NO_MOVE, SE_DARK_SCREEN_FLASH
+	battle_anim AERIAL_ACE, SUBANIM_1_STAR_BIG_MOVING, 1, 6
+	db -1 ; end
+
+DragonPulseAnim:
+	battle_anim DRAGON_RAGE, SUBANIM2_0_FIRESPIN_SELF, 1, 10
 	battle_anim ENERGY_BALL, SUBANIM_0_BEAM, 0, 2
 	battle_anim NO_MOVE, SE_DARK_SCREEN_FLASH
 	battle_anim AERIAL_ACE, SUBANIM_1_STAR_BIG_MOVING, 1, 6
@@ -969,6 +1006,10 @@ FocusEnergyAnim:
 	db -1 ; end
 
 DragonClawAnim:
+	battle_anim DRAGON_RAGE, SUBANIM2_0_FIRESPIN_SELF, 1, 10
+	battle_anim SLASH, SUBANIM_0_SCRATCHES, 0, 6
+	db -1 ; end
+
 BideAnim:
 	battle_anim BIDE, SUBANIM_1_STAR_BIG_MOVING, 1, 6
 	db -1 ; end

@@ -19,7 +19,7 @@ ENDC
 
 	; tm/hm learnset
 	tmhm AIR_SLASH,   TOXIC,        PLAY_ROUGH,   FIRE_FANG,    BODY_SLAM,    \
-	     DOUBLE_EDGE,  BUBBLEBEAM,   TRAILBLAZE,    ICE_BEAM,     BLIZZARD,     \
+	     SLUDGE_BOMB,  BUBBLEBEAM,   TRAILBLAZE,    ICE_BEAM,     BLIZZARD,     \
 	     HYPER_BEAM,   RAGE,         DRAGON_RAGE,  THUNDERFANG,  THUNDER,      \
 	     MIMIC,        ICE_PUNCH,  REFLECT,      ACCELEROCK,         FIRE_BLAST,   \
 	     STEEL_WING,        FIRE_PUNCH,   ICE_FANG,         THUNDER_WAVE, SUBSTITUTE,   \

@@ -14,15 +14,15 @@ ELSE
 ENDC
 	dw ClefablePicFront, ClefablePicBack
 
-	db SING, DOUBLESLAP, MINIMIZE, METRONOME ; level 1 learnset
+	db SING, DOUBLESLAP, MINIMIZE, X_SCISSOR ; level 1 learnset
 	db GROWTH_FAST ; growth rate
 
 	; tm/hm learnset
 	tmhm AERIAL_ACE,   CLOSE_COMBAT,    TOXIC,        FIRE_FANG,    BODY_SLAM,    \
-	     DOUBLE_EDGE,  BUBBLEBEAM,   TRAILBLAZE,    ICE_BEAM,     BLIZZARD,     \
+	     SLUDGE_BOMB,  BUBBLEBEAM,   TRAILBLAZE,    ICE_BEAM,     BLIZZARD,     \
 	     HYPER_BEAM,   EXTREMESPEED,   WATERFALL,      SEISMIC_TOSS, RAGE,         \
 	     ENERGY_BALL,    THUNDERFANG,  THUNDER,      PSYCHIC_M,    BRICK_BREAK,     \
-	     MIMIC,        ICE_PUNCH,  REFLECT,      ACCELEROCK,         METRONOME,    \
+	     MIMIC,        ICE_PUNCH,  REFLECT,      ACCELEROCK,         X_SCISSOR,    \
 	     FIRE_BLAST,   FIRE_PUNCH,   ICE_FANG,         THUNDER_WAVE, PSYCHO_CUT,      \
 	     FLAMETHROWER,   SUBSTITUTE,   STRENGTH,     FLASH
 	; end

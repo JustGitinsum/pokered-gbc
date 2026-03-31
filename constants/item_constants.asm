@@ -163,10 +163,10 @@ DEF TM01 EQU const_value
 	add_tm THIEF        ; $CC TM04
 	add_tm CLOSE_COMBAT ; $CD TM05
 	add_tm TOXIC        ; $CE TM06
-	add_tm METRONOME    ; $CF TM07
+	add_tm X_SCISSOR    ; $CF TM07
 	add_tm FIRE_FANG    ; $D0 TM08
 	add_tm BODY_SLAM    ; $D1 TM09
-	add_tm DOUBLE_EDGE  ; $D2 TM10
+	add_tm SLUDGE_BOMB  ; $D2 TM10
 	add_tm BUBBLEBEAM   ; $D3 TM11
 	add_tm TRAILBLAZE   ; $D4 TM12
 	add_tm ICE_BEAM     ; $D5 TM13 ;moved to Safari Zone

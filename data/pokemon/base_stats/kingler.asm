@@ -14,11 +14,11 @@ ELSE
 ENDC
 	dw KinglerPicFront, KinglerPicBack
 
-	db BUBBLE, LEER, VICEGRIP, NO_MOVE ; level 1 learnset
+	db WATER_GUN, LEER, VICEGRIP, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm SWORDS_DANCE, TOXIC,        FIRE_FANG,    BODY_SLAM,    DOUBLE_EDGE,  \
+	tmhm SWORDS_DANCE, TOXIC,        FIRE_FANG,    BODY_SLAM,    SLUDGE_BOMB,  \
 	     BUBBLEBEAM,   TRAILBLAZE,    ICE_BEAM,     BLIZZARD,     HYPER_BEAM,   \
 	     RAGE,         MIMIC,        ICE_PUNCH,  ACCELEROCK,         ICE_FANG,         \
 	     SUBSTITUTE,   CUT,          SURF,         STRENGTH

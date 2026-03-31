@@ -18,7 +18,7 @@ ENDC
 	db GROWTH_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,        BODY_SLAM,    DOUBLE_EDGE,  BUBBLEBEAM,   TRAILBLAZE,    \
+	tmhm TOXIC,        BODY_SLAM,    SLUDGE_BOMB,  BUBBLEBEAM,   TRAILBLAZE,    \
 	     ICE_BEAM,     BLIZZARD,     HYPER_BEAM,   RAGE,         BRICK_BREAK,     \
 	     MIMIC,        ICE_PUNCH,  REFLECT,      ACCELEROCK,         LEAF_BLADE, \
 	     STEEL_WING,        ICE_FANG,         AURA_SPHERE,    FLAMETHROWER,   SUBSTITUTE,   \

@@ -19,9 +19,9 @@ ENDC
 
 	; tm/hm learnset
 	tmhm AERIAL_ACE,   CLOSE_COMBAT,    TOXIC,        FIRE_FANG,    BODY_SLAM,    \
-	     DOUBLE_EDGE,  SIGNAL_BEAM,      EXTREMESPEED,   WATERFALL,      SEISMIC_TOSS, \
+	     SLUDGE_BOMB,  SIGNAL_BEAM,      EXTREMESPEED,   WATERFALL,      SEISMIC_TOSS, \
 	     RAGE,         THUNDERFANG,  THUNDER,      DIG,          MIMIC,        \
-	     ICE_PUNCH,  ACCELEROCK,         METRONOME,    STEEL_WING,        FIRE_PUNCH,   \
+	     ICE_PUNCH,  ACCELEROCK,         X_SCISSOR,    STEEL_WING,        FIRE_PUNCH,   \
 	     ICE_FANG,         THUNDERBOLT,   SUBSTITUTE,   STRENGTH
 	; end
 

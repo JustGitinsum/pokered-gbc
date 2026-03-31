@@ -122,6 +122,7 @@ FrameBlockPointers:
 	dw FrameBlock77
 	dw FrameBlock78
 	dw FrameBlock79
+	dw FrameBlock90
 	assert_table_length NUM_FRAMEBLOCKS
 
 FrameBlock01:
@@ -538,6 +539,11 @@ FrameBlock2b:
 	db 2 ; #
 	dbsprite  0,  0,  2,  6, $47, 0
 	dbsprite  1,  0,  0,  0, $47, 0
+
+FrameBlock90:
+	db 2 ; # Added for XSissorAnim
+	dbsprite  0,  0,  0,  0, $47, OAM_XFLIP
+	dbsprite  0,  0,  4,  4, $47, OAM_XFLIP
 
 FrameBlock2c:
 	db 1 ; #
