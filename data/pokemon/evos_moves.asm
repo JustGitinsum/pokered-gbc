@@ -1640,7 +1640,7 @@ DodrioEvosMoves:
 ;	db 23, 
 	db 26, AGILITY
 ;	db 30,
-	db 34, SWORD_DANCE
+	db 34, SWORDS_DANCE
 	db 38, DRILL_PECK
 	db 43, OUTRAGE
 	db 50, THRASH

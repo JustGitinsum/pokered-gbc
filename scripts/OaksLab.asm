@@ -655,25 +655,25 @@ OaksLabRivalLeavesWithPokedexScript:
 OaksLabNoopScript:
 	ret
 
-OaksLabScript_RemoveParcel:
-	ld hl, wBagItems
-	ld bc, 0
-.loop
-	ld a, [hli]
-	cp $ff
-	ret z
-	cp OAKS_PARCEL
-	jr z, .foundParcel
-	inc hl
-	inc c
-	jr .loop
-.foundParcel
-	ld hl, wNumBagItems
-	ld a, c
-	ld [wWhichPokemon], a
-	ld a, 1
-	ld [wItemQuantity], a
-	jp RemoveItemFromInventory
+; OaksLabScript_RemoveParcel:
+; 	ld hl, wBagItems
+; 	ld bc, 0
+; .loop
+; 	ld a, [hli]
+; 	cp $ff
+; 	ret z
+; 	cp OAKS_PARCEL
+; 	jr z, .foundParcel
+; 	inc hl
+; 	inc c
+; 	jr .loop
+; .foundParcel
+; 	ld hl, wNumBagItems
+; 	ld a, c
+; 	ld [wWhichPokemon], a
+; 	ld a, 1
+; 	ld [wItemQuantity], a
+; 	jp RemoveItemFromInventory
 
 OaksLabCalcRivalMovementScript:
 	ld a, $7c
@@ -1015,7 +1015,10 @@ OaksLabOak1Text:
 .got_parcel
 	ld hl, .DeliverParcelText
 	call PrintText
-	call OaksLabScript_RemoveParcel
+	ld a, OAKS_PARCEL
+	ldh [hItemToRemoveID], a
+	callfar RemoveItemByID ; this replaces call OaksLabScript_RemoveParcel script previously Made this change to remove OAKS_PARCEL from Keyitem Pocket
+	;call OaksLabScript_RemoveParcel
 	ld a, SCRIPT_OAKSLAB_RIVAL_ARRIVES_AT_OAKS_REQUEST
 	ld [wOaksLabCurScript], a
 	jr .done
