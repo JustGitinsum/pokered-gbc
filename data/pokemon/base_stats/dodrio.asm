@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw DodrioPicFront, DodrioPicBack
 
-	db PECK, GROWL, FURY_ATTACK, NO_MOVE ; level 1 learnset
+	db PECK, GROWL, QUICK_ATTACK, TRI_ATTACK ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset

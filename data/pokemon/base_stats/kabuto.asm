@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw KabutoPicFront, KabutoPicBack
 
-	db TRAILBLAZE, HARDEN, SLASH, ANCIENTPOWER ; level 1 learnset
+	db WATER_GUN, HARDEN, METAL_CLAW, ANCIENTPOWER ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset

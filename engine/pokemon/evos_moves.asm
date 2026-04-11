@@ -217,6 +217,7 @@ Evolution_PartyMonLoop: ; loop over party mons
 	xor a
 	ld [wMonDataLocation], a
 	call LearnMoveFromLevelUp
+	call LearnEvolutionMoves
 	pop hl
 	predef SetPartyMonTypes
 	ld a, [wIsInBattle]
@@ -326,6 +327,16 @@ Evolution_ReloadTilesetTilePatterns:
 	cp LINK_STATE_TRADING
 	ret z
 	jp ReloadTilesetTilePatterns
+
+LearnEvolutionMoves:
+	ld a, [wCurEnemyLevel]
+	push af
+	ld a, EVOLUTION_MOVE ; 254
+	ld [wCurEnemyLevel], a
+	call LearnMoveFromLevelUp
+	pop af
+	ld [wCurEnemyLevel], a
+	ret
 
 LearnMoveFromLevelUp:
 	ld hl, EvosMovesPointerTable

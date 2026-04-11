@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw OmastarPicFront, OmastarPicBack
 
-	db TRAILBLAZE, WITHDRAW, HORN_ATTACK, ANCIENTPOWER ; level 1 learnset
+	db WATER_GUN, WITHDRAW, HORN_ATTACK, ANCIENTPOWER ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
