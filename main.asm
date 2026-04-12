@@ -399,3 +399,6 @@ SECTION "bankBattleAnim", ROMX
 
 INCLUDE "engine/battle/load_move_animation_tiles.asm"
 INCLUDE "color/animations.asm"
+
+SECTION "bankPoryman", ROMX
+INCLUDE "engine/menus/quantity_menu.asm" ; This can go anywhere

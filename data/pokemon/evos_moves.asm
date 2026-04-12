@@ -1257,6 +1257,7 @@ RaichuEvosMoves:
 	db 27, AGILITY
 	db 32, THUNDERBOLT
 	db 43, THUNDER
+	db EVOLUTION_MOVE, THUNDERPUNCH
 	db 0
 
 MissingNo56EvosMoves:
