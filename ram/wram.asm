@@ -1713,6 +1713,7 @@ wUnusedAlreadyOwnedFlag:: db
 
 ;	ds 2 ;REMOVED for Trainers are not Pokemon
 
+wEphemerealTempBuffer2ByteStorage:: ; new
 wIsTrainerBattle:: db
 
 wWasTrainerBattle:: db
@@ -1919,7 +1920,7 @@ wCurrentBoxNum:: db
 ; number of HOF teams
 wNumHoFTeams:: db
 
-wUnusedMapVariable:: db
+wMultipurposeTemporaryStorage:: db ; edited, it waswUnusedMapVariable:: db
 
 wPlayerCoins:: dw ; BCD
 
@@ -1927,7 +1928,8 @@ wPlayerCoins:: dw ; BCD
 wMissableObjectFlags:: flag_array $100
 wMissableObjectFlagsEnd::
 
-	ds 7
+	; ds 7
+wUniQuizAnswer:: ds NAME_LENGTH ; new, apparently it's 11 and not 7 as I thought, same length as Mons' names + terminator
 
 ; saved copy of SPRITESTATEDATA1_IMAGEINDEX (used for sprite facing/anim)
 wSavedSpriteImageIndex:: db

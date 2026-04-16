@@ -1847,7 +1847,7 @@ MagikarpEvosMoves:
 	db EVOLVE_LEVEL, 20, GYARADOS
 	db 0
 ; Learnset
-	db 15, TACKLE
+	db 15, WATER_GUN
 	db 0
 
 MissingNo86EvosMoves:
