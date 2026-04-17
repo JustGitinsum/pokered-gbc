@@ -456,6 +456,7 @@ PrintBagInfoText: ; marcelnote - new for bag pockets
 	bit BIT_KEY_ITEMS_POCKET, a
 	jr z, .mainPocket
 	ld de, BagKeyItemsText
+	jp PlaceString
 .mainPocket
 	;ld a, [wCurListMenuItem]
 	;cp $ff
@@ -464,13 +465,40 @@ PrintBagInfoText: ; marcelnote - new for bag pockets
 	;jp c, .notTM
 	;ld de, IsTMText
 ;.notTM
-	jp PlaceString
+	call PlaceString
+	ld a, [wNumBagItems]
+	ld b, a
+	ld c, BAG_ITEM_CAPACITY
+	jr .loadText
+
+.loadText
+	hlcoord 13, 1
+	ld de, w2CharStringBuffer
+	ld a, b
+	ld [de], a
+	inc de
+	ld a, c
+	ld [de], a
+	dec de
+	lb bc, 1 | LEADING_ZEROES, 2
+	call PrintNumber
+	ld [hl], "/"
+	inc hl
+	inc de
+	inc de
+	call PrintNumber
+	hlcoord  4, 2
+	ld [hl], $65
+	hlcoord 19, 2
+	ld [hl], $66
+	ret
+
 
 ListMenuCancelText::
 	db "CANCEL@"
 
 BagItemsText:
-	db "◀   ITEMS    ▶@"
+	db "◀ITEMS       ▶@"
 
 BagKeyItemsText:
-	db "◀ KEY ITEMS  ▶@" ; ▶
+	db "◀KEY ITEMS   ▶@" ; ▶

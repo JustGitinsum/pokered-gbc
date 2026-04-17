@@ -1905,7 +1905,9 @@ wTilesetTalkingOverTiles:: ds 3
 
 wGrassTile:: db
 
-	ds 4
+	ds 1
+
+w2CharStringBuffer:: ds 3 ; don't use this buffer during attack animations
 
 wNumBoxItems:: db
 ; item, quantity
