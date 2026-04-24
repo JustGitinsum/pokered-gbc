@@ -21,7 +21,7 @@ PlayerPCMenu:
 	ld [wCurrentMenuItem], a
 	ld hl, wMiscFlags
 	set BIT_NO_MENU_BUTTON_SOUND, [hl]
-	;;;;;;;;;; marcelnote - flag if withdrawing from PC (to prevent switching bag pocket), new for bag pockets
+	;;;;;;;;;; marcelnote - flag to prevent switching bag pockets, new for bag pockets
 	ld hl, wBagPocketsFlags
 	res BIT_PC_WITHDRAWING, [hl]
 	;;;;;;;;;;
@@ -103,16 +103,20 @@ PlayerPCDeposit:
 	call PrintText
 	jp PlayerPCMenu
 .loop
+	;;;;;;;;; marcelnote - flag if depositing to PC (to prevent switching bag pocket), new for bag pockets
+	ld hl, wBagPocketsFlags
+	set BIT_PC_WITHDRAWING, [hl]
+	;;;;;;;;;;
 	ld hl, WhatToDepositText
 	call PrintText
 	ld hl, wNumBagItems
-	;;;;;;;;;; marcelnote - check which pocket we were last in, new for bag pockets
-	ld a, [wBagPocketsFlags]
-	bit BIT_KEY_ITEMS_POCKET, a
-	jr z, .gotBagPocket
-	ld hl, wNumBagKeyItems
-.gotBagPocket
-	;;;;;;;;;;
+; 	;;;;;;;;;; marcelnote - check which pocket we were last in, new for bag pockets
+; 	ld a, [wBagPocketsFlags]
+; 	bit BIT_KEY_ITEMS_POCKET, a
+; 	jr z, .gotBagPocket
+; 	ld hl, wNumBagKeyItems
+; .gotBagPocket
+; 	;;;;;;;;;;
 	ld a, l
 	ld [wListPointer], a
 	ld a, h

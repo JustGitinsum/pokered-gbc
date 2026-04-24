@@ -5,6 +5,10 @@ DisplayPokemartDialogue_::
 	xor a
 	ld [wBoughtOrSoldItemInMart], a
 .loop
+	;;;;;;;;;; marcelnote - flag if selling (to prevent switching bag pocket), new for bag pockets
+	ld hl, wBagPocketsFlags
+	res BIT_PC_WITHDRAWING, [hl]
+	;;;;;;;;;;
 	xor a
 	ld [wListScrollOffset], a
 	ld [wCurrentMenuItem], a
@@ -51,18 +55,22 @@ DisplayPokemartDialogue_::
 	call PrintText
 	call SaveScreenTilesToBuffer1 ; save screen
 .sellMenuLoop
+	;;;;;;;;; marcelnote - flag if selling (to prevent switching bag pocket), new for bag pockets
+	ld hl, wBagPocketsFlags
+	set BIT_PC_WITHDRAWING, [hl]
+	;;;;;;;;;;
 	call LoadScreenTilesFromBuffer1 ; restore saved screen
 	ld a, MONEY_BOX
 	ld [wTextBoxID], a
 	call DisplayTextBoxID ; draw money text box
 	ld hl, wNumBagItems
-	;;;;;;;;;; marcelnote - check which pocket we were last in, new for bag pockets
-	ld a, [wBagPocketsFlags]
-	bit BIT_KEY_ITEMS_POCKET, a
-	jr z, .gotBagPocket
-	ld hl, wNumBagKeyItems
-.gotBagPocket
-	;;;;;;;;;;
+; 	;;;;;;;;;; marcelnote - check which pocket we were last in, new for bag pockets
+; 	ld a, [wBagPocketsFlags]
+; 	bit BIT_KEY_ITEMS_POCKET, a
+; 	jr z, .gotBagPocket
+; 	ld hl, wNumBagKeyItems
+; .gotBagPocket
+; 	;;;;;;;;;;
 	ld a, l
 	ld [wListPointer], a
 	ld a, h
