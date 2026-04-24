@@ -357,12 +357,13 @@ StartMenu_Item::
 	call UpdateSprites
 	jp RedisplayStartMenu
 .choseItem
+	farcall DisplayItemDescription
 ; erase menu cursor (blank each tile in front of an item name)
 	ld a, " "
 	ldcoord_a 5, 4
 	ldcoord_a 5, 6
 	ldcoord_a 5, 8
-	ldcoord_a 5, 10
+	; ldcoord_a 5, 10
 	call PlaceUnfilledArrowMenuCursor
 	xor a
 	ld [wMenuItemToSwap], a
@@ -374,7 +375,7 @@ StartMenu_Item::
 	ld [wTextBoxID], a
 	call DisplayTextBoxID
 	ld hl, wTopMenuItemY
-	ld a, 11
+	ld a, 7
 	ld [hli], a ; top menu item Y
 	ld a, 14
 	ld [hli], a ; top menu item X

@@ -85,6 +85,7 @@ DisplayPokemartDialogue_::
 	ld a, PRICEDITEMLISTMENU
 	ld [wListMenuID], a
 	ldh [hHalveItemPrices], a ; halve prices when selling
+	farcall DisplayItemDescription
 	call DisplayChooseQuantityMenu
 	inc a
 	jr z, .sellMenuLoop ; if the player closed the choose quantity menu with the B button
@@ -156,6 +157,7 @@ DisplayPokemartDialogue_::
 	ld [wListMenuID], a
 	call DisplayListMenuID
 	jr c, .returnToMainPokemartMenu ; if the player closed the menu
+	farcall DisplayItemDescription
 	ld a, 99
 	ld [wMaxItemQuantity], a
 	xor a

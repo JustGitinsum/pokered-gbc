@@ -2181,24 +2181,24 @@ ItemUseTMHM:
     ld [wNameListType], a	; new, if you decide not to use the machine, change the list type back to item list. FIXES THE TM CRASH BUG! Thanks Zangoose! + Pigeon edit, it was on another line, still had some edge cases of crash
 	call CopyToStringBuffer
 	pop af
-	ld hl, BootedUpTMText
-	jr nc, .printBootedUpMachineText
-	ld hl, BootedUpHMText
-.printBootedUpMachineText
-	call PrintText
-	ld hl, TeachMachineMoveText
-	call PrintText
-	hlcoord 14, 7
-	lb bc, 8, 15
-	ld a, TWO_OPTION_MENU
-	ld [wTextBoxID], a
-	call DisplayTextBoxID ; yes/no menu
-	ld a, [wCurrentMenuItem]
-	and a
-	jr z, .useMachine
-	ld a, 2
-	ld [wActionResultOrTookBattleTurn], a ; item not used
-	ret
+; 	ld hl, BootedUpTMText
+; 	jr nc, .printBootedUpMachineText
+; 	ld hl, BootedUpHMText
+; .printBootedUpMachineText
+; 	call PrintText
+; 	ld hl, TeachMachineMoveText
+; 	call PrintText
+; 	hlcoord 14, 7
+; 	lb bc, 8, 15
+; 	ld a, TWO_OPTION_MENU
+; 	ld [wTextBoxID], a
+; 	call DisplayTextBoxID ; yes/no menu
+; 	ld a, [wCurrentMenuItem]
+; 	and a
+; 	jr z, .useMachine
+; 	ld a, 2
+; 	ld [wActionResultOrTookBattleTurn], a ; item not used
+; 	ret
 .useMachine
 	ld a, [wWhichPokemon]
 	push af

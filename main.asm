@@ -350,6 +350,10 @@ INCLUDE "engine/events/in_game_trades.asm"
 INCLUDE "engine/gfx/palettes.asm"
 INCLUDE "engine/items/tm_prices.asm"
 
+SECTION "Engine Spillover", ROMX
+
+INCLUDE "engine/menus/item_descriptions.asm"
+
 SECTION "Engine Save", ROMX
 
 INCLUDE "engine/menus/save.asm"

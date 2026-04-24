@@ -25,7 +25,7 @@ Moves:
 	move GUILLOTINE,   OHKO_EFFECT,                  1, NORMAL,       100,  5 ;sacredsword? 
 	move AIR_SLASH,    FLINCH_SIDE_EFFECT2,         75, FLYING,        95, 15
 	move SWORDS_DANCE, ATTACK_UP2_EFFECT,            0, NORMAL,       100, 30
-	move CUT,          NO_ADDITIONAL_EFFECT,        75, NORMAL,       100, 30
+	move CUT,          NO_ADDITIONAL_EFFECT,        75, NORMAL,        95, 30
 	move GUST,         NO_ADDITIONAL_EFFECT,        40, FLYING,       100, 35
 	move WING_ATTACK,  NO_ADDITIONAL_EFFECT,        35, FLYING,       100, 35
 	move SILVER_WIND,  NO_ADDITIONAL_EFFECT,        60,    BUG,       100, 10
@@ -102,7 +102,7 @@ Moves:
 	move EARTHQUAKE,   NO_ADDITIONAL_EFFECT,       100, GROUND,       100, 10
 	move EARTH_POWER,  DEFENSE_DOWN_SIDE_EFFECT,    90, GROUND,       100, 10
 	move DIG,          CHARGE_EFFECT,              100, GROUND,       100, 10
-	move TOXIC,        POISON_EFFECT,                0, POISON,        85, 10
+	move TOXIC,        POISON_EFFECT,                0, POISON,        90, 10
 	move CONFUSION,    CONFUSION_SIDE_EFFECT,       50, PSYCHIC_TYPE, 100, 25
 	move PSYCHIC_M,    SPECIAL_DOWN_SIDE_EFFECT,    90, PSYCHIC_TYPE, 100, 10
 	move HYPNOSIS,     SLEEP_EFFECT,                 0, PSYCHIC_TYPE,  60, 20

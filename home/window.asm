@@ -292,3 +292,16 @@ PrintText::
 PrintText_NoCreatingTextBox::
 	bccoord 1, 14
 	jp TextCommandProcessor
+
+PrintBigText::
+; Print text hl at (1, 12).
+	push hl
+	ld a, BIG_MESSAGE_BOX
+	ld [wTextBoxID], a
+	call DisplayTextBoxID
+	call UpdateSprites
+	call Delay3
+	pop hl
+PrintBigText_NoCreatingTextBox::
+	bccoord 1, 10
+	jp TextCommandProcessor

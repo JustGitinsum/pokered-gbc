@@ -447,6 +447,11 @@ PrintListMenuEntries::
 	jp PlaceString
 
 PrintBagInfoText: ; marcelnote - new for bag pockets
+	; hlcoord 0, 12
+	; lb bc, 4, 18  ; height, width
+	; call TextBoxBorder
+	; call UpdateSprites
+	
 	ld hl, wBagPocketsFlags
 	bit BIT_PRINT_INFO_BOX, [hl]
 	ret z ; do not display the info box
