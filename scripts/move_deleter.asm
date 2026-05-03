@@ -61,7 +61,7 @@ MoveDeleterText1:
 	ld [wMoveNum], a
 	ld [wPokeBallCaptureCalcTemp],a ;ld [wd11e],a
 	call GetMoveName
-	call CopyToStringBuffer ; copy name to wcf4b
+	call CopyToStringBuffer ; copy name to CopyToStringBuffer
 	ld hl, MoveDeleterConfirmText
 	call PrintText
 	call YesNoChoice

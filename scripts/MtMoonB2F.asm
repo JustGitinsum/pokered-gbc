@@ -378,5 +378,10 @@ MtMoonB2FRocket4EndBattleText:
 	text_end
 
 MtMoonB2FRocket4AfterBattleText:
-	text_far _MtMoonB2FRocket4AfterBattleText
-	text_end
+	; text_far _MtMoonB2FRocket4AfterBattleText
+	; text_end
+	text_asm
+	ld a, 2
+	ld [wWhichTrade], a
+	farcall MoveTutorScript
+	jp TextScriptEnd

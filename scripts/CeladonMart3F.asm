@@ -22,24 +22,29 @@ CeladonMart3F_TextPointers:
 	dw_const CeladonMart3FPokemonPosterText,    TEXT_CELADONMART3F_POKEMON_POSTER3
 
 CeladonMart3FClerkText:
+; 	text_asm
+; 	CheckEvent EVENT_GOT_TM18
+; 	jr nz, .got_item
+; 	ld hl, .TM18PreReceiveText
+; 	call PrintText
+; 	lb bc, TM_WATERFALL, 1
+; 	call GiveItem
+; 	jr nc, .bag_full
+; 	SetEvent EVENT_GOT_TM18
+; 	ld hl, .ReceivedTM18Text
+; 	jr .done
+; .bag_full
+; 	ld hl, .TM18NoRoomText
+; 	jr .done
+; .got_item
+; 	ld hl, .TM18ExplanationText
+; .done
+; 	call PrintText
+; 	jp TextScriptEnd
 	text_asm
-	CheckEvent EVENT_GOT_TM18
-	jr nz, .got_item
-	ld hl, .TM18PreReceiveText
-	call PrintText
-	lb bc, TM_WATERFALL, 1
-	call GiveItem
-	jr nc, .bag_full
-	SetEvent EVENT_GOT_TM18
-	ld hl, .ReceivedTM18Text
-	jr .done
-.bag_full
-	ld hl, .TM18NoRoomText
-	jr .done
-.got_item
-	ld hl, .TM18ExplanationText
-.done
-	call PrintText
+	ld a, 3
+	ld [wWhichTrade], a
+	farcall MoveTutorScript
 	jp TextScriptEnd
 
 .TM18PreReceiveText:

@@ -219,8 +219,13 @@ VermilionCitySailor1Text:
 	text_end
 
 VermilionCityGambler2Text:
-	text_far _VermilionCityGambler2Text
-	text_end
+	; text_far _VermilionCityGambler2Text
+	; text_end
+	text_asm
+	ld a, 3
+	ld [wWhichTrade], a
+	farcall MoveTutorScript
+	jp TextScriptEnd
 
 VermilionCityMachopText:
 	text_far _VermilionCityMachopText

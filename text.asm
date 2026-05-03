@@ -265,6 +265,7 @@ INCLUDE "data/text/text_6.asm"
 SECTION "Text 11", ROMX
 INCLUDE "text/move_deleter.asm"
 INCLUDE "text/move_relearner.asm"
+INCLUDE "text/move_tutor.asm"
 
 INCLUDE "data/text/text_7.asm"
 

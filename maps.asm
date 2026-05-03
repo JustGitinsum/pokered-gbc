@@ -166,6 +166,7 @@ INCLUDE "data/maps/objects/NameRatersHouse.asm"
 ; Mateo's move relearner/deleter files
 INCLUDE "scripts/move_deleter.asm"
 INCLUDE "scripts/move_relearner.asm"
+INCLUDE "engine/events/move_tutor.asm"
 
 INCLUDE "data/maps/headers/VermilionPidgeyHouse.asm"
 INCLUDE "scripts/VermilionPidgeyHouse.asm"

@@ -4,10 +4,10 @@ _ViridianSchoolHouseBrunetteGirlText::
 	cont "my notes."
 	done
 
-_ViridianSchoolHouseCooltrainerFText::
-	text "Okay!"
+; _ViridianSchoolHouseCooltrainerFText::
+; 	text "Okay!"
 
-	para "Be sure to read"
-	line "the blackboard"
-	cont "carefully!"
-	done
+; 	para "Be sure to read"
+; 	line "the blackboard"
+; 	cont "carefully!"
+; 	done

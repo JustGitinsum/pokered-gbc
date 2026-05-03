@@ -157,8 +157,13 @@ PokemonFanClubChairmanText:
 	text_end
 
 PokemonFanClubReceptionistText:
-	text_far _PokemonFanClubReceptionistText
-	text_end
+	; text_far _PokemonFanClubReceptionistText
+	; text_end
+	text_asm
+	ld a, 1
+	ld [wWhichTrade], a
+	farcall MoveTutorScript
+	jp TextScriptEnd
 
 PokemonFanClubSign1Text:
 	text_far _PokemonFanClubSign1Text

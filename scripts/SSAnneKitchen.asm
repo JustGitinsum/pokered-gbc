@@ -29,8 +29,13 @@ SSAnneKitchenCook4Text:
 	text_end
 
 SSAnneKitchenCook5Text:
-	text_far _SSAnneKitchenCook5Text
-	text_end
+	; text_far _SSAnneKitchenCook5Text
+	; text_end
+	text_asm
+	ld a, 3
+	ld [wWhichTrade], a
+	farcall MoveTutorScript
+	jp TextScriptEnd
 
 SSAnneKitchenCook6Text:
 	text_far _SSAnneKitchenCook6Text

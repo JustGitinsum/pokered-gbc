@@ -105,6 +105,10 @@ FightingDojoTrainerHeader3:
 
 FightingDojoKarateMasterText:
 	text_asm
+	CheckEvent EVENT_GOT_HITMONCHAN
+	jp nz, .master_tutor
+	CheckEvent EVENT_GOT_HITMONLEE
+	jp nz, .master_tutor
 	CheckEvent EVENT_DEFEATED_FIGHTING_DOJO
 	jp nz, .defeated_dojo
 	CheckEventReuseA EVENT_BEAT_KARATE_MASTER
@@ -132,6 +136,11 @@ FightingDojoKarateMasterText:
 .defeated_master
 	ld hl, .IWillGiveYouAPokemonText
 	call PrintText
+	jr .end
+.master_tutor
+	ld a, 3
+	ld [wWhichTrade], a
+	farcall MoveTutorScript
 .end
 	jp TextScriptEnd
 

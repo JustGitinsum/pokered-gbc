@@ -463,7 +463,7 @@ _TM15Description::
 	done
 
 _TM16Description::
-	text "SIGNAL_BEAM"
+	text "SIGNAL BEAM"
 	next "BUG       PP 15"
 	next "PWR 90    ACC 100%"
 	next "Chance to Confuse"

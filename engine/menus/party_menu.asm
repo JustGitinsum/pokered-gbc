@@ -62,6 +62,8 @@ RedrawPartyMenu_::
 	jr z, .teachMoveMenu
 	cp EVO_STONE_PARTY_MENU
 	jr z, .evolutionStoneMenu
+	cp a,$06
+	jr z, .moveTutorMenu
 	push hl
 	ld bc, 14 ; 14 columns to the right
 	add hl, bc
@@ -81,6 +83,9 @@ RedrawPartyMenu_::
 	call SetPartyMenuHPBarColor ; color the HP bar (on SGB)
 	pop hl
 	jr .printLevel
+.moveTutorMenu
+	ld de, .ableToLearnMoveText
+	jp .placeMoveLearnabilityString	
 .teachMoveMenu
 	push hl
 	predef CanLearnTM ; check if the pokemon can learn the move
