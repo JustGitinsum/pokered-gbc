@@ -204,6 +204,8 @@ MoveSoundTable:
 	db SFX_BATTLE_0D,          $f0, $ff ; POISON_JAB
 	db SFX_BATTLE_09,          $88, $10 ; DRAIN_KISS
 	db SFX_NOT_VERY_EFFECTIVE, $01, $ff ; METAL_CLAW
+	db SFX_BATTLE_14,          $11, $20 ; BELCH
+	db SFX_BATTLE_12,          $00, $c0 ; CHATTER
 	db SFX_BATTLE_0B,          $00, $80 ; STRUGGLE
 	assert_table_length NUM_ATTACKS
 	db SFX_BATTLE_0B,          $00, $80

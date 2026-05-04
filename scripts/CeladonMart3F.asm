@@ -42,7 +42,7 @@ CeladonMart3FClerkText:
 ; 	call PrintText
 ; 	jp TextScriptEnd
 	text_asm
-	ld a, 3
+	ld a, 9
 	ld [wWhichTrade], a
 	farcall MoveTutorScript
 	jp TextScriptEnd

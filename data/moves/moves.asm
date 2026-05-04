@@ -214,5 +214,7 @@ Moves:
 	move POISON_JAB,   POISON_SIDE_EFFECT2,         80, POISON,       100, 20
 	move DRAIN_KISS,   DRAIN_HP_EFFECT,             50, FAIRY,        100, 35
 	move METAL_CLAW,   NO_ADDITIONAL_EFFECT,        50, STEEL,         95, 35
+	move BELCH,        DEFENSE_DOWN_SIDE_EFFECT,    75, POISON,        95, 15
+	move CHATTER,      CONFUSION_SIDE_EFFECT,       65, FLYING,       100, 20
 	move STRUGGLE,     RECOIL_EFFECT,               50, NORMAL,       100, 10
 	assert_table_length NUM_ATTACKS

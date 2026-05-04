@@ -203,5 +203,7 @@ MoveNames::
 	li "POISON JAB"
 	li "DRAIN KISS"
 	li "METAL CLAW"
+	li "BELCH"
+	li "CHATTER"
 	li "STRUGGLE"
 	assert_list_length NUM_ATTACKS

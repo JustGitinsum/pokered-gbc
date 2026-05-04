@@ -203,6 +203,8 @@ AttackAnimationPointers:
 	dw PoisonJabAnim
 	dw DrainKissAnim
 	dw MetalClawAnim
+	dw BelchAnim
+	dw ChatterAnim
 	dw StruggleAnim
 	assert_table_length NUM_ATTACKS
 
@@ -564,6 +566,13 @@ SingAnim:
 
 SupersonicAnim:
 	battle_anim SUPERSONIC, SUBANIM_0_SOUND_WAVE, 0, 6
+	db -1 ; end
+
+ChatterAnim:
+	battle_anim ROAR, SUBANIM_1_SHOUT, 1, 6
+	battle_anim ROAR, SUBANIM_1_SHOUT, 1, 6
+	battle_anim DIZZY_PUNCH, SUBANIM_0_BIRDIES_CIRCLING_ENEMY, 0, 6
+	battle_anim DIZZY_PUNCH, SUBANIM_0_BIRDIES_CIRCLING_ENEMY, 0, 6
 	db -1 ; end
 
 SonicBoomAnim:
@@ -1039,6 +1048,11 @@ EggBombAnim:
 
 LickAnim:
 	battle_anim SLUDGE, SUBANIM_1_BLOB_DRIP_ENEMY, 1, 6
+	db -1 ; end
+
+BelchAnim:
+	battle_anim BARRIER, SUBANIM_1_CLOUD_TOSS, 1, 6
+	battle_anim BIDE, SUBANIM_1_STAR_BIG_MOVING, 1, 6
 	db -1 ; end
 
 SmogAnim:

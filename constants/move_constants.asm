@@ -209,6 +209,8 @@
 	const POISON_JAB
 	const DRAIN_KISS
 	const METAL_CLAW
+	const BELCH
+	const CHATTER
 	const STRUGGLE     ; a5
 DEF NUM_ATTACKS EQU const_value - 1
 

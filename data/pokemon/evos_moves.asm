@@ -382,12 +382,18 @@ GrimerEvosMoves:
 	db EVOLVE_LEVEL, 38, MUK
 	db 0
 ; Learnset
-	db 30, POISON_GAS
-	db 33, MINIMIZE
-	db 37, SLUDGE
-	db 42, HARDEN
-	db 48, SCREECH
-	db 55, ACID_ARMOR
+	db 4, HARDEN
+	db 7, BITE
+;;;	db 9, MUD_SLAP
+	db 12, DISABLE
+	db 15, SLUDGE
+;;;	db 18, MUD_SHOT
+	db 21, MINIMIZE
+	db 26, TOXIC
+	db 29, BELCH
+	db 32, CRUNCH
+	db 37, SCREECH
+	db 43, ACID_ARMOR
 	db 0
 
 GengarEvosMoves:
@@ -819,6 +825,7 @@ ArbokEvosMoves:
 	db 17, SCREECH
 	db 20, ACID
 	db 22, CRUNCH
+	db 27, BELCH
 	db 33, LEECH_LIFE
 	db 39, SLUDGE_BOMB
 	db 51, HAZE
@@ -938,9 +945,12 @@ KoffingEvosMoves:
 	db EVOLVE_LEVEL, 35, WEEZING
 	db 0
 ; Learnset
-	db 32, SLUDGE
+	db 15, SLUDGE
+	db 21, MINIMIZE
+	db 26, TOXIC
+	db 29, BELCH
 	db 37, SMOKESCREEN
-	db 40, SELFDESTRUCT
+	db 40, SLUDGE_BOMB
 	db 45, HAZE
 	db 48, EXPLOSION
 	db 0
@@ -1554,6 +1564,7 @@ EkansEvosMoves:
 	db 12, GLARE
 	db 17, SCREECH
 	db 20, ACID
+	db 27, BELCH
 	db 33, SLUDGE_BOMB
 	db 41, HAZE
 	db 0
@@ -1837,6 +1848,7 @@ SnorlaxEvosMoves:
 	db 15, BULLDOZE
 	db 21, BODY_SLAM
 	db 29, ZEN_HEADBUTT
+	db 32, BELCH
 	db 35, CRUNCH
 	db 46, DOUBLE_EDGE
 	db 57, HYPER_BEAM
@@ -1866,12 +1878,18 @@ MukEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 30, POISON_GAS
-	db 33, MINIMIZE
-	db 37, SLUDGE
-	db 45, HARDEN
-	db 53, SCREECH
-	db 60, ACID_ARMOR
+	db 4, HARDEN
+	db 7, BITE
+;;;	db 9, MUD_SLAP
+	db 12, DISABLE
+	db 15, SLUDGE
+;;;	db 18, MUD_SHOT
+	db 21, MINIMIZE
+	db 26, TOXIC
+	db 29, BELCH
+	db 32, CRUNCH
+	db 37, SCREECH
+	db 43, ACID_ARMOR
 	db 0
 
 MissingNo8AEvosMoves:
@@ -1942,11 +1960,14 @@ WeezingEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 32, SLUDGE
-	db 39, SMOKESCREEN
-	db 43, SELFDESTRUCT
-	db 49, HAZE
-	db 53, EXPLOSION
+	db 15, SLUDGE
+	db 21, MINIMIZE
+	db 26, TOXIC
+	db 29, BELCH
+	db 37, SMOKESCREEN
+	db 40, SLUDGE_BOMB
+	db 45, HAZE
+	db 48, EXPLOSION
 	db 0
 
 PersianEvosMoves:

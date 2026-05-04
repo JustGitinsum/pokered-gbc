@@ -160,7 +160,7 @@ PokemonFanClubReceptionistText:
 	; text_far _PokemonFanClubReceptionistText
 	; text_end
 	text_asm
-	ld a, 1
+	ld a, 4
 	ld [wWhichTrade], a
 	farcall MoveTutorScript
 	jp TextScriptEnd
