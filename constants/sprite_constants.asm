@@ -64,6 +64,46 @@
 	const SPRITE_SEEL                    ; $3c
 	const SPRITE_BULBASAUR               ; $-3
 	const SPRITE_OFFICER_JENNY           ; $-4
+	const SPRITE_ARTICUNO				 ; $3d
+	const SPRITE_CHANSEY				 ; $3e
+	const SPRITE_CLEFAIRY				 ; $3f
+	const SPRITE_CUBONE					 ; $40
+	const SPRITE_KANGASKHAN				 ; $41
+	const SPRITE_LAPRAS					 ; $42
+	const SPRITE_MEOWTH					 ; $43
+	const SPRITE_MEWTWO					 ; $44
+	const SPRITE_MOLTRES				 ; $45
+	const SPRITE_NIDORINO				 ; $46
+	const SPRITE_OMANYTE
+	const SPRITE_PIDGEOT				 ; $47
+	const SPRITE_POLYWRATH				 ; $48
+	const SPRITE_PSYDUCK				 ; $49
+	const SPRITE_SLOWBRO				 ; $4a
+	const SPRITE_SLOWPOKE				 ; $4b
+	const SPRITE_SPEAROW				 ; $4c
+	const SPRITE_VOLTORB				 ; $4d
+	const SPRITE_WIGGLYTUFF				 ; $4e
+; Map Pokémons with odd pixel number
+	const SPRITE_DODUO					 ; $4f
+	const SPRITE_FEAROW					 ; $50
+	const SPRITE_JIGGLYPUFF				 ; $51
+	const SPRITE_KABUTO
+	const SPRITE_MACHOKE				 ; $52
+	const SPRITE_MACHOP					 ; $53
+	const SPRITE_NIDORANF				 ; $54
+	const SPRITE_NIDORANM				 ; $55
+	const SPRITE_PIDGEY					 ; $56
+	const SPRITE_PIKACHU				 ; $57
+	const SPRITE_SEEL2					 ; $58
+	const SPRITE_ZAPDOS					 ; $59
+; Gym Leaders
+	const SPRITE_BROCK
+	const SPRITE_MISTY
+	const SPRITE_SURGE
+	const SPRITE_ERIKA
+	const SPRITE_KOGA2
+	const SPRITE_SABRINA
+	const SPRITE_BLAINE
 DEF FIRST_STILL_SPRITE EQU const_value
 	const SPRITE_POKE_BALL               ; $3d
 	const SPRITE_FOSSIL                  ; $3e

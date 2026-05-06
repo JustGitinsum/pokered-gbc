@@ -83,3 +83,4 @@ _MoveTutorBRICK_BREAKIntroText::
 	line "like listening"
 	cont "to chatter."
 	prompt
+	

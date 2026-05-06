@@ -90,7 +90,7 @@ Moves:
 	move POISONPOWDER, POISON_EFFECT,                0, POISON,        75, 35
 	move STUN_SPORE,   PARALYZE_EFFECT,              0, GRASS,         75, 30
 	move SLEEP_POWDER, SLEEP_EFFECT,                 0, GRASS,         75, 15
-	move MAGICAL_LEAF, SWIFT_EFFECT,                60, GRASS,        100, 20 ;move MAGICAL_LEAF,  THRASH_PETAL_DANCE_EFFECT,   70, GRASS,        100, 20
+	move MAGICAL_LEAF, SWIFT_EFFECT,                60, GRASS,        100, 20
 	move STRING_SHOT,  SPEED_DOWN1_EFFECT,           0, BUG,           95, 40
 	move DRAGON_RAGE,  SPECIAL_DAMAGE_EFFECT,        1, DRAGON,       100, 10
 	move FIRE_SPIN,    TRAPPING_EFFECT,             15, FIRE,          70, 15

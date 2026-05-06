@@ -122,6 +122,8 @@ INCLUDE "engine/overworld/map_sprites.asm"
 INCLUDE "engine/overworld/emotion_bubbles.asm"
 INCLUDE "engine/events/evolve_trade.asm"
 INCLUDE "engine/battle/move_effects/substitute.asm"
+
+SECTION "PC Menu", ROMX ;Moved pc.asm to this section because Battle Engine 2 got too big
 INCLUDE "engine/menus/pc.asm"
 
 
