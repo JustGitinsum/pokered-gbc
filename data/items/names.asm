@@ -78,7 +78,7 @@ ItemNames::
 	li "OLD ROD"
 	li "GOOD ROD"
 	li "SUPER ROD"
-	li "PP UP"
+	li "PP MAX" ; PP UP > PP MAX
 	li "ETHER"
 	li "MAX ETHER"
 	li "ELIXER"

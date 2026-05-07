@@ -158,6 +158,7 @@ DebugNewGameItemsList:
 	db ESCAPE_ROPE, 99
 	db RARE_CANDY, 99
 	db MASTER_BALL, 99
+	db PP_MAX, 99
 	db NUGGET, 99
 	db -1 ; end
 

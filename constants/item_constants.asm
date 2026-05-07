@@ -87,7 +87,7 @@ DEF SAFARI_ROCK EQU CASCADEBADGE ; overload
 	const OLD_ROD       ; $4C
 	const GOOD_ROD      ; $4D
 	const SUPER_ROD     ; $4E
-	const PP_UP         ; $4F
+	const PP_MAX         ; $4F
 	const ETHER         ; $50
 	const MAX_ETHER     ; $51
 	const ELIXER        ; $52

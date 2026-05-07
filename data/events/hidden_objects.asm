@@ -452,7 +452,7 @@ Route10HiddenObjects:
 	db -1 ; end
 
 RocketHideout1HiddenObjects:
-	hidden_object 21, 15, PP_UP, HiddenItems
+	hidden_object 21, 15, PP_MAX, HiddenItems
 	db -1 ; end
 
 RocketHideout3HiddenObjects:
@@ -473,7 +473,7 @@ PokemonTower5HiddenObjects:
 	db -1 ; end
 
 Route13HiddenObjects:
-	hidden_object  1, 14, PP_UP, HiddenItems
+	hidden_object  1, 14, PP_MAX, HiddenItems
 	hidden_object 16, 13, CALCIUM, HiddenItems
 	db -1 ; end
 
@@ -507,7 +507,7 @@ CeruleanCave3HiddenObjects:
 
 PowerPlantHiddenObjects:
 	hidden_object 17, 16, MAX_ELIXER, HiddenItems
-	hidden_object 12,  1, PP_UP, HiddenItems
+	hidden_object 12,  1, PP_MAX, HiddenItems
 	db -1 ; end
 
 SeafoamIslands3HiddenObjects:
@@ -632,7 +632,7 @@ SilphCo11FHiddenObjects:
 Route17HiddenObjects:
 	hidden_object 15,  14, RARE_CANDY, HiddenItems
 	hidden_object  8,  45, FULL_RESTORE, HiddenItems
-	hidden_object 17,  72, PP_UP, HiddenItems
+	hidden_object 17,  72, PP_MAX, HiddenItems
 	hidden_object  4,  91, MAX_REVIVE, HiddenItems
 	hidden_object  8, 121, MAX_ELIXER, HiddenItems
 	db -1 ; end
@@ -648,7 +648,7 @@ UndergroundPathWeHiddenObjects:
 	db -1 ; end
 
 CeladonCityHiddenObjects:
-	hidden_object 48, 15, PP_UP, HiddenItems
+	hidden_object 48, 15, PP_MAX, HiddenItems
 	db -1 ; end
 
 SeafoamIslands4HiddenObjects:

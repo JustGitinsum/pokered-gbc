@@ -95,7 +95,7 @@ ItemUsePtrTable:
 	dw ItemUseOldRod     ; OLD_ROD
 	dw ItemUseGoodRod    ; GOOD_ROD
 	dw ItemUseSuperRod   ; SUPER_ROD
-	dw ItemUsePPUp       ; PP_UP
+	dw ItemUsePPUp       ; PP_MAX
 	dw ItemUsePPRestore  ; ETHER
 	dw ItemUsePPRestore  ; MAX_ETHER
 	dw ItemUsePPRestore  ; ELIXER
@@ -2016,7 +2016,7 @@ ItemUsePPRestore:
 	jr .chooseMove
 .PPNotMaxedOut
 	ld a, [hl]
-	add 1 << 6 ; increase PP Up count by 1
+	add 3 << 6 ; increase PP Up count by 1 changed to 3 (maximizes PP) PP UP > PP MAX
 	ld [hl], a
 	ld a, 1 ; 1 PP Up used
 	ld [wUsingPPUp], a
@@ -2454,9 +2454,9 @@ AddBonusPP:
 .addAmount
 	add b
 	ld b, a
-	ld a, [wUsingPPUp]
-	dec a ; is the player using a PP Up right now?
-	jr z, .done ; if so, only add the bonus once
+	;ld a, [wUsingPPUp] CHANGED: PP UPs max out PP in one go PP UP > PP MAX
+	;dec a ; is the player using a PP Up right now?
+	;jr z, .done ; if so, only add the bonus once
 	dec c
 	jr nz, .loop
 .done
