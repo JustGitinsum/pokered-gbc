@@ -846,3 +846,26 @@ SwitchPartyMon_InitVarOrSwapData:
 	pop de
 	pop hl
 	ret
+
+StartMenu_SelectPressed::
+	ld a, [wCurrentMenuItem]
+	ld [wBattleAndStartSavedMenuItem], a ; save current menu selection
+	ld a, [wCurMapTextPtr]
+	ld b, a
+	ld a, [wCurMapTextPtr + 1]
+	ld c, a
+	push bc ; save the current maptextptr for later because that property can be modified by changing boxes
+	call SaveScreenTilesToBuffer2 ; copy background from wTileMap to wTileMapBackup2
+	callfar LoadBillsPCExtraTiles
+	farcall ChangeBox
+	call LoadScreenTilesFromBuffer2 ; restore saved screen
+	call Delay3 ; allow the old screen to load before putting back the textbox tile patterns
+	call LoadTextBoxTilePatterns
+	call UpdateSprites
+	pop bc ; recover the original maptextptr in case we changed the value by changing boxes
+	ld a, b
+	ld [wCurMapTextPtr], a 
+	ld a, c
+	ld [wCurMapTextPtr + 1], a
+.done
+	jp RedisplayStartMenu

@@ -88,18 +88,16 @@ _CeladonCityRocket2Text::
 
 _CeladonCityTrainerTips1Text::
 	text "TRAINER TIPS"
-
-	para "X ACCURACY boosts"
-	line "the accuracy of"
-	cont "techniques!"
-
-	para "DIRE HIT jacks up"
-	line "the likelihood of"
-	cont "critical hits!"
-
-	para "Get your items at"
-	line "CELADON DEPT."
-	cont "STORE!"
+	
+	para "Open the START "
+	line "menu and scroll"
+	cont "down to the SAVE"
+	cont "option."
+	
+	para "Then press SELECT"
+	line "to change PC"
+	cont "boxes whenever"
+	cont "you like!"
 	done
 
 _CeladonCitySignText::

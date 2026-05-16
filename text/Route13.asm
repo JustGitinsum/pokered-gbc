@@ -168,6 +168,10 @@ _Route13TrainerTips2Text::
 	text "TRAINER TIPS"
 
 	para "Use SELECT to"
+	line "switch #MON in"
+	cont "the #MON menu!"
+
+	para "Use SELECT to"
 	line "switch items in"
 	cont "the ITEM window!"
 	done

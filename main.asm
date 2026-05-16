@@ -101,7 +101,7 @@ INCLUDE "engine/menus/start_sub_menus.asm"
 INCLUDE "engine/items/tms.asm"
 INCLUDE "engine/battle/end_of_battle.asm"
 INCLUDE "engine/battle/wild_encounters.asm"
-INCLUDE "engine/battle/move_effects/recoil.asm"
+; moved to battle engine 9 INCLUDE "engine/battle/move_effects/recoil.asm"
 INCLUDE "engine/battle/move_effects/conversion.asm"
 INCLUDE "engine/battle/move_effects/haze.asm"
 INCLUDE "engine/battle/get_trainer_name.asm"
@@ -276,6 +276,7 @@ INCLUDE "engine/events/hidden_objects/indigo_plateau_hq.asm"
 SECTION "Battle Engine 9", ROMX
 
 INCLUDE "engine/battle/experience.asm"
+INCLUDE "engine/battle/move_effects/recoil.asm"
 INCLUDE "engine/overworld/field_moves.asm"
 
 SECTION "Diploma", ROMX
@@ -408,3 +409,6 @@ INCLUDE "color/animations.asm"
 
 SECTION "bankPoryman", ROMX
 INCLUDE "engine/menus/quantity_menu.asm" ; This can go anywhere
+
+SECTION "newCode", ROMX
+INCLUDE "engine/menus/change_box_menu.asm"

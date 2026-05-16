@@ -874,7 +874,33 @@ wRightGBMonSpecies:: db
 
 wMiscFlags:: db
 
-	ds 9
+;;;;;;;;;; PureRGBnote: CHANGED: this previously empty space of 9 bytes was used by new variables
+;	ds 9
+
+; new set of flags for things during game
+; bit 0 = set when we're in-game rather than in the main menu before loading a game
+; bit 1 = set when we're using a pokemart menu
+; bit 2 = set when we've viewed the itemfinder "yes an item is nearby!" text once per game reset
+; bit 3 = set when we've activated item duplication by letting the old man show us how to capture a pokemon
+wNewInGameFlags:: db
+
+wListMenuCustomType:: db ; for list menus with custom list entry text rendering methods, which entry text renderer should be used
+wListMenuHoverTextType:: db ; whether the current list menu should display a text box on navigating between entries and which type it is
+; bit 0 = TM text for item list is shown
+; bit 1 = "item list count" has been loaded once already
+wListMenuNewFlags:: db
+wSum:: ; a temp store for 16 bit values created by addition, used with PrintNumber to display the sum on screen
+wDamageIntention:: dw ; in battle, the amount of damage a move will do before doing it (used for high jump kick / jump kick crash effect)
+wIsAltPalettePkmn:: db ;a flag for features related to alternate pokemon color palettes, set in these scenarios:
+;scenario 1 - set prior to loading the palette of a pokemon that should have an alternate palette, reset upon showing the pokemon sprite
+;scenario 2 - set as a storage value for "which wild pokemon slot has been encountered" when figuring out if that slot is an alternate palette pokemon
+;if this flag is 0 the default palette will be used.
+wIsAltPalettePkmnData:: db ;a flag for features related to alternate pokemon color palettes, set in these scenarios:
+;scenario 1 - set prior to loading the data of a pokemon into wram in order to insert the flag for alternate palette into its data - permanently
+;stays set until the next pokemon is loaded.
+
+wLowHealthTonePairs:: db ;in battle, used as a counter for low hp alarm tone pairs. Bit 7 is a flag that indicates tones are currently being played.
+;;;;;;;;;;
 
 ; This has overlapping related uses.
 ; When the player tries to use an item or use certain field moves, 0 is stored

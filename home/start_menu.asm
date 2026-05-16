@@ -10,11 +10,14 @@ DisplayStartMenu::
 RedisplayStartMenu::
 	farcall DrawStartMenu
 	farcall PrintSafariZoneSteps ; print Safari Zone info, if in Safari Zone
+	call LoadGBPal ; shinpokerednote: gbcnote: moved to redisplaystartmenu for better visual effect
 	call UpdateSprites
 .loop
 	call HandleMenuInput
 	ld b, a
 .checkIfUpPressed
+	bit B_PAD_SELECT, a
+	jp nz, .selectPressed ; NEW: if pressing SELECT while the cursor is over the SAVE option - we can change PC boxes.
 	bit B_PAD_UP, a
 	jr z, .checkIfDownPressed
 	ld a, [wCurrentMenuItem] ; menu selection
@@ -74,6 +77,13 @@ RedisplayStartMenu::
 	jp z, StartMenu_SaveReset
 	cp 5
 	jp z, StartMenu_Option
+.selectPressed
+	CheckEvent EVENT_GOT_POKEDEX
+	jp z, .loop
+	ld a, [wCurrentMenuItem]
+	cp 4 ; are we currently on SAVE menu index? (need to be to do the below action)
+	jp nz, .loop
+	jp StartMenu_SelectPressed
 
 ; EXIT falls through to here
 CloseStartMenu::
