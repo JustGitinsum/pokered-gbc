@@ -21,17 +21,11 @@ _SilphCo11FSilphPresidentText::
 
 _SilphCo11FSilphPresidentReceivedMasterBallText::
 	text "<PLAYER> got a"
-	line "@"
-	text_ram wStringBuffer
-	text "!@"
-	text_end
+	line "MASTER BALL!"
+	prompt
 
 _SilphCo11FSilphPresidentMasterBallDescriptionText::
-	text "PRESIDENT: You"
-	line "can't buy that"
-	cont "anywhere!"
-
-	para "It's our secret"
+	text "It's our secret"
 	line "prototype MASTER"
 	cont "BALL!"
 
@@ -42,6 +36,12 @@ _SilphCo11FSilphPresidentMasterBallDescriptionText::
 	para "You should be"
 	line "quiet about using"
 	cont "it, though."
+	prompt
+
+_SilphCo11FSilphPresident::
+	text "We should probably"
+	line "have our CARD KEY,"
+	cont "if you don't mind."
 	done
 
 _SilphCo11FSilphPresidentNoRoomText::

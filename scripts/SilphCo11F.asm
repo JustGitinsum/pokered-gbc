@@ -302,14 +302,23 @@ SilphCo11FSilphPresidentText:
 	ld hl, .ReceivedMasterBallText
 	call PrintText
 	SetEvent EVENT_GOT_MASTER_BALL
+.got_item
+	ld hl, .MasterBallDescriptionText
+	call PrintText
+.check_card_key
+	ld b, CARD_KEY
+	call IsItemInBag
+	jr z, .done
+	ld hl, .GiveCardKeyText
+	call PrintText
+	ld a, CARD_KEY
+	ldh [hItemToRemoveID], a
+	farcall RemoveItemByID
 	jr .done
 .bag_full
 	ld hl, .NoRoomText
 	call PrintText
 	jr .done
-.got_item
-	ld hl, .MasterBallDescriptionText
-	call PrintText
 .done
 	jp TextScriptEnd
 
@@ -324,6 +333,10 @@ SilphCo11FSilphPresidentText:
 
 .MasterBallDescriptionText:
 	text_far _SilphCo11FSilphPresidentMasterBallDescriptionText
+	text_end
+
+.GiveCardKeyText:
+	text_far _SilphCo11FSilphPresident
 	text_end
 
 .NoRoomText:

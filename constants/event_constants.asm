@@ -112,7 +112,7 @@
 	const EVENT_BEAT_VERMILION_GYM_TRAINER_0
 	const EVENT_BEAT_VERMILION_GYM_TRAINER_1
 	const EVENT_BEAT_VERMILION_GYM_TRAINER_2
-	const_skip
+	const EVENT_GAVE_SSANNE_TICKET
 	const EVENT_GOT_TM24
 	const EVENT_BEAT_LT_SURGE
 
@@ -165,7 +165,8 @@
 ; Cinnabar Island events
 	const_next $278
 	const EVENT_MANSION_SWITCH_ON
-	const_skip 16
+	const_skip 15
+	const EVENT_USED_SECRET_KEY
 	const EVENT_BEAT_MANSION_1_TRAINER_0
 	const_skip 14
 	const EVENT_GOT_TM38
@@ -593,7 +594,7 @@
 
 ; Rocket Hideout events
 	const_next $670
-	const_skip
+	const EVENT_USED_LIFT_KEY
 	const EVENT_BEAT_ROCKET_HIDEOUT_1_TRAINER_0
 	const EVENT_BEAT_ROCKET_HIDEOUT_1_TRAINER_1
 	const EVENT_BEAT_ROCKET_HIDEOUT_1_TRAINER_2

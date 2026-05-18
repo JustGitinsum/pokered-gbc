@@ -66,9 +66,24 @@ RocketHideoutElevator_TextPointers:
 
 RocketHideoutElevatorText:
 	text_asm
+	;;;;;;;;;; PureRGBnote: CHANGED: lift key is consumed upon unlocking the elevator, making it usable permanently 
+	CheckEvent EVENT_USED_LIFT_KEY 
+	jr nz, .startLift
 	ld b, LIFT_KEY
 	call IsItemInBag
 	jr z, .no_key
+	; if we have the LIFT_KEY, remove it from bag and unlock the elevator forever
+	SetEvent EVENT_USED_LIFT_KEY
+	ld a, LIFT_KEY
+	ldh [hItemToRemoveID], a
+	farcall RemoveItemByID
+    ld a, SFX_SWITCH
+    call PlaySound
+    call WaitForSoundToFinish
+	ld hl, .UnlockedElevatorText
+	call PrintText
+.startLift
+;;;;;;;;;;
 	call RocketHideoutElevatorScript
 	ld hl, RocketHideoutElevatorWarpMaps
 	predef DisplayElevatorFloorMenu
@@ -82,4 +97,8 @@ RocketHideoutElevatorText:
 .AppearsToNeedKeyText:
 	text_far _RocketHideoutElevatorAppearsToNeedKeyText
 	text_waitbutton
+	text_end
+
+.UnlockedElevatorText:
+	text_far _UnlockedElevatorText
 	text_end

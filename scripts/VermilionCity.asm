@@ -53,6 +53,9 @@ VermilionCityDefaultScript:
 	call DisplayTextID
 	CheckEvent EVENT_SS_ANNE_LEFT
 	jr nz, .ship_departed
+.default
+	CheckEvent EVENT_GAVE_SSANNE_TICKET
+	ret nz ; give your SS ticket to enter
 	ld b, S_S_TICKET
 	predef GetQuantityOfItemInBag
 	ld a, b
@@ -165,33 +168,38 @@ VermilionCitySailor1Text:
 	jr z, .greet_player
 	ld hl, .inFrontOfOrBehindGuardCoords
 	call ArePlayerCoordsInArray
-	jr nc, .greet_player_and_check_ticket
-.greet_player
-	ld hl, .WelcomeToSSAnneText
-	call PrintText
-	jr .end
+	jr c, .greet_player
 .greet_player_and_check_ticket
+	CheckEvent EVENT_GAVE_SSANNE_TICKET
+	ld hl, .ComeOnThroughText
+	jr nz, .player_has_ticket
 	ld hl, .DoYouHaveATicketText
 	call PrintText
 	ld b, S_S_TICKET
-	predef GetQuantityOfItemInBag
-	ld a, b
-	and a
-	jr nz, .player_has_ticket
-	ld hl, .YouNeedATicketText
-	call PrintText
-	jr .end
-.player_has_ticket
+	call IsItemInBag
+	jr z, .no_ticket
+	SetEvent EVENT_GAVE_SSANNE_TICKET
+	ld a, S_S_TICKET
+	ldh [hItemToRemoveID], a
+	farcall RemoveItemByID
 	ld hl, .FlashedTicketText
+	jr .player_has_ticket
+.greet_player
+	ld hl, .WelcomeToSSAnneText
+	jr .printDone
+.player_has_ticket
 	call PrintText
 	ld a, SCRIPT_VERMILIONCITY_PLAYER_ALLOWED_TO_PASS
 	ld [wVermilionCityCurScript], a
-	jr .end
+	jp TextScriptEnd
 .ship_departed
 	ld hl, .ShipSetSailText
+.printDone
 	call PrintText
-.end
 	jp TextScriptEnd
+.no_ticket
+	ld hl, .YouNeedATicketText
+	jr .printDone
 
 .inFrontOfOrBehindGuardCoords
 	dbmapcoord 19, 29 ; in front of guard
@@ -216,6 +224,10 @@ VermilionCitySailor1Text:
 
 .ShipSetSailText:
 	text_far _VermilionCitySailor1ShipSetSailText
+	text_end
+
+.ComeOnThroughText:
+	text_far _VermilionCity1OhItsYouText
 	text_end
 
 VermilionCityGambler2Text:
