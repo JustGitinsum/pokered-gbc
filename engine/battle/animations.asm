@@ -276,7 +276,7 @@ PlayAnimation:
 	vc_hook_red Stop_reducing_move_anim_flashing_Hyper_Beam
 	vc_hook_blue Stop_reducing_move_anim_flashing_Bubblebeam_Hyper_Beam_Blizzard
 	pop hl
-	vc_hook Stop_reducing_move_anim_flashing_Guillotine
+	vc_hook Stop_reducing_move_anim_flashing_SACRED_SWORD
 	jr .animationLoop
 .AnimationOver
 ;; make sure we zero out the alt animation ID after we're finished with the animation.
@@ -285,7 +285,7 @@ PlayAnimation:
 	ret
 
 LoadSubanimation:
-	vc_hook Reduce_move_anim_flashing_Guillotine
+	vc_hook Reduce_move_anim_flashing_SACRED_SWORD
 	ld a, [wSubAnimAddrPtr + 1]
 	vc_hook Reduce_move_anim_flashing_CLOSE_COMBAT
 	ld h, a

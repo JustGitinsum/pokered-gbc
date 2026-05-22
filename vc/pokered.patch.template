@@ -208,8 +208,8 @@ ConditionValueC = {dws_ M_CHAR        E_CHAR          G_CHAR          A_CHAR    
                                     
                                     
 ;rsm032916    
-;no117 guillotine                
-[FPA 002 Begin@Reduce_move_anim_flashing_Guillotine]                     
+;no117 SACRED_SWORD                
+[FPA 002 Begin@Reduce_move_anim_flashing_SACRED_SWORD]                     
 Mode = 3                            
 Type = 0                            
 Address = {HEX @}                   
@@ -220,16 +220,16 @@ MotionBlur1 = 8
 ConditionType = 0                   
 ConditionValueA = {dws_ wStringBuffer wStringBuffer+1 wStringBuffer+2 wStringBuffer+3 wAnimationID}         
 ConditionValueB = {dws_ ==            ==              ==              ==              ==          }         
-ConditionValueC = {dws_ G_CHAR        U_CHAR          I_CHAR          L_CHAR          GUILLOTINE  } 
+ConditionValueC = {dws_ G_CHAR        U_CHAR          I_CHAR          L_CHAR          SACRED_SWORD  } 
 
-[FPA 002 End@Stop_reducing_move_anim_flashing_Guillotine]                 
+[FPA 002 End@Stop_reducing_move_anim_flashing_SACRED_SWORD]                 
 Mode = 3                      
 Type = 1                      
 Address = {HEX @}           
 ConditionType = 0             
 ConditionValueA = {dws_ wStringBuffer wStringBuffer+1 wStringBuffer+2 wStringBuffer+3 wAnimationID} 
 ConditionValueB = {dws_ ==            ==              ==              ==              ==          } 
-ConditionValueC = {dws_ G_CHAR        U_CHAR          I_CHAR          L_CHAR          GUILLOTINE  } 
+ConditionValueC = {dws_ G_CHAR        U_CHAR          I_CHAR          L_CHAR          SACRED_SWORD  } 
 
 
 ;rsm041307 

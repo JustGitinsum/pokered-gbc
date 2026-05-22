@@ -65,16 +65,16 @@ FlyWarpDataPtr:
 	fly_warp_spec PALLET_TOWN,     .PalletTown
 	fly_warp_spec VIRIDIAN_CITY,   .ViridianCity
 	fly_warp_spec PEWTER_CITY,     .PewterCity
-	fly_warp_spec ROUTE_4,         .Route4
 	fly_warp_spec CERULEAN_CITY,   .CeruleanCity
 	fly_warp_spec VERMILION_CITY,  .VermilionCity
-	fly_warp_spec ROUTE_10,        .Route10
 	fly_warp_spec LAVENDER_TOWN,   .LavenderTown
 	fly_warp_spec CELADON_CITY,    .CeladonCity
 	fly_warp_spec SAFFRON_CITY,    .SaffronCity
 	fly_warp_spec FUCHSIA_CITY,    .FuchsiaCity
 	fly_warp_spec CINNABAR_ISLAND, .CinnabarIsland
 	fly_warp_spec INDIGO_PLATEAU,  .IndigoPlateau
+	fly_warp_spec ROUTE_4,         .Route4
+	fly_warp_spec ROUTE_10,        .Route10
 	
 
 .PalletTown:     fly_warp PALLET_TOWN,      5,  6
@@ -84,7 +84,7 @@ FlyWarpDataPtr:
 .CeruleanCity:   fly_warp CERULEAN_CITY,   19, 18
 .VermilionCity:  fly_warp VERMILION_CITY,  11,  4
 .Route10:        fly_warp ROUTE_10,        11, 20
-.LavenderTown:   fly_warp LAVENDER_TOWN,    3,  6
+.LavenderTown:   fly_warp LAVENDER_TOWN,    1,  6
 .CeladonCity:    fly_warp CELADON_CITY,    41, 10
 .SaffronCity:    fly_warp SAFFRON_CITY,     9, 30
 .FuchsiaCity:    fly_warp FUCHSIA_CITY,    19, 28

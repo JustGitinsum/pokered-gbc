@@ -122,7 +122,10 @@ FrameBlockPointers:
 	dw FrameBlock77
 	dw FrameBlock78
 	dw FrameBlock79
+	dw FrameBlock7f
 	dw FrameBlock90
+	dw FrameBlock66bis ; new
+	dw FrameBlock66ter ; new
 	assert_table_length NUM_FRAMEBLOCKS
 
 FrameBlock01:
@@ -541,9 +544,22 @@ FrameBlock2b:
 	dbsprite  1,  0,  0,  0, $47, 0
 
 FrameBlock90:
-	db 2 ; # Added for XSissorAnim
+	db 2 ; # new for XSissorAnim
 	dbsprite  0,  0,  0,  0, $47, OAM_XFLIP
 	dbsprite  0,  0,  4,  4, $47, OAM_XFLIP
+
+FrameBlock66bis: ; new
+	db 6 ; #
+	dbsprite  0,  2,  0,  0, $03, 0
+	dbsprite  0,  3,  0,  0, $13, 0
+	dbsprite  2,  0,  0,  0, $03, 0
+	dbsprite  2,  1,  0,  0, $13, 0
+	dbsprite  4,  1,  0,  0, $03, 0
+	dbsprite  4,  2,  0,  0, $13, 0
+
+FrameBlock66ter: ; new
+	db 1 ; #
+	dbsprite  0,  1,  0,  0, $03, 0
 
 FrameBlock2c:
 	db 1 ; #
@@ -1237,6 +1253,13 @@ FrameBlock78:
 FrameBlock79:
 	db 1 ; #
 	dbsprite  0,  0,  0,  0, $4e, 0
+
+FrameBlock7f:
+	db 4 ; #
+	dbsprite  0,  0,  0,  0, $02, 0
+	dbsprite  1,  0,  0,  0, $02, OAM_XFLIP
+	dbsprite  0,  1,  0,  0, $02, OAM_YFLIP
+	dbsprite  1,  1,  0,  0, $02, OAM_XFLIP | OAM_YFLIP
 
 INCLUDE "data/battle_anims/base_coords.asm"
 

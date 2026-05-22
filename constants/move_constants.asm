@@ -17,7 +17,7 @@
 	const THUNDERPUNCH ; 09
 	const SCRATCH      ; 0a
 	const VICEGRIP     ; 0b
-	const GUILLOTINE   ; 0c
+	const SACRED_SWORD   ; 0c
 	const AIR_SLASH    ; 0d
 	const SWORDS_DANCE ; 0e
 	const CUT          ; 0f
@@ -133,7 +133,7 @@
 	const SHADOW_BONE    ; 7d
 	const FIRE_BLAST   ; 7e
 	const WATERFALL    ; 7f
-	const CLAMP        ; 80
+	const RAZOR_SHELL        ; 80
 	const SWIFT        ; 81
 	const IRON_HEAD   ; 82
 	const SPIKE_CANNON ; 83
@@ -211,6 +211,10 @@
 	const METAL_CLAW
 	const BELCH
 	const CHATTER
+	const ROOST
+	const SYNTHESIS
+	const MOONLIGHT
+	const MYSTICAL_FIRE
 	const STRUGGLE     ; a5
 DEF NUM_ATTACKS EQU const_value - 1
 

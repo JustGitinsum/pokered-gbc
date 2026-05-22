@@ -12,7 +12,7 @@ MoveSoundTable:
 	db SFX_BATTLE_0D,          $00, $a0 ; THUNDERPUNCH
 	db SFX_DAMAGE,             $00, $80 ; SCRATCH
 	db SFX_BATTLE_0F,          $20, $40 ; VICEGRIP
-	db SFX_BATTLE_0F,          $00, $80 ; GUILLOTINE
+	db SFX_BATTLE_0F,          $00, $80 ; SACRED_SWORD
 	db SFX_BATTLE_0E,          $00, $a0 ; AIR_SLASH
 	db SFX_NOT_VERY_EFFECTIVE, $10, $c0 ; SWORDS_DANCE
 	db SFX_NOT_VERY_EFFECTIVE, $00, $a0 ; CUT
@@ -128,7 +128,7 @@ MoveSoundTable:
 	db SFX_BATTLE_32,          $00, $80 ; SHADOW_BONE
 	db SFX_BATTLE_29,          $1f, $20 ; FIRE_BLAST
 	db SFX_BATTLE_25,          $2f, $80 ; WATERFALL
-	db SFX_BATTLE_0F,          $1f, $ff ; CLAMP
+	db SFX_BATTLE_0F,          $1f, $ff ; RAZOR_SHELL
 	db SFX_BATTLE_2B,          $1f, $60 ; SWIFT
 	db SFX_BATTLE_26,          $1e, $20 ; IRON_HEAD
 	db SFX_BATTLE_26,          $1f, $18 ; SPIKE_CANNON
@@ -207,5 +207,9 @@ MoveSoundTable:
 	db SFX_BATTLE_14,          $11, $20 ; BELCH
 	db SFX_BATTLE_12,          $00, $c0 ; CHATTER
 	db SFX_BATTLE_0B,          $00, $80 ; STRUGGLE
+	db SFX_BATTLE_33,          $00, $80 ; ROOST
+	db SFX_BATTLE_33,          $00, $80 ; SYNTHESIS
+	db SFX_BATTLE_33,          $00, $80 ; MOONLIGHT
+	db SFX_BATTLE_29,          $20, $c0 ; MYSTICAL_FIRE
 	assert_table_length NUM_ATTACKS
 	db SFX_BATTLE_0B,          $00, $80

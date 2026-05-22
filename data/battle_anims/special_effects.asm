@@ -6,7 +6,7 @@ ENDM
 AnimationIdSpecialEffects:
 	; animation id, effect routine address
 	anim_special_effect AERIAL_ACE,            AnimationFlashScreen
-	anim_special_effect GUILLOTINE,            AnimationFlashScreen
+	anim_special_effect SACRED_SWORD,            AnimationFlashScreen
 	anim_special_effect CLOSE_COMBAT,             AnimationFlashScreen
 	anim_special_effect HEADBUTT,              AnimationFlashScreen
 	anim_special_effect TAIL_WHIP,             TailWhipAnimationUnused

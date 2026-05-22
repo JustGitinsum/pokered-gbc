@@ -256,12 +256,11 @@ ClefairyEvosMoves:
 	db 13, SING
 	db 16, DRAIN_KISS
 	db 20, MAGICAL_LEAF
-	db 23, METRONOME
-	db 25, BUBBLEBEAM
-	db 27, LIGHT_SCREEN
+	db 23, BUBBLEBEAM
+	db 27, MOONLIGHT
 	db 31, AMNESIA
 	db 35, MINIMIZE
-;;;	db 40, MYSTICAL_FIRE
+	db 40, MYSTICAL_FIRE
 	db 48, MOONBLAST
 	db 0
 
@@ -274,6 +273,7 @@ SpearowEvosMoves:
 	db 15, FURY_ATTACK
 	db 22, MIRROR_MOVE
 	db 29, DRILL_PECK
+	db 32, ROOST
 	db 36, AGILITY
 	db 0
 
@@ -528,7 +528,7 @@ ShellderEvosMoves:
 	db 0
 ; Learnset
 	db 18, SUPERSONIC
-	db 23, CLAMP
+	db 23, RAZOR_SHELL
 	db 30, AURORA_BEAM
 	db 39, LEER
 	db 50, ICE_BEAM
@@ -684,6 +684,7 @@ FearowEvosMoves:
 	db 15, FURY_ATTACK
 	db 25, MIRROR_MOVE
 	db 34, DRILL_PECK
+	db 36, ROOST
 	db 43, AGILITY
 	db 0
 
@@ -698,6 +699,7 @@ PidgeyEvosMoves:
 	db 21, WING_ATTACK
 	db 25, SILVER_WIND
 	db 29, AGILITY
+	db 37, ROOST
 	db 44, MIRROR_MOVE
 	db 0
 
@@ -1071,6 +1073,7 @@ DragoniteEvosMoves:
 	db 10, THUNDER_WAVE
 	db 15, DRAGONBREATH
 	db 20, AGILITY
+	db 25, ROOST
 	db 35, SLAM
 	db 45, DRAGON_RAGE
 	db 50, EXTREMESPEED
@@ -1141,13 +1144,16 @@ MoltresEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
+	db 55, ROOST
 	db 60, SKY_ATTACK
+	db 65, 
 	db 0
 
 ArticunoEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
+	db 55, ROOST
 	db 60, HAZE
 	db 65, BLIZZARD
 	db 0
@@ -1156,6 +1162,7 @@ ZapdosEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
+	db 55, ROOST
 	db 60, LIGHT_SCREEN
 	db 65, THUNDER
 	db 0
@@ -1236,6 +1243,7 @@ NinetalesEvosMoves:
 	db 32, EXTRASENSORY
 	db 36, FLAMETHROWER
 	db 44, FIRE_SPIN
+	db EVOLUTION_MOVE, MYSTICAL_FIRE
 	db 0
 
 PikachuEvosMoves:
@@ -1951,7 +1959,7 @@ ClefableEvosMoves:
 	db 27, LIGHT_SCREEN
 	db 31, AMNESIA
 	db 35, MINIMIZE
-;;;	db 40, MYSTICAL_FIRE
+	db 40, MYSTICAL_FIRE
 	db 48, MOONBLAST
 	db EVOLUTION_MOVE, METRONOME
 	db 0
@@ -2051,6 +2059,7 @@ PidgeottoEvosMoves:
 	db 21, WING_ATTACK
 	db 25, SILVER_WIND
 	db 29, AGILITY
+	db 37, ROOST
 	db 44, MIRROR_MOVE
 	db 0
 
@@ -2064,6 +2073,7 @@ PidgeotEvosMoves:
 	db 21, WING_ATTACK
 	db 25, SILVER_WIND
 	db 29, AGILITY
+	db 37, ROOST
 	db 44, MIRROR_MOVE
 	db 0
 
@@ -2440,13 +2450,17 @@ OddishEvosMoves:
 ; Evolutions
 	db EVOLVE_LEVEL, 21, GLOOM
 	db 0
-; Learnset
-	db 15, POISONPOWDER
-	db 17, STUN_SPORE
-	db 19, SLEEP_POWDER
-	db 24, ACID
-	db 33, MAGICAL_LEAF
-	db 46, ENERGY_BALL
+; Learnset SUN/MOON
+	db 9, ACID
+	db 13, POISONPOWDER
+	db 14, STUN_SPORE
+	db 15, SLEEP_POWDER
+	db 19, MAGICAL_LEAF
+	db 27, MOONLIGHT
+	db 31, GIGA_DRAIN
+	db 35, TOXIC
+	db 43, MOONBLAST
+	db 51, ENERGY_BALL
 	db 0
 
 GloomEvosMoves:
@@ -2454,21 +2468,28 @@ GloomEvosMoves:
 	db EVOLVE_ITEM, LEAF_STONE, 1, VILEPLUME
 	db 0
 ; Learnset
-	db 15, POISONPOWDER
-	db 17, STUN_SPORE
-	db 19, SLEEP_POWDER
-	db 28, ACID
-	db 38, MAGICAL_LEAF
-	db 52, ENERGY_BALL
+	db 14, STUN_SPORE
+	db 15, SLEEP_POWDER
+	db 19, MAGICAL_LEAF
+	db 27, MOONLIGHT
+	db 31, GIGA_DRAIN
+	db 35, TOXIC
+	db 43, MOONBLAST
+	db 51, ENERGY_BALL
 	db 0
 
 VileplumeEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 15, POISONPOWDER
-	db 17, STUN_SPORE
-	db 19, SLEEP_POWDER
+	db 14, STUN_SPORE
+	db 15, SLEEP_POWDER
+	db 19, MAGICAL_LEAF
+	db 27, MOONLIGHT
+	db 31, GIGA_DRAIN
+	db 35, TOXIC
+	db 43, MOONBLAST
+	db 51, ENERGY_BALL
 	db 0
 
 BellsproutEvosMoves:

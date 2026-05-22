@@ -138,6 +138,26 @@ DEF FIRST_SE_ID EQU const_value
 	const SUBANIM_0_STAR_HIGH
 	const SUBANIM2_0_SLICE_HMIRRORED
 	const SUBANIM2_0_FIRESPIN_SELF
+	const SUBANIM_HURRICANE
+	const SUBANIM_1fGUNKSHOT
+	const SUBANIM_3E_fire
+	const SUBANIM_ICICLESPEAR
+	const SUBANIM_30bis
+	const SUBANIM_2Benemy
+	const SUBANIM_1_SPIKES
+	const SUBANIM_0_ROCKS_RISE_ENEMY
+	const SUBANIM_17flip
+	const SUBANIM_EmanatingFromOpponent
+	const SUBANIM_1fcircles
+	const SUBANIM_27spec
+	const SUBANIM_0_SOUND_WAVE_SHOT
+	const SUBANIM_2_BONE_TOSS
+	const SUBANIM_2_BONE_RECOVER
+	const SUBANIM_3_PUNCH_FIST_CENTER
+	const SUBANIM_3_PUNCH_FIST_LEFT
+	const SUBANIM_3_PUNCH_FIST_RIGHT
+	const SUBANIM_3_KICK
+	const SUBANIM_3_PUNCH_FIST_DROP
 DEF NUM_SUBANIMS EQU const_value
 
 ; types of subanimations
@@ -156,7 +176,7 @@ DEF NUM_SUBANIMS EQU const_value
 	const FRAMEBLOCK_01
 	const FRAMEBLOCK_02
 	const FRAMEBLOCK_03
-	const FRAMEBLOCK_04
+	const FRAMEBLOCK_04 ; 0: 1: 3: Little Fist
 	const FRAMEBLOCK_05
 	const FRAMEBLOCK_06
 	const FRAMEBLOCK_07
@@ -234,7 +254,7 @@ DEF NUM_SUBANIMS EQU const_value
 	const FRAMEBLOCK_4F
 	const FRAMEBLOCK_50
 	const FRAMEBLOCK_51
-	const FRAMEBLOCK_52
+	const FRAMEBLOCK_52 ; 1: Question Mark 2: 3: Big Fist
 	const FRAMEBLOCK_53
 	const FRAMEBLOCK_54
 	const FRAMEBLOCK_55
@@ -274,7 +294,10 @@ DEF NUM_SUBANIMS EQU const_value
 	const FRAMEBLOCK_77
 	const FRAMEBLOCK_78
 	const FRAMEBLOCK_79
-	const FRAMEBLOCK_90
+	const FRAMEBLOCK_7F
+	const FRAMEBLOCK_90 ; new
+	const FRAMEBLOCK_66bis ; new
+	const FRAMEBLOCK_66ter ; new
 DEF NUM_FRAMEBLOCKS EQU const_value
 
 ; base coordinates that are part of subanimations
@@ -458,6 +481,10 @@ DEF NUM_FRAMEBLOCKS EQU const_value
 	const BASECOORD_AF
 	const BASECOORD_B0
 	const BASECOORD_B1
+	const BASECOORD_B2
+	const BASECOORD_BB
+	const BASECOORD_BC
+	const BASECOORD_BD
 DEF NUM_BASECOORDS EQU const_value
 
 ; frame block modes that are part of subanimations

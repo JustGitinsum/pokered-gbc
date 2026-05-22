@@ -136,7 +136,7 @@ ColorOverworldSprite::
 	and a
 	ld a, SPR_PAL_ORANGE
 	jr z, .norandomColor
-	ld a, SPR_PAL_ORANGE ; Overwork palette for Green (Girl player)
+	ld a, SPR_PAL_GREEN ; Overwork palette for Green (Girl player)
 	jr .norandomColor
 .surfing
 	ld a, SPR_PAL_EMOJI
@@ -207,6 +207,12 @@ ColorNonOverworldSprites::
 	ld a, d
 	cp ENERGY_BALL
 	ld a, ELECTRIC
+	jr z, .gotType
+
+; Make Mystical Fire Light Blue, despite being a fire move
+	ld a, d
+	cp MYSTICAL_FIRE
+	ld a, ICE
 	jr z, .gotType
 
 ; Make Aura Sphere Light Blue, despite being a fighting move

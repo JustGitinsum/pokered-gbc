@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw GloomPicFront, GloomPicBack
 
-	db MEGA_DRAIN, POISONPOWDER, STUN_SPORE, NO_MOVE ; level 1 learnset
+	db MEGA_DRAIN, POISONPOWDER, GROWTH, ACID ; level 1 learnset
 	db GROWTH_MEDIUM_SLOW ; growth rate
 
 	; tm/hm learnset

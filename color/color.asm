@@ -249,7 +249,7 @@ SetPal_TownMap:
 	ldh [rSVBK], a
 	ld hl, W2_SpritePaletteMap
 	ld bc, $4
-	ld a, SPR_PAL_ORANGE ; Girl Player SPrite palette
+	ld a, SPR_PAL_GREEN ; Girl Player SPrite palette
 	jr .doneMap
 .boyMap
 	ld a, 2
@@ -872,7 +872,7 @@ SetPal_TrainerCard:
 	; Greens's palette
 	ld a, 2
 	ldh [rSVBK], a
-	ld d, PAL_SWIMMER ; Green palette
+	ld d, PAL_ERIKA ; Green palette (Girl player)
 	ld e, 4
 	farcall LoadSGBPalette
 	ld d, PAL_GREENMON ; Border
