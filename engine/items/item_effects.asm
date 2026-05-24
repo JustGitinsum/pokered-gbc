@@ -650,6 +650,12 @@ ItemUseBicycle:
 	ld a, [wIsInBattle]
 	and a
 	jp nz, ItemUseNotTime
+	;;;;;;;;;; marcelnote - moved this here from StartMenu_Item
+	ld a, [wStatusFlags6]
+	bit BIT_ALWAYS_ON_BIKE, a
+	ld hl, CannotGetOffHereText
+	jp nz, ItemUseFailed
+	;;;;;;;;;;
 	ld a, [wWalkBikeSurfState]
 	ld [wWalkBikeSurfStateCopy], a
 	cp 2 ; is the player surfing?
@@ -661,8 +667,9 @@ ItemUseBicycle:
 	xor a
 	ld [wWalkBikeSurfState], a ; change player state to walking
 	call PlayDefaultMusic ; play walking music
-	ld hl, GotOffBicycleText
-	jr .printText
+	jp TextScriptEnd ; end text
+	; ld hl, GotOffBicycleText
+	; jr .printText
 .tryToGetOnBike
 	call IsBikeRidingAllowed
 	jp nc, NoCyclingAllowedHere
@@ -671,8 +678,9 @@ ItemUseBicycle:
 	ldh [hJoyHeld], a ; current joypad state
 	inc a
 	ld [wWalkBikeSurfState], a ; change player state to bicycling
-	ld hl, GotOnBicycleText
+	; ld hl, GotOnBicycleText
 	call PlayDefaultMusic ; play bike riding music
+	jp TextScriptEnd ; end text
 .printText
 	jp PrintText
 
@@ -695,8 +703,9 @@ ItemUseSurfboard:
 	ld a, 2
 	ld [wWalkBikeSurfState], a ; change player state to surfing
 	call PlayDefaultMusic ; play surfing music
-	ld hl, SurfingGotOnText
-	jp PrintText
+	; ld hl, SurfingGotOnText
+	; jp PrintText
+	jp TextScriptEnd ; end text
 .tryToStopSurfing
 	xor a
 	ldh [hSpriteIndex], a
@@ -1915,6 +1924,7 @@ FishingInit:
 	scf ; can't fish during battle
 	ret
 .notInBattle
+	predef GetTileAndCoordsInFrontOfPlayer ; marcelnote - use items with Select
 	call IsNextTileShoreOrWater
 	jr nc, .nofish
 	ld a, [wWalkBikeSurfState]
@@ -2389,6 +2399,10 @@ GotOffBicycleText:
 	text_far _GotOffBicycleText1
 	text_low
 	text_far _GotOffBicycleText2
+	text_end
+
+CannotGetOffHereText: ; marcelnote - moved from start_sub_menus.asm
+	text_far _CannotGetOffHereText
 	text_end
 
 ; restores bonus PP (from PP Ups) when healing at a pokemon center

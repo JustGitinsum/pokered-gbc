@@ -45,3 +45,17 @@ IsInRestOfArray::
 .found
 	scf
 	ret
+
+IsInList:: ; marcelnote - simpler, uses e only, for arrays with entry size 1
+; Search the list at hl for the value in a.
+; Returns carry if found.
+; If found, then also returns hl the address at which a was found.
+	ld e, a
+.loop
+	ld a, [hl]
+	cp -1
+	jr z, IsInRestOfArray.notfound
+	cp e
+	jr z, IsInRestOfArray.found
+	inc hl
+	jr .loop

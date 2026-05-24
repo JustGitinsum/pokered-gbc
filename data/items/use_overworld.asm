@@ -1,5 +1,6 @@
 ; items which close the item menu when used
 UsableItems_CloseMenu:
+	db BICYCLE ; marcelnote - added
 	db ESCAPE_ROPE
 	db ITEMFINDER
 	db POKE_FLUTE

@@ -9,7 +9,7 @@ TextBoxCoordTable:
 	; text box ID, upper-left X, upper-left Y, lower-right X, lower-right Y
 	db MESSAGE_BOX,       0, 12, 19, 17
 	db MENU_TEMPLATE_03,  0,  0, 19, 14
-	db MENU_TEMPLATE_07,  0,  0, 11,  6
+	;db MENU_TEMPLATE_07,  0,  0, 11,  6 ; marcelnote - replaced with USE_SLCT_MENU_TEMPLATE
 	db LIST_MENU_BOX,     4,  2, 19, 12
 	db MENU_TEMPLATE_10,  7,  0, 19, 17
 	db MON_SPRITE_POPUP,  6,  4, 14, 13
@@ -28,6 +28,7 @@ TextBoxTextAndCoordTable:
 	; text box ID, upper-left X, upper-left Y, lower-right X, lower-right Y, text pointer, text X, text Y
 	text_box_text JP_MOCHIMONO_MENU_TEMPLATE,         0,  0, 14, 17, JapaneseMochimonoText,    3,  0
 	text_box_text USE_TOSS_MENU_TEMPLATE,            13,  6, 19, 10, UseTossText,             15,  7
+	text_box_text USE_SLCT_MENU_TEMPLATE,            13,  6, 19, 10, UseSlctText,             15,  7 ; marcelnote - new, use items with Select
 	text_box_text JP_SAVE_MESSAGE_MENU_TEMPLATE,      0,  0,  7,  5, JapaneseSaveMessageText,  2,  2
 	text_box_text JP_SPEED_OPTIONS_MENU_TEMPLATE,     0,  6,  5, 10, JapaneseSpeedOptionsText, 2,  7
 	text_box_text BATTLE_MENU_TEMPLATE,               8, 12, 19, 17, BattleMenuText,          10, 14
@@ -48,6 +49,10 @@ BuySellQuitText:
 UseTossText:
 	db   "USE"
 	next "TOSS@"
+
+UseSlctText: ; marcelnote - use items with SELECT
+	db   "USE"
+	next "SEL@"
 
 JapaneseSaveMessageText:
 	db   "きろく"

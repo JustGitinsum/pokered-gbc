@@ -25,7 +25,7 @@ TrySurf:
 	bit 1, [hl]
 	res 1, [hl]
 	jr z, .no2
-	call InitializeFieldMoveTextBox
+	; call InitializeFieldMoveTextBox
 	; ld hl, PromptToSurfText
 	; call PrintText
 	; call YesNoChoice
@@ -52,7 +52,7 @@ TrySurf:
 TryCut:
 	call IsCutTile
 	jr nc, TrySurf.no
-	call InitializeFieldMoveTextBox
+	; call InitializeFieldMoveTextBox
 	; ld hl, ExplainCutText
 	; call PrintText
 	; call ManualTextScroll
@@ -146,27 +146,27 @@ HasPartyMove::
 	pop bc
 	ret
 
-InitializeFieldMoveTextBox:
-	call EnableAutoTextBoxDrawing
-	ld a, 1 ; not 0
-	ld [hTextID], a
-	farcall DisplayTextIDInit
-	ret
+; InitializeFieldMoveTextBox:
+; 	call EnableAutoTextBoxDrawing
+; 	ld a, 1 ; not 0
+; 	ld [hTextID], a
+; 	farcall DisplayTextIDInit
+; 	ret
 
 CloseFieldMoveTextBox:
 	ld a,[hLoadedROMBank]
 	push af
 	jp CloseTextDisplay
 
-PromptToSurfText:
-	text "The water is calm."
-	line "Would you like to"
-	cont "SURF?@@"
+; PromptToSurfText:
+; 	text "The water is calm."
+; 	line "Would you like to"
+; 	cont "SURF?@@"
 
-ExplainCutText:
-	text "This tree can be"
-	line "CUT!@@"
+; ExplainCutText:
+; 	text "This tree can be"
+; 	line "CUT!@@"
 
-PromptToCutText:
-	text "Would you like to"
-	line "use CUT?@@"
+; PromptToCutText:
+; 	text "Would you like to"
+; 	line "use CUT?@@"

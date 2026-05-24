@@ -3,8 +3,8 @@ PrintStrengthText:
 	set BIT_STRENGTH_ACTIVE, [hl]
 	ld hl, UsedStrengthText
 	call PrintText
-	ld hl, CanMoveBouldersText
-	jp PrintText
+	; ld hl, CanMoveBouldersText
+	; jp PrintText
 
 UsedStrengthText:
 	text_far _UsedStrengthText
@@ -14,9 +14,9 @@ UsedStrengthText:
 	call Delay3
 	jp TextScriptEnd
 
-CanMoveBouldersText:
-	text_far _CanMoveBouldersText
-	text_end
+; CanMoveBouldersText:
+; 	text_far _CanMoveBouldersText
+; 	text_end
 
 IsSurfingAllowed:
 ; Returns whether surfing is allowed in BIT_SURF_ALLOWED of wStatusFlags1.

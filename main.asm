@@ -402,6 +402,10 @@ INCLUDE "data/battle_anims/frame_blocks.asm"
 INCLUDE "engine/movie/evolution.asm"
 INCLUDE "engine/overworld/elevator.asm"
 
+SECTION "bank1F", ROMX ; marcelnote - new
+
+INCLUDE "engine/overworld/use_item_select_button.asm" ; marcelnote - adapted from PureRGB
+
 SECTION "bankBattleAnim", ROMX
 
 INCLUDE "engine/battle/load_move_animation_tiles.asm"

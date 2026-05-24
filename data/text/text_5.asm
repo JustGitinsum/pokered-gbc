@@ -72,6 +72,12 @@ _CannotGetOffHereText::
 	line "here."
 	prompt
 
+_ItemWasAssignedToSelectText:: ; marcelnote - use items with Select
+	text_ram wStringBuffer
+	text " was"
+	line "assigned."
+	prompt
+
 _GotMonText::
 	text "<PLAYER> got"
 	line "@"

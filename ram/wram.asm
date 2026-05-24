@@ -1860,7 +1860,10 @@ wSpriteSetID:: db
 
 wObjectDataPointerTemp:: dw
 
-	ds 2
+; marcelnote - use SELECT for key items
+wSelectButtonItem:: db
+
+	ds 1
 
 ; the tile shown outside the boundaries of the map
 wMapBackgroundTile:: db

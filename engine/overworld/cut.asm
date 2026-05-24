@@ -50,8 +50,8 @@ UsedCut:
 	; fall through
 
 Cut2::
-	ld hl, UsedCutText
-	call PrintText
+	; ld hl, UsedCutText
+	; call PrintText
 	call LoadScreenTilesFromBuffer2
 	ld hl, wStatusFlags5
 	res BIT_NO_TEXT_DELAY, [hl]

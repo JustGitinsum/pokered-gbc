@@ -73,12 +73,20 @@ OverworldLoopLessDelay::
 	ldh a, [hJoyPressed]
 .checkIfStartIsPressed
 	bit B_PAD_START, a
-	jr z, .startButtonNotPressed
+	jr z, .checkIfSelectIsPressed ; marcelnote - was .checkIfAIsPressed
 ; if START is pressed
 	xor a ; TEXT_START_MENU
 	ldh [hTextID], a
 	jp .displayDialogue
-.startButtonNotPressed
+;;;;;;;;;;;;;;;;;;;;;;;;;; marcelnote - use items with Select
+.checkIfSelectIsPressed
+	bit B_PAD_SELECT, a
+	jr z, .checkIfAIsPressed
+; if SELECT is pressed
+	callfar UseSelectButtonItem
+	jr OverworldLoop
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+.checkIfAIsPressed
 	bit B_PAD_A, a
 	jp z, .checkIfDownButtonIsPressed
 ; if A is pressed

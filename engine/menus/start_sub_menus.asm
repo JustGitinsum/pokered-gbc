@@ -213,7 +213,7 @@ StartMenu_Pokemon::
 	call GBPalWhiteOutWithDelay3
 	jp .goBackToMap
 .teleport
-	jp .dig
+	jr .dig
 	;call CheckIfInOutsideMap
 	;jr z, .canTeleport
 	;ld a, [wWhichPokemon]
@@ -310,7 +310,7 @@ ItemMenuLoop:
 	call LoadScreenTilesFromBuffer2DisableBGTransfer ; restore saved screen
 	call RunDefaultPaletteCommand
 
-StartMenu_Item::
+StartMenu_Item::  ; marcelnote - BICYCLE does not have special handling anymore
 	ld a, [wLinkState]
 	dec a ; is the player in the Colosseum or Trade Centre?
 	jr nz, .notInCableClubRoom
@@ -367,11 +367,13 @@ StartMenu_Item::
 	call PlaceUnfilledArrowMenuCursor
 	xor a
 	ld [wMenuItemToSwap], a
-	ld a, [wCurItem]
-	cp BICYCLE
-	jp z, .useOrTossItem
-.notBicycle1
+	;;;;;;;;;;;;;;;;;;;;; marcelnote - use items with Select
+	callfar CheckIfSelectItem ; sets carry if item can be assigned to Select
 	ld a, USE_TOSS_MENU_TEMPLATE
+	jr nc, .cannotAssignToSelect
+	ld a, USE_SLCT_MENU_TEMPLATE
+.cannotAssignToSelect
+;;;;;;;;;;;;;;;;;;;;;
 	ld [wTextBoxID], a
 	call DisplayTextBoxID
 	ld hl, wTopMenuItemY
@@ -391,26 +393,15 @@ StartMenu_Item::
 	call HandleMenuInput
 	call PlaceUnfilledArrowMenuCursor
 	bit B_PAD_B, a
-	jr z, .useOrTossItem
-	jp ItemMenuLoop
-.useOrTossItem ; if the player made the choice to use or toss the item
+	jp nz, ItemMenuLoop
+; if the player made the choice to use or toss the item
 	ld a, [wCurItem]
 	ld [wNamedObjectIndex], a
 	call GetItemName
 	call CopyToStringBuffer
-	ld a, [wCurItem]
-	cp BICYCLE
-	jr nz, .notBicycle2
-	ld a, [wStatusFlags6]
-	bit BIT_ALWAYS_ON_BIKE, a
-	jr z, .useItem_closeMenu
-	ld hl, CannotGetOffHereText
-	call PrintText
-	jp ItemMenuLoop
-.notBicycle2
 	ld a, [wCurrentMenuItem]
 	and a
-	jr nz, .tossItem
+	jr nz, .tossOrSelectItem ; marcelnote - added SLCT option
 ; use item
 	ld [wPseudoItemID], a ; a must be 0 due to above conditional jump
 	ld a, [wCurItem]
@@ -455,7 +446,12 @@ StartMenu_Item::
 	pop af
 	ld [wUpdateSpritesEnabled], a
 	jp ItemMenuLoop
-.tossItem
+.tossOrSelectItem ; marcelnote - added SLCT option
+;;;;;;;;;;;;;;;;;;;;; marcelnote - use items with Select
+	callfar CheckIfSelectItem ; uses [wCurItem], sets carry if item can be assigned to Select
+	jr c, .assignItemToSelect
+;;;;;;;;;;;;;;;;;;;;;
+	; toss item
 	call IsKeyItem
 	ld a, [wIsKeyItem]
 	and a
@@ -471,13 +467,19 @@ StartMenu_Item::
 	call TossItem
 .tossZeroItems
 	jp ItemMenuLoop
+.assignItemToSelect ; marcelnote - use items with Select
+	ld a, [wCurItem]
+	ld [wSelectButtonItem], a ; assign item to Select button
+	ld hl, ItemWasAssignedToSelectText
+	call PrintText
+	jp ItemMenuLoop
 
 CannotUseItemsHereText:
 	text_far _CannotUseItemsHereText
 	text_end
 
-CannotGetOffHereText:
-	text_far _CannotGetOffHereText
+ItemWasAssignedToSelectText: ; marcelnote - use items with Select
+	text_far _ItemWasAssignedToSelectText
 	text_end
 
 INCLUDE "data/items/use_party.asm"
