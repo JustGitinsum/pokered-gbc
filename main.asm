@@ -118,14 +118,14 @@ ENDC
 SECTION "Battle Engine 2", ROMX
 
 INCLUDE "engine/gfx/load_pokedex_tiles.asm"
-INCLUDE "engine/overworld/map_sprites.asm"
 INCLUDE "engine/overworld/emotion_bubbles.asm"
 INCLUDE "engine/events/evolve_trade.asm"
-INCLUDE "engine/battle/move_effects/substitute.asm"
 
 SECTION "PC Menu", ROMX ;Moved pc.asm to this section because Battle Engine 2 got too big
 INCLUDE "engine/menus/pc.asm"
 
+SECTION "Overworld Sprites", ROMX
+INCLUDE "engine/overworld/map_sprites.asm" ; Moved from Battle Engine 2
 
 SECTION "Play Time", ROMX
 
@@ -173,6 +173,7 @@ INCLUDE "engine/battle/move_effects/focus_energy.asm"
 SECTION "Battle Engine 4", ROMX
 
 INCLUDE "engine/battle/move_effects/leech_seed.asm"
+INCLUDE "engine/battle/move_effects/substitute.asm" ;Moved from Battle Engine 2
 
 
 SECTION "Battle Engine 5", ROMX

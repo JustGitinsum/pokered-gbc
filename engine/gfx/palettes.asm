@@ -127,7 +127,7 @@ IF GEN_2_GRAPHICS
 	ld a, [wPlayerGender] ; Gender check
 	and a
 	jr z, .boyBackPalette
-	ld a, PAL_SWIMMER
+	ld a, PAL_ERIKA
 	jr .gotPalette
 .boyBackPalette
 	ld a, PAL_HERO

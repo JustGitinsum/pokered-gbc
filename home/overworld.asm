@@ -143,6 +143,7 @@ OverworldLoopLessDelay::
 .noDirectionButtonsPressed
 	ld hl, wMiscFlags
 	res BIT_TURNING, [hl]
+	call SwitchRunningToWalkingSprites ; marcelnote - running sprites
 	call UpdateSprites
 	ld a, 1
 	ld [wCheckFor180DegreeTurn], a
@@ -284,16 +285,42 @@ OverworldLoopLessDelay::
 .noSpinning
 	call UpdateSprites
 
-.moveAhead2
+.moveAhead2 ; marcelnote - changes to handle running, faster swimming, and faster spinning
 	ld hl, wMiscFlags
 	res BIT_TURNING, [hl]
+	ld a, [wMovementFlags]
+    bit BIT_LEDGE_OR_FISHING, a ; jumping a ledge?
+    jr nz, .normalPlayerSpriteAdvancement
+	bit BIT_SPINNING, a ; spinning?
+    jr nz, .speedUp
 	ld a, [wWalkBikeSurfState]
 	dec a ; riding a bike?
-	jr nz, .normalPlayerSpriteAdvancement
-	ld a, [wMovementFlags]
-	bit BIT_LEDGE_OR_FISHING, a
-	jr nz, .normalPlayerSpriteAdvancement
-	call DoBikeSpeedup
+	jr z, .speedUp
+	ldh a, [hJoyHeld]
+    and PAD_B
+    jr nz, .checkIfWalking
+	; marcelnote - running sprites
+	; if reached here then player is not running, so check if we need to update sprites
+	ld a, [wWalkBikeSurfState]
+	and a ; WALKING?
+	jr nz, .normalPlayerSpriteAdvancement ; if not walking, no need to update sprites
+	ld hl, wMovementFlags
+	bit BIT_RUNNING, [hl]
+	jr z, .normalPlayerSpriteAdvancement ; if wasn't running, no need to update sprites
+	res BIT_RUNNING, [hl]
+	call LoadWalkingPlayerSpriteGraphics
+	jr .normalPlayerSpriteAdvancement
+.checkIfWalking
+	ld a, [wWalkBikeSurfState]
+	and a ; WALKING?
+	jr nz, .speedUp ; if not walking, no need to update sprites
+	ld hl, wMovementFlags
+	bit BIT_RUNNING, [hl]
+	jr nz, .speedUp ; if already running, no need to update sprites
+	set BIT_RUNNING, [hl]
+	call LoadRunningPlayerSpriteGraphics
+.speedUp
+    call DoBikeSpeedup
 .normalPlayerSpriteAdvancement
 	call AdvancePlayerSprite
 	ld a, [wWalkCounter]
@@ -834,7 +861,7 @@ LoadPlayerSpriteGraphics::
 .ridingBike
 	; If the bike can't be used,
 	; start walking instead.
-	call IsBikeRidingAllowed
+	call IsBikingAllowed
 	jr c, .determineGraphics
 
 .startWalking
@@ -853,32 +880,23 @@ LoadPlayerSpriteGraphics::
 	jp z, LoadSurfingPlayerSpriteGraphics
 	jp LoadWalkingPlayerSpriteGraphics
 
-IsBikeRidingAllowed::
-; The bike can be used on Route 23 and Indigo Plateau,
-; or maps with tilesets in BikeRidingTilesets.
+SwitchRunningToWalkingSprites: ; marcelnote - running sprites
+	ld a, [wWalkBikeSurfState]
+	and a ; WALKING?
+	ret nz ; if not walking, do nothing
+	ld hl, wMovementFlags
+	bit BIT_RUNNING, [hl]
+	ret z ; if wasn't running, do nothing
+	res BIT_RUNNING, [hl]
+	jp LoadWalkingPlayerSpriteGraphics
+
+IsBikingAllowed:: ; marcelnote - simplified
+; The bike can be used on maps with tilesets in BikeRidingTilesets.
 ; Return carry if biking is allowed.
-
-	ld a, [wCurMap]
-	cp ROUTE_23
-	jr z, .allowed
-	cp INDIGO_PLATEAU
-	jr z, .allowed
-
 	ld a, [wCurMapTileset]
-	ld b, a
 	ld hl, BikeRidingTilesets
-.loop
-	ld a, [hli]
-	cp b
-	jr z, .allowed
-	inc a
-	jr nz, .loop
-	and a
-	ret
-
-.allowed
-	scf
-	ret
+	; ld de, 1 ; size of array entries
+	jp IsInList ; returns carry if found
 
 INCLUDE "data/tilesets/bike_riding_tilesets.asm"
 
@@ -1994,6 +2012,17 @@ LoadWalkingPlayerSpriteGraphics::
 	ld de, GreenSprite
 .AreGuy1
 	ld hl,vNPCSprites
+	jr LoadPlayerSpriteGraphicsCommon
+
+LoadRunningPlayerSpriteGraphics:: ; marcelnote - running sprites
+	ld de, RedRunSprite
+	ld hl, vNPCSprites
+	ld a, [wPlayerGender]
+	and a
+	jr z, .gotSprite
+	ld de, GreenRunSprite
+.gotSprite
+	ld hl, vNPCSprites
 	jr LoadPlayerSpriteGraphicsCommon
 
 LoadSurfingPlayerSpriteGraphics::

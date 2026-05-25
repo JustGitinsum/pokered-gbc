@@ -15,7 +15,7 @@ IF GEN_2_GRAPHICS
 	ld a, [wPlayerGender]
 	and a
 	jr z, .boyOak
-	ld a, PAL_SWIMMER
+	ld a, PAL_ERIKA
 	jr .girlOak
 .boyOak
 	ld a, PAL_HERO
