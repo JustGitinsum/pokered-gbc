@@ -556,6 +556,26 @@ FlareonPicFront::     INCBIN "gfx/pokemon/front/flareon.pic"
 FlareonPicBack::      INCBIN "gfx/pokemon/back/flareonb.pic"
 ENDC
 
+SECTION "Type Icons", ROMX
+
+NormalTypeIcon::     INCBIN "gfx/type/normal.2bpp"
+FightingTypeIcon::   INCBIN "gfx/type/fighting.2bpp"
+FlyingTypeIcon::     INCBIN "gfx/type/flying.2bpp"
+PoisonTypeIcon::     INCBIN "gfx/type/poison.2bpp"
+GroundTypeIcon::     INCBIN "gfx/type/ground.2bpp"
+RockTypeIcon::       INCBIN "gfx/type/rock.2bpp"
+BugTypeIcon::        INCBIN "gfx/type/bug.2bpp"
+GhostTypeIcon::      INCBIN "gfx/type/ghost.2bpp"
+FireTypeIcon::       INCBIN "gfx/type/fire.2bpp"
+WaterTypeIcon::      INCBIN "gfx/type/water.2bpp"
+GrassTypeIcon::      INCBIN "gfx/type/grass.2bpp"
+ElectricTypeIcon::   INCBIN "gfx/type/electric.2bpp"
+PsychicTypeIcon::    INCBIN "gfx/type/psychic.2bpp"
+IceTypeIcon::        INCBIN "gfx/type/ice.2bpp"
+DragonTypeIcon::     INCBIN "gfx/type/dragon.2bpp"
+PhysicalIcon::        INCBIN "gfx/type/pysical.2bpp"
+SpecialIcon::        INCBIN "gfx/type/special.2bpp"
+StatusIcon::        INCBIN "gfx/type/status.2bpp"
 
 SECTION "Pics 10", ROMX
 
