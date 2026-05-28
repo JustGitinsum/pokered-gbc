@@ -101,7 +101,7 @@ Moves:
 	move ROCK_TOMB,    SPEED_DOWN_SIDE_EFFECT,      60, ROCK,          95, 15
 	move EARTHQUAKE,   NO_ADDITIONAL_EFFECT,       100, GROUND,       100, 10
 	move EARTH_POWER,  DEFENSE_DOWN_SIDE_EFFECT,    90, GROUND,       100, 10
-	move DIG,          CHARGE_EFFECT,              100, GROUND,       100, 10
+	move DIG,          CHARGE_EFFECT,               80, GROUND,       100, 10
 	move TOXIC,        POISON_EFFECT,                0, POISON,        90, 10
 	move CONFUSION,    CONFUSION_SIDE_EFFECT,       50, PSYCHIC_TYPE, 100, 25
 	move PSYCHIC_M,    SPECIAL_DOWN_SIDE_EFFECT,    90, PSYCHIC_TYPE, 100, 10
