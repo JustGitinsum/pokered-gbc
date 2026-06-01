@@ -17,6 +17,18 @@ TrySurf:
 	ld d, SURF
 	call HasPartyMove
 	jr nz, .no
+	;;; Added for Unique Surf Sprites
+	push hl
+	push bc
+	ld a, [wWhichPokemon]
+	ld hl, wPartyMon1Species
+	ld bc, PARTYMON_STRUCT_LENGTH
+	call AddNTimes
+	ld a, [hl]
+	ld [wSurfingPokemonID], a
+	pop bc
+	pop hl
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld a, [wObtainedBadges]
 	bit 4, a ; SOUL BADGE
 	jr z, .no

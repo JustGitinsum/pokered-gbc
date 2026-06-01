@@ -2109,6 +2109,7 @@ wObtainedHiddenCoinsFlags:: flag_array MAX_HIDDEN_COINS
 ; $02 = surfing
 wWalkBikeSurfState:: db
 wPlayerFlying:: db ; 0 = not a bird, 1 = bird
+wSurfingPokemonID:: db
 	ds 9
 
 wTownVisitedFlag:: flag_array NUM_FLY_LOCATIONS

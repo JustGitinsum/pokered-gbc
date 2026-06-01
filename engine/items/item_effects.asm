@@ -702,6 +702,14 @@ ItemUseSurfboard:
 	set BIT_SCRIPTED_MOVEMENT_STATE, [hl]
 	ld a, 2
 	ld [wWalkBikeSurfState], a ; change player state to surfing
+	;;;;;;Added for Unique Surf Sprites
+	ld a, [wSurfingPokemonID]
+	and a
+	jr nz, .skipDefaultMon
+	ld a, SEEL
+	ld [wSurfingPokemonID], a
+.skipDefaultMon
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	call PlayDefaultMusic ; play surfing music
 	; ld hl, SurfingGotOnText
 	; jp PrintText
@@ -739,6 +747,7 @@ ItemUseSurfboard:
 	set BIT_SCRIPTED_MOVEMENT_STATE, [hl]
 	xor a
 	ld [wWalkBikeSurfState], a ; change player state to walking
+	ld [wSurfingPokemonID], a ; Added for Unique Surf Sprites
 	dec a
 	ld [wJoyIgnore], a
 	call PlayDefaultMusic ; play walking music
