@@ -23,7 +23,7 @@ ENDC
 	     SEISMIC_TOSS, RAGE,         DRAGON_RAGE,  EARTHQUAKE,   EARTH_POWER,      \
 	     DIG,          MIMIC,        ICE_PUNCH,  REFLECT,      ACCELEROCK,         \
 	     FIRE_BLAST,   STEEL_WING,        FIRE_PUNCH,   ICE_FANG,         SUBSTITUTE,   \
-	     CUT,          STRENGTH
+	     CUT,          FLY, STRENGTH
 	; end
 
 	db BANK(CharizardPicFront)

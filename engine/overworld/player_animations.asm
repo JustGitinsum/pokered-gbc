@@ -251,6 +251,17 @@ LoadBirdSpriteGraphics:
 ; Set flight state
 	ld a, $1
 	ld [wPlayerFlying], a
+	ld a, [wFlyingPokemonID]
+	cp CHARIZARD
+	jr z, .charizard
+	cp PIDGEOT
+	jr z, .pidgeot
+	cp ARTICUNO
+	jr z, .articuno
+	cp ZAPDOS
+	jr z, .zapdos
+	cp MOLTRES
+	jr z, .moltres
 	ld de, BirdSprite
 	ld hl, vNPCSprites
 	lb bc, BANK(BirdSprite), 12
@@ -258,6 +269,51 @@ LoadBirdSpriteGraphics:
 	ld de, BirdSprite tile 12 ; moving animation sprite
 	ld hl, vNPCSprites2
 	lb bc, BANK(BirdSprite), 12
+	jp CopyVideoData
+.charizard
+	ld de, CharizardSprite
+	ld hl, vNPCSprites
+	lb bc, BANK(CharizardSprite), 12
+	call CopyVideoData
+	ld de, CharizardSprite tile 12 ; moving animation sprite
+	ld hl, vNPCSprites2
+	lb bc, BANK(CharizardSprite), 12
+	jp CopyVideoData
+.pidgeot
+	ld de, PidgeotSprite
+	ld hl, vNPCSprites
+	lb bc, BANK(PidgeotSprite), 12
+	call CopyVideoData
+	ld de, PidgeotSprite tile 12 ; moving animation sprite
+	ld hl, vNPCSprites2
+	lb bc, BANK(PidgeotSprite), 12
+	jp CopyVideoData
+.articuno
+	ld de, ArticunoSprite
+	ld hl, vNPCSprites
+	lb bc, BANK(ArticunoSprite), 12
+	call CopyVideoData
+	ld de, ArticunoSprite tile 12 ; moving animation sprite
+	ld hl, vNPCSprites2
+	lb bc, BANK(ArticunoSprite), 12
+	jp CopyVideoData
+.zapdos
+	ld de, ZapdosSprite
+	ld hl, vNPCSprites
+	lb bc, BANK(ZapdosSprite), 12
+	call CopyVideoData
+	ld de, ZapdosSprite tile 12 ; moving animation sprite
+	ld hl, vNPCSprites2
+	lb bc, BANK(ZapdosSprite), 12
+	jp CopyVideoData
+.moltres
+	ld de, MoltresSprite
+	ld hl, vNPCSprites
+	lb bc, BANK(MoltresSprite), 12
+	call CopyVideoData
+	ld de, MoltresSprite tile 12 ; moving animation sprite
+	ld hl, vNPCSprites2
+	lb bc, BANK(MoltresSprite), 12
 	jp CopyVideoData
 
 InitFacingDirectionList:

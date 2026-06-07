@@ -109,7 +109,10 @@ SpriteSheetPointerTable:
 	overworld_sprite Koga2Sprite, 12            ; SPRITE_KOGA2
 	overworld_sprite SabrinaSprite, 12          ; SPRITE_SABRINA
 	overworld_sprite BlaineSprite, 12           ; SPRITE_BLAINE
-
+; Surf Sprites
+	overworld_sprite GyaradosSurfSprite, 12     ; SPRITE_GYARADOS
+	overworld_sprite BlastoiseSurfSprite, 12    ; SPRITE_BLASTOISE_SURF
+	overworld_sprite CharizardSprite, 12        ; SPRITE_CHARIZARD
 ; Still sprites     
 	overworld_sprite PokeBallSprite, 4          ; SPRITE_POKE_BALL
 	overworld_sprite FossilSprite, 4            ; SPRITE_FOSSIL

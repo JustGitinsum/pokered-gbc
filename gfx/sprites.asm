@@ -122,3 +122,8 @@ ErikaSprite::            INCBIN "gfx/sprites/leaders/erika.2bpp"
 Koga2Sprite::            INCBIN "gfx/sprites/leaders/koga.2bpp"
 SabrinaSprite::          INCBIN "gfx/sprites/leaders/sabrina.2bpp"
 BlaineSprite::           INCBIN "gfx/sprites/leaders/blaine.2bpp"
+; Surf Sprites
+GyaradosSurfSprite::         INCBIN "gfx/sprites/mons/gyarados.2bpp"
+BlastoiseSurfSprite::    INCBIN "gfx/sprites/mons/blastoise_surf.2bpp"
+CharizardSprite::        INCBIN "gfx/sprites/mons/charizard.2bpp"
+

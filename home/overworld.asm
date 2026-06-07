@@ -2030,8 +2030,12 @@ LoadSurfingPlayerSpriteGraphics::
 	ld a, [wSurfingPokemonID]
 	; cp PIKACHU
 	; jr z, .pikachu
+	cp BLASTOISE
+	jr z, .blastoise
 	cp LAPRAS
 	jr z, .lapras
+	cp GYARADOS
+	jr z, .gyarados
 	ld b, BANK(SeelSprite)
 	ld de, SeelSprite
 	jr LoadPlayerSpriteGraphicsCommon
@@ -2040,10 +2044,17 @@ LoadSurfingPlayerSpriteGraphics::
 ; 	ld b, BANK(SurfingPikachuSprite)
 ; 	ld de, SurfingPikachuSprite
 ; 	jr LoadPlayerSpriteGraphicsCommon
-
+.blastoise
+	ld b, BANK(BlastoiseSurfSprite)
+	ld de, BlastoiseSurfSprite
+	jr LoadPlayerSpriteGraphicsCommon
 .lapras
 	ld b, BANK(LaprasSprite)
 	ld de, LaprasSprite
+	jr LoadPlayerSpriteGraphicsCommon
+.gyarados
+	ld b, BANK(GyaradosSurfSprite)
+	ld de, GyaradosSurfSprite
 	jr LoadPlayerSpriteGraphicsCommon
 
 LoadBikePlayerSpriteGraphics::

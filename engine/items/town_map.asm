@@ -143,9 +143,46 @@ LoadTownMap_Fly::
 	call LoadTownMap
 	call LoadPlayerSpriteGraphics
 	call LoadFontTilePatterns
+	ld a, [wFlyingPokemonID]
+	cp CHARIZARD
+	jr z, .charizard
+	cp PIDGEOT
+	jr z, .pidgeot
+	cp ARTICUNO
+	jr z, .articuno
+	cp ZAPDOS
+	jr z, .zapdos
+	cp MOLTRES
+	jr z, .moltres
 	ld de, BirdSprite
 	ld hl, vSprites tile BIRD_BASE_TILE
 	lb bc, BANK(BirdSprite), 12
+	jr .ShowFlyMap
+.charizard
+	ld de, CharizardSprite
+	ld hl, vSprites tile BIRD_BASE_TILE
+	lb bc, BANK(CharizardSprite), 12
+	jr .ShowFlyMap
+.pidgeot
+	ld de, PidgeotSprite
+	ld hl, vSprites tile BIRD_BASE_TILE
+	lb bc, BANK(PidgeotSprite), 12
+	jr .ShowFlyMap
+.articuno
+	ld de, ArticunoSprite
+	ld hl, vSprites tile BIRD_BASE_TILE
+	lb bc, BANK(ArticunoSprite), 12
+	jr .ShowFlyMap
+.zapdos
+	ld de, ZapdosSprite
+	ld hl, vSprites tile BIRD_BASE_TILE
+	lb bc, BANK(ZapdosSprite), 12
+	jr .ShowFlyMap
+.moltres
+	ld de, MoltresSprite
+	ld hl, vSprites tile BIRD_BASE_TILE
+	lb bc, BANK(MoltresSprite), 12
+.ShowFlyMap
 	call CopyVideoData
 	ld de, TownMapUpArrow
 	ld hl, vChars1 tile $6d

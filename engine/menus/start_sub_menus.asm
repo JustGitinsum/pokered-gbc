@@ -150,6 +150,14 @@ StartMenu_Pokemon::
 	call PrintText
 	jp .loop
 .canFly
+	;;;Added for Unique fly Sprites
+	ld a, [wWhichPokemon]
+	ld hl, wPartyMon1Species
+	ld bc, PARTYMON_STRUCT_LENGTH
+	call AddNTimes
+	ld a, [hl]
+	ld [wFlyingPokemonID], a
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	call ChooseFlyDestination
 	ld a, [wStatusFlags6]
 	bit BIT_FLY_WARP, a

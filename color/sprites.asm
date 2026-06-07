@@ -142,13 +142,32 @@ ColorOverworldSprite::
 	ld a, [wSurfingPokemonID]
 	cp LAPRAS
 	jr z, .blueSprite
+	cp GYARADOS
+	jr z, .blueSprite
+	cp BLASTOISE
+	jr z, .blueSprite
 	ld a, SPR_PAL_EMOJI
     jr .norandomColor
 .flying
+	ld a, [wFlyingPokemonID]
+	cp CHARIZARD
+	jr z, .orangeSprite
+	cp ARTICUNO
+	jr z, .blueSprite
+	cp ZAPDOS
+	jr z, .purpleSprite
+	cp MOLTRES
+	jr z, .orangeSprite
 	ld a, SPR_PAL_BROWN
+    jr .norandomColor
+.orangeSprite
+	ld a, SPR_PAL_ORANGE
     jr .norandomColor
 .blueSprite
 	ld a, SPR_PAL_BLUE
+    jr .norandomColor
+.purpleSprite
+	ld a, SPR_PAL_PURPLE
     jr .norandomColor
 ; This is called whenever [wUpdateSpritesEnabled] != 1 (overworld sprites not enabled?).
 ;
@@ -644,6 +663,13 @@ SpritePaletteAssignments: ; Characters on the overworld
 	db SPR_PAL_ORANGE
 	; SPRITE_BLAINE
 	db SPR_PAL_BLUE
+; Surf/Fly Sprites
+	; SPRITE_GYARADOS
+	db SPR_PAL_BLUE
+	; SPRITE_BLASTOISE_SURF
+	db SPR_PAL_BLUE
+	; SPRITE_CHARIZARD
+	db SPR_PAL_ORANGE
 	; 0x3d: SPRITE_BALL
 	db SPR_PAL_ORANGE
 

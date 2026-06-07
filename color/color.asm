@@ -270,7 +270,15 @@ SetPal_TownMap:
 .doneMap
 	call FillMemory
 	ld bc, $4
+	ld a, [wFlyingPokemonID]
+	cp ARTICUNO
+	jr z, .blueSprite
+	cp ZAPDOS
+	jr z, .purpleSprite
+	cp MOLTRES
+	jr z, .orangeSprite
 	ld a, SPR_PAL_BROWN
+.colorslockedin	
 	call FillMemory
 
 	ld d, PAL_TOWNMAP
@@ -297,6 +305,18 @@ SetPal_TownMap:
 	ldh [rWBK], a
 	ret
 
+.orangeSprite
+	ld a, SPR_PAL_ORANGE
+    jr .colorslockedin
+.blueSprite
+	ld a, SPR_PAL_BLUE
+    jr .colorslockedin
+.purpleSprite
+	ld a, SPR_PAL_PURPLE
+    jr .colorslockedin
+.whiteSprite
+	ld a, SPR_PAL_EMOJI
+	jr .colorslockedin
 ; Status screen
 SetPal_StatusScreen:
 	ld a, [wCurPartySpecies]

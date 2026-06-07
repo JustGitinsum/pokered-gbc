@@ -104,6 +104,10 @@
 	const SPRITE_KOGA2
 	const SPRITE_SABRINA
 	const SPRITE_BLAINE
+; Surf/Fly Sprites
+	const SPRITE_GYARADOS
+	const SPRITE_BLASTOISE_SURF
+	const SPRITE_CHARIZARD
 DEF FIRST_STILL_SPRITE EQU const_value
 	const SPRITE_POKE_BALL               ; $3d
 	const SPRITE_FOSSIL                  ; $3e
