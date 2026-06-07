@@ -149,6 +149,8 @@ DisplayListMenuIDLoop::
 .skipGettingQuantity
 	ld a, [wCurItem]
 	ld [wNameListIndex], a
+	ld a, ITEM_NAME ; marcelnote - added for robustness (needed for TM printing)
+	ld [wNameListType], a
 	ld a, BANK(ItemNames)
 	ld [wPredefBank], a
 	call GetName
