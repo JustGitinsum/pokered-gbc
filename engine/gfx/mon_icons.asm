@@ -342,24 +342,33 @@ LoadPartyMonSprite:
 	predef IndexToPokedex
 
 	; hMultiplicand = pokedex number - 1
-	xor a
-	ld [hMultiplicand], a
-	ld [hMultiplicand + 1], a
+	; xor a
+	; ld [hMultiplicand], a
+	; ld [hMultiplicand + 1], a
 	ld a, [wPokedexNum]
 	dec a
-	ld [hMultiplicand + 2], a
+	; ld [hMultiplicand + 2], a
 
-	; hMultiplier = icon size, in bytes
-	ld a, 8 tiles
-	ld [hMultiplier], a
+	; ; hMultiplier = icon size, in bytes
+	; ld a, 8 tiles
+	; ld [hMultiplier], a
 
-	call Multiply
+	; call Multiply
 
-	; hl = icon offset
-	ld a, [hProduct + 2]
-	ld h, a
-	ld a, [hProduct + 3]
+	; ; hl = icon offset
+	; ld a, [hProduct + 2]
+	; ld h, a
+	; ld a, [hProduct + 3]
+	; ld l, a
 	ld l, a
+	ld h, 0
+	add hl, hl
+	add hl, hl
+	add hl, hl
+	add hl, hl
+	add hl, hl
+	add hl, hl
+	add hl, hl ; * 8 tiles (1 tile = 16 bytes)
 
 	; if offset < $4000, use first icon bank
 	bit 6, h
