@@ -14,14 +14,19 @@ _GameCornerClerk1DoYouNeedSomeGameCoinsText::
 	para "Do you need some"
 	line "game coins?"
 
-	para "It's ¥1000 for 50"
+	para "It's ¥2000 for 100"
 	line "coins. Would you"
 	cont "like some?"
 	done
 
 _GameCornerClerk1ThanksHereAre50CoinsText::
 	text "Thanks! Here are"
-	line "your 50 coins!"
+	line "your 100 coins!"
+	prompt ; marcelnote - for buying coins faster, was 'done'
+
+_GameCornerClerk1WantMoreCoinsText:: ; marcelnote - new for buying coins faster
+	text "More? It's ¥2000"
+	line "for 100 coins."
 	done
 
 _GameCornerClerk1PleaseComePlaySometimeText::

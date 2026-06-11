@@ -137,40 +137,46 @@ GameCornerBeauty1Text:
 	text_far _GameCornerBeauty1Text
 	text_end
 
-GameCornerClerk1Text:
+GameCornerClerk1Text: ; marcelnote - optimized and made buying coins faster
 	text_asm
 	; Show player's coins
 	call GameCornerDrawCoinBox
 	ld hl, .DoYouNeedSomeGameCoins
+.need_more_coins ; marcelnote - new for buying coins faster
 	call PrintText
 	call YesNoChoice
 	ld a, [wCurrentMenuItem]
 	and a
-	jr nz, .declined
+	ld hl, .PleaseComePlaySometime
+	jr nz, .print_text ; declined
 	; Can only get more coins if you
 	; - have the Coin Case
 	ld b, COIN_CASE
 	call IsItemInBag
-	jr z, .no_coin_case
+	ld hl, .DontHaveCoinCase
+	jr z, .print_text ; no coin case
 	; - have room in the Coin Case for at least 9 coins
 	call Has9990Coins
-	jr nc, .coin_case_full
-	; - have at least 1000 yen
+	ld hl, .CoinCaseIsFull
+	jr nc, .print_text ; coin case full
+	; - have at least 2000 yen
 	xor a
 	ldh [hMoney], a
 	ldh [hMoney + 2], a
-	ld a, $10
+	ld a, $20
 	ldh [hMoney + 1], a
 	call HasEnoughMoney
 	jr nc, .buy_coins
 	ld hl, .CantAffordTheCoins
-	jr .print_ret
+.print_text
+	call PrintText
+	jp TextScriptEnd ; PureRGB - rst TextScriptEnd
 .buy_coins
 	; Spend 1000 yen
 	xor a
 	ldh [hMoney], a
 	ldh [hMoney + 2], a
-	ld a, $10
+	ld a, $20
 	ldh [hMoney + 1], a
 	ld hl, hMoney + 2
 	ld de, wPlayerMoney + 2
@@ -180,7 +186,7 @@ GameCornerClerk1Text:
 	xor a
 	ldh [hUnusedCoinsByte], a
 	ldh [hCoins], a
-	ld a, $50
+	ld a, $A0
 	ldh [hCoins + 1], a
 	ld de, wPlayerCoins + 1
 	ld hl, hCoins + 1
@@ -188,19 +194,14 @@ GameCornerClerk1Text:
 	predef AddBCDPredef
 	; Update display
 	call GameCornerDrawCoinBox
+	ld a, SFX_PURCHASE            ; marcelnote -
+	call PlaySoundWaitForCurrent  ; added purchase sound
+	call WaitForSoundToFinish     ; when buying coins
 	ld hl, .ThanksHereAre50Coins
-	jr .print_ret
-.declined
-	ld hl, .PleaseComePlaySometime
-	jr .print_ret
-.coin_case_full
-	ld hl, .CoinCaseIsFull
-	jr .print_ret
-.no_coin_case
-	ld hl, .DontHaveCoinCase
-.print_ret
+	; marcelnote - next few lines are new for buying coins faster
 	call PrintText
-	jp TextScriptEnd
+	ld hl, .WantMoreCoins
+	jr .need_more_coins
 
 .DoYouNeedSomeGameCoins:
 	text_far _GameCornerClerk1DoYouNeedSomeGameCoinsText
@@ -208,6 +209,10 @@ GameCornerClerk1Text:
 
 .ThanksHereAre50Coins:
 	text_far _GameCornerClerk1ThanksHereAre50CoinsText
+	text_end
+
+.WantMoreCoins: ; marcelnote - new for buying coins faster
+	text_far _GameCornerClerk1WantMoreCoinsText
 	text_end
 
 .PleaseComePlaySometime:
