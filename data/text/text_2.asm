@@ -1210,9 +1210,18 @@ _GainedText::
 	line "@"
 	text_end
 
-_WithExpAllText::
-	text "Party gained"
-	next "@"
+; _WithExpAllText::
+; 	text "Party gained"
+; 	next "@"
+; 	text_end
+
+_ExpAllIsOnText:: ; marcelnote - shortened ExpAll messages
+	text "EXP.ALL is on!"
+	prompt
+
+_ExpAllSharedText:: ; marcelnote - shortened ExpAll messages
+	text "EXP.ALL shared"
+	line "@"
 	text_end
 
 _BoostedText::

@@ -2,11 +2,11 @@ GainExperience:
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
 	ret z ; return if link battle
-	ld a, [wBoostExpByExpAll] ;load in a if the EXP All is being used
-	ld hl, WithExpAllText ; this is preparing the text to show
-	and a ;check wBoostExpByExpAll value
-	jr z, .skipExpAll ; if wBoostExpByExpAll is zero, we are not using it, so we don't show anything and keep going on
-	call PrintText ; if the code reaches this point it means we have the Exp.All, so show the message
+	; ld a, [wBoostExpByExpAll] ;load in a if the EXP All is being used
+	; ld hl, WithExpAllText ; this is preparing the text to show
+	; and a ;check wBoostExpByExpAll value
+	; jr z, .skipExpAll ; if wBoostExpByExpAll is zero, we are not using it, so we don't show anything and keep going on
+	; call PrintText ; if the code reaches this point it means we have the Exp.All, so show the message
 .skipExpAll
 	ld hl, wPartyMon1
 	xor a
@@ -151,8 +151,8 @@ GainExperience:
 	ld a, [wWhichPokemon]
 	ld hl, wPartyMonNicks
 	call GetPartyMonName
-	ld a, [wBoostExpByExpAll] ; get using ExpAll flag
-    and a ; check the flag
+	ld a, [wStatusFlags1]
+	bit BIT_EXP_ALL_ACTIVE, a
     jr nz, .skipExpText ; if there's EXP. all, skip showing any text
     ld hl, GainedText ;there's no EXP. all, load the text to show
 	call PrintText
@@ -331,10 +331,10 @@ BoostExp:
 GainedText:
 	text_far _GainedText
 	text_asm
-	ld a, [wBoostExpByExpAll]
-	ld hl, WithExpAllText
-	and a
-	ret nz
+	;ld a, [wBoostExpByExpAll] ; marcelnote - shortened ExpAll messages
+	;ld hl, WithExpAllText
+	;and a
+	;ret nz
 	ld hl, ExpPointsText
 	ld a, [wGainBoostedExp]
 	and a
@@ -342,11 +342,11 @@ GainedText:
 	ld hl, BoostedText
 	ret
 
-WithExpAllText:
-	text_far _WithExpAllText
-	text_asm
-	ld hl, ExpPointsText
-	ret
+;WithExpAllText: ; marcelnote - shortened ExpAll messages
+;	text_far _WithExpAllText
+;	text_asm
+;	ld hl, ExpPointsText
+;	ret
 
 BoostedText:
 	text_far _BoostedText
