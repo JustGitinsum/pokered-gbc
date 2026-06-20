@@ -510,10 +510,7 @@ StatusScreenOriginal:
 ExitStatusScreen:
 	pop af
 	ldh [hTileAnimations], a
-	ld a, [wStatusFlags2]
-  	res BIT_NO_AUDIO_FADE_OUT, a
-	ld a, $77
-	ldh [rNR50], a
+	call MaxVolume
 	call GBPalWhiteOut
 	jp ClearScreen
 
@@ -527,6 +524,7 @@ StatusScreenLoop:
 	push af
 .displayNextMon
 	call StatusScreen
+	ld a, PAD_A | PAD_B
 	call PokemonStatusWaitForButtonPress
 	bit B_PAD_UP, a
 	jr nz, .prevMon
@@ -535,6 +533,7 @@ StatusScreenLoop:
 	bit B_PAD_B, a
 	jr nz, .exitStatus
 	call StatusScreen2
+	ld a, PAD_A | PAD_B
 	call PokemonStatusWaitForButtonPress
 	bit B_PAD_UP, a
 	jr nz, .prevMon
@@ -557,7 +556,6 @@ StatusScreenLoop:
 
 PokemonStatusWaitForButtonPress:
 .decideButtons
-	ld a, PAD_A | PAD_B
 	ld b, a
 	ld a, [wWhichPokemon]
 	and a

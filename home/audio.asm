@@ -212,3 +212,11 @@ PlaySound::
 	pop de
 	pop hl
 	ret
+
+MaxVolume::
+  	ld a, [wStatusFlags2]
+  	res BIT_NO_AUDIO_FADE_OUT, a
+  	ld [wStatusFlags2], a
+	ld a, $77 ; max volume
+	ldh [rAUDVOL], a
+	ret
