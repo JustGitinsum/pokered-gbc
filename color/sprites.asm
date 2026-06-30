@@ -689,7 +689,7 @@ SpritePaletteAssignments: ; Characters on the overworld
 	db SPR_PAL_BROWN
 
 	; 0x43: SPRITE_SNORLAX
-	db SPR_PAL_ORANGE
+	db SPR_PAL_PURPLE
 
 	; 0x44: SPRITE_OLD_AMBER_COPY
 	db SPR_PAL_ROCK

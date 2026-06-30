@@ -136,12 +136,12 @@ _ItemfinderFoundNothingText::
 
 _ExpAllActivatedText:: ; marcelnote - ExpAll can be activated/deactivated
 	text "<PLAYER> switched"
-	line "ON EXP.ALL."
+	line "the EXP.ALL ON."
 	prompt
 
 _ExpAllDeactivatedText:: ; marcelnote - ExpAll can be activated/deactivated
 	text "<PLAYER> switched"
-	line "OFF EXP.ALL."
+	line "the EXP.ALL OFF."
 	prompt
 
 _RaisePPWhichTechniqueText::
