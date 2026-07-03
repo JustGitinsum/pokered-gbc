@@ -22,6 +22,7 @@ MtMoon1F_Object:
 	warp_event  5,  5, MT_MOON_B1F, 1
 	warp_event 17, 11, MT_MOON_B1F, 3
 	warp_event 25, 15, MT_MOON_B1F, 4
+	warp_event  4, 16, MT_MOON_B1F, 9
 
 	def_bg_events
 	bg_event 15, 23, TEXT_MTMOON1F_BEWARE_ZUBAT_SIGN

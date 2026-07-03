@@ -96,6 +96,8 @@
 	const SPRITE_PIKACHU				 ; $57
 	const SPRITE_SEEL2					 ; $58
 	const SPRITE_ZAPDOS					 ; $59
+; 
+	const SPRITE_ONIX
 ; Gym Leaders
 	const SPRITE_BROCK
 	const SPRITE_MISTY

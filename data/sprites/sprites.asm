@@ -101,6 +101,8 @@ SpriteSheetPointerTable:
 	overworld_sprite PikachuSprite, 12          ; SPRITE_PIKACHU
 	overworld_sprite Seel2Sprite, 12            ; SPRITE_SEEL2
 	overworld_sprite ZapdosSprite, 12           ; SPRITE_ZAPDOS
+; 
+	overworld_sprite OnixSprite, 12
 ; Gym Leaders
 	overworld_sprite BrockSprite, 12            ; SPRITE_BROCK
 	overworld_sprite MistySprite, 12            ; SPRITE_MISTY

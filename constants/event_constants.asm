@@ -551,6 +551,7 @@
 	const EVENT_BEAT_MT_MOON_3_TRAINER_3
 	const EVENT_GOT_DOME_FOSSIL
 	const EVENT_GOT_HELIX_FOSSIL
+	const EVENT_BEAT_ONIX
 
 ; S.S. Anne events
 	const_next $5C0

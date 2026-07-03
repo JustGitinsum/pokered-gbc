@@ -1996,6 +1996,7 @@ wRoute25CurScript:: db
 wRoute9CurScript:: db
 wRoute10CurScript:: db
 wMtMoon1FCurScript:: db
+wMtMoonB1FCurScript:: db
 wMtMoonB2FCurScript:: db
 wSSAnne1FRoomsCurScript:: db
 wSSAnne2FRoomsCurScript:: db

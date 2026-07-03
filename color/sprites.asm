@@ -648,6 +648,9 @@ SpritePaletteAssignments: ; Characters on the overworld
 	db SPR_PAL_EMOJI
 	; SPRITE_ZAPDOS
 	db SPR_PAL_PURPLE
+; 
+	; SPRITE_ONIX
+	db SPR_PAL_EMOJI
 ; Gym Leaders
 	; SPRITE_BROCK
 	db SPR_PAL_PURPLE

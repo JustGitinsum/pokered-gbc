@@ -114,6 +114,9 @@ PidgeySprite::           INCBIN "gfx/sprites/mons/pidgey.2bpp"
 PikachuSprite::          INCBIN "gfx/sprites/mons/pikachu.2bpp"
 Seel2Sprite::            INCBIN "gfx/sprites/mons/seel.2bpp"
 ZapdosSprite::           INCBIN "gfx/sprites/mons/zapdos.2bpp"
+; One face but use 9 tiles
+SnorlaxBigSprite::       INCBIN "gfx/sprites/mons/snorlax3x3.2bpp"
+OnixSprite::          INCBIN "gfx/sprites/mons/onix.2bpp"
 ; Gym Leaders
 BrockSprite::            INCBIN "gfx/sprites/leaders/brock.2bpp"
 MistySprite::            INCBIN "gfx/sprites/leaders/misty.2bpp"
@@ -122,6 +125,9 @@ ErikaSprite::            INCBIN "gfx/sprites/leaders/erika.2bpp"
 Koga2Sprite::            INCBIN "gfx/sprites/leaders/koga.2bpp"
 SabrinaSprite::          INCBIN "gfx/sprites/leaders/sabrina.2bpp"
 BlaineSprite::           INCBIN "gfx/sprites/leaders/blaine.2bpp"
+
+SECTION "NPC Sprites 4", ROMX
+
 ; Surf Sprites
 GyaradosSurfSprite::         INCBIN "gfx/sprites/mons/gyarados.2bpp"
 BlastoiseSurfSprite::    INCBIN "gfx/sprites/mons/blastoise_surf.2bpp"
