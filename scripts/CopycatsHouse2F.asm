@@ -24,7 +24,7 @@ CopycatsHouse2FCopycatText:
 	jr z, .done
 	ld hl, .TM31PreReceiveText
 	call PrintText
-	lb bc, TM_MIMIC, 1
+	lb bc, TM_DARK_PULSE, 1
 	call GiveItem
 	jr nc, .bag_full
 	ld hl, .ReceivedTM31Text

@@ -130,7 +130,7 @@ Moves:
 	move BIDE,         BIDE_EFFECT,                  0, NORMAL,       100, 10 ;;;dump
 	move METRONOME,    METRONOME_EFFECT,             0, NORMAL,       100, 10
 	move MIRROR_MOVE,  MIRROR_MOVE_EFFECT,           0, FLYING,       100, 20
-	move SELFDESTRUCT, EXPLODE_EFFECT,             130, NORMAL,       100,  5
+	move SELFDESTRUCT, EXPLODE_EFFECT,             130, NORMAL,       100,  5 ;;;Change to Boomburst
 	move EGG_BOMB,     NO_ADDITIONAL_EFFECT,       100, NORMAL,        75, 10
 	move LICK,         PARALYZE_SIDE_EFFECT2,       20, GHOST,        100, 30
 	move SMOG,         POISON_SIDE_EFFECT2,         20, POISON,        70, 20
@@ -148,7 +148,7 @@ Moves:
 	move SOFTBOILED,   HEAL_EFFECT,                  0, NORMAL,       100, 10
 	move HI_JUMP_KICK, JUMP_KICK_EFFECT,            85, FIGHTING,      90, 20
 	move GLARE,        PARALYZE_EFFECT,              0, NORMAL,        75, 30
-	move DREAM_EATER,  DREAM_EATER_EFFECT,         100, PSYCHIC_TYPE, 100, 15
+	move DREAM_EATER,  DREAM_EATER_EFFECT,         100, PSYCHIC_TYPE, 100, 15 ;;;;maybe dump
 	move POISON_GAS,   POISON_EFFECT,                0, POISON,        55, 40
 	move BULLET_SEED,  TWO_TO_FIVE_ATTACKS_EFFECT,  25, GRASS,         95, 15
 	move LEECH_LIFE,   DRAIN_HP_EFFECT,             80, BUG,          100, 10
@@ -182,10 +182,10 @@ Moves:
 	move BOUNCE,       NO_ADDITIONAL_EFFECT,        80, FLYING,       100, 10
 	move FLAME_WHEEL,  BURN_SIDE_EFFECT1,           60, FIRE,         100, 25
 	move SHOCK_WAVE,   SWIFT_EFFECT,  				60, ELECTRIC,     100, 20
-	move ACCELEROCK,   NO_ADDITIONAL_EFFECT,        60, ROCK,         100, 15
+	move ACCELEROCK,   NO_ADDITIONAL_EFFECT,        50, ROCK,         100, 20
 	move TRAILBLAZE,   SPEED_UP1_EFFECT,            60, GRASS,        100, 20
 	move ROLLOUT,      NO_ADDITIONAL_EFFECT,        80, ROCK,          95, 20
-	move FLASH_CANNON, DEFENSE_DOWN_SIDE_EFFECT,    80, STEEL,        100, 10
+	move FLASH_CANNON, SPECIAL_DOWN_SIDE_EFFECT,    80, STEEL,        100, 10
 	move DRAGONBREATH, PARALYZE_SIDE_EFFECT1,       60, DRAGON,       100, 20
 	move HEAT_CRASH,   BURN_SIDE_EFFECT1,          100, FIRE,         100, 10
 	move DRAGON_CLAW,  NO_ADDITIONAL_EFFECT,        80, DRAGON,       100, 15
@@ -220,5 +220,9 @@ Moves:
 	move SYNTHESIS,    HEAL_EFFECT,                  0, GRASS,        100, 20
 	move MOONLIGHT,    HEAL_EFFECT,                  0, FAIRY,        100, 20
 	move MYSTICAL_FIRE,SPECIAL_DOWN_SIDE_EFFECT,    75, FIRE,         100, 10
+	move SHADOW_CLAW,  NO_ADDITIONAL_EFFECT,        70, GHOST,        100, 15
+	move HYPER_VOICE,  NO_ADDITIONAL_EFFECT,        90, NORMAL,       100, 10
+	move AURA_WHEEL,   PARALYZE_SIDE_EFFECT1,      110, ELECTRIC,     100, 10
+	move GLACIAL_LANCE,NO_ADDITIONAL_EFFECT,       120, ICE,          100,  5
 	move STRUGGLE,     RECOIL_EFFECT,               50, NORMAL,       100, 10
 	assert_table_length NUM_ATTACKS

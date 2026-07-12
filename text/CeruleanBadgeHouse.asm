@@ -1,3 +1,31 @@
+ViridianCityFisherYouCanHaveThisText::
+	text "Sigh!"
+	line "I have a cool"
+	cont "TM, but my CUBONE"
+	cont "can't learn it!"
+	
+	para "Oh!"
+	line "Here, you can"
+	cont "have this TM."
+	prompt
+
+_CeruleanBadgeHouseReceivedTM03Text::
+	text "<PLAYER> received"
+	line "TM03!@"
+	text_end
+
+_CeruleanBadgeHouseTM03ExplanationText::
+	text "TM03 contains"
+	line "The ICE attack,"
+	cont "AURORA BEAM."
+	done
+
+_CeruleanBadgeHouseTM03NoRoomText::
+	text "You have too much"
+	line "stuff already."
+	done
+
+
 _CeruleanBadgeHouseMiddleAgedManText::
 	text "#MON BADGEs"
 	line "are owned only by"

@@ -215,6 +215,10 @@
 	const SYNTHESIS
 	const MOONLIGHT
 	const MYSTICAL_FIRE
+	const SHADOW_CLAW
+	const HYPER_VOICE
+	const AURA_WHEEL
+	const GLACIAL_LANCE
 	const STRUGGLE     ; a5
 DEF NUM_ATTACKS EQU const_value - 1
 

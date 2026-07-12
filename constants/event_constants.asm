@@ -24,7 +24,7 @@
 ; Viridian City events
 	const_next $28
 	const EVENT_VIRIDIAN_GYM_OPEN
-	const EVENT_GOT_TM42
+	const EVENT_GOT_TM03 ;;;; Changed from TM42
 	const_skip 14
 	const EVENT_OAK_GOT_PARCEL
 	const EVENT_GOT_OAKS_PARCEL
@@ -118,7 +118,7 @@
 
 ; Celadon City events
 	const_next $180
-	const EVENT_GOT_TM41
+	const EVENT_GOT_TM41 ;;;; free to use
 	const_skip 11
 	const EVENT_GOT_TM37
 	const EVENT_GOT_TM32

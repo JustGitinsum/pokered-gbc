@@ -28,39 +28,39 @@ _CeladonCityGramps2Text::
 	cont "coins for prizes!"
 	done
 
-_CeladonCityGramps3Text::
-	text "Hello, there!"
+; _CeladonCityGramps3Text::
+; 	text "Hello, there!"
 
-	para "I've seen you,"
-	line "but I never had a"
-	cont "chance to talk!"
+; 	para "I've seen you,"
+; 	line "but I never had a"
+; 	cont "chance to talk!"
 
-	para "Here's a gift for"
-	line "dropping by!"
-	prompt
+; 	para "Here's a gift for"
+; 	line "dropping by!"
+; 	prompt
 
-_CeladonCityGramps3ReceivedTM41Text::
-	text "<PLAYER> received"
-	line "@"
-	text_ram wStringBuffer
-	text "!@"
-	text_end
+; _CeladonCityGramps3ReceivedTM41Text::
+; 	text "<PLAYER> received"
+; 	line "@"
+; 	text_ram wStringBuffer
+; 	text "!@"
+; 	text_end
 
-_CeladonCityGramps3TM41ExplanationText::
-	text "TM41 teaches"
-	line "SOFTBOILED!"
+; _CeladonCityGramps3TM41ExplanationText::
+; 	text "TM41 teaches"
+; 	line "SOFTBOILED!"
 
-	para "Only one #MON"
-	line "can use it!"
+; 	para "Only one #MON"
+; 	line "can use it!"
 
-	para "That #MON is"
-	line "CHANSEY!"
-	done
+; 	para "That #MON is"
+; 	line "CHANSEY!"
+; 	done
 
-_CeladonCityGramps3TM41NoRoomText::
-	text "Oh, your pack is"
-	line "full of items!"
-	done
+; _CeladonCityGramps3TM41NoRoomText::
+; 	text "Oh, your pack is"
+; 	line "full of items!"
+; 	done
 
 _CeladonCityFisherText::
 	text "This is my trusted"

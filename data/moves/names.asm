@@ -209,5 +209,9 @@ MoveNames::
 	li "SYNTHESIS"
 	li "MOONLIGHT"
 	li "MYSTICALFIRE"
+	li "SHADOW CLAW"
+	li "HYPER VOICE"
+	li "AURA WHEEL"
+	li "GLACIALLANCE"
 	li "STRUGGLE"
 	assert_list_length NUM_ATTACKS

@@ -16,13 +16,13 @@ _CinnabarLabMetronomeRoomScientist1ReceivedTM35Text::
 _CinnabarLabMetronomeRoomScientist1TM35ExplanationText::
 	text "Tch-tch-tch!"
 	line "That's the sound"
-	cont "of a METRONOME!"
+	cont "of a FLASH CANNON!"
 
-	para "It tweaks your"
-	line "#MON's brain"
-	cont "into using moves"
-	cont "it doesn't know!"
+	para "It may reduce your"
+	line "opponent #MON's"
+	cont "SPECIAL stat!"
 	done
+  
 
 _CinnabarLabMetronomeRoomScientist1TM35NoRoomText::
 	text "Your pack is"

@@ -36,6 +36,7 @@ DEF SHOW EQU $15
 	const HS_SAFFRON_CITY_F                ; 18
 	const HS_ROUTE_2_ITEM_1                ; 19 X
 	const HS_ROUTE_2_ITEM_2                ; 1A X
+	const HS_ROUTE_2_ITEM_3                ; 25 X
 	const HS_ROUTE_4_ITEM                  ; 1B X
 	const HS_ROUTE_9_ITEM                  ; 1C X
 	const HS_ROUTE_12_SNORLAX              ; 1D
@@ -46,7 +47,6 @@ DEF SHOW EQU $15
 	const HS_ROUTE_22_RIVAL_1              ; 22
 	const HS_ROUTE_22_RIVAL_2              ; 23
 	const HS_NUGGET_BRIDGE_GUY             ; 24
-	const HS_ROUTE_24_ITEM                 ; 25 X
 	const HS_ROUTE_25_ITEM                 ; 26 X
 	const HS_DAISY_SITTING                 ; 27
 	const HS_DAISY_WALKING                 ; 28

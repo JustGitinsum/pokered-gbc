@@ -114,8 +114,7 @@ PidgeySprite::           INCBIN "gfx/sprites/mons/pidgey.2bpp"
 PikachuSprite::          INCBIN "gfx/sprites/mons/pikachu.2bpp"
 Seel2Sprite::            INCBIN "gfx/sprites/mons/seel.2bpp"
 ZapdosSprite::           INCBIN "gfx/sprites/mons/zapdos.2bpp"
-; One face but use 9 tiles
-SnorlaxBigSprite::       INCBIN "gfx/sprites/mons/snorlax3x3.2bpp"
+; 
 OnixSprite::          INCBIN "gfx/sprites/mons/onix.2bpp"
 ; Gym Leaders
 BrockSprite::            INCBIN "gfx/sprites/leaders/brock.2bpp"

@@ -1,6 +1,7 @@
 	object_const_def
 	const_export ROUTE2_MOON_STONE
 	const_export ROUTE2_HP_UP
+	const_export ROUTE2_TM_THUNDER_WAVE
 
 Route2_Object:
 	db $f ; border block
@@ -11,7 +12,7 @@ Route2_Object:
 	warp_event 15, 19, ROUTE_2_TRADE_HOUSE, 1
 	warp_event 16, 35, ROUTE_2_GATE, 2
 	warp_event 15, 39, ROUTE_2_GATE, 3
-	warp_event  3, 43, VIRIDIAN_FOREST_SOUTH_GATE, 3
+	warp_event  4, 43, VIRIDIAN_FOREST_SOUTH_GATE, 3
 
 	def_bg_events
 	bg_event  9, 65, TEXT_ROUTE2_SIGN
@@ -20,6 +21,7 @@ Route2_Object:
 	def_object_events
 	object_event 13, 54, SPRITE_POKE_BALL, STAY, NONE, TEXT_ROUTE2_MOON_STONE, MOON_STONE
 	object_event 13, 45, SPRITE_POKE_BALL, STAY, NONE, TEXT_ROUTE2_HP_UP, HP_UP
+	object_event 14,  4, SPRITE_POKE_BALL, STAY, NONE, TEXT_ROUTE2_TM_THUNDER_WAVE, TM_THUNDER_WAVE
 
 	def_warps_to ROUTE_2
 

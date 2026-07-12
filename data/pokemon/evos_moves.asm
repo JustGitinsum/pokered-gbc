@@ -668,7 +668,6 @@ OnixEvosMoves:
 	db 0
 ; Learnset ;From ZA and PLA Mix
 	db 11, BULLDOZE
-	db 16, DRAGONBREATH
 	db 22, HEADBUTT
 	db 24, SCREECH
 	db 44, DIG
@@ -1231,7 +1230,7 @@ VulpixEvosMoves:
 	db 20, CONFUSE_RAY
 	db 28, EXTRASENSORY
 	db 32, FLAMETHROWER
-	db 40, FIRE_SPIN
+	db 40, FIRE_BLAST
 	db 0
 
 NinetalesEvosMoves:
@@ -1242,7 +1241,7 @@ NinetalesEvosMoves:
 	db 20, CONFUSE_RAY
 	db 32, EXTRASENSORY
 	db 36, FLAMETHROWER
-	db 44, FIRE_SPIN
+	db 44, FIRE_BLAST
 	db EVOLUTION_MOVE, MYSTICAL_FIRE
 	db 0
 
@@ -1310,6 +1309,7 @@ DragonairEvosMoves:
 	db 0
 ; Learnset
 	db 10, THUNDER_WAVE
+	db 15, DRAGONBREATH
 	db 20, AGILITY
 	db 35, SLAM
 	db 45, DRAGON_RAGE
@@ -2204,7 +2204,7 @@ PonytaEvosMoves:
 	db 30, BOUNCE
 	db 34, FLAMETHROWER
 	db 37, AGILITY
-	db 44, FIRE_SPIN
+	db 44, FIRE_BLAST
 	db 49, HEAT_CRASH
 	db 0
 
@@ -2219,7 +2219,7 @@ RapidashEvosMoves:
 	db 34, FLAMETHROWER
 	db 37, AGILITY
 	db 40, HORN_ATTACK
-	db 44, FIRE_SPIN
+	db 44, FIRE_BLAST
 	db 49, HEAT_CRASH
 	db EVOLUTION_MOVE, FURY_ATTACK
 	db 0
@@ -2359,7 +2359,7 @@ CharmanderEvosMoves:
 	db 24, FIRE_FANG
 	db 30, SLASH
 	db 34, FLAMETHROWER
-	db 46, FIRE_SPIN
+	db 46, FIRE_BLAST
 	db 0
 
 SquirtleEvosMoves:
@@ -2388,8 +2388,7 @@ CharmeleonEvosMoves:
 	db 24, FIRE_FANG
 	db 30, SLASH
 	db 34, FLAMETHROWER
-	db 46, FIRE_SPIN
-	db EVOLUTION_MOVE, DRAGONBREATH
+	db 46, FIRE_BLAST
 	db 0
 
 WartortleEvosMoves:
@@ -2414,11 +2413,10 @@ CharizardEvosMoves:
 	db  6, EMBER
 	db  8, SMOKESCREEN
 	db 12, METAL_CLAW
-	db 16, DRAGONBREATH
 	db 24, FIRE_FANG
 	db 30, SLASH
 	db 34, FLAMETHROWER
-	db 56, FIRE_SPIN
+	db 56, FIRE_BLAST
 	db EVOLUTION_MOVE, WING_ATTACK
 	db 0
 

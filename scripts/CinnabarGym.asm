@@ -148,7 +148,7 @@ CinnabarGymReceiveTM38:
 	ldh [hTextID], a
 	call DisplayTextID
 	SetEvent EVENT_BEAT_BLAINE
-	lb bc, TM_FIRE_BLAST, 1
+	lb bc, TM_HEAT_CRASH, 1
 	call GiveItem
 	jr nc, .BagFull
 	ld a, TEXT_CINNABARGYM_BLAINE_RECEIVED_TM38

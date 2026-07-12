@@ -8,8 +8,8 @@ MoveTutorMoves: ; A list of all moves taught by move tutors, their location as a
 	db BELCH        ; SS Anne Kitchen
 	db LUNGE        ; 
 	db COUNTER      ; Celadon Mart 3F
-	; db DOUBLE_TEAM  ; 
-	; db SWORDS_DANCE ; 
+	db SUBSTITUTE  ; Celadon (Old Softboiled guy)
+	db HYPER_VOICE ; Viridian (Old DreamEater npc)
 	db 0 ; placeholder
 	db 0 ; placeholder
 	db 0 ; placeholder

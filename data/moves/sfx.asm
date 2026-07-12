@@ -210,6 +210,10 @@ MoveSoundTable:
 	db SFX_BATTLE_33,          $00, $80 ; ROOST
 	db SFX_BATTLE_33,          $00, $80 ; SYNTHESIS
 	db SFX_BATTLE_33,          $00, $80 ; MOONLIGHT
-	db SFX_BATTLE_29,          $20, $c0 ; MYSTICAL_FIRE
+	db SFX_BATTLE_29,          $20, $c0 ; MYSTICAL_FIRE	
+	db SFX_BATTLE_31,          $ff, $40 ; SHADOW_CLAW
+	db SFX_BATTLE_0B,          $00, $40 ; HYPER_VOICE
+	db SFX_BATTLE_0D,          $00, $a0 ; AURA_WHEEL
+	db SFX_BATTLE_29,          $f0, $e0 ; GLACIAL_LANCE
 	assert_table_length NUM_ATTACKS
 	db SFX_BATTLE_0B,          $00, $80

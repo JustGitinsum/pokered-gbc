@@ -592,7 +592,7 @@ SpritePaletteAssignments: ; Characters on the overworld
 	; SPRITE_CLEFAIRY
 	db SPR_PAL_PURPLE
 	; SPRITE_CUBONE
-	db SPR_PAL_PURPLE
+	db SPR_PAL_BROWN
 	; SPRITE_KANGASKHAN
 	db SPR_PAL_BROWN
 	; SPRITE_LAPRAS

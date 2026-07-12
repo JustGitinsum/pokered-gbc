@@ -13,11 +13,11 @@ _MrPsychicsHouseMrPsychicReceivedTM29Text::
 	text_end
 
 _MrPsychicsHouseMrPsychicTM29ExplanationText::
-	text "TM29 is PSYCHIC!"
-
-	para "It can lower the"
-	line "target's SPECIAL"
-	cont "abilities."
+	text "TM46 is PSYCHO CUT"
+	
+	para "It uses a critical"
+	line "psychic slash to"
+	cont "inflict damage!"
 	done
 
 _MrPsychicsHouseMrPsychicTM29NoRoomText::

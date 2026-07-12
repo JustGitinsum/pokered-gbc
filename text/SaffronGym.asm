@@ -63,10 +63,10 @@ _SaffronGymSabrinaReceivedTM46Text::
 _TM46ExplanationText::
 	text_start
 
-	para "TM46 is PSYCHO CUT"
-	line "It uses a powerful"
-	cont "psychic slash to"
-	cont "inflict damage!"
+	para "TM29 is PSYCHIC!"
+	line "It can lower the"
+	cont "target's SPECIAL"
+	cont "abilities."
 	done
 
 _SaffronGymSabrinaTM46NoRoomText::

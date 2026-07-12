@@ -560,8 +560,8 @@ _TM33Description::
 
 _TM34Description::
 	text "ACCELEROCK"
-	next "ROCK      PP 15"
-	next "PWR 60    ACC 100%"
+	next "ROCK      PP 20"
+	next "PWR 50    ACC 100%"
 	next "Strikes first"
 	done
 

@@ -24,6 +24,7 @@ PhysicalToSpecialMoves:
         db SHADOW_BALL
 ; Normal
         db HYPER_BEAM
+        db HYPER_VOICE
         db SWIFT
         db TRI_ATTACK
         db -1 ; end
@@ -49,6 +50,7 @@ SpecialToPhysicalMoves:
 ; Electric
         db THUNDERPUNCH
         db THUNDERFANG
+        db AURA_WHEEL
 ; Psychic
         db ZEN_HEADBUTT
         db PSYCHO_CUT
@@ -65,4 +67,5 @@ SpecialToPhysicalMoves:
 ; Ice
         db ICE_PUNCH
         db ICE_FANG
+        db GLACIAL_LANCE
         db -1 ; end

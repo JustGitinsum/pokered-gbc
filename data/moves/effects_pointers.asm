@@ -72,7 +72,7 @@ MoveEffectPointerTable:
 	dw StatModifierDownEffect    ; DEFENSE_DOWN_SIDE_EFFECT
 	dw StatModifierDownEffect    ; SPEED_DOWN_SIDE_EFFECT
 	dw StatModifierDownEffect    ; SPECIAL_DOWN_SIDE_EFFECT
-	dw StatModifierDownEffect    ; unused effect
+	dw StatModifierDownEffect    ; BURN_EFFECT if i ever add it       ; marcelnote - new for WILL_O_WISP, was unused
 	dw StatModifierDownEffect    ; unused effect
 	dw TriAttackEffect           ; TRI_ATTACK_EFFECT ; marcelnote - new for TRI_ATTACK, was unused
 	dw StatModifierDownEffect    ; unused effect

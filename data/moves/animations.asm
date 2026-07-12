@@ -209,6 +209,10 @@ AttackAnimationPointers:
 	dw SynthesisAnim
 	dw MoonlightAnim
 	dw MysticalFireAnim
+	dw ShadowClawAnim
+	dw HyperVoiceAnim
+	dw AuraWheelAnim
+	dw GlacialLanceAnim
 	dw StruggleAnim
 	assert_table_length NUM_ATTACKS
 
@@ -858,6 +862,13 @@ MysticalFireAnim:
 	battle_anim NO_MOVE, SUBANIM_1_FLAME_COLUMN_3, 1, 6
 	db -1 ; end
 
+ShadowClawAnim:
+	battle_anim NO_MOVE, SE_DARK_SCREEN_PALETTE
+	battle_anim FURY_SWIPES, SUBANIM_0_SCRATCHES, 0, 6
+	battle_anim CONFUSION, SE_FLASH_SCREEN_LONG
+	battle_anim NO_MOVE, SE_RESET_SCREEN_PALETTE
+	db -1 ; end
+
 ThunderShockAnim:
 	battle_anim THUNDERSHOCK, SUBANIM_1_LIGHTNING_BALL, 1, 2
 	db -1 ; end
@@ -1194,10 +1205,12 @@ GlareAnim:
 	battle_anim NO_MOVE, SE_RESET_SCREEN_PALETTE
 	db -1 ; end
 
+HyperVoiceAnim:
 DreamEaterAnim:
 	battle_anim DREAM_EATER, SE_FLASH_SCREEN_LONG
 	battle_anim DREAM_EATER, SE_DARK_SCREEN_PALETTE
-	battle_anim DREAM_EATER, SUBANIM_0_STAR_THRICE, 0, 8
+	battle_anim NO_MOVE, SUBANIM_0_STAR_THRICE, 0, 10
+	battle_anim AERIAL_ACE, SUBANIM_1_STAR_BIG_MOVING, 1, 8
 	battle_anim NO_MOVE, SE_RESET_SCREEN_PALETTE
 	db -1 ; end
 
@@ -1425,6 +1438,23 @@ HeatCrashAnim:
 	battle_anim BULLDOZE, SE_DARK_SCREEN_FLASH
 	battle_anim FIRE_SPIN, SUBANIM_1_FLAME_COLUMN_3, 1, 6
 	battle_anim NO_MOVE, SE_RESET_MON_POSITION
+	db -1 ; end
+
+AuraWheelAnim:
+	battle_anim NO_MOVE, SE_DARK_SCREEN_PALETTE
+	battle_anim THUNDERPUNCH, SUBANIM_2Benemy, 1, 6
+	battle_anim NO_MOVE, SE_RESET_SCREEN_PALETTE
+	battle_anim LEECH_SEED, SE_MOVE_MON_HORIZONTALLY
+	battle_anim NO_MOVE, SE_RESET_MON_POSITION
+	battle_anim SUPER_FANG, SUBANIM_1_STAR_BIG_MOVING, 1, 6
+	db -1 ; end
+
+GlacialLanceAnim:
+	battle_anim BLIZZARD, SUBANIM_0_HORN_JAB_THRICE, 3, 2
+	battle_anim NO_MOVE, SUBANIM_0_ICE_RISE, 0, 16
+	battle_anim BLIZZARD, SE_DARK_SCREEN_FLASH
+	battle_anim NO_MOVE, SUBANIM_30bis, 0, 6
+	battle_anim HYPER_FANG, SUBANIM_0_STAR_THRICE, 0, 4
 	db -1 ; end
 
 ElectrowebAnim:

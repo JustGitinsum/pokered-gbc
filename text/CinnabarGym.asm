@@ -53,7 +53,7 @@ _CinnabarGymBlaineTM38ExplanationText::
 	text_start
 
 	para "TM38 contains"
-	line "FIRE BLAST!"
+	line "HEAT CRASH!"
 
 	para "Teach it to fire-"
 	line "type #MON!"

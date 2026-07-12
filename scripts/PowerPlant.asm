@@ -27,8 +27,8 @@ PowerPlant_TextPointers:
 	dw_const PickUpItemText,           TEXT_POWERPLANT_CARBOS
 	dw_const PickUpItemText,           TEXT_POWERPLANT_HP_UP
 	dw_const PickUpItemText,           TEXT_POWERPLANT_RARE_CANDY
-	dw_const PickUpItemText,           TEXT_POWERPLANT_TM_THUNDER
-	dw_const PickUpItemText,           TEXT_POWERPLANT_TM_REFLECT
+	dw_const PickUpItemText,           TEXT_POWERPLANT_TM_AURA_WHEEL
+	dw_const PickUpItemText,           TEXT_POWERPLANT_TM_ENERGY_BALL
 
 PowerPlantTrainerHeaders:
 	def_trainers

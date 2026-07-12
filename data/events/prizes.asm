@@ -55,9 +55,9 @@ ENDC
 	db "@"
 
 PrizeMenuTMsEntries:
-	db TM_DRAGON_RAGE
+	db TM_MIGHTY_CLEAVE
 	db TM_HYPER_BEAM
-	db TM_SUBSTITUTE
+	db TM_MOONBLAST
 	db "@"
 
 PrizeMenuTMsCost:

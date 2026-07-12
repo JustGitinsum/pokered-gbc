@@ -150,46 +150,47 @@ SpritePalettesPokecenter: ; Taken from pokemon GSC.
 
 
 AttackSpritePalettes:
-	; GREY
+	; GREY 00
 	RGB 31,31,31
 	RGB 25,25,25
 	RGB 13,13,13
 	RGB 0,0,0
-	; BLUE
+	; BLUE 01
 	RGB 31,31,31
 	RGB 8,12,31
 	RGB 1,4,31
 	RGB 0,0,0
-	; RED
+	; RED 02
 	RGB 31,31,31
 	RGB 31,19,10
 	RGB 31,7,1
 	RGB 0,0,0
-	; BROWN
+	; BROWN 03
 	RGB 31,31,31
 	RGB 20,14,0
 	RGB 10,6,0
 	RGB 0,0,0
-	; YELLOW (4)
+	; YELLOW 04
 	RGB 31,31,31
 	RGB 29,29,5
 	RGB 19,19,0
 	RGB 0,0,0
-	; GREEN
+	; GREEN 05
 	RGB 31,31,31
 	RGB 13,31,7
 	RGB 2,24,2
 	RGB 0,0,0
-	; ICE
+	; ICE 06
 	RGB 31,31,31
 	RGB 0,20,26
 	RGB 9,22,30
 	RGB 0,0,0
-	; PURPLE
+	; PURPLE 07
 	RGB 31,31,31
 	RGB 16,0,20
 	RGB 12,0,13
 	RGB 0,0,0
+	; 08 = Uses Move Type Palette
 
 ; Not related to sprites, move this somewhere else?
 SlotPaletteMap:

@@ -159,45 +159,45 @@ ENDM
 DEF TM01 EQU const_value
 	add_tm AERIAL_ACE   ; $C9 TM01
 	add_tm AIR_SLASH    ; $CA TM02
-	add_tm SWORDS_DANCE ; $CB TM03
-	add_tm THIEF        ; $CC TM04
+	add_tm AURORA_BEAM  ; $CB TM03
+	add_tm DRAGONBREATH ; $CC TM04
 	add_tm CLOSE_COMBAT ; $CD TM05
 	add_tm TOXIC        ; $CE TM06
 	add_tm X_SCISSOR    ; $CF TM07
 	add_tm FIRE_FANG    ; $D0 TM08
-	add_tm BODY_SLAM    ; $D1 TM09
+	add_tm POWER_GEM    ; $D1 TM09
 	add_tm SLUDGE_BOMB  ; $D2 TM10
 	add_tm BUBBLEBEAM   ; $D3 TM11
 	add_tm TRAILBLAZE   ; $D4 TM12
 	add_tm ICE_BEAM     ; $D5 TM13 ;moved to Safari Zone
-	add_tm BLIZZARD     ; $D6 TM14
+	add_tm DRAGON_PULSE ; $D6 TM14
 	add_tm HYPER_BEAM   ; $D7 TM15
-	add_tm SIGNAL_BEAM  ; $D8 TM16
-	add_tm EXTREMESPEED ; $D9 TM17
+	add_tm SPORE        ; $D8 TM16
+	add_tm POISON_JAB   ; $D9 TM17
 	add_tm WATERFALL    ; $DA TM18
-	add_tm SEISMIC_TOSS ; $DB TM19
-	add_tm RAGE         ; $DC TM20
+	add_tm ANCIENTPOWER ; $DB TM19
+	add_tm SIGNAL_BEAM  ; $DC TM20
 	add_tm GIGA_DRAIN   ; $DD TM21
 	add_tm ENERGY_BALL  ; $DE TM22
-	add_tm DRAGON_RAGE  ; $DF TM23
+	add_tm MIGHTY_CLEAVE ; $DF TM23
 	add_tm THUNDERFANG  ; $E0 TM24
-	add_tm THUNDER      ; $E1 TM25
+	add_tm AURA_WHEEL      ; $E1 TM25
 	add_tm EARTHQUAKE   ; $E2 TM26
 	add_tm EARTH_POWER  ; $E3 TM27
 	add_tm DIG          ; $E4 TM28
 	add_tm PSYCHIC_M    ; $E5 TM29
-	add_tm BRICK_BREAK  ; $E6 TM30
-	add_tm MIMIC        ; $E7 TM31
+	add_tm PSYBEAM      ; $E6 TM30
+	add_tm DARK_PULSE   ; $E7 TM31
 	add_tm ICE_PUNCH    ; $E8 TM32 ;moved to Department Store roof
-	add_tm REFLECT      ; $E9 TM33
+	add_tm GLACIAL_LANCE      ; $E9 TM33
 	add_tm ACCELEROCK   ; $EA TM34
-	add_tm PLAY_ROUGH   ; $EB TM35
+	add_tm FLASH_CANNON ; $EB TM35
 	add_tm LEAF_BLADE   ; $EC TM36
 	add_tm THUNDERPUNCH ; $ED TM37 ;moved to Department Store roof
-	add_tm FIRE_BLAST   ; $EE TM38
+	add_tm HEAT_CRASH   ; $EE TM38
 	add_tm STEEL_WING   ; $EF TM39
 	add_tm FIRE_PUNCH   ; $F0 TM40 ;moved to Department Store roof
-	add_tm SOFTBOILED   ; $F1 TM41
+	add_tm SHADOW_CLAW  ; $F1 TM41
 	add_tm SHADOW_BALL  ; $F2 TM42
 	add_tm DRAGON_CLAW  ; $F3 TM43
 	add_tm ICE_FANG     ; $F4 TM44
@@ -206,7 +206,7 @@ DEF TM01 EQU const_value
 	add_tm AURA_SPHERE  ; $F7 TM47
 	add_tm THUNDERBOLT  ; $F8 TM48 ;moved to Safari Zone
 	add_tm FLAMETHROWER ; $F9 TM49 ;moved to Safari Zone
-	add_tm SUBSTITUTE   ; $FA TM50
+	add_tm MOONBLAST    ; $FA TM50
 ASSERT NUM_TMS == const_value - TM01, "NUM_TMS ({d:NUM_TMS}) does not match the number of add_tm definitions"
 
 DEF NUM_TM_HM EQU NUM_TMS + NUM_HMS
