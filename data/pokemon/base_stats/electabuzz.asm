@@ -14,21 +14,15 @@ ELSE
 ENDC
 	dw ElectabuzzPicFront, ElectabuzzPicBack
 
-	db QUICK_ATTACK, LEER, THUNDERSHOCK, STEEL_WING ; level 1 learnset
+	db QUICK_ATTACK, LEER, THUNDERSHOCK, SWIFT ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
-	tmhm AERIAL_ACE,     AIR_SLASH,      AURORA_BEAM,    DRAGONBREATH,   CLOSE_COMBAT,   \
-	     TOXIC,          X_SCISSOR,      FIRE_FANG,      POWER_GEM,      SLUDGE_BOMB,    \
-	     BUBBLEBEAM,     TRAILBLAZE,     ICE_BEAM,       DRAGON_PULSE,   HYPER_BEAM,     \
-	     SPORE,          POISON_JAB,     WATERFALL,      ANCIENTPOWER,   SIGNAL_BEAM,    \
-	     GIGA_DRAIN,     ENERGY_BALL,    MIGHTY_CLEAVE,  THUNDERFANG,    AURA_WHEEL,     \
-	     EARTHQUAKE,     EARTH_POWER,    DIG,            PSYCHIC_M,      PSYBEAM,        \
-	     DARK_PULSE,     ICE_PUNCH,      GLACIAL_LANCE,  ACCELEROCK,     FLASH_CANNON,   \
-	     LEAF_BLADE,     THUNDERPUNCH,   HEAT_CRASH,     STEEL_WING,     FIRE_PUNCH,     \
-	     SHADOW_CLAW,    SHADOW_BALL,    DRAGON_CLAW,    ICE_FANG,       THUNDER_WAVE,   \
-	     PSYCHO_CUT,     AURA_SPHERE,    THUNDERBOLT,    FLAMETHROWER,   MOONBLAST,      \
-	     CUT,            FLY,            SURF,           STRENGTH,       FLASH,          \
+	tmhm AERIAL_ACE,     CLOSE_COMBAT,   TOXIC,          POWER_GEM,      TRAILBLAZE,     \
+	     HYPER_BEAM,     POISON_JAB,     SIGNAL_BEAM,    MIGHTY_CLEAVE,  THUNDERFANG,    \
+		 AURA_WHEEL,     PSYCHIC_M,      PSYBEAM,        DARK_PULSE,     ICE_PUNCH,      \
+		 ACCELEROCK,     FLASH_CANNON,   THUNDERPUNCH,   FIRE_PUNCH,     THUNDER_WAVE,   \
+	     AURA_SPHERE,    THUNDERBOLT,    STRENGTH,       FLASH 
 	; end
 
 	db BANK(ElectabuzzPicFront)

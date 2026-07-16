@@ -2032,8 +2032,6 @@ AbraEvosMoves:
 	db 0
 ; Learnset
 	db 6, CONFUSION
-	db 9, DISABLE
-	db 14, ANCIENTPOWER
 	db 0
 
 AlakazamEvosMoves:

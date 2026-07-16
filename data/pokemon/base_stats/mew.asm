@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw MewPicFront, MewPicBack
 
-	db POUND, GLACIAL_LANCE, NO_MOVE, NO_MOVE ; level 1 learnset
+	db POUND, TAIL_WHIP, REFLECT, LIGHT_SCREEN ; level 1 learnset
 	db GROWTH_MEDIUM_SLOW ; growth rate
 
 	; tm/hm learnset
