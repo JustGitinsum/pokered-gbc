@@ -59,3 +59,15 @@ IsInList:: ; marcelnote - simpler, uses e only, for arrays with entry size 1
 	jr z, IsInRestOfArray.found
 	inc hl
 	jr .loop
+
+; navigates to index a in an array of bytes in hl and gets the pointer from that index into hl
+GetAddressFromPointerArray::
+	ld d, 0
+	ld e, a
+	add hl, de
+	add hl, de ; 2 bytes per pointer
+GetAddressFromPointer::
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	ret

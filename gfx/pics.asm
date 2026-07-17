@@ -556,7 +556,7 @@ FlareonPicFront::     INCBIN "gfx/pokemon/front/flareon.pic"
 FlareonPicBack::      INCBIN "gfx/pokemon/back/flareonb.pic"
 ENDC
 
-SECTION "Type Icons", ROMX
+SECTION "Menu GFX", ROMX
 
 NormalTypeIcon::     INCBIN "gfx/type/normal.2bpp"
 FightingTypeIcon::   INCBIN "gfx/type/fighting.2bpp"
@@ -576,6 +576,8 @@ DragonTypeIcon::     INCBIN "gfx/type/dragon.2bpp"
 PhysicalIcon::        INCBIN "gfx/type/pysical.2bpp"
 SpecialIcon::        INCBIN "gfx/type/special.2bpp"
 StatusIcon::        INCBIN "gfx/type/status.2bpp"
+LearnsetMenuUI2BPP:: INCBIN "gfx/pokedex/learnset_menu_2bpp.2bpp"
+LearnsetMenuUI1BPP:: INCBIN "gfx/pokedex/learnset_menu_1bpp.1bpp"
 
 SECTION "Pics 10", ROMX
 

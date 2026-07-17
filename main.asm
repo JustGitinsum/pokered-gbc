@@ -220,6 +220,8 @@ INCLUDE "color/draw_hud_pokeball_gfx.asm"
 SECTION "Move Data", ROMX
 INCLUDE "data/moves/moves.asm"
 INCLUDE "engine/pokemon/evos_moves.asm"
+INCLUDE "engine/pokemon/read_level_up_learnsets.asm"
+
 
 SECTION "Battle Core", ROMX
 
@@ -233,6 +235,7 @@ INCLUDE "engine/menus/pokedex.asm"
 INCLUDE "engine/movie/trade.asm"
 INCLUDE "engine/movie/intro.asm"
 INCLUDE "engine/movie/trade2.asm"
+INCLUDE "engine/menus/learnsets.asm"
 
 ; Hooks for color hack
 INCLUDE "color/trade.asm"

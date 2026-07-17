@@ -322,7 +322,8 @@ wMenuWrappingEnabled:: db
 ; whether to check for 180-degree turn (0 = don't, 1 = do)
 wCheckFor180DegreeTurn:: db
 
-	ds 1
+; PureRGBnote: when running the generic palette setting function, we can force it to use a different palette by loading one here
+wGenericPaletteOverride:: db
 
 wMissableObjectIndex:: db
 
@@ -837,6 +838,7 @@ wTempSCX::
 ; which entry from TradeMons to select
 wWhichTrade::
 wDexMaxSeenMon::
+wDexLearnsetListCount::
 wPPRestoreItem::
 wWereAnyMonsAsleep::
 wNumShakes::
@@ -1592,6 +1594,7 @@ wMoveNum:: db
 ; PureRGBnote: MOVED: itemlist is a temp list for indicating what items appear in a mart, the size was expanded to allow for bigger mart stocks.
 ; we reuse wMovesString for this expanded list since wMovesString is only used in battle.
 wItemList::
+wLearnsetList::
 wMovesString:: ds 56
 
 wUnusedCurMapTilesetCopy:: db
@@ -1620,6 +1623,7 @@ wMoveType::
 wPokedexNum::
 wTempTMHM::
 wUsingPPUp::
+wMovedexMoveID::
 wMaxPP::
 wMoveGrammar::
 ; 0 for player, non-zero for enemy
@@ -1693,8 +1697,35 @@ wSavedSpriteScreenX:: db
 wSavedSpriteMapY:: db
 wSavedSpriteMapX:: db
 
-	ds 5
+	ds 3 ; unused 3 bytes
 
+;;; PureRGBnote: ADDED: new properties in this previously empty space
+wTownMapAreaState:: ; view which state is which in map_pokemon_areas.asm
+wDexMinSeenMon::
+wDexMinSeenMove::
+wWhatStat:: db ; contains the stat currently being modified by a stat changing move
+; bit 0 = set to 1 when we should mark a move as seen in the movedex flags on showing its animation, 0 otherwise
+; bit 1 = set if we ran from battle
+; bit 2 = set if screeches are echoing
+; bit 3-7 = unused
+wBattleFunctionalFlags:: db
+;;;
+
+;;;;; PureRGBnote: CHANGED: this property is also used in the pokedex for some flags.
+;;;;; bit 0 -> How we're displaying pokedex data. 0 = internal (from the pokedex), 1 = external (from dialog)
+;;;;; bit 1 -> Which sprite is currently displayed on a pokedex data page. 0 = front sprite, 1 = back sprite 
+;;;;; bit 2 -> used to indicate whether we're in the pokedex data page or not
+;;;;; bit 3 -> How we're displaying movedex data. 0 = internal (from the movedex), 1 = external (from learnset page)
+;;;;; bit 4 -> does the currently chosen pokedex pokemon have its learnset unlocked
+wPokedexDataFlags:: 
+;;;;; PureRGBnote: CHANGED: this property is also used in the "AREA" option in the pokedex for indicating which states are available for a pokemon
+;;;;; bit 0 -> pokemon has old rod locations
+;;;;; bit 1 -> pokemon has good rod locations in fresh water areas
+;;;;; bit 2 -> pokemon has good rod locations in salt water areas
+;;;;; bit 3 -> pokemon has super rod locations
+;;;;; bit 4 -> pokemon has grass / cave / building locations
+;;;;; bit 5 -> pokemon has surfing locations
+wTownMapAreaTypeFlags::
 wWhichPrize:: db
 
 ; counts downward each frame
@@ -1707,7 +1738,9 @@ wStepCounter:: db
 ; after a battle, you have at least 3 steps before a random battle can occur
 wNumberOfNoRandomBattleStepsLeft:: db
 
+wLearnsetIndex::
 wPrize1:: db
+wLearnsetPage::
 wPrize2:: db
 wPrize3:: db
 

@@ -102,7 +102,7 @@ HandlePokedexSideMenu:
 	and a
 	jr z, .choseData
 	dec a
-	jr z, .choseCry
+	jr z, .choseEvo
 	dec a
 	jr z, .choseArea
 .choseQuit
@@ -141,14 +141,18 @@ HandlePokedexSideMenu:
 	jr .exitSideMenu
 
 ; play pokemon cry
-.choseCry
-	; ld a, [wPokedexNum]
-	; call GetCryData
-	; call PlaySound
-	; jr .handleMenuInput
+.choseEvo
+	push bc
+	ld a, SFX_PRESS_AB
+	call PlaySound
 	call ShowPokedexInfo
-	ld b, 0
+	pop bc
+	call ClearScreen
 	jr .exitSideMenu
+
+	; call ShowPokedexInfo
+	; ld b, 0
+	; jr .exitSideMenu
 
 .choseArea
 	predef LoadTownMap_Nest ; display pokemon areas
@@ -515,7 +519,7 @@ ShowPokedexDataInternal:
 
 	ld a, c
 	and a
-	jp z, .waitForButtonPress ; if the pokemon has not been owned, don't print the height, weight, or description
+	jp z, .displaySeenBottomInfo ; if the pokemon has not been owned, don't print the height or weight, but show their type
 	inc de ; de = address of feet (height)
 	ld a, [de] ; reads feet, but a is overwritten without being used
 	hlcoord 12, 6
@@ -567,11 +571,90 @@ ShowPokedexDataInternal:
 	pop af
 	ldh [hDexWeight], a ; restore original value of [hDexWeight]
 	pop hl
-	inc hl ; hl = address of pokedex description text
-	bccoord 1, 11
-	ld a, %10
+	; Turned off description text. Uncomment to turn Pokedex descriptions back on ; inc hl ; hl = address of pokedex description text
+	; Turned off description text. Uncomment to turn Pokedex descriptions back on ; bccoord 1, 11
+	; Turned off description text. Uncomment to turn Pokedex descriptions back on ; ld a, %10
 	ldh [hClearLetterPrintingDelayFlags], a
-	call TextCommandProcessor ; print pokedex description text
+	; Turned off description text. Uncomment to turn Pokedex descriptions back on ; call TextCommandProcessor ; print pokedex description text
+	;;;;;;;;;; PureRGBnote: ADDED: pokedex will display the pokemon's types and their base stats on a new third page.
+	; CheckEvent EVENT_GOT_POKEDEX
+	; jp z, .clearLetterPrintingFlags ; don't display this new third page if we're showing the starters before getting the pokedex.
+	; ld hl, PromptText
+	; call TextCommandProcessor
+	hlcoord 1, 10
+	lb bc, 7, 18
+	call ClearScreenArea
+	call PrintMonTypes
+	; print mon base stats
+	hlcoord 9, 10
+	ld de, BaseStatsText
+	call PlaceString
+	hlcoord 12, 11
+	ld de, HPText
+	call PlaceString
+	ld de, wMonHBaseHP
+	hlcoord 15, 11
+	lb bc, 1, 3
+	call PrintNumber 
+	hlcoord 11, 12
+	ld de, AtkText
+	call PlaceString
+	ld de, wMonHBaseAttack
+	hlcoord 15, 12
+	lb bc, 1, 3
+	call PrintNumber 
+	hlcoord 11, 13
+	ld de, DefText
+	call PlaceString
+	ld de, wMonHBaseDefense
+	hlcoord 15, 13
+	lb bc, 1, 3
+	call PrintNumber
+	hlcoord 11, 14
+	ld de, SpdText
+	call PlaceString
+	ld de, wMonHBaseSpeed
+	hlcoord 15, 14
+	lb bc, 1, 3
+	call PrintNumber
+	hlcoord 11, 15
+	ld de, SpcText
+	call PlaceString
+	ld de, wMonHBaseSpecial
+	hlcoord 15, 15
+	lb bc, 1, 3
+	call PrintNumber 
+	hlcoord 9, 16
+	ld de, TotalText
+	call PlaceString
+	; calculate the base stat total to print it
+	ld b, 0
+	ld a, [wMonHBaseHP]
+	ld hl, 0
+	ld c, a
+	add hl, bc
+	ld a, [wMonHBaseAttack]
+	ld c, a
+	add hl, bc
+	ld a, [wMonHBaseDefense]
+	ld c, a
+	add hl, bc
+	ld a, [wMonHBaseSpeed]
+	ld c, a
+	add hl, bc
+	ld a, [wMonHBaseSpecial]
+	ld c, a
+	add hl, bc
+	ld a, h
+	ld [wSum], a
+	ld a, l
+	ld [wSum+1], a
+	ld de, wSum
+	hlcoord 15, 16
+	lb bc, 2, 3
+	call PrintNumber
+.clearLetterPrintingFlags
+;;;;;;;;;;
 	xor a
 	ldh [hClearLetterPrintingDelayFlags], a
 .waitForButtonPress
@@ -592,50 +675,25 @@ ShowPokedexDataInternal:
 	ldh [rAUDVOL], a
 	ret
 
-; new for evos and learnsets
-ShowPokedexInfo: ; TBE
-	ld hl, wStatusFlags2
-	set 1, [hl]
-	ld a, $33 ; 3/7 volume
-	ldh [rAUDVOL], a
-	ldh a, [hTileAnimations]
+.displaySeenBottomInfo
+	call PrintMonTypes ; PureRGBnote: ADDED: for pokemon you have seen but not caught it displays just their types on the bottom
+	jr .waitForButtonPress
 
-	push af
-	xor a
-	ldh [hTileAnimations], a
-	call GBPalWhiteOut ; zero all palettes
-
-	ld a, [wPokedexNum] ; pokemon ID
-	ld [wCurPartySpecies], a
-	push af
-	ld b, SET_PAL_POKEDEX
-	call RunPaletteCommand
-	pop af
-	ld [wPokedexNum], a
-
-;	ld hl, wPokedexOwned
-;	call IsPokemonBitSet ; info in z flag
-;	jr z, .printUnknownInfo
-
-	call DrawMonInfoOnScreen
-
-.waitForButtonPress
-	call JoypadLowSensitivity
-	ldh a, [hJoy5]
-	and PAD_A | PAD_B
-	jr z, .waitForButtonPress
-
-	pop af
-	ldh [hTileAnimations], a
-	call GBPalWhiteOut
-	call ClearScreen
-	call RunDefaultPaletteCommand
-	call LoadTextBoxTilePatterns
-	call GBPalNormal
-	ld hl, wStatusFlags2
-	res 1, [hl]
-	ld a, $77 ; max volume
-	ldh [rAUDVOL], a
+PrintMonTypes:
+	hlcoord 1, 11
+	ld de, DexType1Text
+	call PlaceString
+	hlcoord 2, 12
+	predef PrintMonType
+	ld a, [wMonHType1]
+	ld b, a
+	ld a, [wMonHType2]
+	cp b
+	jr z, .done ; don't print TYPE2/ if the pokemon has 1 type only.
+	hlcoord 1, 13
+	ld de, DexType2Text
+	call PlaceString
+.done
 	ret
 
 HeightWeightText:
@@ -671,429 +729,6 @@ DrawTileLine:
 	ret
 
 INCLUDE "data/pokemon/dex_entries.asm"
-
-; new ==========================================================
-
-DrawMonInfoOnScreen:
-
-	call DrawPokedexBordersForInfoPages
-
-	call GBPalNormal
-
-	
-; 	ld hl, wPokedexOwned
-; 	call IsPokemonBitSet
-; 	jr nz, .pokemonOwned
-
-; ; pokemon not owned
-; 	call GetMonName
-; 	hlcoord 1, 1
-; 	call PlaceString
-; 	ld h, b
-; 	ld l, c
-; 	ld de, InfoText
-; 	call PlaceString
-; 	hlcoord 3, 4
-; 	ld de, InfoWhenOwnedText
-; 	jp PlaceString
-
-.pokemonOwned
-
-	call PrintEvoInfo
-
-; .waitForButtonPress1
-; 	call JoypadLowSensitivity
-; 	ldh a, [hJoy5]
-; 	and PAD_A | PAD_B
-; 	jr z, .waitForButtonPress1
-
-; 	call PrintLevelUpMovesInfo
-
-; .waitForButtonPress2
-; 	call JoypadLowSensitivity
-; 	ldh a, [hJoy5]
-; 	and PAD_A | PAD_B
-; 	jr z, .waitForButtonPress2
-
-; 	call PrintTMHMsMovesInfo
-
-; .waitForButtonPress3
-; 	call JoypadLowSensitivity
-; 	ldh a, [hJoy5]
-; 	and PAD_A | PAD_B
-; 	jr z, .waitForButtonPress3
-
-; 	call PrintBaseStatsInfo
-
-	ret
-
-; ----------------------------------------------------------
-
-MonsEvolutionsText:
-	db "'s EVOs@"
-
-InfoText:
-	db "'s INFO@"
-
-InfoWhenOwnedText:
-	db   "INFO AVAILABLE"
-	next "  WHEN OWNED@"
-
-PrintEvoInfo:
-
-	hlcoord 1, 1
-	ld a, h
-	ld [wEphemerealTempBuffer2ByteStorage], a
-	ld a, l
-	ld [wEphemerealTempBuffer2ByteStorage+1], a
-
-	call GetMonName
-	hlcoord 1, 1
-	call PlaceString
-	ld h, b
-	ld l, c
-	ld de, MonsEvolutionsText
-	call PlaceString
-
-; is this Eevee?
-	ld a, [wPokedexNum]
-	cp EEVEE
-	jr nz, .evolutionsVisible
-
-	hlcoord 1, 4
-	ld de, EeveeDedicatedEvoListText1
-	call PlaceString
-	hlcoord 1, 5
-	ld de, EeveeDedicatedEvoListText2
-	call PlaceString
-	hlcoord 1, 6
-	ld de, EeveeDedicatedEvoListText3
-	call PlaceString
-	hlcoord 1, 7
-	ld de, EeveeDedicatedEvoListText4
-	call PlaceString
-	hlcoord 1, 8
-	ld de, EeveeDedicatedEvoListText5
-	call PlaceString
-	hlcoord 1, 9
-	ld de, EeveeDedicatedEvoListText6
-	call PlaceString
-	hlcoord 1, 10
-	ld de, EeveeDedicatedEvoListText7
-	call PlaceString
-	hlcoord 1, 11
-	ld de, EeveeDedicatedEvoListText8
-	call PlaceString
-
-	call SetHLToEvosMovesPointer
-; hl +32
-	ld b, 0
-	ld c, 32
-	add hl, bc
-	ret
-
-.evolutionsVisible
-
-	call SetHLToEvosMovesPointer
-
-.nextEvoEntry
-	push hl ; stack start address for evolution moves (this will be later updated with the next entry)
-
-	ld de, wBuffer
-	ld a, BANK(EvosMovesPointerTable)
-	ld bc, 4 * 3 + 1 ; 4 bytes, as currently the biggest entry for an evolution is 4 bytes
-	call FarCopyData ; wBuffer now has a copy of first evo entry
-
-	ld hl, wBuffer
-	ld a, [hli]
-	and a ; reached terminator?
-	jr nz, .noTerminator
-; we reached the end
-	jp .concludeEvoLoop
-
-.noTerminator
-	push hl
-	push af
-	SetEvent EVENT_AT_LEAST_ONE_EVOLUTION_TO_PRINT_IN_DEX
-	call IncreaseHLCoordinatesBy1Row
-	pop af
-	pop hl
-	cp EVOLVE_ITEM
-	jr z, .handleItem ; is it an item evolution?
-	cp EVOLVE_LEVEL
-	jr z, .handleLevel
-
-.handleTrade
-	inc hl
-	push hl
-	call IncreaseHLCoordinatesBy2Row
-	ld de, ViaTradeText
-	call PlaceString
-	call PrintColonRightAfterString
-
-	call SaveValueOfwPokedexNum
-	pop hl
-	ld a, [hl] ; a contains the evolved form
-	ld [wPokedexNum], a
-	call GetMonName
-	call GetIndentedHLCoordinates
-	call PlaceString
-	call RestoreValueOfwPokedexNum
-
-	jr .progressWithChecks3Bytes
-
-.handleLevel
-	ld a, [hli] ; a contains the level at which the mons evolve
-	            ; hl now points to the mon it evolves into
-	push hl
-	ld [wUniQuizAnswer], a
-	call IncreaseHLCoordinatesBy2Row
-	ld de, ArrowLevelText
-	call PlaceString
-	ld h, b
-	ld l, c
-	push hl
-	ld de, wUniQuizAnswer
-	lb bc, 1, 2
-	call PrintNumber
-	pop hl
-	call PrintColonRightAfterNumberAtDEStartingAtHL
-
-	call SaveValueOfwPokedexNum
-	pop hl
-	ld a, [hl] ; a contains the evolved form
-	ld [wPokedexNum], a
-	call GetMonName
-	call GetIndentedHLCoordinates
-	call PlaceString
-	call RestoreValueOfwPokedexNum
-
-	jr .progressWithChecks3Bytes
-
-.handleItem
-	call SaveValueOfwPokedexNum
-
-	ld a, [hli] ; a contains the item with which the mon evolves
-	            ; hl now points to 1 (because... yes)
-	inc hl
-	push hl
-	ld [wPokedexNum], a
-
-	ld de, ArrowText
-	call IncreaseHLCoordinatesBy2Row
-	call PlaceString
-	ld h, b
-	ld l, c
-	push hl
-	call GetItemName ; given an item ID at [wPokedexNum], store the name of the item into a string starting at wNameBuffer
-	ld de, wNameBuffer
-	pop hl
-	call PlaceString
-	call PrintColonRightAfterString
-
-	pop hl ; now hl points to the mon it evolves into
-	ld a, [hl] ; a contains the evolved form
-	ld [wPokedexNum], a
-	call GetMonName
-	call GetIndentedHLCoordinates
-	call PlaceString
-	call RestoreValueOfwPokedexNum
-
-	jr .progressWithChecks4Bytes
-
-.progressWithChecks3Bytes
-	pop hl
-	jr .continueWithProgress
-
-.progressWithChecks4Bytes
-	pop hl
-	inc hl
-
-.continueWithProgress
-	inc hl
-	inc hl
-	inc hl ; hl now holds the address to the next evo entry
-	jp .nextEvoEntry ; we have the address, load next entry to wBuffer
-
-.concludeEvoLoop
-	CheckAndResetEvent EVENT_AT_LEAST_ONE_EVOLUTION_TO_PRINT_IN_DEX
-	jr nz, .popAndRet
-	hlcoord 3, 4
-	ld de, UnableToEvolveText
-	call PlaceString
-.popAndRet
-	pop hl
-	ret
-
-UnableToEvolveText:
-	db "CANNOT EVOLVE@"
-
-EeveeDedicatedEvoListText1:
-	db "▷FIRES: FLAREON@"
-EeveeDedicatedEvoListText2:
-	db "▷THUNDERS: JOLTEON@"
-EeveeDedicatedEvoListText3:
-	db "▷WATERS: VAPOREON@"
-EeveeDedicatedEvoListText4:
-	db "▷SUNS: ESPEON@"
-EeveeDedicatedEvoListText5:
-	db "▷MOONS: UMBREON@"
-EeveeDedicatedEvoListText6:
-	db "▷LEAFS: LEAFEON@"
-EeveeDedicatedEvoListText7:
-	db "▷ICES: GLACEON@"
-EeveeDedicatedEvoListText8:
-	db "▷KING's R: SYLVEON@"
-
-ViaTradeText:
-	db "▷ VIA TRADE@"
-
-ArrowLevelText:
-	db "▷ LV @"
-
-ArrowText:
-	db "▷ @"
-
-SaveValueOfwPokedexNum:
-	ld a, [wPokedexNum]
-	ld [wMultipurposeTemporaryStorage], a
-	ret
-
-RestoreValueOfwPokedexNum:
-	ld a, [wMultipurposeTemporaryStorage]
-	ld [wPokedexNum], a
-	ret
-
-IncreaseHLCoordinatesBy2Row:
-	ld a, [wEphemerealTempBuffer2ByteStorage]
-	ld h, a
-	ld a, [wEphemerealTempBuffer2ByteStorage+1]
-	ld l, a
-	ld bc, SCREEN_WIDTH * 2
-	add hl, bc
-	ld a, h
-	ld [wEphemerealTempBuffer2ByteStorage], a
-	ld a, l
-	ld [wEphemerealTempBuffer2ByteStorage+1], a
-	ret
-
-IncreaseHLCoordinatesBy1Row:
-	ld a, [wEphemerealTempBuffer2ByteStorage]
-	ld h, a
-	ld a, [wEphemerealTempBuffer2ByteStorage+1]
-	ld l, a
-	ld bc, SCREEN_WIDTH
-	add hl, bc
-	ld a, h
-	ld [wEphemerealTempBuffer2ByteStorage], a
-	ld a, l
-	ld [wEphemerealTempBuffer2ByteStorage+1], a
-	ret
-
-GetIndentedHLCoordinates:
-	ld a, [wEphemerealTempBuffer2ByteStorage]
-	ld h, a
-	ld a, [wEphemerealTempBuffer2ByteStorage+1]
-	ld l, a
-	ld bc, SCREEN_WIDTH
-	add hl, bc
-	inc hl
-	inc hl
-	ret
-
-PrintColonRightAfterString:
-	ld h, b
-	ld l, c
-	ld de, ColonText
-	jp PlaceString
-
-PrintColonRightAfterNumberAtDEStartingAtHL:
-	ld a, [de]
-	cp 10
-	jr c, .small
-	cp 100
-	jr nz, .medium
-.big
-	inc hl
-.medium
-	inc hl
-.small
-	inc hl
-	inc hl
-	ld de, ColonText
-	jp PlaceString
-
-ColonText:
-	db ":@"
-
-.endOfLoop
-
-	pop bc
-	ld a, b
-	ld [wPokedexNum], a
-
-	pop hl
-	pop de
-	pop bc
-	ret
-
-SetHLToEvosMovesPointer:
-	ld hl, EvosMovesPointerTable
-	ld b, 0
-	ld a, [wPokedexNum]
-	ld [wLoadedMonSpecies], a
-	dec a
-	add a
-	rl b
-	ld c, a
-	add hl, bc
-	ld de, wBuffer
-	ld a, BANK(EvosMovesPointerTable)
-	ld bc, 2
-	call FarCopyData ; wBuffer has the address to evomoves list
-	ld hl, wBuffer
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a ; at this point hl has the address for this pokémon's evomoves list
-	ret
-
-; ----------------------------------------------------------
-
-DrawPokedexBordersForInfoPages:
-	call ClearScreen
-
-	hlcoord 0, 0
-	ld de, 1
-	lb bc, $64, SCREEN_WIDTH
-	call DrawTileLine ; draw top border
-
-	hlcoord 0, 17
-	ld b, $6f
-	call DrawTileLine ; draw bottom border
-
-	hlcoord 0, 1
-	ld de, 20
-	lb bc, $66, $10
-	call DrawTileLine ; draw left border
-
-	hlcoord 19, 1
-	ld b, $67
-	call DrawTileLine ; draw right border
-
-	ld a, $63 ; upper left corner tile
-	ldcoord_a 0, 0
-	ld a, $65 ; upper right corner tile
-	ldcoord_a 19, 0
-	ld a, $6c ; lower left corner tile
-	ldcoord_a 0, 17
-	ld a, $6e ; lower right corner tile
-	ldcoord_a 19, 17
-
-	hlcoord 0, 2
-	ld de, PokedexDataDividerLine
-	jp PlaceString ; draw horizontal divider line
-
-
 
 PokedexToIndex:
 	; converts the Pokédex number at [wPokedexNum] to an index
@@ -1131,5 +766,37 @@ IndexToPokedex:
 	pop hl
 	pop bc
 	ret
+
+PromptText:
+	text_promptbutton
+	text_end
+
+DexType1Text:
+	db "TYPE1/@"
+
+DexType2Text:
+	db "TYPE2/@"
+
+BaseStatsText:
+	db "BASE STATS@"
+
+HPText:
+	db "HP@"
+
+AtkText:
+	db "ATK@"
+
+DefText:
+	db "DEF@"
+
+SpdText:
+	db "SPD@"
+
+SpcText:
+	db "SPC@"
+
+TotalText:
+	db "TOTAL@"
+
 
 INCLUDE "data/pokemon/dex_order.asm"
