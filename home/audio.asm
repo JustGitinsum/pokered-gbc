@@ -213,6 +213,14 @@ PlaySound::
 	pop hl
 	ret
 
+HalfVolume::
+  	ld a, [wStatusFlags2]
+  	set BIT_NO_AUDIO_FADE_OUT, a
+  	ld [wStatusFlags2], a
+	ld a, $33 ; 3/7 volume
+	ldh [rNR50], a
+	ret
+
 MaxVolume::
   	ld a, [wStatusFlags2]
   	res BIT_NO_AUDIO_FADE_OUT, a

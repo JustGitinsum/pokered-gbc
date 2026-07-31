@@ -145,14 +145,10 @@ HandlePokedexSideMenu:
 	push bc
 	ld a, SFX_PRESS_AB
 	call PlaySound
-	call ShowPokedexInfo
+	call ShowMonLearnsetMenu;ShowPokedexMoves
 	pop bc
 	call ClearScreen
 	jr .exitSideMenu
-
-	; call ShowPokedexInfo
-	; ld b, 0
-	; jr .exitSideMenu
 
 .choseArea
 	predef LoadTownMap_Nest ; display pokemon areas
@@ -376,8 +372,8 @@ PokedexContentsText:
 	db "CONTENTS@"
 
 PokedexMenuItemsText:
-	db   "DATA"
-	next "EVO"
+	db   "STAT"
+	next "WIKI"
 	next "AREA"
 	next "QUIT@"
 

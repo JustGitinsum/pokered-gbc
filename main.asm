@@ -103,9 +103,9 @@ INCLUDE "engine/battle/end_of_battle.asm"
 INCLUDE "engine/battle/wild_encounters.asm"
 ; moved to battle engine 9 INCLUDE "engine/battle/move_effects/recoil.asm"
 INCLUDE "engine/battle/move_effects/conversion.asm"
-INCLUDE "engine/battle/move_effects/haze.asm"
 INCLUDE "engine/battle/get_trainer_name.asm"
 INCLUDE "engine/math/random.asm"
+INCLUDE "engine/pokemon/read_tm_learnsets.asm"
 
 INCLUDE "color/status_screen.asm"
 
@@ -214,6 +214,7 @@ INCLUDE "gfx/trade.asm"
 INCLUDE "engine/battle/move_effects/heal.asm"
 INCLUDE "engine/battle/move_effects/transform.asm"
 INCLUDE "engine/battle/move_effects/reflect_light_screen.asm"
+INCLUDE "engine/battle/move_effects/haze.asm"
 
 INCLUDE "color/draw_hud_pokeball_gfx.asm"
 
@@ -235,6 +236,7 @@ INCLUDE "engine/menus/pokedex.asm"
 INCLUDE "engine/movie/trade.asm"
 INCLUDE "engine/movie/intro.asm"
 INCLUDE "engine/movie/trade2.asm"
+INCLUDE "engine/menus/movedex.asm"
 INCLUDE "engine/menus/learnsets.asm"
 
 ; Hooks for color hack

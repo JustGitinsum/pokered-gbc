@@ -578,6 +578,8 @@ SpecialIcon::        INCBIN "gfx/type/special.2bpp"
 StatusIcon::        INCBIN "gfx/type/status.2bpp"
 LearnsetMenuUI2BPP:: INCBIN "gfx/pokedex/learnset_menu_2bpp.2bpp"
 LearnsetMenuUI1BPP:: INCBIN "gfx/pokedex/learnset_menu_1bpp.1bpp"
+MovedexUI::          INCBIN "gfx/movedex/movedex_ui.1bpp"
+MovedexUIEnd::
 
 SECTION "Pics 10", ROMX
 

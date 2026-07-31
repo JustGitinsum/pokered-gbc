@@ -504,7 +504,7 @@ MewEvosMoves:
 	db 30, ANCIENTPOWER
 	db 60, METRONOME
 	db 90, AURA_SPHERE
-	db 100, PSYCHIC_M
+	db 99, PSYCHIC_M
 	db 0
 
 GyaradosEvosMoves:

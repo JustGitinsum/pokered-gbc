@@ -1,470 +1,13 @@
-; new for evos and learnsets
-ShowPokedexInfo: ; TBE
-	ld hl, wStatusFlags2
-	set 1, [hl]
-	ld a, $33 ; 3/7 volume
-	ldh [rAUDVOL], a
-	ldh a, [hTileAnimations]
 
-	push af
-	xor a
-	ldh [hTileAnimations], a
-	call GBPalWhiteOut ; zero all palettes
-
-	ld a, [wPokedexNum] ; pokemon ID
-	ld [wCurPartySpecies], a
-	push af
-	ld b, SET_PAL_POKEDEX
-	call RunPaletteCommand
-	pop af
-	ld [wPokedexNum], a
-
-;	ld hl, wPokedexOwned
-;	call IsPokemonBitSet ; info in z flag
-;	jr z, .printUnknownInfo
-
-	call DrawMonInfoOnScreen
-
-.waitForButtonPress
-	call JoypadLowSensitivity
-	ldh a, [hJoy5]
-	and PAD_A | PAD_B
-	jr z, .waitForButtonPress
-
-	pop af
-	ldh [hTileAnimations], a
-	call GBPalWhiteOut
-	call ClearScreen
-	call RunDefaultPaletteCommand
-	call LoadTextBoxTilePatterns
-	call GBPalNormal
-	ld hl, wStatusFlags2
-	res 1, [hl]
-	ld a, $77 ; max volume
-	ldh [rAUDVOL], a
+EnableSpriteUpdates::
+	ld a, 1
+	jr ChangeUpdateSpritesEnabled
+DisableSpriteUpdates::
+	ld a, $FF
+	; fall through
+ChangeUpdateSpritesEnabled:
+	ld [wUpdateSpritesEnabled], a
 	ret
-
-DrawMonInfoOnScreen:
-
-	call DrawPokedexBordersForInfoPages
-
-	call GBPalNormal
-
-	
-; 	ld hl, wPokedexOwned
-; 	call IsPokemonBitSet
-; 	jr nz, .pokemonOwned
-
-; ; pokemon not owned
-; 	call GetMonName
-; 	hlcoord 1, 1
-; 	call PlaceString
-; 	ld h, b
-; 	ld l, c
-; 	ld de, InfoText
-; 	call PlaceString
-; 	hlcoord 3, 4
-; 	ld de, InfoWhenOwnedText
-; 	jp PlaceString
-
-.pokemonOwned
-
-	call PrintEvoInfo
-
-; .waitForButtonPress1
-; 	call JoypadLowSensitivity
-; 	ldh a, [hJoy5]
-; 	and PAD_A | PAD_B
-; 	jr z, .waitForButtonPress1
-
-; 	call PrintLevelUpMovesInfo
-
-; .waitForButtonPress2
-; 	call JoypadLowSensitivity
-; 	ldh a, [hJoy5]
-; 	and PAD_A | PAD_B
-; 	jr z, .waitForButtonPress2
-
-; 	call PrintTMHMsMovesInfo
-
-; .waitForButtonPress3
-; 	call JoypadLowSensitivity
-; 	ldh a, [hJoy5]
-; 	and PAD_A | PAD_B
-; 	jr z, .waitForButtonPress3
-
-; 	call PrintBaseStatsInfo
-
-	ret
-
-; ----------------------------------------------------------
-
-MonsEvolutionsText:
-	db "'s EVOs@"
-
-InfoText:
-	db "'s INFO@"
-
-InfoWhenOwnedText:
-	db   "INFO AVAILABLE"
-	next "  WHEN OWNED@"
-
-PrintEvoInfo:
-
-	hlcoord 1, 1
-	ld a, h
-	ld [wEphemerealTempBuffer2ByteStorage], a
-	ld a, l
-	ld [wEphemerealTempBuffer2ByteStorage+1], a
-
-	call GetMonName
-	hlcoord 1, 1
-	call PlaceString
-	ld h, b
-	ld l, c
-	ld de, MonsEvolutionsText
-	call PlaceString
-
-; is this Eevee?
-	ld a, [wPokedexNum]
-	cp EEVEE
-	jr nz, .evolutionsVisible
-
-	hlcoord 1, 4
-	ld de, EeveeDedicatedEvoListText1
-	call PlaceString
-	hlcoord 1, 5
-	ld de, EeveeDedicatedEvoListText2
-	call PlaceString
-	hlcoord 1, 6
-	ld de, EeveeDedicatedEvoListText3
-	call PlaceString
-	hlcoord 1, 7
-	ld de, EeveeDedicatedEvoListText4
-	call PlaceString
-	hlcoord 1, 8
-	ld de, EeveeDedicatedEvoListText5
-	call PlaceString
-	hlcoord 1, 9
-	ld de, EeveeDedicatedEvoListText6
-	call PlaceString
-	hlcoord 1, 10
-	ld de, EeveeDedicatedEvoListText7
-	call PlaceString
-	hlcoord 1, 11
-	ld de, EeveeDedicatedEvoListText8
-	call PlaceString
-
-	call SetHLToEvosMovesPointer
-; hl +32
-	ld b, 0
-	ld c, 32
-	add hl, bc
-	ret
-
-.evolutionsVisible
-
-	call SetHLToEvosMovesPointer
-
-.nextEvoEntry
-	push hl ; stack start address for evolution moves (this will be later updated with the next entry)
-
-	ld de, wBuffer
-	ld a, BANK(EvosMovesPointerTable)
-	ld bc, 4 * 3 + 1 ; 4 bytes, as currently the biggest entry for an evolution is 4 bytes
-	call FarCopyData ; wBuffer now has a copy of first evo entry
-
-	ld hl, wBuffer
-	ld a, [hli]
-	and a ; reached terminator?
-	jr nz, .noTerminator
-; we reached the end
-	jp .concludeEvoLoop
-
-.noTerminator
-	push hl
-	push af
-	SetEvent EVENT_AT_LEAST_ONE_EVOLUTION_TO_PRINT_IN_DEX
-	call IncreaseHLCoordinatesBy1Row
-	pop af
-	pop hl
-	cp EVOLVE_ITEM
-	jr z, .handleItem ; is it an item evolution?
-	cp EVOLVE_LEVEL
-	jr z, .handleLevel
-
-.handleTrade
-	inc hl
-	push hl
-	call IncreaseHLCoordinatesBy2Row
-	ld de, ViaTradeText
-	call PlaceString
-	call PrintColonRightAfterString
-
-	call SaveValueOfwPokedexNum
-	pop hl
-	ld a, [hl] ; a contains the evolved form
-	ld [wPokedexNum], a
-	call GetMonName
-	call GetIndentedHLCoordinates
-	call PlaceString
-	call RestoreValueOfwPokedexNum
-
-	jr .progressWithChecks3Bytes
-
-.handleLevel
-	ld a, [hli] ; a contains the level at which the mons evolve
-	            ; hl now points to the mon it evolves into
-	push hl
-	ld [wUniQuizAnswer], a
-	call IncreaseHLCoordinatesBy2Row
-	ld de, ArrowLevelText
-	call PlaceString
-	ld h, b
-	ld l, c
-	push hl
-	ld de, wUniQuizAnswer
-	lb bc, 1, 2
-	call PrintNumber
-	pop hl
-	call PrintColonRightAfterNumberAtDEStartingAtHL
-
-	call SaveValueOfwPokedexNum
-	pop hl
-	ld a, [hl] ; a contains the evolved form
-	ld [wPokedexNum], a
-	call GetMonName
-	call GetIndentedHLCoordinates
-	call PlaceString
-	call RestoreValueOfwPokedexNum
-
-	jr .progressWithChecks3Bytes
-
-.handleItem
-	call SaveValueOfwPokedexNum
-
-	ld a, [hli] ; a contains the item with which the mon evolves
-	            ; hl now points to 1 (because... yes)
-	inc hl
-	push hl
-	ld [wPokedexNum], a
-
-	ld de, ArrowText
-	call IncreaseHLCoordinatesBy2Row
-	call PlaceString
-	ld h, b
-	ld l, c
-	push hl
-	call GetItemName ; given an item ID at [wPokedexNum], store the name of the item into a string starting at wNameBuffer
-	ld de, wNameBuffer
-	pop hl
-	call PlaceString
-	call PrintColonRightAfterString
-
-	pop hl ; now hl points to the mon it evolves into
-	ld a, [hl] ; a contains the evolved form
-	ld [wPokedexNum], a
-	call GetMonName
-	call GetIndentedHLCoordinates
-	call PlaceString
-	call RestoreValueOfwPokedexNum
-
-	jr .progressWithChecks4Bytes
-
-.progressWithChecks3Bytes
-	pop hl
-	jr .continueWithProgress
-
-.progressWithChecks4Bytes
-	pop hl
-	inc hl
-
-.continueWithProgress
-	inc hl
-	inc hl
-	inc hl ; hl now holds the address to the next evo entry
-	jp .nextEvoEntry ; we have the address, load next entry to wBuffer
-
-.concludeEvoLoop
-	CheckAndResetEvent EVENT_AT_LEAST_ONE_EVOLUTION_TO_PRINT_IN_DEX
-	jr nz, .popAndRet
-	hlcoord 3, 4
-	ld de, UnableToEvolveText
-	call PlaceString
-.popAndRet
-	pop hl
-	ret
-
-UnableToEvolveText:
-	db "CANNOT EVOLVE@"
-
-EeveeDedicatedEvoListText1:
-	db "▷FIRES: FLAREON@"
-EeveeDedicatedEvoListText2:
-	db "▷THUNDERS: JOLTEON@"
-EeveeDedicatedEvoListText3:
-	db "▷WATERS: VAPOREON@"
-EeveeDedicatedEvoListText4:
-	db "▷SUNS: ESPEON@"
-EeveeDedicatedEvoListText5:
-	db "▷MOONS: UMBREON@"
-EeveeDedicatedEvoListText6:
-	db "▷LEAFS: LEAFEON@"
-EeveeDedicatedEvoListText7:
-	db "▷ICES: GLACEON@"
-EeveeDedicatedEvoListText8:
-	db "▷KING's R: SYLVEON@"
-
-ViaTradeText:
-	db "▷ VIA TRADE@"
-
-ArrowLevelText:
-	db "▷ LV @"
-
-ArrowText:
-	db "▷ @"
-
-SaveValueOfwPokedexNum:
-	ld a, [wPokedexNum]
-	ld [wMultipurposeTemporaryStorage], a
-	ret
-
-RestoreValueOfwPokedexNum:
-	ld a, [wMultipurposeTemporaryStorage]
-	ld [wPokedexNum], a
-	ret
-
-IncreaseHLCoordinatesBy2Row:
-	ld a, [wEphemerealTempBuffer2ByteStorage]
-	ld h, a
-	ld a, [wEphemerealTempBuffer2ByteStorage+1]
-	ld l, a
-	ld bc, SCREEN_WIDTH * 2
-	add hl, bc
-	ld a, h
-	ld [wEphemerealTempBuffer2ByteStorage], a
-	ld a, l
-	ld [wEphemerealTempBuffer2ByteStorage+1], a
-	ret
-
-IncreaseHLCoordinatesBy1Row:
-	ld a, [wEphemerealTempBuffer2ByteStorage]
-	ld h, a
-	ld a, [wEphemerealTempBuffer2ByteStorage+1]
-	ld l, a
-	ld bc, SCREEN_WIDTH
-	add hl, bc
-	ld a, h
-	ld [wEphemerealTempBuffer2ByteStorage], a
-	ld a, l
-	ld [wEphemerealTempBuffer2ByteStorage+1], a
-	ret
-
-GetIndentedHLCoordinates:
-	ld a, [wEphemerealTempBuffer2ByteStorage]
-	ld h, a
-	ld a, [wEphemerealTempBuffer2ByteStorage+1]
-	ld l, a
-	ld bc, SCREEN_WIDTH
-	add hl, bc
-	inc hl
-	inc hl
-	ret
-
-PrintColonRightAfterString:
-	ld h, b
-	ld l, c
-	ld de, ColonText
-	jp PlaceString
-
-PrintColonRightAfterNumberAtDEStartingAtHL:
-	ld a, [de]
-	cp 10
-	jr c, .small
-	cp 100
-	jr nz, .medium
-.big
-	inc hl
-.medium
-	inc hl
-.small
-	inc hl
-	inc hl
-	ld de, ColonText
-	jp PlaceString
-
-ColonText:
-	db ":@"
-
-.endOfLoop
-
-	pop bc
-	ld a, b
-	ld [wPokedexNum], a
-
-	pop hl
-	pop de
-	pop bc
-	ret
-
-SetHLToEvosMovesPointer:
-	ld hl, EvosMovesPointerTable
-	ld b, 0
-	ld a, [wPokedexNum]
-	ld [wLoadedMonSpecies], a
-	dec a
-	add a
-	rl b
-	ld c, a
-	add hl, bc
-	ld de, wBuffer
-	ld a, BANK(EvosMovesPointerTable)
-	ld bc, 2
-	call FarCopyData ; wBuffer has the address to evomoves list
-	ld hl, wBuffer
-	ld a, [hli]
-	ld h, [hl]
-	ld l, a ; at this point hl has the address for this pokémon's evomoves list
-	ret
-
-; ----------------------------------------------------------
-
-DrawPokedexBordersForInfoPages:
-	call ClearScreen
-
-	hlcoord 0, 0
-	ld de, 1
-	lb bc, $64, SCREEN_WIDTH
-	call DrawTileLine ; draw top border
-
-	hlcoord 0, 17
-	ld b, $6f
-	call DrawTileLine ; draw bottom border
-
-	hlcoord 0, 1
-	ld de, 20
-	lb bc, $66, $10
-	call DrawTileLine ; draw left border
-
-	hlcoord 19, 1
-	ld b, $67
-	call DrawTileLine ; draw right border
-
-	ld a, $63 ; upper left corner tile
-	ldcoord_a 0, 0
-	ld a, $65 ; upper right corner tile
-	ldcoord_a 19, 0
-	ld a, $6c ; lower left corner tile
-	ldcoord_a 0, 17
-	ld a, $6e ; lower right corner tile
-	ldcoord_a 19, 17
-
-	hlcoord 0, 2
-	ld de, PokedexDataDividerLine
-	jp PlaceString ; draw horizontal divider line
-
-
-;---------------------Work in progress-------------------;
 
 LoadLearnsetTiles:
 	; call DisableSpriteUpdates
@@ -473,16 +16,16 @@ LoadLearnsetTiles:
 	ld [wCurSpecies], a
 	push af
 	call GetMonHeader
-	call DisableLCD
-	ld de, vChars1 tile $57
-	ld a, [wPokedexNum]
-	ld c, a
-	; callfar FarLoadPartyMonSpriteIntoVRAM
-	ld hl, LearnsetMonIconsOAM
-	ld de, wShadowOAM
-	ld bc, 32
-	call CopyData
-	call EnableLCD
+	; call DisableLCD
+	; ; ld de, vChars1 tile $57
+	; ; ld a, [wPokedexNum]
+	; ; ld c, a
+	; ; ; callfar FarLoadPartyMonSpriteIntoVRAM
+	; ; ; ld hl, LearnsetMonIconsOAM
+	; ; ld de, wShadowOAM
+	; ; ld bc, 32
+	; ; call CopyData
+	; call EnableLCD
 	pop af
 	ld [wPokedexNum], a
 	; load menu graphics
@@ -555,7 +98,7 @@ ShowMonLearnsetMenu:
 	jr c, .showMovedex
 	cp 1
 	jr z, .changePage
-	; call EnableSpriteUpdates
+	call EnableSpriteUpdates
 .exitLearnset
 	ret
 .changePage
@@ -590,10 +133,10 @@ ShowMonLearnsetMenu:
 	; ld hl, wMovedexSeen
 	; call IsMoveBitSet
 	; jr z, .notSeen
-	; call EnableSpriteUpdates
+	call EnableSpriteUpdates
 	ld hl, wPokedexDataFlags
 	set 3, [hl]
-	; call ShowMoveDataExternal
+	call ShowMoveDataExternal
 	pop af
 	ld [wPokedexNum], a
 	call LoadLearnsetTiles
@@ -632,7 +175,15 @@ PrepLearnsetList:
 	
 	
 ShowLevelUpLearnset:
-	ld a, PAD_RIGHT | PAD_B | PAD_A
+	ld a, SFX_LEDGE
+	call PlaySound
+	call ClearScreen
+	call LoadLearnsetTiles
+	xor a
+	ld [wListScrollOffset], a
+	ld [wCurrentMenuItem], a
+	
+	ld a, PAD_RIGHT | PAD_LEFT |PAD_B | PAD_A
 	ld [wMenuWatchedKeys], a
 	callfar LoadLevelUpLearnsetIntoWRAM
 	hlcoord 7, 3
@@ -649,11 +200,12 @@ ShowLevelUpLearnset:
 	inc hl
 .notLongName
 	ld de, LevelUpText
+	hlcoord 3, 2
 	call PlaceString
-	ld bc, SCREEN_WIDTH - 1
-	add hl, bc
-	ld de, LearnsetText
-	call PlaceString
+	; ld bc, SCREEN_WIDTH - 1
+	; add hl, bc
+	; ld de, LearnsetText
+	; call PlaceString
 	; ld a, PAL_CERULEAN
 	; ld [wGenericPaletteOverride], a
 	; ld b, SET_PAL_GENERIC
@@ -668,13 +220,11 @@ ShowLevelUpLearnset:
 	push af
 	push de
 	push hl
-;;;; page specific code starts
+	;;;; page specific code starts
 	ld de, LvText
 	push af
 	call PlaceString ; Place "Lv" text
 	pop af
-	inc hl
-	inc hl
 	push hl
 	; get level the move is learned at into e
 	ld hl, wLearnsetList
@@ -685,18 +235,35 @@ ShowLevelUpLearnset:
 	add hl, de
 	ld a, [hl]
 	cp 10
-	pop hl
+	; pop hl
 	jr nc, .twoDigit
+	pop hl
+	inc hl
+	inc hl
 	ld [hl], " "
 	inc hl
 	add NUMBER_CHAR_OFFSET
 	ld [hli], a
 	jr .doneLevel
 .twoDigit
+	ld a, [hl]
+	cp 254
+	pop hl
+	jr nc, .evoText
+	inc hl
+	inc hl
 	ld de, wStringBuffer
 	ld [de], a
 	lb bc, LEADING_ZEROES | 1, 2
 	call PrintNumber ; print level
+	jr .doneLevel
+.evoText
+	ld de, EvoMoveText
+	call PlaceString
+	inc hl
+	inc hl
+	inc hl
+	inc hl
 .doneLevel
 	push hl
 	ld a, [wPokedexNum]
@@ -711,7 +278,7 @@ ShowLevelUpLearnset:
 	inc hl
 ;;;; page specific code ends
 	ld a, [hl]
-    ; ld [wMovedexMoveID], a
+    ld [wMovedexMoveID], a
 	; ld hl, wMovedexSeen
 	; call IsMoveBitSet
 	; ld de, MoveDashedLine
@@ -730,7 +297,7 @@ ShowLevelUpLearnset:
 	pop af
 	ld [wLearnsetIndex], a
 	dec d
-	jr nz, .printMoveEntryLoop
+	jp nz, .printMoveEntryLoop
 	ld a, 01
 	ldh [hAutoBGTransferEnabled], a
 	call GBPalNormal
@@ -772,7 +339,7 @@ ShowLevelUpLearnset:
 	inc [hl]
 	ld a, 1
 	and a
-	ret
+	call ShowTMLearnset
 .checkIfLeftPressed
 	bit B_PAD_LEFT, a
 	jr z, .buttonAPressed
@@ -781,7 +348,7 @@ ShowLevelUpLearnset:
 	dec [hl]
 	ld a, 1
 	and a
-	ret
+	call ShowEvolutions
 .buttonAPressed
 	xor a
 	scf
@@ -794,14 +361,17 @@ ShowLevelUpLearnset:
 LvText:
 	db "Lv@"
 
-LevelUpText:
-	db "LevelUp@"
+EvoMoveText: 
+	db "EVO @"
 
-LearnsetText:
-	db "Learnset@"
+LevelUpText:
+	db "LevelUp Learnset@"
+
+; LearnsetText:
+; 	db "Learnset@"
 
 TMPlusHMText:
-	db "TM HM@"
+	db "TM HM Learnset@"
 
 TMLearnsetListPrint:
 	push hl
@@ -816,8 +386,17 @@ TMLearnsetListPrint:
 	pop hl
 	lb bc, LEADING_ZEROES | 1, 3
 	jp PrintNumber ; print level
+	ret
 
 ShowTMLearnset:
+	ld a, SFX_LEDGE
+	call PlaySound
+	call ClearScreen
+	call LoadLearnsetTiles
+	xor a
+	ld [wListScrollOffset], a
+	ld [wCurrentMenuItem], a
+	
 	ld a, PAD_LEFT | PAD_RIGHT | PAD_B | PAD_A
 	ld [wMenuWatchedKeys], a
 	hlcoord 7, 3
@@ -834,11 +413,12 @@ ShowTMLearnset:
 	inc hl
 .notLongName
 	ld de, TMPlusHMText
+	hlcoord 3, 2
 	call PlaceString
-	ld bc, SCREEN_WIDTH - 1
-	add hl, bc
-	ld de, LearnsetText
-	call PlaceString
+	; ld bc, SCREEN_WIDTH - 1
+	; add hl, bc
+	; ld de, LearnsetText
+	; call PlaceString
 	; ld a, PAL_CINNABAR
 	; ld [wGenericPaletteOverride], a
 	; ld b, SET_PAL_GENERIC
@@ -907,9 +487,9 @@ ShowTMLearnset:
 	call GBPalNormal
 	call HandleMenuInput
 	bit B_PAD_B, a
-	jp nz, CheckPageLeftRight.buttonBPressed
+	jp nz, .buttonBPressed
 	bit B_PAD_A, a 
-	jp nz, CheckPageLeftRight.buttonAPressed
+	jp nz, .buttonAPressed
 .checkIfUpPressed
 	bit B_PAD_UP, a
 	jr z, .checkIfDownPressed
@@ -922,7 +502,7 @@ ShowTMLearnset:
 	jp .loop
 .checkIfDownPressed
 	bit B_PAD_DOWN, a
-	jr z, CheckPageLeftRight
+	jr z, .checkIfRightPressed
 .downPressed ; scroll down one row
 	ld a, [wDexLearnsetListCount]
 	cp 7
@@ -939,27 +519,32 @@ ShowTMLearnset:
 	hlcoord 6, 6
 	ld de, NoneText
 	call PlaceString
-	ld hl, wMenuWatchedKeys
-	res B_PAD_A, [hl]
-	jp ShowEvolutions.waitForButtonPress
+	call JoypadLowSensitivity
+	ld a, [wMenuWatchedKeys]
+	ld c, a
+	ldh a, [hJoy5]
+	and c
+	jr z, .noTMLearnset
 
-CheckPageLeftRight:
 .checkIfRightPressed
 	bit B_PAD_RIGHT, a
 	jr z, .checkIfLeftPressed
 .rightPressed 
 	ld hl, wLearnsetPage
 	inc [hl]
-	jr .changedPage
+	ld a, 1
+	and a
+	call ShowEvolutions
+	ret
 .checkIfLeftPressed
 	bit B_PAD_LEFT, a
 	jr z, .buttonAPressed
 .leftPressed
 	ld hl, wLearnsetPage
 	dec [hl]
-.changedPage
 	ld a, 1
 	and a
+	call ShowLevelUpLearnset
 	ret
 .buttonAPressed
 	xor a
@@ -971,7 +556,7 @@ CheckPageLeftRight:
 	ret
 
 WaysToText:
-	db "Ways to@"
+	db "Evolution Data@"
 
 EvolveText:
 	db "Evolve@"
@@ -996,7 +581,15 @@ IntoLearnsetText:
 
 
 ShowEvolutions:
-	ld a, PAD_LEFT | PAD_B
+	ld a, SFX_LEDGE
+	call PlaySound
+	call ClearScreen
+	call LoadLearnsetTiles
+	xor a
+	ld [wListScrollOffset], a
+	ld [wCurrentMenuItem], a
+
+	ld a, PAD_RIGHT |PAD_LEFT | PAD_A | PAD_B
 	ld [wMenuWatchedKeys], a
 	hlcoord 7, 3
 	call DrawNonCurrentLearnsetTab
@@ -1012,9 +605,9 @@ ShowEvolutions:
 	inc hl
 .notLongName
 	ld de, WaysToText
+	hlcoord 3, 2
 	call PlaceString
-	hlcoord 13, 2
-	call .printEvolveText
+	; call .printEvolveText
 	; ld a, PAL_LAVENDER
 	; ld [wGenericPaletteOverride], a
 	; ld b, SET_PAL_GENERIC
@@ -1133,8 +726,35 @@ ShowEvolutions:
 	and c
 	jr z, .waitForButtonPress
 	bit B_PAD_B, a
-	jp nz, CheckPageLeftRight.buttonBPressed
-	jp CheckPageLeftRight
+	jp nz, .buttonBPressed
+	bit B_PAD_A, a 
+	jp nz, .buttonAPressed
+.checkIfLeftPressed
+	bit B_PAD_LEFT, a
+	jr z, .checkIfRightPressed
+.leftPressed
+	ld hl, wLearnsetPage
+	dec [hl]
+	ld a, 1
+	and a
+	call ShowTMLearnset
+.checkIfRightPressed
+	bit B_PAD_RIGHT, a
+	jr z, .buttonAPressed
+.rightPressed 
+	ld hl, wLearnsetPage
+	inc [hl]
+	ld a, 1
+	and a
+	call ShowLevelUpLearnset
+.buttonAPressed
+	xor a
+	scf
+	ret
+.buttonBPressed
+	xor a
+	and a
+	ret
 .doesNotEvolve
 	hlcoord 1, 6
 	ld de, DoesNotText
@@ -1256,4 +876,3 @@ ConvertTMItemIDToMove:
 ; 	ld a, c
 ; 	and a ; has pokemon learnset been unlocked?
 ; 	ret
-
