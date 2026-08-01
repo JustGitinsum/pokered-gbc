@@ -82,6 +82,8 @@ SECTION "NPC Sprites 3", ROMX
 
 BulbasaurSprite::        INCBIN "gfx/sprites/bulbasaur.2bpp"
 OfficerJennySprite::     INCBIN "gfx/sprites/officer_jenny.2bpp"
+JessieSprite::           INCBIN "gfx/sprites/jessie.2bpp"
+JamesSprite::            INCBIN "gfx/sprites/james.2bpp"
 ArticunoSprite::         INCBIN "gfx/sprites/mons/articuno.2bpp"
 ChanseySprite::          INCBIN "gfx/sprites/mons/chansey.2bpp"
 ClefairySprite::         INCBIN "gfx/sprites/mons/clefairy.2bpp"

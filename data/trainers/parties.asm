@@ -543,7 +543,7 @@ GiovanniData:
 
 RocketData:
 ; Mt. Moon B2F
-	db 13, RATTATA, ZUBAT, 0
+	db 13, RATTATA, ZUBAT, 0 ;;;Unused Replaced by Jessie and James
 	db 11, SANDSHREW, RATTATA, ZUBAT, 0
 	db 12, ZUBAT, EKANS, 0
 	db 16, RATICATE, 0
@@ -603,6 +603,8 @@ RocketData:
 ; Silph Co. 11F
 	db 25, RATTATA, RATTATA, ZUBAT, RATTATA, EKANS, 0
 	db 32, CUBONE, DROWZEE, MAROWAK, 0
+; Jessie & James
+	db 14, EKANS, KOFFING, MEOWTH, 0 ; Mt. Moon B2F
 
 CooltrainerMData:
 ; Viridian Gym

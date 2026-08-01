@@ -1,3 +1,29 @@
+_MtMoonJessieJamesText1::
+	text "Prepare for "
+	line "Trouble!@"
+	text_end
+
+_MtMoonJessieJamesText2::
+	text "Make it double!"
+	
+	para "That fossil is"
+	line "TEAM ROCKET's!"
+
+	para "Surrender now, or "
+	line "prepare to fight!"
+	done
+
+_MtMoonJessieJamesText3::
+	text "A"
+	line "brat beat us?"
+	prompt
+
+_MtMoonJessieJamesText4::
+	text "TEAM ROCKET, blast"
+	line "off at the speed"
+	cont "of light!@"
+	text_end
+
 _MtMoonB2FDomeFossilYouWantText::
 	text "You want the"
 	line "DOME FOSSIL?"

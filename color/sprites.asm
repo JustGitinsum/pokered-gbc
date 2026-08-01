@@ -585,6 +585,11 @@ SpritePaletteAssignments: ; Characters on the overworld
 	; 0x-4: SPRITE_OFFICER_JENNY
 	db SPR_PAL_BLUE
 
+	; SPRITE_JESSIE
+	db SPR_PAL_ORANGE
+	; SPRITE_JAMES
+	db SPR_PAL_PURPLE
+
 	; SPRITE_ARTICUNO
 	db SPR_PAL_BLUE
 	; SPRITE_CHANSEY

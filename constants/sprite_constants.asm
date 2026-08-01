@@ -64,6 +64,8 @@
 	const SPRITE_SEEL                    ; $3c
 	const SPRITE_BULBASAUR               ; $-3
 	const SPRITE_OFFICER_JENNY           ; $-4
+	const SPRITE_JESSIE
+	const SPRITE_JAMES
 	const SPRITE_ARTICUNO				 ; $3d
 	const SPRITE_CHANSEY				 ; $3e
 	const SPRITE_CLEFAIRY				 ; $3f

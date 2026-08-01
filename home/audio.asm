@@ -135,7 +135,11 @@ PlayMusic::
 	ld [wAudioROMBank], a
 	ld [wAudioSavedROMBank], a
 	ld a, b
+	jr PlaySound
 
+StopAllMusic::
+	ld a, SFX_STOP_ALL_MUSIC
+	ld [wNewSoundID], a
 ; plays music specified by a. If value is $ff, music is stopped
 PlaySound::
 	push hl

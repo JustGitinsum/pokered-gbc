@@ -69,6 +69,8 @@ SpriteSheetPointerTable:
 	overworld_sprite SeelSprite, 12             ; SPRITE_SEEL
 	overworld_sprite BulbasaurSprite, 12        ; SPRITE_BULBASAUR
 	overworld_sprite OfficerJennySprite, 12     ; SPRITE_OFFICER_JENNY
+	overworld_sprite JessieSprite, 12           ; SPRITE_JESSIE
+	overworld_sprite JamesSprite, 12            ; SPRITE_JAMES
 	overworld_sprite ArticunoSprite, 12         ; SPRITE_ARTICUNO
 	overworld_sprite ChanseySprite, 12          ; SPRITE_CHANSEY
 	overworld_sprite ClefairySprite, 12         ; SPRITE_CLEFAIRY

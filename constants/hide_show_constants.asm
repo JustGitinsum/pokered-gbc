@@ -121,6 +121,8 @@ DEF SHOW EQU $15
 	const HS_ONIX                          ; 6F
 	const HS_MT_MOON_B2F_FOSSIL_1          ; 6D
 	const HS_MT_MOON_B2F_FOSSIL_2          ; 6E
+	const HS_MT_MOON_B2F_JESSIE            ; 6D
+	const HS_MT_MOON_B2F_JAMES             ; 6E
 	const HS_MT_MOON_B2F_ITEM_1            ; 6F X
 	const HS_MT_MOON_B2F_ITEM_2            ; 70 X
 	const HS_CERULEAN_BULBASAUR            ; added

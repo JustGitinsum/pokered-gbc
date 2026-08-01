@@ -196,6 +196,7 @@ LoreleiPic::       INCBIN "gfx/gstrainers/lorelei.pic"
 ChannelerPic::     INCBIN "gfx/gstrainers/channeler.pic"
 AgathaPic::        INCBIN "gfx/gstrainers/agatha.pic"
 LancePic::         INCBIN "gfx/gstrainers/lance.pic"
+JessieJamesPic::   INCBIN "gfx/gstrainers/jessiejames.pic"
 ENDC
 
 IF !GEN_2_GRAPHICS
@@ -245,6 +246,7 @@ LoreleiPic::       INCBIN "gfx/trainers/lorelei.pic"
 ChannelerPic::     INCBIN "gfx/trainers/channeler.pic"
 AgathaPic::        INCBIN "gfx/trainers/agatha.pic"
 LancePic::         INCBIN "gfx/trainers/lance.pic"
+JessieJamesPic::   INCBIN "gfx/trainers/jessiejames.pic"
 ENDC
 
 
