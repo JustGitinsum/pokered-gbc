@@ -59,5 +59,12 @@ HiddenItemCoords:
 	hidden_item VERMILION_CITY,                14,  11
 	hidden_item CERULEAN_CITY,                 15,   8
 	hidden_item ROUTE_4,                       40,   3
+	hidden_item DIGLETTS_CAVE,                 27,  22
+	hidden_item DIGLETTS_CAVE,                  5,  21
+	hidden_item DIGLETTS_CAVE,                 12,  15
+	hidden_item DIGLETTS_CAVE,                 17,   8
+	hidden_item DIGLETTS_CAVE,                  4,  11
+	hidden_item DIGLETTS_CAVE,                 18,  31
+	
 	assert_max_table_length MAX_HIDDEN_ITEMS
 	db -1 ; end

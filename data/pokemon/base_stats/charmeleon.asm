@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw CharmeleonPicFront, CharmeleonPicBack
 
-	db SCRATCH, GROWL, EMBER, NO_MOVE ; level 1 learnset
+	db SCRATCH, GROWL, NO_MOVE, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_SLOW ; growth rate
 
 	; tm/hm learnset

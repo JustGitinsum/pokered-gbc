@@ -28,6 +28,7 @@ _BicycleDescription::
 	next "for fast movement."
 	done
 
+_LinkStoneDescription::
 _MoonStoneDescription::
 _FireStoneDescription::
 _ThunderStoneDescription::
@@ -35,11 +36,6 @@ _WaterStoneDescription::
 _LeafStoneDescription::
 	text "Evolves certain"
 	next "kinds of #MON."
-	done
-
-_AntidoteDescription::
-	text "Cures poisoned"
-	next "#MON."
 	done
 
 _BurnHealDescription::

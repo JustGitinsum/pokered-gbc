@@ -35,7 +35,7 @@ ItemDescriptionPointers:
 	text_end
 	text_far _MoonStoneDescription
 	text_end
-	text_far _AntidoteDescription
+	text_far _LinkStoneDescription
 	text_end
 	text_far _BurnHealDescription
 	text_end

@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw BellsproutPicFront, BellsproutPicBack
 
-	db VINE_WHIP, GROWTH, ACID, NO_MOVE ; level 1 learnset
+	db POUND, GROWTH, NO_MOVE, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_SLOW ; growth rate
 
 	; tm/hm learnset

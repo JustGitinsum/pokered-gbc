@@ -10,11 +10,11 @@ ItemNames::
 	li "SAFARI BALL"
 	li "POKéDEX"
 	li "MOON STONE"
-	li "ANTIDOTE"
-	li "BURN HEAL"
-	li "ICE HEAL"
-	li "AWAKENING"
-	li "PARLYZ HEAL"
+	li "LINK CABLE" ;ANTIDOTE
+	li "DAWN STONE" ;BURN HEAL
+	li "DUSK STONE" ;ICE HEAL
+	li "METAL COAT" ;AWAKENING
+	li "RAZOR FANG" ;PARLYZ HEAL
 	li "FULL RESTORE"
 	li "MAX POTION"
 	li "HYPER POTION"
@@ -54,10 +54,10 @@ ItemNames::
 	li "FULL HEAL"
 	li "REVIVE"
 	li "MAX REVIVE"
-	li "GUARD SPEC."
+	li "JAW FOSSIL" ; was GUARD SPEC.
 	li "SUPER REPEL"
 	li "MAX REPEL"
-	li "DIRE HIT"
+	li "SAIL FOSSIL" ; DIRE HIT
 	li "COIN"
 	li "FRESH WATER"
 	li "SODA POP"

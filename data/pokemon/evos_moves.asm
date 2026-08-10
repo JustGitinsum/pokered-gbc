@@ -484,7 +484,6 @@ ArcanineEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 8, BITE
 	db 12, POUNCE
 	db 20, AGILITY
 	db 24, FIRE_FANG
@@ -598,7 +597,6 @@ BlastoiseEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db  6, WATER_GUN
 	db  9, WITHDRAW
 	db 12, BITE
 	db 16, RAPID_SPIN
@@ -720,11 +718,9 @@ SlowpokeEvosMoves:
 KadabraEvosMoves:
 ; Evolutions
 	db EVOLVE_TRADE, 1, ALAKAZAM
-	db EVOLVE_LEVEL, 33, ALAKAZAM
+	db EVOLVE_ITEM, LINK_STONE, 1, ALAKAZAM
 	db 0
 ; Learnset
-	db 6, CONFUSION
-	db 9, DISABLE
 	db 14, ANCIENTPOWER
 	db 20, REFLECT
 	db 25, RECOVER
@@ -737,7 +733,7 @@ KadabraEvosMoves:
 GravelerEvosMoves:
 ; Evolutions
 	db EVOLVE_TRADE, 1, GOLEM
-	db EVOLVE_LEVEL, 33, GOLEM
+	db EVOLVE_ITEM, LINK_STONE, 1, GOLEM
 	db 0
 ; Learnset ;From BD/SP
 	db 1, DEFENSE_CURL
@@ -767,7 +763,7 @@ ChanseyEvosMoves:
 MachokeEvosMoves:
 ; Evolutions
 	db EVOLVE_TRADE, 1, MACHAMP
-	db EVOLVE_LEVEL, 33, MACHAMP
+	db EVOLVE_ITEM, LINK_STONE, 1, MACHAMP
 	db 0
 ; Learnset ;From ZA
 ;;;	db 16, BULLET_PUNCH
@@ -820,7 +816,6 @@ ArbokEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset from gen9
-	db 4, POISON_FANG
 	db 9, BITE
 	db 12, GLARE
 	db 17, SCREECH
@@ -1719,7 +1714,7 @@ DewgongEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 30, GROWL
+	db 30, HEADBUTT
 	db 35, AURORA_BEAM
 	db 44, REST
 	db 50, BODY_SLAM
@@ -1925,7 +1920,8 @@ CloysterEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 50, SPIKE_CANNON
+	db 5, RAZOR_SHELL
+	db EVOLUTION_MOVE, SPIKE_CANNON
 	db 0
 
 MissingNo8CEvosMoves:
@@ -1950,7 +1946,6 @@ ClefableEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset ZA
-	db 5, DEFENSE_CURL
 	db 8, DOUBLESLAP
 	db 13, SING
 	db 16, DRAIN_KISS
@@ -2016,6 +2011,7 @@ MissingNo92EvosMoves:
 HaunterEvosMoves:
 ; Evolutions
 	db EVOLVE_TRADE, 1, GENGAR
+	db EVOLVE_ITEM, LINK_STONE, 1, GENGAR
 	db 0
 ; Learnset
 	db 7, HYPNOSIS
@@ -2031,6 +2027,7 @@ AbraEvosMoves:
 	db EVOLVE_LEVEL, 16, KADABRA
 	db 0
 ; Learnset
+	db 2, DISABLE
 	db 6, CONFUSION
 	db 0
 
@@ -2038,7 +2035,7 @@ AlakazamEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 16, PSYBEAM
+	db 16, ANCIENTPOWER
 	db 20, REFLECT
 	db 25, RECOVER
 	db 31, TRI_ATTACK
@@ -2308,8 +2305,13 @@ AerodactylEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
+	db 9, BITE
+	db 16, AGILITY
+	db 20, ANCIENTPOWER
+	db 24, WING_ATTACK
+	db 29, DRAGONBREATH
 	db 33, SUPERSONIC
-	db 38, BITE
+	db 38, CRUNCH
 	db 45, BODY_SLAM
 	db 54, HYPER_BEAM
 	db 0
@@ -2493,6 +2495,7 @@ BellsproutEvosMoves:
 	db EVOLVE_LEVEL, 21, WEEPINBELL
 	db 0
 ; Learnset
+	db 7, ACID
 	db 10, VINE_WHIP
 	db 13, SLEEP_POWDER
 	db 15, POISONPOWDER

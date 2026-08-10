@@ -200,7 +200,7 @@ ShowLevelUpLearnset:
 	inc hl
 .notLongName
 	ld de, LevelUpText
-	hlcoord 3, 2
+	hlcoord 2, 2
 	call PlaceString
 	; ld bc, SCREEN_WIDTH - 1
 	; add hl, bc

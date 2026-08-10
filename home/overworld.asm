@@ -311,14 +311,15 @@ OverworldLoopLessDelay::
 	call LoadWalkingPlayerSpriteGraphics
 	jr .normalPlayerSpriteAdvancement
 .checkIfWalking
-	ld a, [wWalkBikeSurfState]
-	and a ; WALKING?
-	jr nz, .speedUp ; if not walking, no need to update sprites
-	ld hl, wMovementFlags
-	bit BIT_RUNNING, [hl]
-	jr nz, .speedUp ; if already running, no need to update sprites
-	set BIT_RUNNING, [hl]
-	call LoadRunningPlayerSpriteGraphics
+	;;;;;;;;Removes until i can figure out how to make wild encounters not diabled while running
+	; ld a, [wWalkBikeSurfState]
+	; and a ; WALKING?
+	; jr nz, .speedUp ; if not walking, no need to update sprites
+	; ld hl, wMovementFlags
+	; bit BIT_RUNNING, [hl]
+	; jr nz, .speedUp ; if already running, no need to update sprites
+	; set BIT_RUNNING, [hl]
+	; call LoadRunningPlayerSpriteGraphics
 .speedUp
     call DoBikeSpeedup
 .normalPlayerSpriteAdvancement
@@ -2014,17 +2015,18 @@ LoadWalkingPlayerSpriteGraphics::
 .AreGuy1
 	jr LoadPlayerSpriteGraphicsCommon
 
-LoadRunningPlayerSpriteGraphics:: ; marcelnote - running sprites
-	ld b, BANK(RedRunSprite)
-	ld de, RedRunSprite
-	ld hl, vNPCSprites
-	ld a, [wPlayerGender]
-	and a
-	jr z, .gotSprite
-	ld b, BANK(GreenRunSprite)
-	ld de, GreenRunSprite
-.gotSprite
-	jr LoadPlayerSpriteGraphicsCommon
+;;;;;;;;Removes until i can figure out how to make wild encounters not diabled while running
+; LoadRunningPlayerSpriteGraphics:: ; marcelnote - running sprites
+; 	ld b, BANK(RedRunSprite)
+; 	ld de, RedRunSprite
+; 	ld hl, vNPCSprites
+; 	ld a, [wPlayerGender]
+; 	and a
+; 	jr z, .gotSprite
+; 	ld b, BANK(GreenRunSprite)
+; 	ld de, GreenRunSprite
+; .gotSprite
+; 	jr LoadPlayerSpriteGraphicsCommon
 
 LoadSurfingPlayerSpriteGraphics::
 	ld a, [wSurfingPokemonID]

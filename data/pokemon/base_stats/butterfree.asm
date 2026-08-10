@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw ButterfreePicFront, ButterfreePicBack
 
-	db TACKLE, ELECTROWEB, STRING_SHOT, GUST ; level 1 learnset
+	db TACKLE, STRING_SHOT, POUNCE, ELECTROWEB ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset

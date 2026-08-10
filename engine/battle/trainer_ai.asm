@@ -332,9 +332,15 @@ BlackbeltAI:
 	jp AIUseXAttack
 
 GiovanniAI:
-	cp 25 percent + 1
+	cp 50 percent + 1
 	ret nc
-	jp AIUseGuardSpec
+	ld a, 5
+	call AICheckIfHPBelowFraction
+	ret nc
+	jp AIUseHyperPotion
+	; cp 25 percent + 1
+	; ret nc
+	; jp AIUseGuardSpec
 
 CooltrainerMAI:
 	cp 25 percent + 1
@@ -642,19 +648,19 @@ AIUseXAccuracy: ; unreferenced
 	ld a, X_ACCURACY
 	jp AIPrintItemUse
 
-AIUseGuardSpec:
-	call AIPlayRestoringSFX
-	ld hl, wEnemyBattleStatus2
-	set PROTECTED_BY_MIST, [hl]
-	ld a, GUARD_SPEC
-	jp AIPrintItemUse
+; AIUseGuardSpec:
+; 	call AIPlayRestoringSFX
+; 	ld hl, wEnemyBattleStatus2
+; 	set PROTECTED_BY_MIST, [hl]
+; 	ld a, GUARD_SPEC
+; 	jp AIPrintItemUse
 
-AIUseDireHit: ; unreferenced
-	call AIPlayRestoringSFX
-	ld hl, wEnemyBattleStatus2
-	set GETTING_PUMPED, [hl]
-	ld a, DIRE_HIT
-	jp AIPrintItemUse
+; AIUseDireHit: ; unreferenced
+; 	call AIPlayRestoringSFX
+; 	ld hl, wEnemyBattleStatus2
+; 	set GETTING_PUMPED, [hl]
+; 	ld a, DIRE_HIT
+; 	jp AIPrintItemUse
 
 AICheckIfHPBelowFraction:
 ; return carry if enemy trainer's current HP is below 1 / a of the maximum

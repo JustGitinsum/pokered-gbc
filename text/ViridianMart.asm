@@ -22,7 +22,7 @@ _ViridianMartClerkParcelQuestText::
 
 _ViridianMartYoungsterText::
 	text "This shop sells"
-	line "many ANTIDOTEs."
+	line "many FULL HEALs."
 	done
 
 _ViridianMartCooltrainerMText::

@@ -125,7 +125,7 @@ _CeladonCityDeptStoreSignText::
 	cont "DEPT. STORE!"
 	done
 
-_CeladonCityTrainerTips2Text::
+_CeladonCityTrainerTips2Text:: ;; I should change this
 	text "TRAINER TIPS"
 
 	para "GUARD SPEC."

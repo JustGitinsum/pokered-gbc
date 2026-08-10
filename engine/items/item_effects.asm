@@ -27,7 +27,7 @@ ItemUsePtrTable:
 	dw ItemUseBall       ; SAFARI_BALL
 	dw ItemUsePokedex    ; POKEDEX
 	dw ItemUseEvoStone   ; MOON_STONE
-	dw ItemUseMedicine   ; ANTIDOTE
+	dw ItemUseEvoStone   ; LINK_STONE was ItemUseMedicine   ; ANTIDOTE
 	dw ItemUseMedicine   ; BURN_HEAL
 	dw ItemUseMedicine   ; ICE_HEAL
 	dw ItemUseMedicine   ; AWAKENING
@@ -71,10 +71,10 @@ ItemUsePtrTable:
 	dw ItemUseMedicine   ; FULL_HEAL
 	dw ItemUseMedicine   ; REVIVE
 	dw ItemUseMedicine   ; MAX_REVIVE
-	dw ItemUseGuardSpec  ; GUARD_SPEC
+	dw UnusableItem      ; JAW_FOSSIL (GUARD_SPEC - ItemUseGuardSpec)
 	dw ItemUseSuperRepel ; SUPER_REPEL
 	dw ItemUseMaxRepel   ; MAX_REPEL
-	dw ItemUseDireHit    ; DIRE_HIT
+	dw UnusableItem      ; SAIL_FOSSIL (DIRE_HIT - ItemUseDireHit)
 	dw UnusableItem      ; COIN
 	dw ItemUseMedicine   ; FRESH_WATER
 	dw ItemUseMedicine   ; SODA_POP
@@ -898,21 +898,21 @@ ItemUseMedicine:
 	ld bc, wPartyMon1Status - wPartyMon1
 	add hl, bc ; hl now points to status
 	ld a, [wCurItem]
-	lb bc, ANTIDOTE_MSG, 1 << PSN
-	cp ANTIDOTE
-	jr z, .checkMonStatus
-	lb bc, BURN_HEAL_MSG, 1 << BRN
-	cp BURN_HEAL
-	jr z, .checkMonStatus
-	lb bc, ICE_HEAL_MSG, 1 << FRZ
-	cp ICE_HEAL
-	jr z, .checkMonStatus
-	lb bc, AWAKENING_MSG, SLP_MASK
-	cp AWAKENING
-	jr z, .checkMonStatus
-	lb bc, PARALYZ_HEAL_MSG, 1 << PAR
-	cp PARLYZ_HEAL
-	jr z, .checkMonStatus
+	; lb bc, ANTIDOTE_MSG, 1 << PSN
+	; cp ANTIDOTE
+	; jr z, .checkMonStatus
+	; lb bc, BURN_HEAL_MSG, 1 << BRN
+	; cp BURN_HEAL
+	; jr z, .checkMonStatus
+	; lb bc, ICE_HEAL_MSG, 1 << FRZ
+	; cp ICE_HEAL
+	; jr z, .checkMonStatus
+	; lb bc, AWAKENING_MSG, SLP_MASK
+	; cp AWAKENING
+	; jr z, .checkMonStatus
+	; lb bc, PARALYZ_HEAL_MSG, 1 << PAR
+	; cp PARLYZ_HEAL
+	; jr z, .checkMonStatus
 	lb bc, FULL_HEAL_MSG, $ff ; Full Heal
 .checkMonStatus
 	ld a, [hl] ; pokemon's status
@@ -1646,13 +1646,13 @@ ItemUsePokeDoll:
 	ld [wEscapedFromBattle], a
 	jp PrintItemUseTextAndRemoveItem
 
-ItemUseGuardSpec:
-	ld a, [wIsInBattle]
-	and a
-	jp z, ItemUseNotTime
-	ld hl, wPlayerBattleStatus2
-	set PROTECTED_BY_MIST, [hl] ; Mist bit
-	jp PrintItemUseTextAndRemoveItem
+; ItemUseGuardSpec:
+; 	ld a, [wIsInBattle]
+; 	and a
+; 	jp z, ItemUseNotTime
+; 	ld hl, wPlayerBattleStatus2
+; 	set PROTECTED_BY_MIST, [hl] ; Mist bit
+; 	jp PrintItemUseTextAndRemoveItem
 
 ItemUseSuperRepel:
 	ld b, 200
@@ -1662,13 +1662,13 @@ ItemUseMaxRepel:
 	ld b, 250
 	jp ItemUseRepelCommon
 
-ItemUseDireHit:
-	ld a, [wIsInBattle]
-	and a
-	jp z, ItemUseNotTime
-	ld hl, wPlayerBattleStatus2
-	set GETTING_PUMPED, [hl] ; Focus Energy bit
-	jp PrintItemUseTextAndRemoveItem
+; ItemUseDireHit:
+; 	ld a, [wIsInBattle]
+; 	and a
+; 	jp z, ItemUseNotTime
+; 	ld hl, wPlayerBattleStatus2
+; 	set GETTING_PUMPED, [hl] ; Focus Energy bit
+; 	jp PrintItemUseTextAndRemoveItem
 
 ItemUseXStat:
 	ld a, [wIsInBattle]

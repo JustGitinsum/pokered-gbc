@@ -79,7 +79,7 @@ VictoryRoad2F_TextPointers:
 	dw_const PickUpItemText,                TEXT_VICTORYROAD2F_TM_DRAGON_PULSE
 	dw_const PickUpItemText,                TEXT_VICTORYROAD2F_FULL_HEAL
 	dw_const PickUpItemText,                TEXT_VICTORYROAD2F_TM_CLOSE_COMBAT
-	dw_const PickUpItemText,                TEXT_VICTORYROAD2F_GUARD_SPEC
+	dw_const PickUpItemText,                TEXT_VICTORYROAD2F_MAX_ELIXER
 	dw_const BoulderText,                   TEXT_VICTORYROAD2F_BOULDER1
 	dw_const BoulderText,                   TEXT_VICTORYROAD2F_BOULDER2
 	dw_const BoulderText,                   TEXT_VICTORYROAD2F_BOULDER3

@@ -22,7 +22,7 @@ CeladonMart2FCurrentFloorSignText:
 	text_end
 
 CeladonMart2FClerk1Text:
-	script_mart GREAT_BALL, SUPER_POTION, REVIVE, SUPER_REPEL, ANTIDOTE, BURN_HEAL, ICE_HEAL, AWAKENING, PARLYZ_HEAL
+	script_mart POKE_DOLL, GREAT_BALL, SUPER_POTION, HYPER_POTION, FULL_HEAL, REVIVE, SUPER_REPEL
 
 CeladonMart2FClerk2Text:
 	text_asm

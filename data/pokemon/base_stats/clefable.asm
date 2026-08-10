@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw ClefablePicFront, ClefablePicBack
 
-	db SING, DOUBLESLAP, MINIMIZE, METRONOME ; level 1 learnset
+	db POUND, DEFENSE_CURL, METRONOME, NO_MOVE ; level 1 learnset
 	db GROWTH_FAST ; growth rate
 
 	; tm/hm learnset

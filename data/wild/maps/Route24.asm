@@ -8,7 +8,7 @@ Route24WildMons:
 	db 15, WIGGLYTUFF
 	db 15, BELLSPROUT
 	db 16, PIDGEY
-	db 20, ABRA
+	db 15, ABRA
 	db 17, WIGGLYTUFF
 	end_grass_wildmons
 

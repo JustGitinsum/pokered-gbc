@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw CloysterPicFront, CloysterPicBack
 
-	db WITHDRAW, SUPERSONIC, RAZOR_SHELL, AURORA_BEAM ; level 1 learnset
+	db WITHDRAW, SUPERSONIC, AURORA_BEAM, NO_MOVE ; level 1 learnset
 	db GROWTH_SLOW ; growth rate
 
 	; tm/hm learnset

@@ -1,11 +1,11 @@
 ; items which bring up the party menu when used
 UsableItems_PartyMenu:
 	db MOON_STONE
-	db ANTIDOTE
-	db BURN_HEAL
-	db ICE_HEAL
-	db AWAKENING
-	db PARLYZ_HEAL
+	db LINK_STONE ;Was ANTIDOTE
+	db DAWN_STONE ;Was BURN_HEAL
+	db DUSK_STONE ;Was ICE_HEAL
+	db METAL_COAT ;Was AWAKENING
+	db RAZOR_FANG ;Was PARLYZ_HEAL
 	db FULL_RESTORE
 	db MAX_POTION
 	db HYPER_POTION

@@ -669,7 +669,7 @@ _ViridianBlackboardPoisonText::
 	para "Poison lingers"
 	line "after battles."
 
-	para "Use an ANTIDOTE"
+	para "Use a FULL HEAL"
 	line "to cure poison!"
 	prompt
 
@@ -681,7 +681,7 @@ _ViridianBlackboardPrlzText::
 	para "Paralysis remains"
 	line "after battles."
 
-	para "Use PARLYZ HEAL"
+	para "Use FULL HEAL"
 	line "for treatment!"
 	prompt
 
@@ -694,7 +694,7 @@ _ViridianBlackboardBurnText::
 	para "Burns remain"
 	line "after battles."
 
-	para "Use BURN HEAL to"
+	para "Use FULL HEAL to"
 	line "cure a burn!"
 	prompt
 
@@ -707,7 +707,7 @@ _ViridianBlackboardFrozenText::
 	line "even after the"
 	cont "battle ends."
 
-	para "Use ICE HEAL to"
+	para "Use FULL HEAL to"
 	line "thaw out #MON!"
 	prompt
 

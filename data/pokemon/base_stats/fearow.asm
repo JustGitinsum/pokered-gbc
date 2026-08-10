@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw FearowPicFront, FearowPicBack
 
-	db PECK, GROWL, LEER, NO_MOVE ; level 1 learnset
+	db PECK, GROWL, NO_MOVE, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset

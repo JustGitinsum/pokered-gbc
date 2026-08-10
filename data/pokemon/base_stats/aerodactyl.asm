@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw AerodactylPicFront, AerodactylPicBack
 
-	db WING_ATTACK, AGILITY, BITE, DRAGONBREATH ; level 1 learnset
+	db SCRATCH, GROWL, NO_MOVE, NO_MOVE ; level 1 learnset
 	db GROWTH_SLOW ; growth rate
 
 	; tm/hm learnset

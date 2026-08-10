@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw CubonePicFront, CubonePicBack
 
-	db TACKLE, GROWL, TAIL_WHIP, LEER ; level 1 learnset
+	db TACKLE, GROWL, NO_MOVE, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset

@@ -82,7 +82,7 @@ _ViridianForestTrainerTips1Text::
 
 _ViridianForestUseAntidoteSignText::
 	text "For poison, use"
-	line "ANTIDOTE! Get it"
+	line "FULL HEAL! Get it"
 	cont "at #MON MARTs!"
 	done
 
