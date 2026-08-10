@@ -84,6 +84,7 @@ HiddenObjectMaps:
 	db VERMILION_CITY
 	db CERULEAN_CITY
 	db ROUTE_4
+	db CERULEAN_BADGE_HOUSE
 	db DIGLETTS_CAVE
 	db -1 ; end
 
@@ -174,6 +175,7 @@ HiddenObjectPointers:
 	dw VermilionCityHiddenObjects
 	dw CeruleanCityHiddenObjects
 	dw Route4HiddenObjects
+	dw CeruleanBadgeHouseHiddenObjects
 	dw DigletsCaveHiddenObjects
 
 MACRO hidden_object
@@ -667,6 +669,10 @@ CeruleanCityHiddenObjects:
 
 Route4HiddenObjects:
 	hidden_object 40,  3, GREAT_BALL, HiddenItems
+	db -1 ; end
+
+CeruleanBadgeHouseHiddenObjects:
+	hidden_object  7,  7, TM_AURORA_BEAM, HiddenItems
 	db -1 ; end
 
 DigletsCaveHiddenObjects:

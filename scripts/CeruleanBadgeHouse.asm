@@ -19,44 +19,47 @@ CeruleanBadgeHouseCuboneText:
 	jp TextScriptEnd
 
 CeruleanBadgeHouseMiddleAgedManText:
-	text_asm
-	CheckEvent EVENT_GOT_TM03
-	jr nz, .got_item
-	ld hl, .YouCanHaveThisText
-	call PrintText
-	lb bc, TM_AURORA_BEAM, 1
-	call GiveItem
-	jr nc, .bag_full
-	ld hl, .ReceivedTM03Text
-	call PrintText
-	SetEvent EVENT_GOT_TM03
-	jr .done
-.bag_full
-	ld hl, .TM03NoRoomText
-	call PrintText
-	jr .done
-.got_item
-	ld hl, .TM03ExplanationText
-	call PrintText
-.done
-	jp TextScriptEnd
-
-.YouCanHaveThisText:
-	text_far ViridianCityFisherYouCanHaveThisText
+	text_far _CeruleanBadgeHouseTMTossed
 	text_end
 
-.ReceivedTM03Text:
-	text_far _CeruleanBadgeHouseReceivedTM03Text
-	sound_get_item_2
-	text_end
+; 	text_asm
+; 	CheckEvent EVENT_GOT_TM03
+; 	jr nz, .got_item
+; 	ld hl, .YouCanHaveThisText
+; 	call PrintText
+; 	lb bc, TM_AURORA_BEAM, 1
+; 	call GiveItem
+; 	jr nc, .bag_full
+; 	ld hl, .ReceivedTM03Text
+; 	call PrintText
+; 	SetEvent EVENT_GOT_TM03
+; 	jr .done
+; .bag_full
+; 	ld hl, .TM03NoRoomText
+; 	call PrintText
+; 	jr .done
+; .got_item
+; 	ld hl, .TM03ExplanationText
+; 	call PrintText
+; .done
+; 	jp TextScriptEnd
 
-.TM03ExplanationText:
-	text_far _CeruleanBadgeHouseTM03ExplanationText
-	text_end
+; .YouCanHaveThisText:
+; 	text_far _CeruleanBadgeHouseYouCanHaveThisText
+; 	text_end
 
-.TM03NoRoomText:
-	text_far _CeruleanBadgeHouseTM03NoRoomText
-	text_end
+; .ReceivedTM03Text:
+; 	text_far _CeruleanBadgeHouseReceivedTM03Text
+; 	sound_get_item_2
+; 	text_end
+
+; .TM03ExplanationText:
+; 	text_far _CeruleanBadgeHouseTM03ExplanationText
+; 	text_end
+
+; .TM03NoRoomText:
+; 	text_far _CeruleanBadgeHouseTM03NoRoomText
+; 	text_end
 	
 ; 	text_asm
 ; 	ld hl, .Text

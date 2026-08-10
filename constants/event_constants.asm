@@ -24,7 +24,7 @@
 ; Viridian City events
 	const_next $28
 	const EVENT_VIRIDIAN_GYM_OPEN
-	const EVENT_GOT_TM03 ;;;; Changed from TM42
+	const EVENT_GOT_TM03 ;;;; Free to use
 	const_skip 14
 	const EVENT_OAK_GOT_PARCEL
 	const EVENT_GOT_OAKS_PARCEL
