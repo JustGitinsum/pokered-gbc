@@ -605,6 +605,9 @@ RocketData:
 	db 32, CUBONE, DROWZEE, MAROWAK, 0
 ; Jessie & James
 	db 14, EKANS, KOFFING, MEOWTH, 0 ; Mt. Moon B2F
+	db 25, KOFFING, EKANS, MEOWTH, 0 ; Rocket Hideout B4F
+	; db 27, MEOWTH, ARBOK, WEEZING, 0 ; Pokémon Tower 7F
+	; db 31, WEEZING, ARBOK, MEOWTH, 0 ; Silph Co. 11F
 
 CooltrainerMData:
 ; Viridian Gym

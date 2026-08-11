@@ -357,7 +357,7 @@ MtMoonB2FScript14:
 	ret
 
 MtMoonB2FScript15:
-	call PlayDefaultMusic
+	; call PlayDefaultMusic
 	xor a
 	ldh [hJoyHeld], a
 	ld [wJoyIgnore], a

@@ -1,3 +1,28 @@
+_RocketHideoutJessieJamesText1::
+	text "Not another step,"
+	line "brat!@"
+	text_end
+
+_RocketHideoutJessieJamesText2::
+	text "Prepare for "
+	line "Trouble!"
+	para "Make it double!"
+
+	para "It's payback time,"
+	line "you brat!"
+	done
+
+_RocketHideoutJessieJamesText3::
+	text "Such"
+	line "a dreadful twerp!"
+	prompt
+
+_RocketHideoutJessieJamesText4::
+	text "Looks like TEAM"
+	line "ROCKET's blasting"
+	cont "off again!@"
+	text_end
+
 _RocketHideoutB4FGiovanniImpressedYouGotHereText::
 	text "So! I must say, I"
 	line "am impressed you"
