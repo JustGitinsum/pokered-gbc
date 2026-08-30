@@ -149,7 +149,7 @@ AttackAnimationPointers:
 	dw SporeAnim
 	dw FlashAnim
 	dw ExtrasensoryAnim
-	dw RapidSpin
+	dw RapidSpinAnim
 	dw AcidArmorAnim
 	dw CrabHammerAnim
 	dw ExplosionAnim
@@ -1284,7 +1284,7 @@ ExtrasensoryAnim:
 	battle_anim CONFUSION, SE_WAVY_SCREEN
 	db -1 ; end
 
-RapidSpin:
+RapidSpinAnim:
 	battle_anim RAPID_SPIN, SE_BOUNCE_UP_AND_DOWN
 	db -1 ; end
 

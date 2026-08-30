@@ -38,3 +38,6 @@ SetCurBank::
 	ldh [hLoadedROMBank], a
 	ld [rROMB], a
 	ret
+
+hl_caller::
+	jp hl

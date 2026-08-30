@@ -94,7 +94,7 @@ ShowMonLearnsetMenu:
 	ld a, [wLearnsetPage]
 	ld hl, LearnsetViewJumpTable
 	call GetAddressFromPointerArray
-	jp hl ; was: call hl_caller
+	call hl_caller
 	jr c, .showMovedex
 	cp 1
 	jr z, .changePage
@@ -175,15 +175,15 @@ PrepLearnsetList:
 	
 	
 ShowLevelUpLearnset:
-	ld a, SFX_LEDGE
-	call PlaySound
-	call ClearScreen
-	call LoadLearnsetTiles
-	xor a
-	ld [wListScrollOffset], a
-	ld [wCurrentMenuItem], a
+	; ld a, SFX_LEDGE
+	; call PlaySound
+	; call ClearScreen
+	; call LoadLearnsetTiles
+	; xor a
+	; ld [wListScrollOffset], a
+	; ld [wCurrentMenuItem], a
 	
-	ld a, PAD_RIGHT | PAD_LEFT |PAD_B | PAD_A
+	ld a, PAD_RIGHT | PAD_B | PAD_A
 	ld [wMenuWatchedKeys], a
 	callfar LoadLevelUpLearnsetIntoWRAM
 	hlcoord 7, 3
@@ -339,7 +339,7 @@ ShowLevelUpLearnset:
 	inc [hl]
 	ld a, 1
 	and a
-	call ShowTMLearnset
+	ret
 .checkIfLeftPressed
 	bit B_PAD_LEFT, a
 	jr z, .buttonAPressed
@@ -348,7 +348,7 @@ ShowLevelUpLearnset:
 	dec [hl]
 	ld a, 1
 	and a
-	call ShowEvolutions
+	ret
 .buttonAPressed
 	xor a
 	scf
@@ -389,13 +389,13 @@ TMLearnsetListPrint:
 	ret
 
 ShowTMLearnset:
-	ld a, SFX_LEDGE
-	call PlaySound
-	call ClearScreen
-	call LoadLearnsetTiles
-	xor a
-	ld [wListScrollOffset], a
-	ld [wCurrentMenuItem], a
+	; ld a, SFX_LEDGE
+	; call PlaySound
+	; call ClearScreen
+	; call LoadLearnsetTiles
+	; xor a
+	; ld [wListScrollOffset], a
+	; ld [wCurrentMenuItem], a
 	
 	ld a, PAD_LEFT | PAD_RIGHT | PAD_B | PAD_A
 	ld [wMenuWatchedKeys], a
@@ -413,7 +413,7 @@ ShowTMLearnset:
 	inc hl
 .notLongName
 	ld de, TMPlusHMText
-	hlcoord 3, 2
+	hlcoord 2, 2
 	call PlaceString
 	; ld bc, SCREEN_WIDTH - 1
 	; add hl, bc
@@ -487,9 +487,9 @@ ShowTMLearnset:
 	call GBPalNormal
 	call HandleMenuInput
 	bit B_PAD_B, a
-	jp nz, .buttonBPressed
+	jp nz, CheckPageLeftRight.buttonBPressed
 	bit B_PAD_A, a 
-	jp nz, .buttonAPressed
+	jp nz, CheckPageLeftRight.buttonAPressed
 .checkIfUpPressed
 	bit B_PAD_UP, a
 	jr z, .checkIfDownPressed
@@ -502,7 +502,7 @@ ShowTMLearnset:
 	jp .loop
 .checkIfDownPressed
 	bit B_PAD_DOWN, a
-	jr z, .checkIfRightPressed
+	jr z, CheckPageLeftRight
 .downPressed ; scroll down one row
 	ld a, [wDexLearnsetListCount]
 	cp 7
@@ -519,32 +519,27 @@ ShowTMLearnset:
 	hlcoord 6, 6
 	ld de, NoneText
 	call PlaceString
-	call JoypadLowSensitivity
-	ld a, [wMenuWatchedKeys]
-	ld c, a
-	ldh a, [hJoy5]
-	and c
-	jr z, .noTMLearnset
+	ld hl, wMenuWatchedKeys
+	res B_PAD_A, [hl]
+	jp ShowEvolutions.waitForButtonPress
 
+CheckPageLeftRight:
 .checkIfRightPressed
 	bit B_PAD_RIGHT, a
 	jr z, .checkIfLeftPressed
 .rightPressed 
 	ld hl, wLearnsetPage
 	inc [hl]
-	ld a, 1
-	and a
-	call ShowEvolutions
-	ret
+	jr .changedPage
 .checkIfLeftPressed
 	bit B_PAD_LEFT, a
 	jr z, .buttonAPressed
 .leftPressed
 	ld hl, wLearnsetPage
 	dec [hl]
+.changedPage
 	ld a, 1
 	and a
-	call ShowLevelUpLearnset
 	ret
 .buttonAPressed
 	xor a
@@ -581,15 +576,15 @@ IntoLearnsetText:
 
 
 ShowEvolutions:
-	ld a, SFX_LEDGE
-	call PlaySound
-	call ClearScreen
-	call LoadLearnsetTiles
-	xor a
-	ld [wListScrollOffset], a
-	ld [wCurrentMenuItem], a
+	; ld a, SFX_LEDGE
+	; call PlaySound
+	; call ClearScreen
+	; call LoadLearnsetTiles
+	; xor a
+	; ld [wListScrollOffset], a
+	; ld [wCurrentMenuItem], a
 
-	ld a, PAD_RIGHT |PAD_LEFT | PAD_A | PAD_B
+	ld a, PAD_LEFT | PAD_B
 	ld [wMenuWatchedKeys], a
 	hlcoord 7, 3
 	call DrawNonCurrentLearnsetTab
@@ -605,7 +600,7 @@ ShowEvolutions:
 	inc hl
 .notLongName
 	ld de, WaysToText
-	hlcoord 3, 2
+	hlcoord 2, 2
 	call PlaceString
 	; call .printEvolveText
 	; ld a, PAL_LAVENDER
@@ -726,35 +721,8 @@ ShowEvolutions:
 	and c
 	jr z, .waitForButtonPress
 	bit B_PAD_B, a
-	jp nz, .buttonBPressed
-	bit B_PAD_A, a 
-	jp nz, .buttonAPressed
-.checkIfLeftPressed
-	bit B_PAD_LEFT, a
-	jr z, .checkIfRightPressed
-.leftPressed
-	ld hl, wLearnsetPage
-	dec [hl]
-	ld a, 1
-	and a
-	call ShowTMLearnset
-.checkIfRightPressed
-	bit B_PAD_RIGHT, a
-	jr z, .buttonAPressed
-.rightPressed 
-	ld hl, wLearnsetPage
-	inc [hl]
-	ld a, 1
-	and a
-	call ShowLevelUpLearnset
-.buttonAPressed
-	xor a
-	scf
-	ret
-.buttonBPressed
-	xor a
-	and a
-	ret
+	jp nz, CheckPageLeftRight.buttonBPressed
+	jp CheckPageLeftRight
 .doesNotEvolve
 	hlcoord 1, 6
 	ld de, DoesNotText

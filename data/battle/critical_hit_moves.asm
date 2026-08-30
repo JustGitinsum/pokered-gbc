@@ -6,6 +6,5 @@ HighCriticalMoves:
 	db RAZOR_LEAF
 	db X_SCISSOR
 	db PSYCHO_CUT
-	db RAGE_FIST
 	db SHADOW_CLAW
 	db -1 ; end
