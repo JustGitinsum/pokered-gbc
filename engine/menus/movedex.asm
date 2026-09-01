@@ -1,4 +1,39 @@
-ShowMoveDataExternal:
+ShowMoveDataFromBattle:
+	call ClearScreen
+	callfar LoadPokedexTilePatterns ; load pokedex tiles
+	call HalfVolume
+	call ClearScreen
+	ldh a, [hTileAnimations]
+	push af
+	xor a
+	ldh [hTileAnimations], a
+	ld a, [wMovedexMoveID] ; attack ID
+	ld [wCurPartySpecies], a
+	push af
+	ld b, SET_PAL_GENERIC
+	call RunPaletteCommand
+	pop af
+	ld [wMovedexMoveID], a
+	call ShowNextMoveData
+.waitForButtonPress
+	call JoypadLowSensitivity
+	ldh a, [hJoy5]
+	and PAD_B
+	jr z, .waitForButtonPress
+	pop af
+	ldh [hTileAnimations], a
+	; call GBPalWhiteOut
+	call ClearScreen
+	call RunDefaultPaletteCommand
+	call LoadTextBoxTilePatterns
+	call GBPalNormal
+	; ld hl, wStatusFlags2
+	; res 1, [hl]
+	call MaxVolume
+	ret
+
+
+ShowMoveDataFromPokedex:
 	call HalfVolume
 	call ClearScreen
 	ldh a, [hTileAnimations]
@@ -6,6 +41,43 @@ ShowMoveDataExternal:
 	xor a
 	ldh [hTileAnimations], a
 
+	
+	call ShowNextMoveData
+	ld a, [wMenuWatchedKeys]
+	ld c, a
+	ldh a, [hJoy5]
+	ld b, a
+	and c
+	jr nz, .dontLoop
+.waitForButtonPress
+	call JoypadLowSensitivity
+	ld a, [wMenuWatchedKeys]
+	ld c, a
+	ldh a, [hJoy5]
+	ld b, a
+	and c
+	jr z, .waitForButtonPress
+.dontLoop
+	bit B_PAD_B, b
+	jr nz, .closeMenu
+	jr .waitForButtonPress
+.closeMenu
+	xor a
+	ldh [hClearLetterPrintingDelayFlags], a
+	pop af
+	ldh [hTileAnimations], a
+	call GBPalWhiteOut
+	call ClearScreen
+	; call RunDefaultPaletteCommand
+	; call GBPalNormal
+	call MaxVolume
+	ld a, 1 ; 1 = indicate we have shown the data page and need to reload more stuff to go back
+	and a
+	ret
+
+; display the move data itself - if switching between moves with left/right, we don't need to reload the above stuff
+
+ShowNextMoveData:
 	; load movedex data page UI tiles
 	ld de, MovedexUI
 	lb bc, BANK(MovedexUI), 21
@@ -36,11 +108,6 @@ ShowMoveDataExternal:
 	ld [wMenuCursorLocation], a
 	ld a, l
 	ld [wMenuCursorLocation+1], a
-
-	; fall through
-; display the move data itself - if switching between moves with left/right, we don't need to reload the above stuff
-
-ShowNextMoveData:
 	ld a, [wMovedexMoveID] ; move ID
 	push af
 	call LoadMoveDexMoveData
@@ -220,38 +287,8 @@ ShowNextMoveData:
 	ldh [hClearLetterPrintingDelayFlags], a
 
 	call TextCommandProcessor ; print movedex description text
-	ld a, [wMenuWatchedKeys]
-	ld c, a
-	ldh a, [hJoy5]
-	ld b, a
-	and c
-	jr nz, .dontLoop
-
-.waitForButtonPress
-	call JoypadLowSensitivity
-	ld a, [wMenuWatchedKeys]
-	ld c, a
-	ldh a, [hJoy5]
-	ld b, a
-	and c
-	jr z, .waitForButtonPress
-.dontLoop
-	bit B_PAD_B, b
-	jr nz, .closeMenu
-	jr .waitForButtonPress
-.closeMenu
-	xor a
-	ldh [hClearLetterPrintingDelayFlags], a
-	pop af
-	ldh [hTileAnimations], a
-	call GBPalWhiteOut
-	call ClearScreen
-	; call RunDefaultPaletteCommand
-	; call GBPalNormal
-	call MaxVolume
-	ld a, 1 ; 1 = indicate we have shown the data page and need to reload more stuff to go back
-	and a
 	ret
+
 
 ; ; loads the move identified by wMovedexMoveID's properties (power, accuracy, pp, type) into wram
 LoadMoveDexMoveData:

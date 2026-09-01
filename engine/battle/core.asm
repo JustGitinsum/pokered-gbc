@@ -2621,7 +2621,7 @@ MoveSelectionMenu:
 	; Disable left, right, and START buttons in regular battles.
 	ld a, [wStatusFlags7]
 	bit BIT_TEST_BATTLE, a
-	ld b, ~(PAD_LEFT | PAD_RIGHT | PAD_START)
+	ld b, ~(PAD_LEFT | PAD_RIGHT)
 	jr z, .matchedkeyspicked
 	ld b, PAD_CTRL_PAD | PAD_BUTTONS
 .matchedkeyspicked
@@ -2675,6 +2675,8 @@ SelectMenuItem:
 	jp nz, SelectMenuItem_CursorDown
 	bit B_PAD_SELECT, a
 	jp nz, SwapMovesInMenu
+	bit B_PAD_START, a          ; new
+	jp nz, ShowMoveInfoInMenu ; new
 	bit B_PAD_B, a
 	push af
 	xor a
@@ -2816,6 +2818,17 @@ AnyMoveToSelect:
 NoMovesLeftText:
 	text_far _NoMovesLeftText
 	text_end
+
+ShowMoveInfoInMenu: ; new
+	call SaveScreenTilesToBuffer2
+	callfar ShowMoveDataFromBattle
+	ld a, [wBattleMonSpecies]
+	ld [wCurSpecies], a
+	call GetMonHeader
+	predef LoadMonBackPic
+	call LoadScreenTilesFromBuffer2
+	call LoadHudAndHpBarAndStatusTilePatterns
+	jp MoveSelectionMenu
 
 SwapMovesInMenu:
 	ld a, [wMenuItemToSwap]

@@ -136,7 +136,7 @@ ShowMonLearnsetMenu:
 	call EnableSpriteUpdates
 	ld hl, wPokedexDataFlags
 	set 3, [hl]
-	call ShowMoveDataExternal
+	call ShowMoveDataFromPokedex
 	pop af
 	ld [wPokedexNum], a
 	call LoadLearnsetTiles
