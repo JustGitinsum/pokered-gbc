@@ -323,38 +323,38 @@
 	charmap "す", $bd
 	charmap "せ", $be
 	charmap "そ", $bf
-	charmap "た", $c0
-	charmap "ち", $c1
-	charmap "つ", $c2
-	charmap "て", $c3
-	charmap "と", $c4
-	charmap "な", $c5
-	charmap "に", $c6
-	charmap "ぬ", $c7
-	charmap "ね", $c8
-	charmap "の", $c9
-	charmap "は", $ca
-	charmap "ひ", $cb
-	charmap "ふ", $cc
-	charmap "へ", $cd
-	charmap "ほ", $ce
-	charmap "ま", $cf
-	charmap "み", $d0
-	charmap "む", $d1
-	charmap "め", $d2
-	charmap "も", $d3
-	charmap "や", $d4
+	charmap "た", $c0 ; EXP Bar
+	charmap "ち", $c1 ; EXP Bar
+	charmap "つ", $c2 ; EXP Bar
+	charmap "て", $c3 ; EXP Bar
+	charmap "と", $c4 ; EXP Bar
+	charmap "な", $c5 ; EXP Bar
+	charmap "に", $c6 ; EXP Bar
+	charmap "ぬ", $c7 ; EXP Bar
+	charmap "ね", $c8 ; EXP Bar
+	charmap "の", $c9 ; Flying type symbol
+	charmap "は", $ca ; Psychic
+	charmap "ひ", $cb ; Bug
+	charmap "ふ", $cc ; Rock
+	charmap "へ", $cd ; Ghost
+	charmap "ほ", $ce ; Dragon
+	charmap "ま", $cf ; Dark
+	charmap "み", $d0 ; Steel
+	charmap "む", $d1 ; Fairy
+	charmap "め", $d2 ; Physical Cat
+	charmap "も", $d3 ; Special Cat
+	charmap "や", $d4 ; Status Cat
 	charmap "ゆ", $d5
 	charmap "よ", $d6
-	charmap "ら", $d7
-	charmap "り", $d8
-	charmap "る", $d9
-	charmap "れ", $da
-	charmap "ろ", $db
-	charmap "わ", $dc
-	charmap "を", $dd
-	charmap "ん", $de
-	charmap "っ", $df
+	charmap "ら", $d7 ; Sword Symbol
+	charmap "り", $d8 ; pp Symbol Start
+	charmap "る", $d9 ; pp Pymbol End
+	charmap "れ", $da ; Physical Cat
+	charmap "ろ", $db ; Physical Cat
+	charmap "わ", $dc ; Special Cat
+	charmap "を", $dd ; Special Cat
+	charmap "ん", $de ; Status Cat
+	charmap "っ", $df ; Status Cat
 	charmap "ゃ", $e0
 	charmap "ゅ", $e1
 	charmap "ょ", $e2

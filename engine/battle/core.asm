@@ -2545,22 +2545,22 @@ MoveSelectionMenu:
 	ret z
 	ld hl, wBattleMonMoves
 	call .loadmoves
-	hlcoord 4, 12
+	hlcoord 0, 12
 	ld b, 4
-	ld c, 14
+	ld c, 13
 	di ; out of pure coincidence, it is possible for vblank to occur between the di and ei
 	   ; so it is necessary to put the di ei block to not cause tearing
 	call TextBoxBorder
-	hlcoord 4, 12
-	ld [hl], "┘"  ;inverted the two for new box size
-	;ld [hl], "─"
-	hlcoord 10, 12
-	ld [hl], "─"
+	; hlcoord 4, 12
+	; ld [hl], "┘"  ;inverted the two for new box size
+	; ld [hl], "─"
+	; hlcoord 10, 12
+	; ld [hl], "─"
 	;ld [hl], "┘"
 	ei
-	hlcoord 6, 13
+	hlcoord 2, 13
 	call .writemoves
-	ld b, $5
+	ld b, $1
 	ld a, $c
 	jr .menuset
 .mimicmenu
@@ -2579,6 +2579,9 @@ MoveSelectionMenu:
 	ld a, [wWhichPokemon]
 	ld hl, wPartyMon1Moves
 	ld bc, wPartyMon2 - wPartyMon1
+	call PrintMenuItem
+	ld a, [wMenuItemToSwap]
+	and a
 	call AddNTimes
 	call .loadmoves
 	hlcoord 4, 7
@@ -2658,7 +2661,7 @@ SelectMenuItem:
 	ld a, [wMenuItemToSwap]
 	and a
 	jr z, .select
-	hlcoord 5, 13
+	hlcoord 1, 13
 	dec a
 	ld bc, SCREEN_WIDTH
 	call AddNTimes
@@ -2827,6 +2830,7 @@ ShowMoveInfoInMenu: ; new
 	call GetMonHeader
 	predef LoadMonBackPic
 	call LoadScreenTilesFromBuffer2
+	call LoadFontTilePatterns
 	call LoadHudAndHpBarAndStatusTilePatterns
 	jp MoveSelectionMenu
 
@@ -2909,25 +2913,32 @@ SwapMovesInMenu:
 PrintMenuItem:: ; edited, double colon
 	xor a
 	ldh [hAutoBGTransferEnabled], a
-	; changed the location and size of the box (taller, narrower)
-	hlcoord 0, 7 ; marcelnote - was 0, 8
-	ld b, 4 ; marcelnote - was 3
+	; Move stats box
+	hlcoord 14, 12  
+	ld b, 4  
+	ld c, 4 
+	call TextBoxBorder
+	; Type box for displaying Move type
+	hlcoord 10, 10 ; marcelnote - was 0, 8
+	ld b, 1 ; marcelnote - was 3
 	ld c, 8 ; marcelnote - was 9
 	call TextBoxBorder
-	ld a, [wPlayerDisabledMove]
-	and a
-	jr z, .notDisabled
-	swap a
-	and $f
-	ld b, a
-	ld a, [wCurrentMenuItem]
-	cp b
-	jr nz, .notDisabled
-	hlcoord 1, 10
-	ld de, DisabledText
-	call PlaceString
-	jp .moveDisabled ; was jr
-.notDisabled
+	hlcoord 14, 17
+	ld [hl], "┘"  ;inverted the two for new box size
+; 	ld a, [wPlayerDisabledMove]
+; 	and a
+; 	jr z, .notDisabled
+; 	swap a
+; 	and $f
+; 	ld b, a
+; 	ld a, [wCurrentMenuItem]
+; 	cp b
+; 	jr nz, .notDisabled
+; 	hlcoord 11, 11
+; 	ld de, DisabledText
+; 	call PlaceString
+; 	jp .moveDisabled ; was jr
+; .notDisabled
 	ld hl, wCurrentMenuItem
 	dec [hl]
 	xor a
@@ -2964,39 +2975,85 @@ PrintMenuItem:: ; edited, double colon
 	ld a, BANK(Moves)
 	call FarCopyData ; copies bc bytes from a:hl to de
 ; print TYPE/<type> and <curPP>/<maxPP> ; marcelnote - changed the contents, now also Power and Accuracy
-	hlcoord 1, 9
-	ld de, PowerText
+	; hlcoord 1, 9
+	; ld de, PowerText
+	; call PlaceString
+	; hlcoord 1, 10
+	; ld de, AccuracyText
+	; call PlaceString
+	hlcoord 18, 14
+	ld de, SwordText
 	call PlaceString
-	hlcoord 1, 10
-	ld de, AccuracyText
+	hlcoord 18, 15
+	ld de, PercentText
 	call PlaceString
-	hlcoord 1, 11
+	hlcoord 18, 16
 	ld de, PPText
 	call PlaceString
-	hlcoord 6, 11
-	ld [hl], "/"
+	; hlcoord 18, 15
+	; ld [hl], "/"
 	; current PP
-	hlcoord 4, 11
+	hlcoord 16, 16
 	ld de, wBattleMenuCurrentPP
 	lb bc, 1, 2
 	call PrintNumber
 	; max PP
-	hlcoord 7, 11
-	ld de, wMaxPP
-	lb bc, 1, 2
-	call PrintNumber
+	; hlcoord 7, 11
+	; ld de, wMaxPP
+	; lb bc, 1, 2
+	; call PrintNumber
 	; power
 	ld a, [wPlayerMovePower]
 	cp 2 ; if power 0 or 1, print text "-@"
 	jr c, .noPower
-	hlcoord 6, 9
+	hlcoord 15, 14
 	ld de, wPlayerMovePower
 	lb bc, 1, 3
 	call PrintNumber
+	; jr .accuracy
+
+	; move catagory
+	ld a, [wPlayerMoveType]
+	cp SPECIAL ; types >= SPECIAL are all special
+	ld a, [wPlayerMoveNum]
+	ld b, a
+	jr nc, .isSpecialActuallyPhysical
+	jr .isPhysicalActuallySpecial
+.isSpecialActuallyPhysical
+	ld hl, SpecialToPhysicalMoves
+.specialPhysicalLoop
+	ld a, [hli]
+	cp b
+	jr z, .physicalAttack
+	cp $ff ; end of list
+	jr nz, .specialPhysicalLoop ; keep checking list
+	jr .specialAttack ; Not actually a physical move
+.isPhysicalActuallySpecial
+	ld hl, PhysicalToSpecialMoves
+.physicalSpecialLoop
+	ld a, [hli]
+	cp b
+	jr z, .specialAttack ; the physical move is actually special
+	cp $ff ; end of list
+	jr nz, .physicalSpecialLoop ; keep checking list
+	; fallthrough
+.physicalAttack
+	hlcoord 16, 13
+	ld de, PhysicalCatText
+	call PlaceString
 	jr .accuracy
+.specialAttack
+	hlcoord 16, 13
+	ld de, SpecialCatText
+	call PlaceString
+	jr .accuracy
+
 .noPower
-	hlcoord 8, 9
+	hlcoord 15, 14
 	ld de, NoPowerText
+	call PlaceString
+	hlcoord 16, 13
+	ld de, StatusCatText
 	call PlaceString
 .accuracy
 	; accuracy
@@ -3010,15 +3067,15 @@ PrintMenuItem:: ; edited, double colon
 	add hl, bc     ; add 255 for rounding correctly
 	ld a, h        ; effectively divides hl by 256
 	ld [wStringBuffer], a
-	hlcoord 6, 10
+	hlcoord 15, 15
 	ld de, wStringBuffer
 	lb bc, 1, 3
 	call PrintNumber
 	; move type
 	call GetCurrentMove
-	hlcoord 1, 8
+	hlcoord 11, 11
 	predef PrintMoveType
-.moveDisabled
+; .moveDisabled
 	ld a, $1
 	ldh [hAutoBGTransferEnabled], a
 	jp Delay3
@@ -3029,17 +3086,31 @@ DisabledText:
 ;TypeText:
 ;	db "TYPE@"
 
-PowerText:
-	db "PWR@"
+; PowerText:
+; 	db "PWR@"
 
-AccuracyText:
-	db "ACC@"
+; AccuracyText:
+; 	db "ACC@"
+
+SwordText:
+	db "ら@"
+
+PercentText:
+	db "%@"
 
 PPText:
-	db "PP@"
+	db "りる@"
 
 NoPowerText:
-	db "-@"
+	db "---@"
+
+PhysicalCatText:
+	db "れろ@"
+SpecialCatText:
+	db "わを@"
+StatusCatText:
+	db "んっ@"
+
 
 SelectEnemyMove:
 	ld a, [wLinkState]
@@ -4955,8 +5026,8 @@ ApplyAttackToEnemyPokemon:
 	ld a, [wPlayerMoveNum]
 	cp SEISMIC_TOSS
 	jr z, .storeDamage
-	cp OMINOUS_WIND
-	jr z, .storeDamage
+	; cp OMINOUS_WIND
+	; jr z, .storeDamage
 	ld b, SONICBOOM_DAMAGE ; 20
 	cp SONICBOOM
 	jr z, .storeDamage

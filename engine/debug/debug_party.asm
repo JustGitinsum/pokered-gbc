@@ -71,9 +71,20 @@ IF DEF(_DEBUG)
 	; Articuno gets Fly.
 	ld hl, wPartyMon5Moves
 	ld a, FLY
+	ld [hli], a
+	ld a, BLIZZARD
+	ld [hli], a
+	ld a, ROOST
+	ld [hli], a
+	ld a, CLOSE_COMBAT
 	ld [hl], a
-	ld hl, wPartyMon5PP
+	ld hl, wPartyMon1PP
 	ld a, 15
+	ld [hli], a
+	ld a, 30
+	ld [hli], a
+	ld a, 15
+	ld [hli], a
 	ld [hl], a
 
 	; Pikachu gets Surf.

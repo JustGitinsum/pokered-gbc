@@ -25,7 +25,7 @@ ShowMoveDataFromBattle:
 	; call GBPalWhiteOut
 	call ClearScreen
 	call RunDefaultPaletteCommand
-	call LoadTextBoxTilePatterns
+	; call LoadTextBoxTilePatterns
 	call GBPalNormal
 	; ld hl, wStatusFlags2
 	; res 1, [hl]
