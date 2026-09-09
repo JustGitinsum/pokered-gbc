@@ -74,22 +74,22 @@ GainExperience: ; marcelnote - refactored
 	inc c
 
 ; Divide Stat Exp in place by number of shares
-	ld hl, wEnemyMonBaseStats
-	ld b, NUM_STATS
-	xor a
-	ldh [hDividend], a
-	ldh [hDividend + 1], a
-	ldh [hDividend + 2], a
-.divideStatExpLoop
-	ld a, [hl]
-	ldh [hDividend + 3], a ; [hDividend + 3] = stat to be divided
-	ld a, c
-	ldh [hDivisor], a      ; [hDivisor] = number of exp shares
-	call Divide
-	ldh a, [hQuotient + 3]
-	ld [hli], a            ; [hl] <- [hl] / c
-	dec b
-	jr nz, .divideStatExpLoop
+; 	ld hl, wEnemyMonBaseStats
+; 	ld b, NUM_STATS
+; 	xor a
+; 	ldh [hDividend], a
+; 	ldh [hDividend + 1], a
+; 	ldh [hDividend + 2], a
+; .divideStatExpLoop
+; 	ld a, [hl]
+; 	ldh [hDividend + 3], a ; [hDividend + 3] = stat to be divided
+; 	ld a, c
+; 	ldh [hDivisor], a      ; [hDivisor] = number of exp shares
+; 	call Divide
+; 	ldh a, [hQuotient + 3]
+; 	ld [hli], a            ; [hl] <- [hl] / c
+; 	dec b
+; 	jr nz, .divideStatExpLoop
 
 ; Divide total Exp by number of shares and store it
 	ld hl, wExpAmountGained
