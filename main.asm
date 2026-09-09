@@ -99,10 +99,9 @@ INCLUDE "gfx/player.asm"
 INCLUDE "engine/overworld/turn_sprite.asm"
 INCLUDE "engine/menus/start_sub_menus.asm"
 INCLUDE "engine/items/tms.asm"
-INCLUDE "engine/battle/end_of_battle.asm"
-INCLUDE "engine/battle/wild_encounters.asm"
-; moved to battle engine 9 INCLUDE "engine/battle/move_effects/recoil.asm"
-INCLUDE "engine/battle/move_effects/conversion.asm"
+; INCLUDE "engine/battle/end_of_battle.asm" ; moved to newCode
+; INCLUDE "engine/battle/move_effects/recoil.asm" ; moved to battle engine 9 
+; INCLUDE "engine/battle/move_effects/conversion.asm"
 INCLUDE "engine/battle/get_trainer_name.asm"
 INCLUDE "engine/math/random.asm"
 INCLUDE "engine/pokemon/read_tm_learnsets.asm"
@@ -423,3 +422,6 @@ INCLUDE "engine/menus/quantity_menu.asm" ; This can go anywhere
 
 SECTION "newCode", ROMX
 INCLUDE "engine/menus/change_box_menu.asm"
+INCLUDE "engine/battle/wild_encounters.asm"
+INCLUDE "engine/battle/move_effects/conversion.asm"
+INCLUDE "engine/battle/end_of_battle.asm"

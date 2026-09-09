@@ -601,6 +601,7 @@ SECTION "Menu GFX", ROMX
 ; StatusIcon::        INCBIN "gfx/type/status.2bpp"
 LearnsetMenuUI2BPP:: INCBIN "gfx/pokedex/learnset_menu_2bpp.2bpp"
 LearnsetMenuUI1BPP:: INCBIN "gfx/pokedex/learnset_menu_1bpp.1bpp"
+StatExpPrompt:: INCBIN "gfx/font/stat_exp.1bpp"
 MovedexUI::          INCBIN "gfx/movedex/movedex_ui.1bpp"
 MovedexUIEnd::
 

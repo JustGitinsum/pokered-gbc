@@ -725,6 +725,9 @@
 	const_next $8C0
 	const_skip
 	const EVENT_BEAT_MEWTWO
+; arbitrary flags
+	const_next $8D0
+DEF FLAG_STAT_EXP_SHOWING_IN_STATUS_SCREEN EQU const_value
 
 ; Indigo Plateau events
 	const_next $8E0

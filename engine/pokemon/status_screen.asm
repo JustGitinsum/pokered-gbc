@@ -49,6 +49,12 @@ DrawHP_:
 	ld bc, SCREEN_WIDTH + 1 ; below bar
 .printFraction
 	add hl, bc
+	call PlaceHPText
+	pop hl
+	pop de
+	ret
+
+PlaceHPText:
 	ld de, wLoadedMonHP
 	lb bc, 2, 3
 	call PrintNumber
@@ -56,11 +62,7 @@ DrawHP_:
 	ld [hli], a
 	ld de, wLoadedMonMaxHP
 	lb bc, 2, 3
-	call PrintNumber
-	pop hl
-	pop de
-	ret
-
+	jp PrintNumber
 
 ; Predef 0x37
 StatusScreen:
@@ -101,6 +103,12 @@ StatusScreen:
 	ld hl, vChars2 tile $72
 	lb bc, BANK(PTile), 1
 	call CopyVideoDataDouble ; bold P (for PP)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	ld de, StatExpPrompt
+	ld hl, vFont tile 75
+	lb bc, BANK(StatExpPrompt), 5
+	call CopyVideoDataDouble
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ldh a, [hTileAnimations]
 	push af
 	xor a
@@ -256,27 +264,34 @@ PrintStatsBox:
 	and a ; a is 0 from the status screen
 	jr nz, .DifferentBox
 	hlcoord 0, 8
-	ld b, 8
-	ld c, 8
+	lb bc, 8, 8
 	call TextBoxBorder ; Draws the box
+.default
 	hlcoord 1, 9 ; Start printing stats from here
 	ld bc, $19 ; Number offset
 	jr .PrintStats
 .DifferentBox
+		push de
 	hlcoord 9, 2
-	ld b, 8
-	ld c, 9
+	lb bc, 8, 9
 	call TextBoxBorder
 	hlcoord 11, 3
 	ld bc, $18
+	pop de
 .PrintStats
+	push de
 	push bc
 	push hl
 	ld de, StatsText
 	call PlaceString
 	pop hl
 	pop bc
+	pop de
 	add hl, bc
+	ld a, d
+	cp 2
+	jr z, .statExp
+	push de
 	ld de, wLoadedMonAttack
 	lb bc, 2, 3
 	call PrintStat
@@ -285,7 +300,37 @@ PrintStatsBox:
 	ld de, wLoadedMonSpeed
 	call PrintStat
 	ld de, wLoadedMonSpecial
+	call PrintNumber
+	pop de
+	dec d
+	ret z
+	; if d = 0 we will re-print the hp text
+	call .clearHPRow
+	hlcoord 12, 4
+	jp PlaceHPText
+.statExp
+	dec hl
+	dec hl
+	lb bc, 2, 5
+	ld de, wLoadedMonAttackExp
+	call PrintStat
+	ld de, wLoadedMonDefenseExp
+	call PrintStat
+	ld de, wLoadedMonSpeedExp
+	call PrintStat
+	ld de, wLoadedMonSpecialExp
+	call PrintNumber
+	push bc
+	call .clearHPRow
+	pop bc
+	hlcoord 12, 4
+	ld de, wLoadedMonHPExp
 	jp PrintNumber
+.clearHPRow
+	hlcoord 11, 4
+	lb bc, 1, 8
+	jp ClearScreenArea
+
 PrintStat:
 	push hl
 	call PrintNumber
@@ -500,8 +545,12 @@ StatusScreenOriginal:
 	ldh a, [hTileAnimations]
 	push af
 	call StatusScreen
-	ld b, PAD_A | PAD_B
+.continue
+	ld b, PAD_A | PAD_B | PAD_START
 	call PokedexStatusWaitForButtonPressLoop
+	bit B_PAD_START, a
+	jr nz, ExitStatusScreen.select
+	ResetEvent FLAG_STAT_EXP_SHOWING_IN_STATUS_SCREEN
 	bit B_PAD_B, a
 	jr nz, ExitStatusScreen
 	call StatusScreen2
@@ -513,6 +562,9 @@ ExitStatusScreen:
 	call MaxVolume
 	call GBPalWhiteOut
 	jp ClearScreen
+.select
+	call ToggleStatData
+	jr StatusScreenOriginal.continue
 
 ;;;;;;;;;; 
 
@@ -524,8 +576,12 @@ StatusScreenLoop:
 	push af
 .displayNextMon
 	call StatusScreen
-	ld a, PAD_A | PAD_B
+.continue
+	ld a, PAD_A | PAD_B | PAD_START
 	call PokemonStatusWaitForButtonPress
+	bit B_PAD_START, a
+	jr nz, .changeStatData
+	ResetEvent FLAG_STAT_EXP_SHOWING_IN_STATUS_SCREEN
 	bit B_PAD_UP, a
 	jr nz, .prevMon
 	bit B_PAD_DOWN, a
@@ -553,6 +609,34 @@ StatusScreenLoop:
 	ld hl, wPartyAndBillsPCSavedMenuItem
 	dec [hl]
 	jr .displayNextMon
+.changeStatData
+	call ToggleStatData
+	jr .continue
+
+ToggleStatData:
+	hlcoord 1, 9
+	lb bc, 8, 8
+	call ClearScreenArea
+	ToggleEvent FLAG_STAT_EXP_SHOWING_IN_STATUS_SCREEN
+	ld d, 0
+	jr z, .normalStats
+	ld d, 2
+	hlcoord 1, 17
+	ld [hl], $CB
+	inc hl
+	ld [hl], $CC
+	inc hl
+	ld [hl], $CE
+	inc hl
+	ld [hl], $CF
+	jr .donePrompt
+.normalStats
+	hlcoord 3, 17
+	ld [hl], $CD
+	inc hl
+	ld [hl], $7A
+.donePrompt
+	jp PrintStatsBox.default
 
 PokemonStatusWaitForButtonPress:
 .decideButtons
