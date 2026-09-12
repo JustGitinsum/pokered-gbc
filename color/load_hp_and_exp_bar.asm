@@ -26,3 +26,25 @@ GoodCopyVideoData:
 	pop hl
 	pop de
 	jp FarCopyData2 ; if LCD is off, transfer all at once
+
+LoadPhysicalMoveIcon::
+	ld de, MovePhysicalGraphics
+	; ld bc, 2 tiles
+	ld hl, vChars1 tile $5A
+	lb bc, BANK(MovePhysicalGraphics), 2
+	call CopyVideoData
+	ret
+LoadSpecialMoveIcon::
+	ld de, MoveSpecialGraphics
+	; ld bc, 2 tiles
+	ld hl, vChars1 tile $5C
+	lb bc, BANK(MoveSpecialGraphics), 2
+	call CopyVideoData
+	ret
+LoadStatusMoveIcon::
+	ld de, MoveStatusGraphics
+	; ld bc, 2 tiles
+	ld hl, vChars1 tile $5E
+	lb bc, BANK(MoveStatusGraphics), 2
+	call CopyVideoData
+	ret

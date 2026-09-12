@@ -3041,11 +3041,13 @@ PrintMenuItem:: ; edited, double colon
 	hlcoord 16, 13
 	ld de, PhysicalCatText
 	call PlaceString
+	farcall LoadPhysicalMoveIcon
 	jr .accuracy
 .specialAttack
 	hlcoord 16, 13
 	ld de, SpecialCatText
 	call PlaceString
+	farcall LoadSpecialMoveIcon
 	jr .accuracy
 
 .noPower
@@ -3055,6 +3057,7 @@ PrintMenuItem:: ; edited, double colon
 	hlcoord 16, 13
 	ld de, StatusCatText
 	call PlaceString
+	farcall LoadStatusMoveIcon
 .accuracy
 	; accuracy
 	ld a, [wPlayerMoveAccuracy] ; this is a 0-255 value, need to get 0-100

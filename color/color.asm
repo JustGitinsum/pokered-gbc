@@ -144,6 +144,10 @@ ENDC
 	ld e, 4
 	farcall LoadSGBPalette
 
+	; Catagory icons (physical/special/status)
+	ld d, PAL_LOGO1
+	ld e, 5
+	farcall LoadSGBPalette
 
 	; Now set the tilemap
 
@@ -197,7 +201,14 @@ ENDC
 	ld hl, W2_TilesetPaletteMap + 12 * 20
 	ld a, 0
 	ld b, 6
-	ld c, 20
+	ld c, 14 ; was 20
+	call FillBox
+
+	; Catagory icons (physical/special/status)
+	ld hl, W2_TilesetPaletteMap + $114
+	ld a, 5 ; palette slot
+	ld b, 1 ; Determins Height. was 2
+	ld c, 2 ; Determines width. Was 4
 	call FillBox
 
 	xor a

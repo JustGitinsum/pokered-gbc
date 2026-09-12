@@ -111,6 +111,9 @@ INCLUDE "color/status_screen.asm"
 IF GEN_2_GRAPHICS
 EXPBarGraphics:  INCBIN "gfx/gs/exp_bar.2bpp"
 EXPBarGraphicsEnd:
+MovePhysicalGraphics:  INCBIN "gfx/battle/physical.2bpp"
+MoveSpecialGraphics:  INCBIN "gfx/battle/special.2bpp"
+MoveStatusGraphics:  INCBIN "gfx/battle/stats.2bpp"
 ENDC
 
 
