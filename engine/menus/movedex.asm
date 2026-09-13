@@ -131,36 +131,41 @@ ShowNextMoveData:
 	; ld [hli], a
 	; inc a
 	; ld [hl], a
-
-	ld a, [wPlayerMovePower]
-	and a
-	jr nz, .needsMarker
+	farcall DetermineMoveCategory
+	ld a, [wPlayerMoveCategory]
+	cp MOVE_PHYSICAL
+	jr z, .physicalAttack
+	cp MOVE_SPECIAL
+	jr z, .specialAttack
+	; ld a, [wPlayerMovePower]
+	; and a
+	; jr nz, .needsMarker
 	ld b, $D5 ; Status icon
 	jr .copyMarker
-.needsMarker ;;; is the Move Special or Physical?
-	ld a, [wPlayerMoveType]
-	cp SPECIAL ; types >= SPECIAL are all special
-	ld a, [wPlayerMoveNum]
-	ld b, a
-	jr nc, .isSpecialActuallyPhysical
-	jr .isPhysicalActuallySpecial
-.isSpecialActuallyPhysical
-	ld hl, SpecialToPhysicalMovesIcon
-.specialPhysicalLoop
-	ld a, [hli]
-	cp b
-	jr z, .physicalAttack
-	cp $ff ; end of list
-	jr nz, .specialPhysicalLoop ; keep checking list
-	jr .specialAttack ; Not actually a physical move
-.isPhysicalActuallySpecial
-	ld hl, PhysicalToSpecialMovesIcon
-.physicalSpecialLoop
-	ld a, [hli]
-	cp b
-	jr z, .specialAttack ; the physical move is actually special
-	cp $ff ; end of list
-	jr nz, .physicalSpecialLoop ; keep checking list
+; .needsMarker ;;; is the Move Special or Physical?
+; 	ld a, [wPlayerMoveType]
+; 	cp SPECIAL ; types >= SPECIAL are all special
+; 	ld a, [wPlayerMoveNum]
+; 	ld b, a
+; 	jr nc, .isSpecialActuallyPhysical
+; 	jr .isPhysicalActuallySpecial
+; .isSpecialActuallyPhysical
+; 	ld hl, SpecialToPhysicalMovesIcon
+; .specialPhysicalLoop
+; 	ld a, [hli]
+; 	cp b
+; 	jr z, .physicalAttack
+; 	cp $ff ; end of list
+; 	jr nz, .specialPhysicalLoop ; keep checking list
+; 	jr .specialAttack ; Not actually a physical move
+; .isPhysicalActuallySpecial
+; 	ld hl, PhysicalToSpecialMovesIcon
+; .physicalSpecialLoop
+; 	ld a, [hli]
+; 	cp b
+; 	jr z, .specialAttack ; the physical move is actually special
+; 	cp $ff ; end of list
+; 	jr nz, .physicalSpecialLoop ; keep checking list
 	; fallthrough
 .physicalAttack
 	ld b, $D1 ; Physical icon
@@ -404,74 +409,74 @@ MovedexTitleDividerLine:
 
 ;;; Should be identical to data/battle/physical_special_split.asm
 
-PhysicalToSpecialMovesIcon:
-; Bug
-        db SIGNAL_BEAM
-; Flying
-        db GUST
-        db CHATTER
-        db AIR_SLASH
-; Fighting
-        db AURA_SPHERE
-; Poison
-        db ACID
-        db SLUDGE
-        db BELCH
-        db SLUDGE_BOMB
-; Rock
-        db ANCIENTPOWER
-        db POWER_GEM
-; Ground
-        db EARTH_POWER
-; Steel
-        db FLASH_CANNON
-; Ghost
-        db OMINOUS_WIND
-        db SHADOW_BALL
-; Normal
-        db HYPER_BEAM
-        db HYPER_VOICE
-        db SWIFT
-        db TRI_ATTACK
-        db -1 ; end
+; PhysicalToSpecialMovesIcon:
+; ; Bug
+;         db SIGNAL_BEAM
+; ; Flying
+;         db GUST
+;         db CHATTER
+;         db AIR_SLASH
+; ; Fighting
+;         db AURA_SPHERE
+; ; Poison
+;         db ACID
+;         db SLUDGE
+;         db BELCH
+;         db SLUDGE_BOMB
+; ; Rock
+;         db ANCIENTPOWER
+;         db POWER_GEM
+; ; Ground
+;         db EARTH_POWER
+; ; Steel
+;         db FLASH_CANNON
+; ; Ghost
+;         db OMINOUS_WIND
+;         db SHADOW_BALL
+; ; Normal
+;         db HYPER_BEAM
+;         db HYPER_VOICE
+;         db SWIFT
+;         db TRI_ATTACK
+;         db -1 ; end
 
-SpecialToPhysicalMovesIcon:
-; Fire
-        db FIRE_PUNCH
-        db FIRE_FANG
-        db FLAME_WHEEL
-        db HEAT_CRASH
-; Water
-        db CRABHAMMER
-        db RAZOR_SHELL
-        db WATERFALL
-; Grass
-        db RAZOR_LEAF
-        db TRAILBLAZE
-        db BULLET_SEED
-        db LEAF_BLADE
-        db VINE_WHIP
-; Bug
-        db SILVER_WIND
-; Electric
-        db THUNDERPUNCH
-        db THUNDERFANG
-        db AURA_WHEEL
-; Psychic
-        db ZEN_HEADBUTT
-        db PSYCHO_CUT
-; Dark
-        db BITE
-        db THIEF
-        db SUCKER_PUNCH
-        db CRUNCH
-; Fairy
-        db PLAY_ROUGH
-; Dragon
-        db DRAGON_CLAW
-        db OUTRAGE
-; Ice
-        db ICE_PUNCH
-        db ICE_FANG
-        db GLACIAL_LANCE
-        db -1 ; end
+; SpecialToPhysicalMovesIcon:
+; ; Fire
+;         db FIRE_PUNCH
+;         db FIRE_FANG
+;         db FLAME_WHEEL
+;         db HEAT_CRASH
+; ; Water
+;         db CRABHAMMER
+;         db RAZOR_SHELL
+;         db WATERFALL
+; ; Grass
+;         db RAZOR_LEAF
+;         db TRAILBLAZE
+;         db BULLET_SEED
+;         db LEAF_BLADE
+;         db VINE_WHIP
+; ; Bug
+;         db SILVER_WIND
+; ; Electric
+;         db THUNDERPUNCH
+;         db THUNDERFANG
+;         db AURA_WHEEL
+; ; Psychic
+;         db ZEN_HEADBUTT
+;         db PSYCHO_CUT
+; ; Dark
+;         db BITE
+;         db THIEF
+;         db SUCKER_PUNCH
+;         db CRUNCH
+; ; Fairy
+;         db PLAY_ROUGH
+; ; Dragon
+;         db DRAGON_CLAW
+;         db OUTRAGE
+; ; Ice
+;         db ICE_PUNCH
+;         db ICE_FANG
+;         db GLACIAL_LANCE
+;         db -1 ; end

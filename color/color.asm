@@ -145,7 +145,23 @@ ENDC
 	farcall LoadSGBPalette
 
 	; Catagory icons (physical/special/status)
-	ld d, PAL_LOGO1
+	farcall DetermineMoveCategory
+	ld a, [wPlayerMoveCategory]
+    cp MOVE_PHYSICAL
+    jr z, .physicalAttack
+	cp MOVE_SPECIAL
+    jr z, .specialAttack
+	jr .moveStatus
+.physicalAttack
+	ld d, PAL_REDMON
+	jr .nextStep
+.specialAttack
+	ld d, PAL_BLUEMON
+	jr .nextStep
+.moveStatus
+	ld d, PAL_GRAYMON
+	jr .nextStep
+.nextStep
 	ld e, 5
 	farcall LoadSGBPalette
 

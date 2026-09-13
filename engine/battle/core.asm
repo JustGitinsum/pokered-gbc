@@ -3003,40 +3003,24 @@ PrintMenuItem:: ; edited, double colon
 	; lb bc, 1, 2
 	; call PrintNumber
 	; power
-	ld a, [wPlayerMovePower]
-	cp 2 ; if power 0 or 1, print text "-@"
-	jr c, .noPower
+	; ld a, [wPlayerMovePower]
+	; cp 2 ; if power 0 or 1, print text "-@"
+	; jr c, .noPower
 	hlcoord 15, 14
 	ld de, wPlayerMovePower
 	lb bc, 1, 3
 	call PrintNumber
-	; jr .accuracy
-
 	; move catagory
-	ld a, [wPlayerMoveType]
-	cp SPECIAL ; types >= SPECIAL are all special
-	ld a, [wPlayerMoveNum]
-	ld b, a
-	jr nc, .isSpecialActuallyPhysical
-	jr .isPhysicalActuallySpecial
-.isSpecialActuallyPhysical
-	ld hl, SpecialToPhysicalMoves
-.specialPhysicalLoop
-	ld a, [hli]
-	cp b
-	jr z, .physicalAttack
-	cp $ff ; end of list
-	jr nz, .specialPhysicalLoop ; keep checking list
-	jr .specialAttack ; Not actually a physical move
-.isPhysicalActuallySpecial
-	ld hl, PhysicalToSpecialMoves
-.physicalSpecialLoop
-	ld a, [hli]
-	cp b
-	jr z, .specialAttack ; the physical move is actually special
-	cp $ff ; end of list
-	jr nz, .physicalSpecialLoop ; keep checking list
-	; fallthrough
+	call DetermineMoveCategory
+
+	ld a, [wPlayerMoveCategory]
+    cp MOVE_PHYSICAL
+    jr z, .physicalAttack
+
+	cp MOVE_SPECIAL
+    jr z, .specialAttack
+	jr .noPower 
+
 .physicalAttack
 	hlcoord 16, 13
 	ld de, PhysicalCatText
@@ -3059,7 +3043,10 @@ PrintMenuItem:: ; edited, double colon
 	call PlaceString
 	farcall LoadStatusMoveIcon
 .accuracy
-	; accuracy
+	ld b, SET_PAL_BATTLE
+	call RunPaletteCommand
+
+	; accuracy starts here
 	ld a, [wPlayerMoveAccuracy] ; this is a 0-255 value, need to get 0-100
 	ld hl, 0
 	ld b, 0
@@ -4633,6 +4620,58 @@ GetDamageVarsForEnemyAttack:
 	and a
 	and a
 	ret
+
+DetermineMoveCategory:
+	ld a, [wPlayerMovePower]
+	cp 2 ; if power 0 or 1, then it's a status move
+	jr c, .status
+    ld a, [wPlayerMoveType]
+    cp SPECIAL
+    ld a, [wPlayerMoveNum]
+    ld b, a
+    jr nc, .checkSpecialToPhysical
+
+.checkPhysicalToSpecial
+    ld hl, PhysicalToSpecialMoves
+
+.loopPhysicalToSpecial
+    ld a, [hli]
+    cp b
+    jr z, .special
+    cp $ff
+    jr nz, .loopPhysicalToSpecial
+
+    ; Normal physical move
+    ld a, PHYSICAL
+    ld [wPlayerMoveCategory], a
+    ret
+
+.checkSpecialToPhysical
+    ld hl, SpecialToPhysicalMoves
+
+.loopSpecialToPhysical
+    ld a, [hli]
+    cp b
+    jr z, .physical
+    cp $ff
+    jr nz, .loopSpecialToPhysical
+
+    ; Normal special move
+ .special
+   ld a, MOVE_SPECIAL
+    ld [wPlayerMoveCategory], a
+    ret
+
+.physical
+    ld a, MOVE_PHYSICAL
+    ld [wPlayerMoveCategory], a
+    ret
+
+.status
+    ld a, MOVE_STATUS
+    ld [wPlayerMoveCategory], a
+    ret
+
 
 INCLUDE "data/battle/physical_special_split.asm"
 

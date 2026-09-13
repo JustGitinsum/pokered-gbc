@@ -29,3 +29,9 @@ DEF SPECIAL EQU const_value
 	const FAIRY
 
 DEF NUM_TYPES EQU const_value
+
+; Move categories
+    const_def
+    const MOVE_PHYSICAL
+    const MOVE_SPECIAL
+    const MOVE_STATUS

@@ -1359,7 +1359,8 @@ NEXTU
 wPlayerNumHits:: db
 ENDU
 
-	ds 2
+	ds 1 ; was 2
+wPlayerMoveCategory:: db
 
 ; non-zero when an item or move that allows escape from battle was used
 wEscapedFromBattle:: db
