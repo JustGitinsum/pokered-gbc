@@ -219,6 +219,7 @@
 	const HYPER_VOICE
 	const AURA_WHEEL
 	const GLACIAL_LANCE
+	const BITTER_BLADE
 	const STRUGGLE     ; a5
 DEF NUM_ATTACKS EQU const_value - 1
 

@@ -213,5 +213,6 @@ MoveNames::
 	li "HYPER VOICE"
 	li "AURA WHEEL"
 	li "GLACIALLANCE"
+	li "BITTER BLADE"
 	li "STRUGGLE"
 	assert_list_length NUM_ATTACKS

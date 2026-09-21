@@ -35,6 +35,7 @@ SpecialToPhysicalMoves:
         db FIRE_FANG
         db FLAME_WHEEL
         db HEAT_CRASH
+        db BITTER_BLADE
 ; Water
         db CRABHAMMER
         db RAZOR_SHELL

@@ -215,6 +215,7 @@ MovedexEntryPointers:
 	dw HyperVoiceDexEntry
 	dw AuraWheelDexEntry
 	dw GlacialLanceDexEntry
+	dw BitterBladeDexEntry
 	dw StruggleDexEntry
 	assert_table_length NUM_ATTACKS
 
@@ -857,6 +858,9 @@ AuraWheelDexEntry:
 	text_end
 GlacialLanceDexEntry:
 	text_far _GenericNoAdditionalEffectText
+	text_end
+BitterBladeDexEntry:
+	text_far _GenericAbsorbMoveText
 	text_end
 StruggleDexEntry:
 	text_far _Generic25PercentRecoilText

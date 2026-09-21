@@ -215,5 +215,6 @@ MoveSoundTable:
 	db SFX_BATTLE_0B,          $00, $40 ; HYPER_VOICE
 	db SFX_BATTLE_0D,          $00, $a0 ; AURA_WHEEL
 	db SFX_BATTLE_29,          $f0, $e0 ; GLACIAL_LANCE
+	db SFX_NOT_VERY_EFFECTIVE, $01, $ff ; BITTER_BLADE
 	assert_table_length NUM_ATTACKS
 	db SFX_BATTLE_0B,          $00, $80

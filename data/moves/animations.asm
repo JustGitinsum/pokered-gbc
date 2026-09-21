@@ -213,6 +213,7 @@ AttackAnimationPointers:
 	dw HyperVoiceAnim
 	dw AuraWheelAnim
 	dw GlacialLanceAnim
+	dw BitterBladeAnim
 	dw StruggleAnim
 	assert_table_length NUM_ATTACKS
 
@@ -380,8 +381,8 @@ VicegripAnim:
 
 DrainKissAnim:
 	battle_anim LOVELY_KISS, SUBANIM_0_HEART_1_MUSIC, 0, 6
-	battle_anim NO_MOVE, SUBANIM_0_CIRCLES_1_SQUARES_CENTERING_ENEMY, 0, 6
-	battle_anim NO_MOVE, SUBANIM_0_CIRCLE_1_SQUARE_TOSS_BACK, 0, 6
+	battle_anim NO_MOVE, SUBANIM_0_CIRCLES_1_SQUARES_CENTERING_ENEMY, 3, 6
+	battle_anim NO_MOVE, SUBANIM_0_CIRCLE_1_SQUARE_TOSS_BACK, 3, 6
 	db -1 ; end
 
 SacredSwordAnim:
@@ -1455,6 +1456,15 @@ GlacialLanceAnim:
 	battle_anim BLIZZARD, SE_DARK_SCREEN_FLASH
 	battle_anim NO_MOVE, SUBANIM_30bis, 0, 6
 	battle_anim HYPER_FANG, SUBANIM_0_STAR_THRICE, 0, 4
+	db -1 ; end
+
+BitterBladeAnim:
+	battle_anim CUT, SUBANIM_0_SLICE, 0, 4
+	battle_anim NO_MOVE, SE_DARK_SCREEN_FLASH
+	battle_anim FIRE_SPIN, SUBANIM_1_FLAME_COLUMN_2, 1, 6
+	battle_anim NO_MOVE, SUBANIM_1_FLAME_COLUMN_3, 1, 6
+	battle_anim MEGA_DRAIN, SUBANIM_0_CIRCLES_1_SQUARES_CENTERING_ENEMY, 3, 6
+	battle_anim NO_MOVE, SUBANIM_0_CIRCLE_1_SQUARE_TOSS_BACK, 3, 6
 	db -1 ; end
 
 ElectrowebAnim:
