@@ -1,18 +1,149 @@
 DisplayItemDescription::
-    ld a, [wCurListMenuItem]
+	ld hl, wStatusFlags5
+	set BIT_NO_TEXT_DELAY, [hl]
+	ld a, [wCurListMenuItem]
 	dec a
 	cp a, HM01 - 1
-	jr c, .ok
-	sub HM01 - FLOOR_B2F
-	ld hl, ItemDescriptionPointers
-	ld bc, 5
+	jp c, .NonTMHMs
+	; TM/HM move description
+	; move name box
+	hlcoord 0, 12
+	lb bc, 4, 18  ; height, width
+	call TextBoxBorder
+	; Get move name from TM/HM and add it to wStringBuffer
+	ld a, [wCurListMenuItem]
+	sub TM01
+	jr nc, .tm
+	add NUM_TM_HM
+.tm
+	inc a
+	ld [wTempTMHM], a
+	predef TMToMove
+	ld a, [wTempTMHM]
+	ld [wPlayerMoveNum], a
+	dec a
+	ld hl, Moves
+	ld bc, MOVE_LENGTH
 	call AddNTimes
-	jp PrintBigText
-.ok
+	ld de, wPlayerMoveNum
+	ld a, BANK(Moves)
+	call FarCopyData
+	ld a, [wTempTMHM]
+	ld [wNamedObjectIndex], a
+	call GetMoveName
+	call CopyToStringBuffer
+	ld a, ITEM_NAME
+	ld [wNameListType], a
+
+	; Print Move Name
+	hlcoord 2, 14
+	ld de, wStringBuffer
+	call PlaceString
+	; Move stats box
+	hlcoord 14, 12  
+	ld b, 4  
+	ld c, 4 
+	call TextBoxBorder
+	; place Power, Accuracy, and PP iconography
+	hlcoord 1, 13
+	ld de, ContainsText3
+	call PlaceString
+	hlcoord 18, 14
+	ld de, SwordText3
+	call PlaceString
+	hlcoord 1, 15
+	ld de, TypeText3
+	call PlaceString
+	hlcoord 18, 15
+	ld de, PercentText3
+	call PlaceString
+	hlcoord 18, 16
+	ld de, PPText3
+	call PlaceString
+	; place Power, Accuracy, and PP values	
+	hlcoord 15, 14
+	ld de, wPlayerMovePower
+	lb bc, 1, 3
+	call PrintNumber ; prints the c-digit, b-byte value at de
+	; Check move catagory
+	farcall DetermineMoveCategory
+	ld a, [wPlayerMoveCategory]
+	cp MOVE_PHYSICAL
+    jr z, .physicalAttack
+	cp MOVE_SPECIAL
+    jr z, .specialAttack
+	jr .noPower
+.physicalAttack
+	hlcoord 16, 13
+	ld de, PhysicalCatText3
+	call PlaceString
+	; farcall LoadPhysicalMoveIcon
+	jr .accuracy
+.specialAttack
+	hlcoord 16, 13
+	ld de, SpecialCatText3
+	call PlaceString
+	; farcall LoadSpecialMoveIcon
+	jr .accuracy
+.noPower
+	hlcoord 15, 14
+	ld de, NoPowerText3
+	call PlaceString
+	hlcoord 16, 13
+	ld de, StatusCatText3
+	call PlaceString
+	; farcall LoadStatusMoveIcon
+.accuracy
+	ld a, [wPlayerMoveAccuracy] ; this is a 0-255 value, need to get 0-100
+	ld hl, 0
+	ld b, 0
+	ld c, a
+	ld a, 100
+	call AddNTimes ; add bc to hl a times
+	ld bc, 255
+	add hl, bc     ; add 255 for rounding correctly
+	ld a, h        ; effectively divides hl by 256
+	ld [wStringBuffer], a
+	hlcoord 15, 15
+	ld de, wStringBuffer
+	lb bc, 1, 3
+	call PrintNumber
+	; place Max PP value
+	hlcoord 16, 16
+	ld de, wPlayerMoveMaxPP ; wMaxPP
+	lb bc, 1, 2
+	call PrintNumber
+	; move type
+	hlcoord 2, 16
+	predef PrintMoveType
+	ld hl, wStatusFlags5
+    res BIT_NO_TEXT_DELAY, [hl]
+	ret
+.NonTMHMs
 	ld hl, ItemDescriptionPointers
 	ld bc, 5
 	call AddNTimes
 	jp PrintText
+
+SwordText3:
+	db "ら@"
+PercentText3:
+	db "%@"
+PPText3:
+	db "りる@"
+NoPowerText3:
+	db "---@"
+ContainsText3:
+	db "MOVE:@"
+TypeText3:
+	db "TYPE:@"
+PhysicalCatText3:
+	db "れろ@"
+SpecialCatText3:
+	db "わを@"
+StatusCatText3:
+	db "んっ@"
+
 
 ItemDescriptionPointers:
 	text_far _MasterBallDescription
@@ -37,13 +168,13 @@ ItemDescriptionPointers:
 	text_end
 	text_far _LinkStoneDescription
 	text_end
-	text_far _BurnHealDescription
+	text_far _DawnStoneDescription
 	text_end
-	text_far _IceHealDescription
+	text_far _DuskStoneDescription
 	text_end
-	text_far _AwakeningDescription
+	text_far _MetalCoatDescription
 	text_end
-	text_far _ParlyzHealDescription
+	text_far _RazorFangDescription
 	text_end
 	text_far _FullRestoreDescription
 	text_end
@@ -123,13 +254,13 @@ ItemDescriptionPointers:
 	text_end
 	text_far _MaxReviveDescription
 	text_end
-	text_far _GuardSpecDescription
+	text_far _JawFossilDescription
 	text_end
 	text_far _SuperRepelDescription
 	text_end
 	text_far _MaxRepelDescription
 	text_end
-	text_far _DireHitDescription
+	text_far _SailFossilDescription
 	text_end
 	text_far _UnusedItemDescription
 	text_end
@@ -181,113 +312,113 @@ ItemDescriptionPointers:
 	text_end
 	text_far _MaxElixerDescription
 	text_end
-	text_far _HM01Description
-	text_end
-	text_far _HM02Description
-	text_end
-	text_far _HM03Description
-	text_end
-	text_far _HM04Description
-	text_end
-	text_far _HM05Description
-	text_end
-	text_far _TM01Description
-	text_end
-	text_far _TM02Description
-	text_end
-	text_far _TM03Description
-	text_end
-	text_far _TM04Description
-	text_end
-	text_far _TM05Description
-	text_end
-	text_far _TM06Description
-	text_end
-	text_far _TM07Description
-	text_end
-	text_far _TM08Description
-	text_end
-	text_far _TM09Description
-	text_end
-	text_far _TM10Description
-	text_end
-	text_far _TM11Description
-	text_end
-	text_far _TM12Description
-	text_end
-	text_far _TM13Description
-	text_end
-	text_far _TM14Description
-	text_end
-	text_far _TM15Description
-	text_end
-	text_far _TM16Description
-	text_end
-	text_far _TM17Description
-	text_end
-	text_far _TM18Description
-	text_end
-	text_far _TM19Description
-	text_end
-	text_far _TM20Description
-	text_end
-	text_far _TM21Description
-	text_end
-	text_far _TM22Description
-	text_end
-	text_far _TM23Description
-	text_end
-	text_far _TM24Description
-	text_end
-	text_far _TM25Description
-	text_end
-	text_far _TM26Description
-	text_end
-	text_far _TM27Description
-	text_end
-	text_far _TM28Description
-	text_end
-	text_far _TM29Description
-	text_end
-	text_far _TM30Description
-	text_end
-	text_far _TM31Description
-	text_end
-	text_far _TM32Description
-	text_end
-	text_far _TM33Description
-	text_end
-	text_far _TM34Description
-	text_end
-	text_far _TM35Description
-	text_end
-	text_far _TM36Description
-	text_end
-	text_far _TM37Description
-	text_end
-	text_far _TM38Description
-	text_end
-	text_far _TM39Description
-	text_end
-	text_far _TM40Description
-	text_end
-	text_far _TM41Description
-	text_end
-	text_far _TM42Description
-	text_end
-	text_far _TM43Description
-	text_end
-	text_far _TM44Description
-	text_end
-	text_far _TM45Description
-	text_end
-	text_far _TM46Description
-	text_end
-	text_far _TM47Description
-	text_end
-	text_far _TM48Description
-	text_end
-	text_far _TM49Description
-	text_end
-	text_far _TM50Description
-	text_end
+	; text_far _HM01Description
+	; text_end
+	; text_far _HM02Description
+	; text_end
+	; text_far _HM03Description
+	; text_end
+	; text_far _HM04Description
+	; text_end
+	; text_far _HM05Description
+	; text_end
+	; text_far _TM01Description
+	; text_end
+	; text_far _TM02Description
+	; text_end
+	; text_far _TM03Description
+	; text_end
+	; text_far _TM04Description
+	; text_end
+	; text_far _TM05Description
+	; text_end
+	; text_far _TM06Description
+	; text_end
+	; text_far _TM07Description
+	; text_end
+	; text_far _TM08Description
+	; text_end
+	; text_far _TM09Description
+	; text_end
+	; text_far _TM10Description
+	; text_end
+	; text_far _TM11Description
+	; text_end
+	; text_far _TM12Description
+	; text_end
+	; text_far _TM13Description
+	; text_end
+	; text_far _TM14Description
+	; text_end
+	; text_far _TM15Description
+	; text_end
+	; text_far _TM16Description
+	; text_end
+	; text_far _TM17Description
+	; text_end
+	; text_far _TM18Description
+	; text_end
+	; text_far _TM19Description
+	; text_end
+	; text_far _TM20Description
+	; text_end
+	; text_far _TM21Description
+	; text_end
+	; text_far _TM22Description
+	; text_end
+	; text_far _TM23Description
+	; text_end
+	; text_far _TM24Description
+	; text_end
+	; text_far _TM25Description
+	; text_end
+	; text_far _TM26Description
+	; text_end
+	; text_far _TM27Description
+	; text_end
+	; text_far _TM28Description
+	; text_end
+	; text_far _TM29Description
+	; text_end
+	; text_far _TM30Description
+	; text_end
+	; text_far _TM31Description
+	; text_end
+	; text_far _TM32Description
+	; text_end
+	; text_far _TM33Description
+	; text_end
+	; text_far _TM34Description
+	; text_end
+	; text_far _TM35Description
+	; text_end
+	; text_far _TM36Description
+	; text_end
+	; text_far _TM37Description
+	; text_end
+	; text_far _TM38Description
+	; text_end
+	; text_far _TM39Description
+	; text_end
+	; text_far _TM40Description
+	; text_end
+	; text_far _TM41Description
+	; text_end
+	; text_far _TM42Description
+	; text_end
+	; text_far _TM43Description
+	; text_end
+	; text_far _TM44Description
+	; text_end
+	; text_far _TM45Description
+	; text_end
+	; text_far _TM46Description
+	; text_end
+	; text_far _TM47Description
+	; text_end
+	; text_far _TM48Description
+	; text_end
+	; text_far _TM49Description
+	; text_end
+	; text_far _TM50Description
+	; text_end

@@ -147,6 +147,8 @@ DisplayPokemartDialogue_::
 	ld hl, PokemartBuyingGreetingText
 	call PrintText
 	call SaveScreenTilesToBuffer1
+	xor a
+	ld [wCurrentMenuItem], a
 .buyMenuLoop
 	call LoadScreenTilesFromBuffer1
 	ld a, MONEY_BOX
@@ -158,7 +160,6 @@ DisplayPokemartDialogue_::
 	ld a, h
 	ld [wListPointer + 1], a
 	xor a
-	ld [wCurrentMenuItem], a
 	inc a
 	ld [wPrintItemPrices], a
 	inc a ; a = 2 (PRICEDITEMLISTMENU)
@@ -190,9 +191,9 @@ DisplayPokemartDialogue_::
 
 ; The following code is supposed to check if the player chose No, but the above
 ; check already catches it.
-	ld a, [wChosenMenuItem]
-	dec a
-	jr z, .buyMenuLoop
+	; ld a, [wChosenMenuItem]
+	; dec a
+	; jr z, .buyMenuLoop
 
 .buyItem
 	call .isThereEnoughMoney

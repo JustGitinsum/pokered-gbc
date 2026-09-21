@@ -52,11 +52,11 @@ HandleMenuInput_::
 	ld b, a
 	bit B_PAD_UP, a
 	jr z, .checkIfDownPressed
-.upPressed
+; .upPressed
 	ld a, [wCurrentMenuItem] ; selected menu item
 	and a ; already at the top of the menu?
 	jr z, .alreadyAtTop
-.notAtTop
+; .notAtTop
 	dec a
 	ld [wCurrentMenuItem], a ; move selected menu item up one space
 	jr .checkOtherKeys

@@ -1,22 +1,20 @@
 _DisplayChooseQuantityMenu::
     ; text box dimensions/coordinates for just quantity
-	hlcoord 15, 7
-	ld b, 1 ; height
-	ld c, 3 ; width
+	hlcoord 15, 9
+	lb bc, 1, 3 ; height, width
 	ld a, [wListMenuID]
 	cp PRICEDITEMLISTMENU
 	jr nz, .drawTextBox
     ; text box dimensions/coordinates for quantity and price
-	hlcoord 7, 7
-	ld b, 1  ; height
-	ld c, 11 ; width
+	hlcoord 7, 9
+	lb bc, 1, 11 ; height, width
 .drawTextBox
 	call TextBoxBorder
-	hlcoord 16, 8
+	hlcoord 16, 10
 	ld a, [wListMenuID]
 	cp PRICEDITEMLISTMENU
 	jr nz, .printInitialQuantity
-	hlcoord 8, 8
+	hlcoord 8, 10
 .printInitialQuantity
 	ld de, InitialQuantityText
 	call PlaceString
@@ -90,7 +88,7 @@ _DisplayChooseQuantityMenu::
 	ld a, [wMaxItemQuantity]
 	ld [hl], a
 .handleNewQuantity
-	hlcoord 17, 8
+	hlcoord 17, 10
 	ld a, [wListMenuID]
 	cp PRICEDITEMLISTMENU
 	jr nz, .printQuantity
@@ -129,13 +127,13 @@ _DisplayChooseQuantityMenu::
 	ldh a, [hDivideBCDQuotient + 2]
 	ldh [hMoney + 2], a
 .skipHalvingPrice
-	hlcoord 12, 8
+	hlcoord 12, 10
 	ld de, SpacesBetweenQuantityAndPriceText
 	call PlaceString
 	ld de, hMoney ; total price
 	ld c, 3 | LEADING_ZEROES | MONEY_SIGN
 	call PrintBCDNumber
-	hlcoord 9, 8
+	hlcoord 9, 10
 .printQuantity
 	ld de, wItemQuantity ; current quantity
 	lb bc, LEADING_ZEROES | 1, 2 ; 1 byte, 2 digits

@@ -378,7 +378,7 @@ StartMenu_Item::  ; marcelnote - BICYCLE does not have special handling anymore
 	ldcoord_a 5, 4
 	ldcoord_a 5, 6
 	ldcoord_a 5, 8
-	; ldcoord_a 5, 10
+	ldcoord_a 5, 10
 	call PlaceUnfilledArrowMenuCursor
 	xor a
 	ld [wMenuItemToSwap], a
@@ -392,7 +392,7 @@ StartMenu_Item::  ; marcelnote - BICYCLE does not have special handling anymore
 	ld [wTextBoxID], a
 	call DisplayTextBoxID
 	ld hl, wTopMenuItemY
-	ld a, 7
+	ld a, 8
 	ld [hli], a ; top menu item Y
 	ld a, 14
 	ld [hli], a ; top menu item X

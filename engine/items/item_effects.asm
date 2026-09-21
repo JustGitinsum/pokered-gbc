@@ -2312,17 +2312,17 @@ ItemUseTMHM:
 	ret c
 	jp RemoveUsedItem
 
-BootedUpTMText:
-	text_far _BootedUpTMText
-	text_end
+; BootedUpTMText:
+; 	text_far _BootedUpTMText
+; 	text_end
 
-BootedUpHMText:
-	text_far _BootedUpHMText
-	text_end
+; BootedUpHMText:
+; 	text_far _BootedUpHMText
+; 	text_end
 
-TeachMachineMoveText:
-	text_far _TeachMachineMoveText
-	text_end
+; TeachMachineMoveText:
+; 	text_far _TeachMachineMoveText
+; 	text_end
 
 MonCannotLearnMachineMoveText:
 	text_far _MonCannotLearnMachineMoveText
