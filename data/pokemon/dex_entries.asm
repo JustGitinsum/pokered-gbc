@@ -30,7 +30,7 @@ PokedexEntryPointers:
 	dw BlastoiseDexEntry
 	dw PinsirDexEntry
 	dw TangelaDexEntry
-	dw MissingNoDexEntry
+	dw CrobatDexEntry
 	dw MissingNoDexEntry
 	dw GrowlitheDexEntry
 	dw OnixDexEntry
@@ -1259,3 +1259,10 @@ MissingNoDexEntry:
 	db 10 ; 1.0 m
 	dw 100 ; 10.0 kg
 	db "コメント　さくせいちゅう@" ; コメント作成中 (Comment to be written)
+
+CrobatDexEntry:
+	db "BAT@"
+	db 5,11
+	dw 1650
+	; text_far _CrobatDexEntry
+	text_end

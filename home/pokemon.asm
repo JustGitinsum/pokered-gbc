@@ -438,7 +438,7 @@ GetMonHeader::
 	ld [hl], e ; write front sprite pointer
 	inc hl
 	ld [hl], d
-	jr .done
+	; jr .done
 ; .mew
 ; 	ld hl, MewBaseStats
 ; 	ld de, wMonHeader

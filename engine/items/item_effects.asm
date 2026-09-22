@@ -28,10 +28,10 @@ ItemUsePtrTable:
 	dw ItemUsePokedex    ; POKEDEX
 	dw ItemUseEvoStone   ; MOON_STONE
 	dw ItemUseEvoStone   ; LINK_STONE was ItemUseMedicine   ; ANTIDOTE
-	dw ItemUseMedicine   ; BURN_HEAL
-	dw ItemUseMedicine   ; ICE_HEAL
-	dw ItemUseMedicine   ; AWAKENING
-	dw ItemUseMedicine   ; PARLYZ_HEAL
+	dw ItemUseEvoStone   ; DAWN_STONE Was BURN_HEAL
+	dw ItemUseEvoStone   ; DUSK_STONE Was ICE_HEAL
+	dw ItemUseEvoStone   ; METAL_COAT Was AWAKENING
+	dw ItemUseEvoStone   ; RAZOR_FANG Was PARLYZ_HEAL
 	dw ItemUseMedicine   ; FULL_RESTORE
 	dw ItemUseMedicine   ; MAX_POTION
 	dw ItemUseMedicine   ; HYPER_POTION
@@ -809,6 +809,7 @@ ItemUseEvoStone:
 	call PlaySoundWaitForCurrent
 	call WaitForSoundToFinish
 	callfar TryEvolvingMon ; try to evolve pokemon
+.stop	
 	ld a, [wEvolutionOccurred]
 	and a
 	jr z, .noEffect

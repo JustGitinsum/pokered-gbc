@@ -42,7 +42,7 @@ EvosMovesPointerTable:
 	dw BlastoiseEvosMoves
 	dw PinsirEvosMoves
 	dw TangelaEvosMoves
-	dw MissingNo1FEvosMoves
+	dw CrobatEvosMoves
 	dw MissingNo20EvosMoves
 	dw GrowlitheEvosMoves
 	dw OnixEvosMoves
@@ -633,10 +633,18 @@ TangelaEvosMoves:
 	db 49, GROWTH
 	db 0
 
-MissingNo1FEvosMoves:
+CrobatEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
+	db 12, WING_ATTACK
+	db 15, QUICK_ATTACK
+	db 18, SILVER_WIND
+	db 22, HYPNOSIS
+	db 26, HAZE
+	db 30, CONFUSE_RAY
+	db 34, POISON_FANG
+	db 50, LEECH_LIFE
 	db 0
 
 MissingNo20EvosMoves:
@@ -1814,6 +1822,7 @@ HypnoEvosMoves:
 
 GolbatEvosMoves:
 ; Evolutions
+	db EVOLVE_ITEM, DUSK_STONE, 1, CROBAT
 	db 0
 ; Learnset
 	db 12, WING_ATTACK
