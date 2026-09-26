@@ -226,6 +226,10 @@ IF GEN_2_GRAPHICS
 	const PAL_MEWTWO     ; $BA
 	const PAL_MEW        ; $BB
 	const PAL_CROBAT     ; $BC
+	; const PAL_STEELIX
+	; const PAL_SCIZOR	  ; $BD
+	; const PAL_KINGDRA
+	; const PAL_ANNIHILAPE
 	const PAL_YOUNGSTER     ; $BC
 	const PAL_BUGCATCHER    ; $BD
 	const PAL_LASS          ; $BE

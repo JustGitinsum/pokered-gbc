@@ -156,5 +156,9 @@
 	const DEX_MEWTWO     ; 150
 	const DEX_MEW        ; 151
 	const DEX_CROBAT      ; 152
-
+	const DEX_STEELIX     ; 153
+	const DEX_SCIZOR      ; 154
+	const DEX_KINGDRA     ; 155
+	const DEX_ANNIHILAPE  ; 156
+	
 DEF NUM_POKEMON EQU const_value - 1

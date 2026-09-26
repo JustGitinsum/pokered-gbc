@@ -2,7 +2,7 @@ EscapeRopeTilesets:
 	db OVERWORLD
 	db FOREST
 	db GYM
-	db SHIP
+	; db SHIP
 	db CEMETERY
 	db HOUSE
 	db LOBBY

@@ -43,7 +43,7 @@ EvosMovesPointerTable:
 	dw PinsirEvosMoves
 	dw TangelaEvosMoves
 	dw CrobatEvosMoves
-	dw MissingNo20EvosMoves
+	dw AnnihilapeEvosMoves
 	dw GrowlitheEvosMoves
 	dw OnixEvosMoves
 	dw FearowEvosMoves
@@ -67,7 +67,7 @@ EvosMovesPointerTable:
 	dw ElectabuzzEvosMoves
 	dw MagnetonEvosMoves
 	dw KoffingEvosMoves
-	dw MissingNo38EvosMoves
+	dw ScizorEvosMoves
 	dw MankeyEvosMoves
 	dw SeelEvosMoves
 	dw DiglettEvosMoves
@@ -126,7 +126,7 @@ EvosMovesPointerTable:
 	dw WeedleEvosMoves
 	dw KakunaEvosMoves
 	dw BeedrillEvosMoves
-	dw MissingNo73EvosMoves
+	dw KingdraEvosMoves
 	dw DodrioEvosMoves
 	dw PrimeapeEvosMoves
 	dw DugtrioEvosMoves
@@ -138,7 +138,7 @@ EvosMovesPointerTable:
 	dw MetapodEvosMoves
 	dw ButterfreeEvosMoves
 	dw MachampEvosMoves
-	dw MissingNo7FEvosMoves
+	dw SteelixEvosMoves
 	dw GolduckEvosMoves
 	dw HypnoEvosMoves
 	dw GolbatEvosMoves
@@ -564,6 +564,7 @@ GastlyEvosMoves:
 
 ScytherEvosMoves:
 ; Evolutions
+	db EVOLVE_ITEM, METAL_COAT, 1, SCIZOR
 	db 0
 ; Learnset
 	db 12, WING_ATTACK
@@ -647,10 +648,20 @@ CrobatEvosMoves:
 	db 50, LEECH_LIFE
 	db 0
 
-MissingNo20EvosMoves:
+AnnihilapeEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
+	db 6, KARATE_CHOP
+	db 10, ROCK_TOMB
+	db 16, LOW_SWEEP
+	db 18, SUCKER_PUNCH
+	db 22, BULLDOZE
+	db 28, HEADBUTT
+	db 35, RAGE_FIST
+	db 40, SCREECH
+	db 44, CLOSE_COMBAT
+	db 50, OUTRAGE
 	db 0
 
 GrowlitheEvosMoves:
@@ -671,6 +682,7 @@ GrowlitheEvosMoves:
 
 OnixEvosMoves:
 ; Evolutions
+	db EVOLVE_ITEM, METAL_COAT, 1, STEELIX
 	db 0
 ; Learnset ;From ZA and PLA Mix
 	db 11, BULLDOZE
@@ -959,10 +971,18 @@ KoffingEvosMoves:
 	db 48, EXPLOSION
 	db 0
 
-MissingNo38EvosMoves:
+ScizorEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
+	db 12, WING_ATTACK
+	db 16, DOUBLE_TEAM
+	db 24, SLASH
+	db 28, FOCUS_ENERGY
+	db 32, AGILITY
+	db 36, AIR_SLASH
+	db 40, X_SCISSOR
+	db 44, SWORDS_DANCE
 	db 0
 
 MankeyEvosMoves:
@@ -1359,9 +1379,10 @@ HorseaEvosMoves:
 
 SeadraEvosMoves:
 ; Evolutions
+	db EVOLVE_ITEM, WATER_STONE, 1, KINGDRA
 	db 0
 ; Learnset
-	db 19, SMOKESCREEN
+	; db 19, SMOKESCREEN
 	db 20, DRAGONBREATH
 	db 25, BUBBLEBEAM
 	db 28, AURORA_BEAM
@@ -1647,10 +1668,16 @@ BeedrillEvosMoves:
 	db 43, AGILITY
 	db 0
 
-MissingNo73EvosMoves:
+KingdraEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
+	; db 19, SMOKESCREEN
+	db 20, DRAGONBREATH
+	db 25, BUBBLEBEAM
+	db 28, AURORA_BEAM
+	db 30, AGILITY
+	db 45, HYDRO_PUMP
 	db 0
 
 DodrioEvosMoves:
@@ -1674,6 +1701,7 @@ PrimeapeEvosMoves:
 ; Evolutions
 ;	db EVOLVE_MOVE, RAGE_FIST, 1
 ;	dw ANILAPE
+	db EVOLVE_ITEM, DUSK_STONE, 1, ANNIHILAPE
 	db 0
 ; Learnset
 	db 6, KARATE_CHOP
@@ -1786,10 +1814,16 @@ MachampEvosMoves:
 	db 54, CLOSE_COMBAT
 	db 0
 
-MissingNo7FEvosMoves:
+SteelixEvosMoves:
 ; Evolutions
 	db 0
-; Learnset
+; Learnset ;From ZA and PLA Mix
+	db 11, BULLDOZE
+	db 22, HEADBUTT
+	db 24, SCREECH
+	db 44, DIG
+	db 48, IRON_HEAD
+	db 52, ROCK_SLIDE
 	db 0
 
 GolduckEvosMoves:

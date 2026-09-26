@@ -2,12 +2,12 @@ VictoryRoad2FWildMons:
 	def_grass_wildmons 10 ; encounter rate
 	db 22, MACHOP
 	db 24, GEODUDE
-	db 26, ZUBAT
-	db 36, ONIX
-	db 39, ONIX
-	db 42, ONIX
+	db 26, CROBAT
+	db 36, STEELIX
+	db 39, STEELIX
+	db 42, STEELIX
 	db 41, MACHOKE
-	db 40, GOLBAT
+	db 40, CROBAT
 	db 40, MAROWAK
 	db 43, GRAVELER
 	end_grass_wildmons

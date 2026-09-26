@@ -152,4 +152,8 @@ MonPartyData:
 	nybble ICON_MON       ; Mewtwo
 	nybble ICON_MON       ; Mew
 	nybble ICON_MON       ; Crobat
+	nybble ICON_SNAKE     ; Steelix
+	nybble ICON_BUG       ; Scizor
+	nybble ICON_WATER     ; Kingdra
+	nybble ICON_MON       ; Annihilape
 	end_nybble_array NUM_POKEMON

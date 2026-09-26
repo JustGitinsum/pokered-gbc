@@ -38,7 +38,7 @@
 	const PINSIR             ; $1D
 	const TANGELA            ; $1E
 	const CROBAT             ; $1F
-	const_skip               ; $20
+	const ANNIHILAPE         ; $20
 	const GROWLITHE          ; $21
 	const ONIX               ; $22
 	const FEAROW             ; $23
@@ -62,7 +62,7 @@
 	const ELECTABUZZ         ; $35
 	const MAGNETON           ; $36
 	const KOFFING            ; $37
-	const_skip               ; $38
+	const SCIZOR             ; $38
 	const MANKEY             ; $39
 	const SEEL               ; $3A
 	const DIGLETT            ; $3B
@@ -121,7 +121,7 @@
 	const WEEDLE             ; $70
 	const KAKUNA             ; $71
 	const BEEDRILL           ; $72
-	const_skip               ; $73
+	const KINGDRA            ; $73
 	const DODRIO             ; $74
 	const PRIMEAPE           ; $75
 	const DUGTRIO            ; $76
@@ -133,7 +133,7 @@
 	const METAPOD            ; $7C
 	const BUTTERFREE         ; $7D
 	const MACHAMP            ; $7E
-	const_skip               ; $7F
+	const STEELIX            ; $7F
 	const GOLDUCK            ; $80
 	const HYPNO              ; $81
 	const GOLBAT             ; $82

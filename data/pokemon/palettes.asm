@@ -154,6 +154,10 @@ IF GEN_2_GRAPHICS
 	db PAL_MEWTWO
 	db PAL_MEW
 	db PAL_CROBAT
+	db PAL_ONIX;PAL_STEELIX
+	db PAL_VILEPLUME;PAL_SCIZOR
+	db PAL_SEADRA;PAL_KINGDRA
+	db PAL_VILEPLUME;PAL_ANNIHILAPE
 TrainerPalettes: ; Gen II trainer sprites are given their own palettes
 	db PAL_HERO
 	db PAL_YOUNGSTER
@@ -358,6 +362,7 @@ ELSE
 	db PAL_MEWMON    ; MEWTWO
 	db PAL_MEWMON    ; MEW
 	db PAL_PURPLEMON ; CROBAT
+	db PAL_PURPLEMON ; ANNIHILAPE
 	assert_table_length NUM_POKEMON + 1
 ; Trainers use index 0 of MonsterPalettes
 ENDC
