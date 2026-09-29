@@ -155,5 +155,7 @@ MonPartyData:
 	nybble ICON_SNAKE     ; Steelix
 	nybble ICON_BUG       ; Scizor
 	nybble ICON_WATER     ; Kingdra
+	nybble ICON_QUADRUPED ; Zorua
+	nybble ICON_MON       ; Zoroark
 	nybble ICON_MON       ; Annihilape
 	end_nybble_array NUM_POKEMON

@@ -155,5 +155,7 @@ INCLUDE "data/pokemon/base_stats/crobat.asm"
 INCLUDE "data/pokemon/base_stats/steelix.asm"
 INCLUDE "data/pokemon/base_stats/scizor.asm"
 INCLUDE "data/pokemon/base_stats/kingdra.asm"
+INCLUDE "data/pokemon/base_stats/zorua_h.asm"
+INCLUDE "data/pokemon/base_stats/zoroark_h.asm"
 INCLUDE "data/pokemon/base_stats/annihilape.asm"
 	assert_table_length NUM_POKEMON

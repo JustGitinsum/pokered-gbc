@@ -159,6 +159,8 @@
 	const DEX_STEELIX     ; 153
 	const DEX_SCIZOR      ; 154
 	const DEX_KINGDRA     ; 155
-	const DEX_ANNIHILAPE  ; 156
+	const DEX_ZORUA       ; 156
+	const DEX_ZOROARK     ; 157
+	const DEX_ANNIHILAPE  ; 158
 	
 DEF NUM_POKEMON EQU const_value - 1

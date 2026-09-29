@@ -105,8 +105,8 @@ EvosMovesPointerTable:
 	dw KabutopsEvosMoves
 	dw HorseaEvosMoves
 	dw SeadraEvosMoves
-	dw MissingNo5EEvosMoves
-	dw MissingNo5FEvosMoves
+	dw ZoruaEvosMoves
+	dw ZoroarkEvosMoves
 	dw SandshrewEvosMoves
 	dw SandslashEvosMoves
 	dw OmanyteEvosMoves
@@ -1390,10 +1390,36 @@ SeadraEvosMoves:
 	db 45, HYDRO_PUMP
 	db 0
 
-MissingNo5EEvosMoves:
+ZoruaEvosMoves:
+; Evolutions
+	db EVOLVE_LEVEL, 30, ZOROARK
+	db 0
+; Learnset SV
+	db 7, METAL_CLAW
+	db 12, OMINOUS_WIND
+	db 16, POUNCE
+	db 20, FURY_SWIPES
+	db 24, AGILITY
+	db 28, SLASH
+	db 33, MYSTICAL_FIRE
+	db 37, MOONLIGHT
+	db 40, SHADOW_BALL
+	db 0
+
+ZoroarkEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
+	db 9, METAL_CLAW
+	db 15, OMINOUS_WIND
+	db 18, POUNCE
+	db 22, FURY_SWIPES
+	db 26, AGILITY
+	db 29, SLASH
+	db 35, MYSTICAL_FIRE
+	db 39, MOONLIGHT
+	db 42, SHADOW_BALL
+	db 60, SWORDS_DANCE
 	db 0
 
 MissingNo5FEvosMoves:

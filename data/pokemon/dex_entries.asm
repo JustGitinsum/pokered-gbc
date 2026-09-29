@@ -93,8 +93,8 @@ PokedexEntryPointers:
 	dw KabutopsDexEntry
 	dw HorseaDexEntry
 	dw SeadraDexEntry
-	dw MissingNoDexEntry
-	dw MissingNoDexEntry
+	dw ZoruaDexEntry
+	dw ZoroarkDexEntry
 	dw SandshrewDexEntry
 	dw SandslashDexEntry
 	dw OmanyteDexEntry
@@ -741,6 +741,20 @@ SeadraDexEntry:
 	db 3,11
 	dw 550
 	;text_far _SeadraDexEntry
+	text_end
+
+ZoruaDexEntry:
+	db "TRICKY@"
+	db 2,4
+	dw 27
+	;text_far _ZoruaDexEntry
+	text_end
+
+ZoroarkDexEntry:
+	db "ILLUSION@"
+	db 5,3
+	dw 1609
+	;text_far _ZoroarkDexEntry
 	text_end
 
 SandshrewDexEntry:

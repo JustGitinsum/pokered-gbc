@@ -710,7 +710,7 @@ ChannelerData:
 	db 23, GASTLY, GASTLY, 0
 	db 24, GASTLY, 0
 ; Pokémon Tower 3F
-	db 23, GASTLY, 0
+	db 23, ZORUA, 0
 	db 24, GASTLY, 0
 ; Unused
 	db 24, HAUNTER, 0
@@ -734,7 +734,7 @@ ChannelerData:
 	db 24, GASTLY, 0
 	db 22, HAUNTER, 0
 ; Pokémon Tower 6F
-	db 22, GASTLY, GASTLY, GASTLY, 0
+	db 22, ZORUA, GASTLY, GASTLY, 0
 	db 24, GASTLY, 0
 	db 24, GASTLY, 0
 ; Saffron Gym
@@ -743,7 +743,7 @@ ChannelerData:
 	db 33, GASTLY, GASTLY, HAUNTER, 0
 
 AgathaData:
-	db $FF, 56, GENGAR, 56, ANNIHILAPE, 55, HAUNTER, 58, ARBOK, 60, GENGAR, 0
+	db $FF, 56, GENGAR, 56, ANNIHILAPE, 55, ZOROARK, 58, ARBOK, 60, GENGAR, 0
 
 LanceData:
 	db $FF, 58, GYARADOS, 56, KINGDRA, 56, DRAGONAIR, 60, AERODACTYL, 62, DRAGONITE, 0
