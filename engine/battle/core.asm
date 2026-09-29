@@ -4154,203 +4154,203 @@ OHKOText:
 ; checks if a traded mon will disobey due to lack of badges
 ; stores whether the mon will use a move in Z flag
 CheckForDisobedience:
-	xor a
-	ld [wMonIsDisobedient], a
-	ld a, [wLinkState]
-	cp LINK_STATE_BATTLING
-	jr nz, .checkIfMonIsTraded
+; 	xor a
+; 	ld [wMonIsDisobedient], a
+; 	ld a, [wLinkState]
+; 	cp LINK_STATE_BATTLING
+; 	jr nz, .checkIfMonIsTraded
 	ld a, $1
 	and a
 	ret
-; compare the mon's original trainer ID with the player's ID to see if it was traded
-.checkIfMonIsTraded
-	ld hl, wPartyMon1OTID
-	ld bc, wPartyMon2 - wPartyMon1
-	ld a, [wPlayerMonNumber]
-	call AddNTimes
-	ld a, [wPlayerID]
-	cp [hl]
-	jr nz, .monIsTraded
-	inc hl
-	ld a, [wPlayerID + 1]
-	cp [hl]
-	jp z, .canUseMove
-; it was traded
-.monIsTraded
-; what level might disobey?
-	ld hl, wObtainedBadges
-	bit BIT_EARTHBADGE, [hl]
-	ld a, 101
-	jr nz, .next
-	bit BIT_MARSHBADGE, [hl]
-	ld a, 70
-	jr nz, .next
-	bit BIT_RAINBOWBADGE, [hl]
-	ld a, 50
-	jr nz, .next
-	bit BIT_CASCADEBADGE, [hl]
-	ld a, 30
-	jr nz, .next
-	ld a, 10
-.next
-	ld b, a
-	ld c, a
-	ld a, [wBattleMonLevel]
-	ld d, a
-	add b
-	ld b, a
-	jr nc, .noCarry
-	ld b, $ff ; cap b at $ff
-.noCarry
-	ld a, c
-	cp d
-	jp nc, .canUseMove
-.loop1
-	call BattleRandom
-	swap a
-	cp b
-	jr nc, .loop1
-	cp c
-	jp c, .canUseMove
-.loop2
-	call BattleRandom
-	cp b
-	jr nc, .loop2
-	cp c
-	jr c, .useRandomMove
-	ld a, d
-	sub c
-	ld b, a
-	call BattleRandom
-	swap a
-	sub b
-	jr c, .monNaps
-	cp b
-	jr nc, .monDoesNothing
-	ld hl, WontObeyText
-	call PrintText
-	call HandleSelfConfusionDamage
-	jp .cannotUseMove
-.monNaps
-	call BattleRandom
-	add a
-	swap a
-	and SLP_MASK
-	jr z, .monNaps ; keep trying until we get at least 1 turn of sleep
-	ld [wBattleMonStatus], a
-	ld hl, BeganToNapText
-	jr .printText
-.monDoesNothing
-	call BattleRandom
-	and $3
-	ld hl, LoafingAroundText
-	and a
-	jr z, .printText
-	ld hl, WontObeyText
-	dec a
-	jr z, .printText
-	ld hl, TurnedAwayText
-	dec a
-	jr z, .printText
-	ld hl, IgnoredOrdersText
-.printText
-	call PrintText
-	jr .cannotUseMove
-.useRandomMove
-	ld a, [wBattleMonMoves + 1]
-	and a ; is the second move slot empty?
-	jr z, .monDoesNothing ; mon will not use move if it only knows one move
-	ld a, [wPlayerDisabledMoveNumber]
-	and a
-	jr nz, .monDoesNothing
-	ld a, [wPlayerSelectedMove]
-	cp STRUGGLE
-	jr z, .monDoesNothing ; mon will not use move if struggling
-; check if only one move has remaining PP
-	ld hl, wBattleMonPP
-	push hl
-	ld a, [hli]
-	and PP_MASK
-	ld b, a
-	ld a, [hli]
-	and PP_MASK
-	add b
-	ld b, a
-	ld a, [hli]
-	and PP_MASK
-	add b
-	ld b, a
-	ld a, [hl]
-	and PP_MASK
-	add b
-	pop hl
-	push af
-	ld a, [wCurrentMenuItem]
-	ld c, a
-	ld b, $0
-	add hl, bc
-	ld a, [hl]
-	and PP_MASK
-	ld b, a
-	pop af
-	cp b
-	jr z, .monDoesNothing ; mon will not use move if only one move has remaining PP
-	ld a, $1
-	ld [wMonIsDisobedient], a
-	ld a, [wMaxMenuItem]
-	ld b, a
-	ld a, [wCurrentMenuItem]
-	ld c, a
-.chooseMove
-	call BattleRandom
-	and $3
-	cp b
-	jr nc, .chooseMove ; if the random number is greater than the move count, choose another
-	cp c
-	jr z, .chooseMove ; if the random number matches the move the player selected, choose another
-	ld [wCurrentMenuItem], a
-	ld hl, wBattleMonPP
-	ld e, a
-	ld d, $0
-	add hl, de
-	ld a, [hl]
-	and a ; does the move have any PP left?
-	jr z, .chooseMove ; if the move has no PP left, choose another
-	ld a, [wCurrentMenuItem]
-	ld c, a
-	ld b, $0
-	ld hl, wBattleMonMoves
-	add hl, bc
-	ld a, [hl]
-	ld [wPlayerSelectedMove], a
-	call GetCurrentMove
-.canUseMove
-	ld a, $1
-	and a ; clear Z flag
-	ret
-.cannotUseMove
-	xor a ; set Z flag
-	ret
+; ; compare the mon's original trainer ID with the player's ID to see if it was traded
+; .checkIfMonIsTraded
+; 	ld hl, wPartyMon1OTID
+; 	ld bc, wPartyMon2 - wPartyMon1
+; 	ld a, [wPlayerMonNumber]
+; 	call AddNTimes
+; 	ld a, [wPlayerID]
+; 	cp [hl]
+; 	jr nz, .monIsTraded
+; 	inc hl
+; 	ld a, [wPlayerID + 1]
+; 	cp [hl]
+; 	jp z, .canUseMove
+; ; it was traded
+; .monIsTraded
+; ; what level might disobey?
+; 	ld hl, wObtainedBadges
+; 	bit BIT_EARTHBADGE, [hl]
+; 	ld a, 101
+; 	jr nz, .next
+; 	bit BIT_MARSHBADGE, [hl]
+; 	ld a, 70
+; 	jr nz, .next
+; 	bit BIT_RAINBOWBADGE, [hl]
+; 	ld a, 50
+; 	jr nz, .next
+; 	bit BIT_CASCADEBADGE, [hl]
+; 	ld a, 30
+; 	jr nz, .next
+; 	ld a, 10
+; .next
+; 	ld b, a
+; 	ld c, a
+; 	ld a, [wBattleMonLevel]
+; 	ld d, a
+; 	add b
+; 	ld b, a
+; 	jr nc, .noCarry
+; 	ld b, $ff ; cap b at $ff
+; .noCarry
+; 	ld a, c
+; 	cp d
+; 	jp nc, .canUseMove
+; .loop1
+; 	call BattleRandom
+; 	swap a
+; 	cp b
+; 	jr nc, .loop1
+; 	cp c
+; 	jp c, .canUseMove
+; .loop2
+; 	call BattleRandom
+; 	cp b
+; 	jr nc, .loop2
+; 	cp c
+; 	jr c, .useRandomMove
+; 	ld a, d
+; 	sub c
+; 	ld b, a
+; 	call BattleRandom
+; 	swap a
+; 	sub b
+; 	jr c, .monNaps
+; 	cp b
+; 	jr nc, .monDoesNothing
+; 	ld hl, WontObeyText
+; 	call PrintText
+; 	call HandleSelfConfusionDamage
+; 	jp .cannotUseMove
+; .monNaps
+; 	call BattleRandom
+; 	add a
+; 	swap a
+; 	and SLP_MASK
+; 	jr z, .monNaps ; keep trying until we get at least 1 turn of sleep
+; 	ld [wBattleMonStatus], a
+; 	ld hl, BeganToNapText
+; 	jr .printText
+; .monDoesNothing
+; 	call BattleRandom
+; 	and $3
+; 	ld hl, LoafingAroundText
+; 	and a
+; 	jr z, .printText
+; 	ld hl, WontObeyText
+; 	dec a
+; 	jr z, .printText
+; 	ld hl, TurnedAwayText
+; 	dec a
+; 	jr z, .printText
+; 	ld hl, IgnoredOrdersText
+; .printText
+; 	call PrintText
+; 	jr .cannotUseMove
+; .useRandomMove
+; 	ld a, [wBattleMonMoves + 1]
+; 	and a ; is the second move slot empty?
+; 	jr z, .monDoesNothing ; mon will not use move if it only knows one move
+; 	ld a, [wPlayerDisabledMoveNumber]
+; 	and a
+; 	jr nz, .monDoesNothing
+; 	ld a, [wPlayerSelectedMove]
+; 	cp STRUGGLE
+; 	jr z, .monDoesNothing ; mon will not use move if struggling
+; ; check if only one move has remaining PP
+; 	ld hl, wBattleMonPP
+; 	push hl
+; 	ld a, [hli]
+; 	and PP_MASK
+; 	ld b, a
+; 	ld a, [hli]
+; 	and PP_MASK
+; 	add b
+; 	ld b, a
+; 	ld a, [hli]
+; 	and PP_MASK
+; 	add b
+; 	ld b, a
+; 	ld a, [hl]
+; 	and PP_MASK
+; 	add b
+; 	pop hl
+; 	push af
+; 	ld a, [wCurrentMenuItem]
+; 	ld c, a
+; 	ld b, $0
+; 	add hl, bc
+; 	ld a, [hl]
+; 	and PP_MASK
+; 	ld b, a
+; 	pop af
+; 	cp b
+; 	jr z, .monDoesNothing ; mon will not use move if only one move has remaining PP
+; 	ld a, $1
+; 	ld [wMonIsDisobedient], a
+; 	ld a, [wMaxMenuItem]
+; 	ld b, a
+; 	ld a, [wCurrentMenuItem]
+; 	ld c, a
+; .chooseMove
+; 	call BattleRandom
+; 	and $3
+; 	cp b
+; 	jr nc, .chooseMove ; if the random number is greater than the move count, choose another
+; 	cp c
+; 	jr z, .chooseMove ; if the random number matches the move the player selected, choose another
+; 	ld [wCurrentMenuItem], a
+; 	ld hl, wBattleMonPP
+; 	ld e, a
+; 	ld d, $0
+; 	add hl, de
+; 	ld a, [hl]
+; 	and a ; does the move have any PP left?
+; 	jr z, .chooseMove ; if the move has no PP left, choose another
+; 	ld a, [wCurrentMenuItem]
+; 	ld c, a
+; 	ld b, $0
+; 	ld hl, wBattleMonMoves
+; 	add hl, bc
+; 	ld a, [hl]
+; 	ld [wPlayerSelectedMove], a
+; 	call GetCurrentMove
+; .canUseMove
+; 	ld a, $1
+; 	and a ; clear Z flag
+; 	ret
+; .cannotUseMove
+; 	xor a ; set Z flag
+; 	ret
 
-LoafingAroundText:
-	text_far _LoafingAroundText
-	text_end
+; LoafingAroundText:
+; 	text_far _LoafingAroundText
+; 	text_end
 
-BeganToNapText:
-	text_far _BeganToNapText
-	text_end
+; BeganToNapText:
+; 	text_far _BeganToNapText
+; 	text_end
 
-WontObeyText:
-	text_far _WontObeyText
-	text_end
+; WontObeyText:
+; 	text_far _WontObeyText
+; 	text_end
 
-TurnedAwayText:
-	text_far _TurnedAwayText
-	text_end
+; TurnedAwayText:
+; 	text_far _TurnedAwayText
+; 	text_end
 
-IgnoredOrdersText:
-	text_far _IgnoredOrdersText
-	text_end
+; IgnoredOrdersText:
+; 	text_far _IgnoredOrdersText
+; 	text_end
 
 ; sets b, c, d, and e for the CalculateDamage routine in the case of an attack by the player mon
 GetDamageVarsForPlayerAttack:

@@ -214,19 +214,19 @@ GainExperience: ; marcelnote - refactored
 	dec a                     ; have we already boosted exp at beginning for exp all?
 	jr z, .skipTradedMonBoost ; if yes, traded mon boost does not stack with upgraded exp all boost
 	; traded mon?
-	ld a, [wPlayerID]
-	sub [hl]
-	inc hl      ; hl = wPartyMon<n>OTID + 1
-	jr nz, .tradedMon
-	ld [wGainBoostedExp], a ; here a = 0
-	ld a, [wPlayerID + 1]
-	sub [hl]
-	jr z, .addGainedExp
-.tradedMon
-	call BoostExp ; traded mon exp boost
-	ld a, 2
-	ld [wGainBoostedExp], a
-	jr .addGainedExp
+; 	ld a, [wPlayerID]
+; 	sub [hl]
+; 	inc hl      ; hl = wPartyMon<n>OTID + 1
+; 	jr nz, .tradedMon
+; 	ld [wGainBoostedExp], a ; here a = 0
+; 	ld a, [wPlayerID + 1]
+; 	sub [hl]
+; 	jr z, .addGainedExp
+; .tradedMon
+; 	call BoostExp ; traded mon exp boost
+; 	ld a, 2
+; 	ld [wGainBoostedExp], a
+; 	jr .addGainedExp
 .skipTradedMonBoost
 	inc hl      ; hl = wPartyMon<n>OTID + 1
 

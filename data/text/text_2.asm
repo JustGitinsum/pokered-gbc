@@ -1147,35 +1147,35 @@ _OHKOText::
 	text "One-hit KO!"
 	prompt
 
-_LoafingAroundText::
-	text_ram wBattleMonNick
-	text " is"
-	line "loafing around."
-	prompt
+; _LoafingAroundText::
+; 	text_ram wBattleMonNick
+; 	text " is"
+; 	line "loafing around."
+; 	prompt
 
-_BeganToNapText::
-	text_ram wBattleMonNick
-	text " began"
-	line "to nap!"
-	prompt
+; _BeganToNapText::
+; 	text_ram wBattleMonNick
+; 	text " began"
+; 	line "to nap!"
+; 	prompt
 
-_WontObeyText::
-	text_ram wBattleMonNick
-	text " won't"
-	line "obey!"
-	prompt
+; _WontObeyText::
+; 	text_ram wBattleMonNick
+; 	text " won't"
+; 	line "obey!"
+; 	prompt
 
-_TurnedAwayText::
-	text_ram wBattleMonNick
-	text " turned"
-	line "away!"
-	prompt
+; _TurnedAwayText::
+; 	text_ram wBattleMonNick
+; 	text " turned"
+; 	line "away!"
+; 	prompt
 
-_IgnoredOrdersText::
-	text_ram wBattleMonNick
-	text_start
-	line "ignored orders!"
-	prompt
+; _IgnoredOrdersText::
+; 	text_ram wBattleMonNick
+; 	text_start
+; 	line "ignored orders!"
+; 	prompt
 
 _SubstituteTookDamageText::
 	text "The SUBSTITUTE"

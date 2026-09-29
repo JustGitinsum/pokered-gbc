@@ -1400,7 +1400,6 @@ ZoruaEvosMoves:
 	db 16, POUNCE
 	db 20, FURY_SWIPES
 	db 24, AGILITY
-	db 28, SLASH
 	db 33, MYSTICAL_FIRE
 	db 37, MOONLIGHT
 	db 40, SHADOW_BALL
@@ -1415,11 +1414,11 @@ ZoroarkEvosMoves:
 	db 18, POUNCE
 	db 22, FURY_SWIPES
 	db 26, AGILITY
-	db 29, SLASH
 	db 35, MYSTICAL_FIRE
 	db 39, MOONLIGHT
 	db 42, SHADOW_BALL
 	db 60, SWORDS_DANCE
+	db EVOLUTION_MOVE, SLASH
 	db 0
 
 MissingNo5FEvosMoves:
