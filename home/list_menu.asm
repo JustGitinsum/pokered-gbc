@@ -235,22 +235,23 @@ DisplayListMenuIDLoop::
 	jp DisplayListMenuID
 
 DisplayChooseQuantityMenu::
-	    ; text box dimensions/coordinates for just quantity
-	hlcoord 15, 9
-	lb bc, 1, 3 ; height, width
+	hlcoord 15, 9 ; coordinates of TOSS item text box
+	lb bc, 1, 3 ; height, width of TOSS item text box
+	; Check for Shop menu
 	ld a, [wListMenuID]
 	cp PRICEDITEMLISTMENU
 	jr nz, .drawTextBox
     ; text box dimensions/coordinates for quantity and price
-	hlcoord 7, 9
-	lb bc, 1, 11 ; height, width
+	hlcoord 7, 7
+	lb bc, 3, 11 ; height, width
 .drawTextBox
 	call TextBoxBorder
-	hlcoord 16, 10
+	hlcoord 16, 10 ; coordinates TOSS item quantity text
 	ld a, [wListMenuID]
 	cp PRICEDITEMLISTMENU
 	jr nz, .printInitialQuantity
-	hlcoord 8, 10
+	callfar PrintHowManyOfThisItemAreOwned ; How many of this item are owned
+	hlcoord 8, 10 ; coordinates SELL item quantity text
 .printInitialQuantity
 	ld de, InitialQuantityText
 	call PlaceString

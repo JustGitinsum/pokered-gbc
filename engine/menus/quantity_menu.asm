@@ -1,5 +1,6 @@
 _DisplayChooseQuantityMenu::
-    ; text box dimensions/coordinates for just quantity
+    call PrintHowManyOfThisItemAreOwned ; new
+	; text box dimensions/coordinates for just quantity
 	hlcoord 15, 9
 	lb bc, 1, 3 ; height, width
 	ld a, [wListMenuID]
@@ -148,3 +149,41 @@ _DisplayChooseQuantityMenu::
 	ld [wMenuItemToSwap], a ; 0 means no item is currently being swapped
 	ld a, $ff
 	ret
+
+PrintHowManyOfThisItemAreOwned::
+	; hlcoord 8, 7
+	; lb bc, 1, 10  ; height and width
+	; call TextBoxBorder
+; print "Owned" text
+	hlcoord 12, 8
+	ld de, OwnedText
+	call PlaceString
+; determins how many we have and print accordingly
+	hlcoord 17, 8
+	ld de, zeroText
+	call PlaceString
+	ld a, [wCurItem]
+	ld b, a
+	predef GetQuantityOfItemInBag
+	ld a, b
+	cp 99
+	jr nc, .bigNumber
+; 0-98 of the item
+	ld [wArrayForTemporaryStorage], a
+	hlcoord 17, 8
+	ld de, wArrayForTemporaryStorage ; current quantity
+	lb bc, 1, 2 ; 1 byte, 2 digits
+	jp PrintNumber
+.bigNumber
+	hlcoord 17, 8
+	ld de, ManyItemsText
+	jp PlaceString
+
+OwnedText::
+	db "Bag ×@"
+
+zeroText::
+	db "0@"
+
+ManyItemsText::
+	db "99@"

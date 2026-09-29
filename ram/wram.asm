@@ -876,6 +876,7 @@ wRightGBMonSpecies:: db
 
 wMiscFlags:: db
 
+
 ;;;;;;;;;; PureRGBnote: CHANGED: this previously empty space of 9 bytes was used by new variables
 ;	ds 9
 
@@ -2252,7 +2253,8 @@ wLinkEnemyTrainerName:: ds NAME_LENGTH
 
 wSerialEnemyDataBlock:: ; ds $1a8
 
-	ds 9
+wArrayForTemporaryStorage:: ds 9 ; new	
+	;ds 9
 
 wEnemyPartyCount:: db
 wEnemyPartySpecies:: ds PARTY_LENGTH + 1
