@@ -21,7 +21,7 @@ DebugNewGameParty: ; unreferenced except in _DEBUG
 	db MEW, 5
 	db ZAPDOS, 56
 	db MOLTRES, 56
-	db ARTICUNO, 57
+	db ARTICUNO, 99
 	db PIKACHU, 5
 	db -1 ; end
 
@@ -128,10 +128,10 @@ IF DEF(_DEBUG)
 .key_items_end
 
 	; Complete the Pokédex.
-	ld hl, wPokedexOwned
-	call DebugSetPokedexEntries
-	ld hl, wPokedexSeen
-	call DebugSetPokedexEntries
+	; ld hl, wPokedexOwned
+	; call DebugSetPokedexEntries
+	; ld hl, wPokedexSeen
+	; call DebugSetPokedexEntries
 	SetEvent EVENT_GOT_POKEDEX
 
 	; Rival chose Squirtle,

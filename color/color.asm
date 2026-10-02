@@ -227,6 +227,13 @@ ENDC
 	ld c, 2 ; Determines width. Was 4
 	call FillBox
 
+	; Set the Enemy pokemon extra palettes. This is done after the tilemap is set so that the enemy pokemon's palette is applied to the correct tiles.
+	ld a, [wEnemyMonSpecies2]
+	ld b, a
+	ld a, PIC_CONTEXT_BATTLE
+	ld hl, PokemonPicPaletteRects
+	call ApplyPokemonPicPaletteRects
+
 	xor a
 	ld [W2_TileBasedPalettes], a ; Use a direct color map instead of assigning colors to tiles
 	ld a, 3
@@ -344,6 +351,7 @@ SetPal_TownMap:
 .whiteSprite
 	ld a, SPR_PAL_EMOJI
 	jr .colorslockedin
+
 ; Status screen
 SetPal_StatusScreen:
 	ld a, [wCurPartySpecies]
@@ -377,7 +385,6 @@ ENDC
 	ld d, a
 	ld e, 0
 	farcall LoadSGBPalette
-
 
 	; Set palette map
 	xor a
@@ -423,6 +430,13 @@ IF GEN_2_GRAPHICS
 	jr nz, .expLoop
 ENDC
 
+	; Set the pokemon's picture extra palette
+	ld a, [wCurPartySpecies]
+	ld b, a
+	ld a, PIC_CONTEXT_STATUS
+	ld hl, PokemonPicPaletteRects
+	call ApplyPokemonPicPaletteRects
+
 	xor a
 	ldh [rWBK], a
 	ret
@@ -446,6 +460,10 @@ ELSE
 ENDC
 	ld e, 1
 	farcall LoadSGBPalette
+
+    ; ld d, PAL_REDMON ; Replace with your chosen palette
+    ; ld e, 2             ; Background palette slot 2
+    ; farcall LoadSGBPalette
 
 	ld bc, 20 * 18
 	ld hl, W2_TilesetPaletteMap
@@ -471,6 +489,13 @@ ENDC
 	add hl, de
 	dec b
 	jr nz, .pokeLoop
+
+    ; Accent tiles, relative to the Pokédex picture area.
+	ld a, [wCurPartySpecies]
+	ld b, a
+	ld a, PIC_CONTEXT_POKEDEX
+	ld hl, PokemonPicPaletteRects
+	call ApplyPokemonPicPaletteRects
 
 	CALL_INDIRECT ClearSpritePaletteMap
 
@@ -854,6 +879,14 @@ SetPal_PokemonWholeScreen:
 	ld a, 3
 	ld [W2_StaticPaletteMapChanged], a
 
+	; After the routine clears W2_TilesetPaletteMap to palette 0:
+	; Use slot 1 for the accent (the routine initially fills it with PAL_MEWMON).
+	ld a, [wWholeScreenPaletteMonSpecies]
+	ld b, a
+	ld a, PIC_CONTEXT_EVOLUTION
+	ld hl, PokemonPicPaletteRects
+	call ApplyPokemonPicPaletteRects
+
 	xor a
 	ldh [rWBK], a
 	ret
@@ -1036,6 +1069,111 @@ LoadTitleMonTilesAndPalettes:
 	farcall TitleScroll ; removed from caller to make space for hook
 	ret
 
+; A = picture context, B = species, HL = PokemonPicPaletteRects table.
+; Each entry is: context, species, palette ID, palette slot,
+; map offset (word), height, width. A context byte of $ff ends the table.
+ApplyPokemonPicPaletteRects:
+	ld c, b ; Preserve species for the table scan.
+	ld b, a ; Preserve context for the table scan.
+.loop
+	ld a, [hli] ; Context
+	cp $ff
+	ret z
+	cp b
+	jr nz, .skipEntry
+
+	ld a, [hli] ; Species
+	cp c
+	jr nz, .skipEntryData
+
+	ld a, [hli] ; Palette ID
+	ld d, a
+	ld a, [hli] ; Palette slot
+	ld e, a
+	push bc
+	push hl
+	push de
+	farcall LoadSGBPalette
+	pop de
+	pop hl
+	pop bc
+
+	push bc
+	ld a, e ; Keep palette slot while reading the rectangle.
+	push af
+	ld a, [hli] ; Map offset, low byte
+	ld e, a
+	ld a, [hli] ; Map offset, high byte
+	ld d, a
+	ld a, [hli] ; Height
+	ld b, a
+	ld a, [hli] ; Width
+	ld c, a
+	push hl ; Save the next table entry.
+	ld hl, W2_TilesetPaletteMap
+	add hl, de
+	pop de
+	pop af
+	push de
+	call FillBox
+	pop hl
+	pop bc
+
+	ld a, 3
+	ld [W2_StaticPaletteMapChanged], a
+	jr .loop
+
+.skipEntry
+	; Context didn't match; skip the remaining seven bytes in this entry.
+	ld de, 7
+	add hl, de
+	jr .loop
+
+.skipEntryData
+	; Species didn't match; skip the remaining six bytes in this entry.
+	ld de, 6
+	add hl, de
+	jr .loop
+
+; context, species, palette data ID, palette slot, map offset, height, width
+PokemonPicPaletteRects:
+;STARMIE
+	db PIC_CONTEXT_BATTLE, STARMIE, PAL_REDMON, 6
+	dw 3 * SCREEN_WIDTH + 11 + 3 ; enemy image starts at screen x=11
+	db 2, 3
+	db PIC_CONTEXT_BATTLE, STARMIE, PAL_REDMON, 6
+	dw 5 * SCREEN_WIDTH + 11 + 4
+	db 1, 1
+
+	db PIC_CONTEXT_STATUS, STARMIE, PAL_REDMON, 2
+	dw 3 * SCREEN_WIDTH + 3
+	db 2, 3
+	db PIC_CONTEXT_STATUS, STARMIE, PAL_REDMON, 2
+	dw 5 * SCREEN_WIDTH + 4
+	db 1, 1
+
+	db PIC_CONTEXT_POKEDEX, STARMIE, PAL_REDMON, 2
+	dw 21 + 3 * SCREEN_WIDTH + 2
+	db 2, 3
+	db PIC_CONTEXT_POKEDEX, STARMIE, PAL_REDMON, 2
+	dw 21 + 5 * SCREEN_WIDTH + 3
+	db 1, 1
+	
+	db PIC_CONTEXT_EVOLUTION, STARMIE, PAL_REDMON, 1
+    dw 5 * SCREEN_WIDTH + 9 ; screen x=9, y=5
+    db 2, 3
+    db PIC_CONTEXT_EVOLUTION, STARMIE, PAL_REDMON, 1
+    dw 7 * SCREEN_WIDTH + 10 ; screen x=10, y=7
+    db 1, 1
+
+    ; db PIC_CONTEXT_HOF, STARMIE, PAL_REDMON, 1
+    ; dw 6 * SCREEN_WIDTH + 13
+    ; db 2, 3
+    ; db PIC_CONTEXT_HOF, STARMIE, PAL_REDMON, 1
+    ; dw 8 * SCREEN_WIDTH + 14
+    ; db 1, 1
+
+    db $ff ; end marker: context
 
 ; Everything else goes in bank $2C (unused by original game)
 SECTION "bank2C", ROMX

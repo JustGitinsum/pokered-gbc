@@ -102,6 +102,7 @@ INCLUDE "engine/items/tms.asm"
 ; INCLUDE "engine/battle/end_of_battle.asm" ; moved to newCode
 ; INCLUDE "engine/battle/move_effects/recoil.asm" ; moved to battle engine 9 
 ; INCLUDE "engine/battle/move_effects/conversion.asm"
+INCLUDE "engine/battle/move_effects/haze.asm"
 INCLUDE "engine/battle/get_trainer_name.asm"
 INCLUDE "engine/math/random.asm"
 INCLUDE "engine/pokemon/read_tm_learnsets.asm"
@@ -216,7 +217,6 @@ INCLUDE "gfx/trade.asm"
 INCLUDE "engine/battle/move_effects/heal.asm"
 INCLUDE "engine/battle/move_effects/transform.asm"
 INCLUDE "engine/battle/move_effects/reflect_light_screen.asm"
-INCLUDE "engine/battle/move_effects/haze.asm"
 
 INCLUDE "color/draw_hud_pokeball_gfx.asm"
 

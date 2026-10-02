@@ -33,6 +33,14 @@ DEF PALETTE_SIZE EQU NUM_PAL_COLORS * PAL_COLOR_SIZE
 DEF SET_PAL_PARTY_MENU_HP_BARS EQU $fc
 DEF SET_PAL_DEFAULT EQU $ff
 
+; Pokemon picture palette-map contexts
+DEF PIC_CONTEXT_BATTLE    EQU $00
+DEF PIC_CONTEXT_STATUS    EQU $01
+DEF PIC_CONTEXT_POKEDEX   EQU $02
+DEF PIC_CONTEXT_EVOLUTION EQU $03
+; DEF PIC_CONTEXT_HOF       EQU $04
+
+
 ; sgb palettes
 ; SuperPalettes indexes (see data/sgb/sgb_palettes.asm)
 	const_def
