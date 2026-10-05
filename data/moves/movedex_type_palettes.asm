@@ -99,3 +99,70 @@ TypeGraphicMapping:
 
 _PsychicTypeGBCIcon:
 	dw PsychicTypeGBCIcon
+
+; input: d = type ID
+LoadTypeIconSm:
+    ld e, $c9
+
+; input: d = type ID, e = first tile ID for the icon
+LoadTypeIconSmAt:
+    ld a, e
+    ld l, a
+    ld h, 0
+    bit 7, a
+    jr z, .frontPicTiles
+    sub $80
+    ld l, a
+    ld bc, vFont
+    jr .getDestination
+.frontPicTiles
+    ld bc, vFrontPic
+.getDestination
+    REPT 4
+        add hl, hl
+    ENDR
+    add hl, bc
+    push hl
+    ld hl, TypeGraphicMappingSm
+    ld a, d
+    ld b, 0
+    ld c, a
+    add hl, bc
+    add hl, bc
+    ld a, [hli]
+    ld e, a
+    ld a, [hl]
+    ld d, a
+    lb bc, BANK(NormalTypeIconSm), 8
+    pop hl
+    jp CopyVideoData
+
+TypeGraphicMappingSm:
+    table_width 2
+
+    dw NormalTypeIconSm   ; $00 NORMAL
+    dw FightingTypeIconSm ; $01 FIGHTING
+    dw FlyingTypeIconSm   ; $02 FLYING
+    dw PoisonTypeIconSm   ; $03 POISON
+    dw GroundTypeIconSm   ; $04 GROUND
+    dw RockTypeIconSm     ; $05 ROCK
+    dw NormalTypeIconSm   ; $06 BIRD: fallback until a Bird icon is available
+    dw BugTypeIconSm      ; $07 BUG
+    dw GhostTypeIconSm    ; $08 GHOST
+    dw SteelTypeIconSm    ; $09 STEEL
+
+    REPT UNUSED_TYPES_END - UNUSED_TYPES
+        dw NormalTypeIconSm ; unused type fallback
+    ENDR
+
+    dw FireTypeIconSm     ; $14 FIRE
+    dw WaterTypeIconSm    ; $15 WATER
+    dw GrassTypeIconSm    ; $16 GRASS
+    dw ElectricTypeIconSm ; $17 ELECTRIC
+    dw PsychicTypeIconSm  ; $18 PSYCHIC
+    dw IceTypeIconSm      ; $19 ICE
+    dw DragonTypeIconSm   ; $1A DRAGON
+    dw DarkTypeIconSm     ; $1B DARK
+    dw FairyTypeIconSm    ; $1C FAIRY
+
+    assert_table_length NUM_TYPES

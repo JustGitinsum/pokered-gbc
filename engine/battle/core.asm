@@ -340,8 +340,30 @@ MainInBattleLoop:
 	push af
 	call LoadScreenTilesFromBuffer1
 	call DrawHUDsAndHPBars
+
+	ld a, ICE ; this is to ensure the the EXP Bar is blue (Same color as Ice type icon)
+	ld [wPlayerMoveType], a
+
+IF GEN_2_GRAPHICS
+	; The player cancelled, so restore the EXP-bar palette.
+	ld d, PAL_EXP
+	ld e, 4
+	farcall LoadSGBPalette
+
+	; Request a background-palette update.
+	ld a, 2
+	ldh [rWBK], a
+	ld a, 1
+	ld [W2_ForceBGPUpdate], a
+	ldh [rWBK], a
+ENDC
+
+
 	pop af
-	jr nz, MainInBattleLoop ; if the player didn't select a move, jump
+    jr z, .selectEnemyMove ; A = 0 means a move was selected
+
+
+    jp MainInBattleLoop
 .selectEnemyMove
 	call SelectEnemyMove
 	ld a, [wLinkState]
@@ -877,8 +899,11 @@ FaintEnemyPokemon:
 	call SaveScreenTilesToBuffer1
 	xor a
 	ld [wBattleResult], a
+    ld a, ICE ; this is to ensure the the EXP Bar is blue (Same color as Ice type icon)
+    ld [wPlayerMoveType], a
 	; marcelnote - drastically simplified this function's ending,
 	;              ExpAll is managed within the GainExperience function instead
+
 	jpfar GainExperience
 
 EnemyMonFaintedText:
@@ -3043,8 +3068,7 @@ PrintMenuItem:: ; edited, double colon
 	call PlaceString
 	farcall LoadStatusMoveIcon
 .accuracy
-	ld b, SET_PAL_BATTLE
-	call RunPaletteCommand
+	farcall SetPal_MovePreview
 
 	; accuracy starts here
 	ld a, [wPlayerMoveAccuracy] ; this is a 0-255 value, need to get 0-100
@@ -3063,13 +3087,35 @@ PrintMenuItem:: ; edited, double colon
 	call PrintNumber
 	; move type
 	call GetCurrentMove
+	; hlcoord 11, 11
+	; predef PrintMoveType
+	ld a, [wPlayerMoveType]
+	ld d, a
+	farcall LoadTypeIconSm
+
 	hlcoord 11, 11
-	predef PrintMoveType
+	ld a, $c9
+	ld [hli], a
+	inc a
+	ld [hli], a
+	inc a
+	ld [hli], a
+	inc a
+	ld [hli], a
+	inc a
+	ld [hli], a
+	inc a
+	ld [hli], a
+	inc a
+	ld [hli], a
+	inc a
+	ld [hl], a
+
 ; .moveDisabled
 	ld a, $1
 	ldh [hAutoBGTransferEnabled], a
-	jp Delay3
-
+    jp Delay3
+	
 DisabledText:
 	db "disabled!@"
 
@@ -7213,6 +7259,9 @@ InitWildBattle:
 
 ; common code that executes after init battle code specific to trainer or wild battles
 _InitBattleCommon:
+    ld a, ICE ; this is to ensure the the EXP Bar is blue (Same color as Ice type icon)
+    ld [wPlayerMoveType], a
+
 	ld b, SET_PAL_BATTLE_BLACK
 	call RunPaletteCommand
 	call SlidePlayerAndEnemySilhouettesOnScreen

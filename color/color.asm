@@ -134,15 +134,19 @@ SetPal_Battle_Common:
 	ld e, 3
 	farcall LoadSGBPalette
 
-IF GEN_2_GRAPHICS
-	; Player exp bar
-	ld d, PAL_EXP
+	; Player EXP Bar or Move Types
+	IF GEN_2_GRAPHICS
+    ld a, [wPlayerMoveType]
+    ld hl, MoveTypeExpBarPalette
+    ld c, a
+    ld b, 0
+    add hl, bc
+    ld d, [hl]
 ELSE
-	; Black palette
-	ld d, PAL_BLACK
+    ld d, PAL_BLACK
 ENDC
-	ld e, 4
-	farcall LoadSGBPalette
+    ld e, 4
+    farcall LoadSGBPalette
 
 	; Catagory icons (physical/special/status)
 	farcall DetermineMoveCategory
@@ -217,7 +221,7 @@ ENDC
 	ld hl, W2_TilesetPaletteMap + 12 * 20
 	ld a, 0
 	ld b, 6
-	ld c, 14 ; was 20
+	ld c, 20
 	call FillBox
 
 	; Catagory icons (physical/special/status)
@@ -246,6 +250,46 @@ ENDC
 	ld [wDefaultPaletteCommand], a
 
 	ret
+
+SetPal_MovePreview::
+IF GEN_2_GRAPHICS
+    ; Move type palette for the EXP bar.
+    ld a, [wPlayerMoveType]
+    ld hl, MoveTypeExpBarPalette
+    ld c, a
+    ld b, 0
+    add hl, bc
+    ld d, [hl]
+ELSE
+    ld d, PAL_BLACK
+ENDC
+    ld e, 4
+    farcall LoadSGBPalette
+
+    ; Palette for the physical/special/status category icon.
+    ld a, [wPlayerMoveCategory]
+    cp MOVE_PHYSICAL
+    jr z, .physical
+    cp MOVE_SPECIAL
+    jr z, .special
+    ld d, PAL_GRAYMON
+    jr .loadCategoryPalette
+.physical
+    ld d, PAL_REDMON
+    jr .loadCategoryPalette
+.special
+    ld d, PAL_BLUEMON
+.loadCategoryPalette
+    ld e, 5
+    farcall LoadSGBPalette
+
+    ; Apply these palette changes during the menu's existing final delay.
+    ld a, 2
+    ldh [rWBK], a
+    ld a, 1
+    ld [W2_ForceBGPUpdate], a
+    ldh [rWBK], a
+    ret
 
 ; hl: starting address
 ; a: pal number
@@ -386,6 +430,31 @@ ENDC
 	ld e, 0
 	farcall LoadSGBPalette
 
+IF GEN_2_GRAPHICS
+	; Load palettes for the type icons shown in the status screen.
+	ld a, [wCurPartySpecies]
+	ld [wCurSpecies], a
+	call GetMonHeader
+
+	ld a, [wMonHType1]
+	ld hl, MoveTypeExpBarPalette
+	ld c, a
+	ld b, 0
+	add hl, bc
+	ld d, [hl]
+	ld e, 5 ; Keep type palettes separate from slot 2 used by picture accents.
+	farcall LoadSGBPalette
+
+	ld a, [wMonHType2]
+	ld hl, MoveTypeExpBarPalette
+	ld c, a
+	ld b, 0
+	add hl, bc
+	ld d, [hl]
+	ld e, 6
+	farcall LoadSGBPalette
+ENDC
+
 	; Set palette map
 	xor a
 	ld [W2_TileBasedPalettes], a
@@ -428,6 +497,29 @@ IF GEN_2_GRAPHICS
 	ld [hli], a
 	dec b
 	jr nz, .expLoop
+
+	; Match the status-screen type icon rows to their type palette slots.
+	ld hl, W2_TilesetPaletteMap + 10 * SCREEN_WIDTH + 11
+	ld b, 8
+	ld a, 5
+.type1IconPaletteLoop
+	ld [hli], a
+	dec b
+	jr nz, .type1IconPaletteLoop
+
+	ld a, [wMonHType1]
+	ld b, a
+	ld a, [wMonHType2]
+	cp b
+	jr z, .noType2IconPalette
+	ld hl, W2_TilesetPaletteMap + 12 * SCREEN_WIDTH + 11
+	ld b, 8
+	ld a, 6
+.type2IconPaletteLoop
+	ld [hli], a
+	dec b
+	jr nz, .type2IconPaletteLoop
+.noType2IconPalette
 ENDC
 
 	; Set the pokemon's picture extra palette
@@ -461,9 +553,30 @@ ENDC
 	ld e, 1
 	farcall LoadSGBPalette
 
-    ; ld d, PAL_REDMON ; Replace with your chosen palette
-    ; ld e, 2             ; Background palette slot 2
-    ; farcall LoadSGBPalette
+IF GEN_2_GRAPHICS
+	; Load the palettes for this Pokémon's two types into separate slots.
+	ld a, [wCurPartySpecies]
+	ld [wCurSpecies], a
+	call GetMonHeader
+
+	ld a, [wMonHType1]
+	ld hl, MoveTypeExpBarPalette
+	ld c, a
+	ld b, 0
+	add hl, bc
+	ld d, [hl]
+	ld e, 5 ; Keep type palettes separate from slot 2 used by picture accents.
+	farcall LoadSGBPalette
+
+	ld a, [wMonHType2]
+	ld hl, MoveTypeExpBarPalette
+	ld c, a
+	ld b, 0
+	add hl, bc
+	ld d, [hl]
+	ld e, 6
+	farcall LoadSGBPalette
+ENDC
 
 	ld bc, 20 * 18
 	ld hl, W2_TilesetPaletteMap
@@ -489,6 +602,31 @@ ENDC
 	add hl, de
 	dec b
 	jr nz, .pokeLoop
+
+IF GEN_2_GRAPHICS
+	; Match the icon rows drawn by PrintMonTypes to their type palette slots.
+	ld hl, W2_TilesetPaletteMap + 12 * SCREEN_WIDTH + 2
+	ld b, 8
+	ld a, 5
+.type1IconPaletteLoop
+	ld [hli], a
+	dec b
+	jr nz, .type1IconPaletteLoop
+
+	ld a, [wMonHType1]
+	ld b, a
+	ld a, [wMonHType2]
+	cp b
+	jr z, .noType2IconPalette
+	ld hl, W2_TilesetPaletteMap + 14 * SCREEN_WIDTH + 2
+	ld b, 8
+	ld a, 6
+.type2IconPaletteLoop
+	ld [hli], a
+	dec b
+	jr nz, .type2IconPaletteLoop
+.noType2IconPalette
+ENDC
 
     ; Accent tiles, relative to the Pokédex picture area.
 	ld a, [wCurPartySpecies]
@@ -1174,6 +1312,36 @@ PokemonPicPaletteRects:
     ; db 1, 1
 
     db $ff ; end marker: context
+
+MoveTypeExpBarPalette:
+    table_width 1
+
+    db PAL_MACHOKE    ; $00 NORMAL
+    db PAL_PIKACHU    ; $01 FIGHTING
+    db PAL_BLUEMON    ; $02 FLYING
+    db PAL_PURPLEMON  ; $03 POISON
+    db PAL_BROWNMON   ; $04 GROUND
+    db PAL_KAKUNA     ; $05 ROCK
+    db PAL_EXP        ; $06 BIRD
+    db PAL_VICTREEBEL ; $07 BUG
+    db PAL_GENGAR     ; $08 GHOST
+    db PAL_VILEPLUME  ; $09 STEEL
+
+    REPT UNUSED_TYPES_END - UNUSED_TYPES
+        db PAL_EXP
+    ENDR
+
+    db PAL_YELLOWMON ; $14 FIRE
+    db PAL_BLUEMON   ; $15 WATER
+    db PAL_GREENMON  ; $16 GRASS
+    db PAL_YELLOWMON ; $17 ELECTRIC
+    db PAL_GASTLY    ; $18 PSYCHIC
+    db PAL_EXP       ; $19 ICE
+    db PAL_POLIWAG   ; $1A DRAGON
+    db PAL_BLACK     ; $1B DARK
+    db PAL_LICKITUNG ; $1C FAIRY
+
+    assert_table_length NUM_TYPES
 
 ; Everything else goes in bank $2C (unused by original game)
 SECTION "bank2C", ROMX

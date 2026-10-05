@@ -161,6 +161,20 @@ ENDC
 	call PrintNumber ; Pokémon no.
 	hlcoord 11, 10
 	predef PrintMonType
+	hlcoord 11, 10
+	ld a, [wMonHType1]
+	ld c, $40 ; use unused back-picture tiles; the status screen only loads the front picture
+	call PrintStatusTypeIcon
+	ld a, [wMonHType1]
+	ld b, a
+	ld a, [wMonHType2]
+	cp b
+	jr z, .statusTypeIconsDone
+	hlcoord 11, 12
+	ld a, [wMonHType2]
+	ld c, $48
+	call PrintStatusTypeIcon
+.statusTypeIconsDone
 	ld hl, NamePointers2
 	call .GetStringPointer
 	ld d, h
@@ -204,6 +218,24 @@ ENDC
 	ret z
 	ld a, [wWhichPokemon]
 	jp SkipFixedLengthTextEntries
+
+; a = type ID, c = first icon tile ID, hl = tile-map destination
+PrintStatusTypeIcon:
+	push hl
+	push bc
+	ld d, a
+	ld e, c
+	farcall LoadTypeIconSmAt
+	pop bc
+	pop hl
+	ld b, 8
+.loop
+	ld a, c
+	ld [hli], a
+	inc c
+	dec b
+	jr nz, .loop
+	ret
 
 OTPointers:
 	dw wPartyMonOT

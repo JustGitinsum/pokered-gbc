@@ -124,6 +124,19 @@ TransformEffect_:
 	ld hl, wEnemyMonStatMods
 	ld de, wPlayerMonStatMods
 	call .copyBasedOnTurn ; stat mods
+	ld a, ICE ; this is to ensure the the EXP Bar is blue (Same color as Ice type icon)
+	ld [wPlayerMoveType], a
+
+	ld d, PAL_EXP
+	ld e, 4
+	farcall LoadSGBPalette
+	; Request a background-palette update.
+	ld a, 2
+	ldh [rWBK], a
+	ld a, 1
+	ld [W2_ForceBGPUpdate], a
+	ldh [rWBK], a
+
 	ld hl, TransformedText
 	jp PrintText
 

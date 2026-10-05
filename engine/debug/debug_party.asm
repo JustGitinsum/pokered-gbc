@@ -18,10 +18,10 @@ DebugNewGameParty: ; unreferenced except in _DEBUG
 	; always using this character while I was debugging the program."
 	; From https://web.archive.org/web/20000607152840/http://pocket.ign.com/news/14973.html
 	db EXEGGUTOR, 90
-	db MEW, 5
+	db MEW, 10
 	db ZAPDOS, 56
 	db MOLTRES, 56
-	db ARTICUNO, 99
+	db ARTICUNO, 90
 	db PIKACHU, 5
 	db -1 ; end
 
@@ -43,13 +43,13 @@ IF DEF(_DEBUG)
 
 	; Exeggutor gets four HM moves.
 	ld hl, wPartyMon1Moves
-	ld a, FLY
-	ld [hli], a
 	ld a, CUT
 	ld [hli], a
 	ld a, SURF
 	ld [hli], a
 	ld a, STRENGTH
+	ld [hli], a
+	ld a, FLY
 	ld [hl], a
 	ld hl, wPartyMon1PP
 	ld a, 15
@@ -72,7 +72,7 @@ IF DEF(_DEBUG)
 	ld hl, wPartyMon5Moves
 	ld a, FLY
 	ld [hli], a
-	ld a, BLIZZARD
+	ld a, ICE_BEAM
 	ld [hli], a
 	ld a, ROOST
 	ld [hli], a
@@ -128,10 +128,10 @@ IF DEF(_DEBUG)
 .key_items_end
 
 	; Complete the Pokédex.
-	; ld hl, wPokedexOwned
-	; call DebugSetPokedexEntries
-	; ld hl, wPokedexSeen
-	; call DebugSetPokedexEntries
+	ld hl, wPokedexOwned
+	call DebugSetPokedexEntries
+	ld hl, wPokedexSeen
+	call DebugSetPokedexEntries
 	SetEvent EVENT_GOT_POKEDEX
 
 	; Rival chose Squirtle,

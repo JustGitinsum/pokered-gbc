@@ -680,7 +680,15 @@ PrintMonTypes:
 	ld de, DexType1Text
 	call PlaceString
 	hlcoord 2, 12
-	predef PrintMonType
+	lb bc, 1, 8
+	call ClearScreenArea
+	hlcoord 2, 14
+	lb bc, 1, 8
+	call ClearScreenArea
+	hlcoord 2, 12
+	ld a, [wMonHType1]
+	ld c, $c9
+	call PrintDexTypeIcon
 	ld a, [wMonHType1]
 	ld b, a
 	ld a, [wMonHType2]
@@ -689,7 +697,27 @@ PrintMonTypes:
 	hlcoord 1, 13
 	ld de, DexType2Text
 	call PlaceString
+	hlcoord 2, 14
+	ld a, [wMonHType2]
+	ld c, $d1
+	call PrintDexTypeIcon
 .done
+	ret
+
+; a = type ID, c = first icon tile ID, hl = tile-map destination
+PrintDexTypeIcon:
+	push hl
+	push bc
+	ld d, a
+	ld e, c
+	call LoadTypeIconSmAt
+	pop bc
+	pop hl
+	REPT 8
+	ld a, c
+	ld [hli], a
+	inc c
+	ENDR
 	ret
 
 HeightWeightText:
