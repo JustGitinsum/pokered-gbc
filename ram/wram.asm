@@ -229,6 +229,7 @@ wLastMenuItem:: db
 ; when you choose a mon from the list and a sub-menu is shown. It's reset when
 ; you return to the main Bill's PC menu.
 wPartyAndBillsPCSavedMenuItem:: db
+wPartyMenuStatScreenUsed:: db
 
 ; It is used by the bag list to remember the cursor position while the menu
 ; isn't active.

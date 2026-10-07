@@ -321,7 +321,13 @@ GetPartyMenuWatchedKeys::
 	ld a, [wPartyMenuTypeOrMessageID]
 	and a ; NORMAL_PARTY_MENU
 	ld d, PAD_A | PAD_B | PAD_SELECT
+	jr nz, .notNormalMenu
+	ld a, [wPartyCount]
+	and a
 	ret z
+	set B_PAD_START, d
+	ret
+.notNormalMenu
 	cp SWAP_MONS_PARTY_MENU
 	ret z
 .inBattle

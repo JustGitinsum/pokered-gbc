@@ -275,6 +275,8 @@ HandlePartyMenuInput::
 	jp nz, .swappingPokemon
 	pop af
 	ldh [hTileAnimations], a
+	bit B_PAD_START, b
+	jr nz, .viewStats
 	bit B_PAD_B, b
 	jr nz, .noPokemonChosen
 	ld a, [wPartyCount]
@@ -292,6 +294,24 @@ HandlePartyMenuInput::
 	call BankswitchBack
 	and a
 	ret
+.viewStats
+	ld a, [wCurrentMenuItem]
+	ld [wWhichPokemon], a
+	call ClearSprites
+	xor a ; PLAYER_PARTY_DATA
+	ld [wMonDataLocation], a
+	predef StatusScreenLoop
+	ld a, 1
+	ld [wPartyMenuStatScreenUsed], a
+	ldh a, [hTileAnimations]
+	push af
+	ld a, [wBankswitchHomeSavedROMBank]
+	push af
+	call PartyMenuInit
+	pop af
+	ld [wBankswitchHomeSavedROMBank], a
+	call RedrawPartyMenu
+	jp HandlePartyMenuInput
 .noPokemonChosen
 	call BankswitchBack
 	scf
@@ -305,12 +325,19 @@ HandlePartyMenuInput::
 	ld [wMenuItemToSwap], a
 	ld [wPartyMenuTypeOrMessageID], a
 	call RedrawPartyMenu
+	call .UpdateWatchedKeys
 	jp HandlePartyMenuInput
 .handleSwap
 	ld a, [wCurrentMenuItem]
 	ld [wWhichPokemon], a
 	farcall SwitchPartyMon
+	call .UpdateWatchedKeys
 	jp HandlePartyMenuInput
+.UpdateWatchedKeys
+	callfar GetPartyMenuWatchedKeys
+	ld a, d
+	ld [wMenuWatchedKeys], a
+	ret
 
 DrawPartyMenu::
 	ld hl, DrawPartyMenu_

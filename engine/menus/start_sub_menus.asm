@@ -11,6 +11,9 @@ StartMenu_Pokemon::
 	and a
 	jp z, RedisplayStartMenu
 	xor a
+	ld [wPartyMenuStatScreenUsed], a
+.restart
+	xor a
 	ld [wMenuItemToSwap], a
 	ld [wPartyMenuTypeOrMessageID], a
 	ld [wUpdateSpritesEnabled], a
@@ -25,6 +28,13 @@ StartMenu_Pokemon::
 	jr nc, .chosePokemon
 .exitMenu
 	call GBPalWhiteOutWithDelay3
+	ld a, [wPartyMenuStatScreenUsed]
+	and a
+	jr z, .restoreScreen
+	xor a
+	ld [wPartyMenuStatScreenUsed], a
+	call ReloadMapData
+.restoreScreen
 	call RestoreScreenTilesAndReloadTilePatterns
 	call LoadGBPal
 	jp RedisplayStartMenu
@@ -87,7 +97,7 @@ StartMenu_Pokemon::
 .choseSwitch
 	ld a, [wPartyCount]
 	cp 2 ; is there more than one pokemon in the party?
-	jp c, StartMenu_Pokemon ; if not, no switching
+	jp c, .restart ; if not, no switching
 	call SwitchPartyMon_InitVarOrSwapData ; init [wMenuItemToSwap]
 	ld a, SWAP_MONS_PARTY_MENU
 	ld [wPartyMenuTypeOrMessageID], a
