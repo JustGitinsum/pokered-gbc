@@ -60,9 +60,9 @@ PokedexEntryPointers:
 	dw SeelDexEntry
 	dw DiglettDexEntry
 	dw TaurosDexEntry
-	dw MissingNoDexEntry
-	dw MissingNoDexEntry
-	dw MissingNoDexEntry
+	dw CharcadetDexEntry
+	dw ArmarougeDexEntry
+	dw CeruledgeDexEntry
 	dw FarfetchdDexEntry
 	dw VenonatDexEntry
 	dw DragoniteDexEntry
@@ -587,6 +587,27 @@ TaurosDexEntry:
 	db 4,7
 	dw 1950
 	;text_far _TaurosDexEntry
+	text_end
+
+CharcadetDexEntry:
+	db "FIRE CHILD@"
+	db 2,0
+	dw 231
+	;text_far _CharcadetDexEntry
+	text_end
+
+ArmarougeDexEntry:
+	db "FIRE WAR@"
+	db 4,11
+	dw 1874
+	;text_far _ArmarougeDexEntry
+	text_end
+
+CeruledgeDexEntry:
+	db "FIRE BLADE@"
+	db 5,3
+	dw 1367
+	;text_far _CeruledgeDexEntry
 	text_end
 
 FarfetchdDexEntry:

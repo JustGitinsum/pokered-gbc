@@ -72,9 +72,9 @@ EvosMovesPointerTable:
 	dw SeelEvosMoves
 	dw DiglettEvosMoves
 	dw TaurosEvosMoves
-	dw MissingNo3DEvosMoves
-	dw MissingNo3EEvosMoves
-	dw MissingNo3FEvosMoves
+	dw CharcadetEvosMoves
+	dw ArmarougeEvosMoves
+	dw CeruledgeEvosMoves
 	dw FarfetchdEvosMoves
 	dw VenonatEvosMoves
 	dw DragoniteEvosMoves
@@ -1043,16 +1043,57 @@ TaurosEvosMoves:
 	db 55, DOUBLE_EDGE
 	db 0
 
-MissingNo3DEvosMoves:
+CharcadetEvosMoves:
 ; Evolutions
+	db EVOLVE_ITEM, DAWN_STONE, 1, ARMAROUGE
+	db EVOLVE_ITEM, DUSK_STONE, 1, CERULEDGE
 	db 0
 ; Learnset
+	db 8, SMOKESCREEN
+	db 10, CONFUSE_RAY
+	db 12, FIRE_SPIN
+	db 16, OMINOUS_WIND
+	db 21, HEADBUTT
+	db 24, FLAME_WHEEL
+	db 32, FIRE_PUNCH ;ADDMOVELAVA_PLUME
 	db 0
 
-MissingNo3EEvosMoves:
+ArmarougeEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
+	db 8, SMOKESCREEN
+	db 10, CONFUSE_RAY
+	db 12, FIRE_SPIN
+	db 16, OMINOUS_WIND
+	db 20, PSYBEAM
+	db 24, FLAME_WHEEL
+	db 32, FIRE_PUNCH ;ADDMOVE LAVA_PLUME
+	db 37, FLAMETHROWER
+	db 48, FIRE_BLAST
+	db 54, PSYCHIC_M
+	db 62, AURA_SPHERE
+	db EVOLUTION_MOVE, EXTRASENSORY
+	db 0
+
+CeruledgeEvosMoves:
+; Evolutions
+	db 0
+; Learnset
+	db 8, SMOKESCREEN
+	db 10, CONFUSE_RAY
+	db 12, FIRE_SPIN
+	db 16, OMINOUS_WIND
+	db 21, HEADBUTT
+	db 24, FLAME_WHEEL
+	db 32, FIRE_PUNCH ;ADDMOVELAVA_PLUME
+	db 37, SWORDS_DANCE
+	db 44, SACRED_SWORD
+	db 48, BITTER_BLADE
+	db 54, PSYCHO_CUT
+	db 58, RAGE_FIST
+	db 62, HEAT_CRASH
+	db EVOLUTION_MOVE, SHADOW_CLAW
 	db 0
 
 MissingNo3FEvosMoves:

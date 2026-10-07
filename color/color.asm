@@ -1317,7 +1317,7 @@ MoveTypeExpBarPalette:
     table_width 1
 
     db PAL_MACHOKE    ; $00 NORMAL
-    db PAL_PIKACHU    ; $01 FIGHTING
+    db PAL_FLAREON    ; $01 FIGHTING
     db PAL_BLUEMON    ; $02 FLYING
     db PAL_PURPLEMON  ; $03 POISON
     db PAL_BROWNMON   ; $04 GROUND
@@ -1334,7 +1334,7 @@ MoveTypeExpBarPalette:
     db PAL_YELLOWMON ; $14 FIRE
     db PAL_BLUEMON   ; $15 WATER
     db PAL_GREENMON  ; $16 GRASS
-    db PAL_YELLOWMON ; $17 ELECTRIC
+    db PAL_PSYDUCK ; $17 ELECTRIC
     db PAL_GASTLY    ; $18 PSYCHIC
     db PAL_EXP       ; $19 ICE
     db PAL_POLIWAG   ; $1A DRAGON

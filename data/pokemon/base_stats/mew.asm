@@ -28,8 +28,7 @@ ENDC
 	     LEAF_BLADE,     THUNDERPUNCH,   HEAT_CRASH,     STEEL_WING,     FIRE_PUNCH,     \
 	     SHADOW_CLAW,    SHADOW_BALL,    DRAGON_CLAW,    ICE_FANG,       THUNDER_WAVE,   \
 	     PSYCHO_CUT,     AURA_SPHERE,    THUNDERBOLT,    FLAMETHROWER,   MOONBLAST,      \
-	     CUT,            FLY,            SURF,           STRENGTH,       FLASH,          \
-	     UNUSED
+	     CUT,            FLY,            SURF,           STRENGTH,       FLASH
 	; end
 
 	db BANK(MewPicFront)

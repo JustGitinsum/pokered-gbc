@@ -239,6 +239,9 @@ IF GEN_2_GRAPHICS
 	; const PAL_KINGDRA
 	; const PAL_ZORUA
 	const PAL_ZOROARK
+	; const PAL_CHARCADET
+    ; const PAL_ARMAROUGE
+    ; const PAL_CERULEDGE
 	; const PAL_ANNIHILAPE
 	const PAL_YOUNGSTER     ; $BC
 	const PAL_BUGCATCHER    ; $BD

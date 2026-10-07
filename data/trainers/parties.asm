@@ -149,7 +149,7 @@ JrTrainerMData:
 ; Pewter Gym
 	db 11, DIGLETT, SANDSHREW, 0
 ; Route 24/Route 25
-	db 14, RATTATA, EKANS, 0
+	db 14, CHARCADET, EKANS, 0
 ; Route 24
 	db 18, MANKEY, 0
 ; Route 6
@@ -661,7 +661,7 @@ KogaData:
 	db $FF, 37, KOFFING, 39, MUK, 37, KOFFING, 43, WEEZING, 0
 
 BlaineData:
-	db $FF, 42, GROWLITHE, 40, PONYTA, 42, RAPIDASH, 47, ARCANINE, 0
+	db $FF, 42, RAPIDASH, 42, ARMAROUGE, 44, CERULEDGE, 47, ARCANINE, 0
 
 SabrinaData:
 	db $FF, 38, KADABRA, 37, MR_MIME, 38, VENOMOTH, 43, ALAKAZAM, 0

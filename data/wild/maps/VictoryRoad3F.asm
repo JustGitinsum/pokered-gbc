@@ -8,8 +8,8 @@ VictoryRoad3FWildMons:
 	db 45, STEELIX
 	db 43, GRAVELER
 	db 41, CROBAT
-	db 42, MACHOKE
-	db 45, MACHOKE
+	db 42, ARMAROUGE
+	db 45, CERULEDGE
 	end_grass_wildmons
 
 	def_water_wildmons 0 ; encounter rate

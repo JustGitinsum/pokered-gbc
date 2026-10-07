@@ -161,6 +161,9 @@
 	const DEX_KINGDRA     ; 155
 	const DEX_ZORUA       ; 156
 	const DEX_ZOROARK     ; 157
+	const DEX_CHARCADET
+	const DEX_ARMAROUGE
+	const DEX_CERULEDGE
 	const DEX_ANNIHILAPE  ; 158
 	
 DEF NUM_POKEMON EQU const_value - 1

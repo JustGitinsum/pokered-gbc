@@ -157,5 +157,8 @@ MonPartyData:
 	nybble ICON_WATER     ; Kingdra
 	nybble ICON_QUADRUPED ; Zorua
 	nybble ICON_MON       ; Zoroark
+	nybble ICON_MON       ; Charcadet
+	nybble ICON_MON       ; Armarouge
+	nybble ICON_MON       ; Ceruledge
 	nybble ICON_MON       ; Annihilape
 	end_nybble_array NUM_POKEMON
