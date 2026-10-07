@@ -192,7 +192,7 @@ MoveNames::
 	li "ELECTROWEB"
 	li "STEEL WING"
 	li "LEAF BLADE"
-	li "RAGE FIST"
+	li "PHANTOMFORCE"
 	li "SLUDGE BOMB"
 	li "DARK PULSE"
 	li "MOON BLAST"

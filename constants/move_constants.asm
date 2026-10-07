@@ -198,7 +198,7 @@
 	const ELECTROWEB
 	const STEEL_WING
 	const LEAF_BLADE
-	const RAGE_FIST
+	const PHANTOMFORCE
 	const SLUDGE_BOMB
 	const DARK_PULSE
 	const MOONBLAST

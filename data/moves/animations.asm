@@ -192,7 +192,7 @@ AttackAnimationPointers:
 	dw ElectrowebAnim
 	dw SteelWingAnim
 	dw LeafBladeAnim
-	dw RageFistAnim
+	dw PhantomForceAnim
 	dw SludgeBombAnim
 	dw DarkPulseAnim
 	dw MoonblastAnim
@@ -651,7 +651,7 @@ DragonBreathAnim:
 	battle_anim FLAMETHROWER, SUBANIM_1_FLAME_COLUMN_1, 1, 6
 	db -1 ; end
 
-RageFistAnim:
+PhantomForceAnim:
 	battle_anim DOUBLESLAP, SUBANIM_0_STAR_THRICE, 0, 6
 	battle_anim CONFUSION, SE_FLASH_SCREEN_LONG
 	battle_anim NO_MOVE, SE_WAVY_SCREEN
@@ -1345,6 +1345,9 @@ TriAttackAnim:
 	battle_anim TRI_ATTACK, SE_DARK_SCREEN_FLASH
 	battle_anim NO_MOVE, SUBANIM_1_TRIANGLE_TOSS, 1, 6
 	battle_anim NO_MOVE, SE_DARK_SCREEN_FLASH
+	battle_anim FIRE_SPIN, SUBANIM_1_FLAME_COLUMN_3, 3, 6
+	battle_anim THUNDER, SUBANIM_1_LIGHTNING, 1, 6
+	battle_anim BLIZZARD, SUBANIM_0_ICE_RISE, 0, 16
 	db -1 ; end
 
 SuperFangAnim:
@@ -1422,7 +1425,7 @@ PsychoCutAnim:
 	db -1 ; end
 
 ShadowBallAnim:
-	battle_anim AURORA_BEAM, SUBANIM_1_CIRCLE_BLACK_TOSS, 1, 3
+	battle_anim CONFUSE_RAY, SUBANIM_1fcircles, 1, 6
 	battle_anim NO_MOVE, SE_DARK_SCREEN_FLASH
 	battle_anim CONFUSION, SE_WAVY_SCREEN
 	db -1 ; end

@@ -194,7 +194,7 @@ MovedexEntryPointers:
 	dw ElectrowebDexEntry
 	dw SteelWingDexEntry
 	dw LeafBladeDexEntry
-	dw RageFistDexEntry
+	dw PhantomForceDexEntry
 	dw SludgeBombDexEntry
 	dw DarkPulseDexEntry
 	dw MoonblastDexEntry
@@ -796,7 +796,7 @@ SteelWingDexEntry:
 LeafBladeDexEntry:
 	text_far _GenericOftenLandsCriticalHitsText
 	text_end
-RageFistDexEntry:
+PhantomForceDexEntry:
 	text_far _GenericNoAdditionalEffectText
 	text_end
 SludgeBombDexEntry:

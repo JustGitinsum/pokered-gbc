@@ -62,7 +62,7 @@ IF DEF(_DEBUG)
 
 	; Jolteon gets Thunderbolt.
 	ld hl, wPartyMon3Moves + 3
-	ld a, SURF
+	ld a, SHADOW_BALL
 	ld [hl], a
 	ld hl, wPartyMon3PP + 3
 	ld a, 15

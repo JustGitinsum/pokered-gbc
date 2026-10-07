@@ -193,7 +193,7 @@ MoveSoundTable:
 	db SFX_BATTLE_09,          $00, $40 ; ELECTROWEB
 	db SFX_BATTLE_12,          $10, $a0 ; STEEL_WING
 	db SFX_BATTLE_34,          $00, $80 ; LEAF_BLADE
-	db SFX_FAINT_FALL,         $ff, $04 ; RAGE_FIST
+	db SFX_FAINT_FALL,         $ff, $04 ; PHANTOMFORCE
 	db SFX_BATTLE_34,          $00, $40 ; SLUDGE_BOMB
 	db SFX_BATTLE_09,          $f0, $40 ; DARK_PULSE
 	db SFX_BATTLE_36,          $00, $80 ; MoonblastAnim
