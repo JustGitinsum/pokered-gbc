@@ -2,6 +2,9 @@
 DisplayTextIDInit::
 	xor a
 	ld [wListMenuID], a
+	call IsFastPokemonCenterNurse
+	push af
+	jr c, .skipDrawingTextBoxBorder
 	ld a, [wAutoTextBoxDrawingControl]
 	bit BIT_NO_AUTO_TEXT_BOX, a
 	jr nz, .skipDrawingTextBoxBorder
@@ -69,6 +72,8 @@ DisplayTextIDInit::
 	add hl, de
 	dec c
 	jr nz, .spriteStandStillLoop
+	pop af
+	ret c
 	ld b, $9c ; window background address
 	call CopyScreenTileBufferToVRAM ; transfer background in WRAM to VRAM
 	xor a
@@ -76,4 +81,41 @@ DisplayTextIDInit::
 	call LoadFontTilePatterns
 	ld a, $01
 	ldh [hAutoBGTransferEnabled], a ; enable continuous WRAM to VRAM transfer each V-blank
+	ret
+
+IsFastPokemonCenterNurse:
+	ld a, [wOptions]
+	and TEXT_DELAY_MASK
+	jr nz, .no
+	ldh a, [hSpriteIndex]
+	cp 1
+	jr nz, .no
+	ld a, [wCurMap]
+	cp VIRIDIAN_POKECENTER
+	jr z, .yes
+	cp PEWTER_POKECENTER
+	jr z, .yes
+	cp CERULEAN_POKECENTER
+	jr z, .yes
+	cp MT_MOON_POKECENTER
+	jr z, .yes
+	cp ROCK_TUNNEL_POKECENTER
+	jr z, .yes
+	cp VERMILION_POKECENTER
+	jr z, .yes
+	cp CELADON_POKECENTER
+	jr z, .yes
+	cp LAVENDER_POKECENTER
+	jr z, .yes
+	cp FUCHSIA_POKECENTER
+	jr z, .yes
+	cp CINNABAR_POKECENTER
+	jr z, .yes
+	cp SAFFRON_POKECENTER
+	jr nz, .no
+.yes
+	scf
+	ret
+.no
+	and a
 	ret

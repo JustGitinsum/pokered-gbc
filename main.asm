@@ -27,7 +27,6 @@ INCLUDE "engine/items/subtract_paid_money.asm"
 INCLUDE "engine/menus/swap_items.asm"
 INCLUDE "engine/events/pokemart.asm"
 INCLUDE "engine/pokemon/learn_move.asm"
-INCLUDE "engine/events/pokecenter.asm"
 INCLUDE "engine/events/set_blackout_map.asm"
 INCLUDE "engine/menus/display_text_id_init.asm"
 INCLUDE "engine/menus/draw_start_menu.asm"
@@ -367,6 +366,7 @@ SECTION "Engine Spillover", ROMX
 INCLUDE "engine/movie/splash.asm"
 INCLUDE "engine/movie/hall_of_fame.asm"
 INCLUDE "engine/menus/item_descriptions.asm"
+INCLUDE "engine/events/pokecenter.asm"
 
 SECTION "Engine Save", ROMX
 

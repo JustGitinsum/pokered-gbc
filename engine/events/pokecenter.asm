@@ -2,18 +2,20 @@ DisplayPokemonCenterDialogue_::
 ; new, for setting Route 4 and Route 10 Pokecenters fly locations
 	ld a, [wCurMap]
 	cp MT_MOON_POKECENTER
-	jr nz, .checkRockTunnelPokecenter
-	lb bc, FLAG_SET, FLYLOC_ROUTE_4_CENTER
-	ld hl, wTownVisitedFlag   ; mark town as visited (for flying)
-	predef FlagActionPredef
-	jr .regularCenter
-.checkRockTunnelPokecenter
+	jr z, .route4Center
 	cp ROCK_TUNNEL_POKECENTER
 	jr nz, .regularCenter
 	lb bc, FLAG_SET, FLYLOC_ROUTE_10_CENTER
+	jr .setTownVisited
+.route4Center
+	lb bc, FLAG_SET, FLYLOC_ROUTE_4_CENTER
+.setTownVisited
 	ld hl, wTownVisitedFlag   ; mark town as visited (for flying)
 	predef FlagActionPredef
 .regularCenter
+	ld a, [wOptions]
+	and TEXT_DELAY_MASK
+	jr z, .fastHeal
 ; back to vanilla
 	call SaveScreenTilesToBuffer1 ; save screen
 	ld hl, PokemonCenterWelcomeText
@@ -30,10 +32,19 @@ DisplayPokemonCenterDialogue_::
 	ld a, [wCurrentMenuItem]
 	and a
 	jr nz, .declinedHealing ; if the player chose No
-	call SetLastBlackoutMap
+	farcall SetLastBlackoutMap
 	call LoadScreenTilesFromBuffer1 ; restore screen
 	ld hl, NeedYourPokemonText
 	call PrintText
+	jr .startHealing
+.fastHeal
+	ld hl, wStatusFlags4
+	set BIT_UNKNOWN_4_1, [hl]
+	set BIT_USED_POKECENTER, [hl]
+	ld a, $90
+	ldh [hWY], a
+	farcall SetLastBlackoutMap
+.startHealing
 	ld a, $18
 	ld [wSprite01StateData1ImageIndex], a ; make the nurse turn to face the machine
 	call Delay3
@@ -47,6 +58,9 @@ DisplayPokemonCenterDialogue_::
 	ld [wLastMusicSoundID], a
 	ld [wNewSoundID], a
 	call PlaySound
+	ld a, [wOptions]
+	and TEXT_DELAY_MASK
+	ret z
 	ld hl, PokemonFightingFitText
 	call PrintText
 	ld a, $14
@@ -59,7 +73,7 @@ DisplayPokemonCenterDialogue_::
 .done
 	ld hl, PokemonCenterFarewellText
 	call PrintText
-	jp UpdateSprites
+	ret
 
 PokemonCenterWelcomeText:
 	text_far _PokemonCenterWelcomeText

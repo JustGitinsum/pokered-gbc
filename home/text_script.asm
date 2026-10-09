@@ -176,14 +176,16 @@ LoadItemList::
 	ret
 
 DisplayPokemonCenterDialogue::
-; zeroing these doesn't appear to serve any purpose
-	xor a
-	ldh [hItemPrice], a
-	ldh [hItemPrice + 1], a
-	ldh [hItemPrice + 2], a
-
 	inc hl
 	homecall DisplayPokemonCenterDialogue_
+	ld a, PLAYER_DIR_DOWN
+	ld [wPlayerMovingDirection], a
+	xor a ; SPRITE_FACING_DOWN
+	ld [wSprite01StateData2OrigFacingDirection], a
+	call UpdateSprites
+	ld a, [wOptions]
+	and TEXT_DELAY_MASK
+	jp z, CloseTextDisplay
 	jp AfterDisplayingTextID
 
 DisplaySafariGameOverText::
