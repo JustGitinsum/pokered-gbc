@@ -127,14 +127,10 @@ HMMoves::
 INCLUDE "data/moves/hm_moves.asm"
 
 GetMoveName::
+; Preserve the registers expected by existing callers across the banked lookup.
+	push bc
 	push hl
-	ld a, MOVE_NAME
-	ld [wNameListType], a
-	ld a, [wNamedObjectIndex]
-	ld [wNameListIndex], a
-	ld a, BANK(MoveNames)
-	ld [wPredefBank], a
-	call GetName
-	ld de, wNameBuffer
+	callfar GetMoveName_
 	pop hl
+	pop bc
 	ret

@@ -790,7 +790,7 @@ NEXTU
 wOptionsTextSpeedCursorX:: db
 wOptionsBattleAnimCursorX:: db
 wOptionsBattleStyleCursorX:: db
-wOptionsCancelCursorX:: db
+wOptionsMoveNameCaseCursorX:: db ; cursor X position for UPPER/lower move names
 
 NEXTU
 ; tile ID of the badge number being drawn

@@ -430,3 +430,5 @@ INCLUDE "engine/menus/change_box_menu.asm"
 INCLUDE "engine/battle/wild_encounters.asm"
 INCLUDE "engine/battle/move_effects/conversion.asm"
 INCLUDE "engine/battle/end_of_battle.asm"
+; Keep added options and move-name helpers out of the full bank1 section.
+INCLUDE "engine/menus/options_menu_helpers.asm"

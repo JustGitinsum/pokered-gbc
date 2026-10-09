@@ -15,6 +15,7 @@
 	const PLAYEROT_NAME ; 5
 	const ENEMYOT_NAME  ; 6
 	const TRAINER_NAME  ; 7
+	const MOVE_NAME_LOWERCASE ; 8 ; lowercase move-name table, indexed like MOVE_NAME
 
 	const_def 1
 	const INIT_ENEMYOT_LIST    ; 1

@@ -8,12 +8,11 @@ FormatMovesString:
 	and a ; end of move list?
 	jr z, .printDashLoop ; print dashes when no moves are left
 	push hl
-	ld [wNameListIndex], a
-	ld a, BANK(MoveNames)
-	ld [wPredefBank], a
-	ld a, MOVE_NAME
-	ld [wNameListType], a
-	call GetName
+	ld [wNamedObjectIndex], a
+	; GetMoveName returns its buffer address in DE; preserve the list's write pointer.
+	push de
+	call GetMoveName
+	pop de
 	ld hl, wNameBuffer
 .copyNameLoop
 	ld a, [hli]

@@ -31,6 +31,7 @@ DEF BIT_FONT_LOADED EQU 0
 
 ; wOptions
 DEF TEXT_DELAY_MASK EQU %111
+DEF BIT_MOVE_NAMES_LOWERCASE EQU 5 ; select the lowercase move-name table
 	const_def 6
 	const BIT_BATTLE_SHIFT     ; 6
 	const BIT_BATTLE_ANIMATION ; 7

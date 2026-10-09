@@ -5968,12 +5968,9 @@ EnemyCanExecuteChargingMove:
 	res CHARGING_UP, [hl] ; no longer charging up for attack
 	res INVULNERABLE, [hl] ; no longer invulnerable to typical attacks
 	ld a, [wEnemyMoveNum]
-	ld [wNameListIndex], a
-	ld a, BANK(MoveNames)
-	ld [wPredefBank], a
-	ld a, MOVE_NAME
-	ld [wNameListType], a
-	call GetName
+	; GetMoveName selects the configured case using the move ID in wNamedObjectIndex.
+	ld [wNamedObjectIndex], a
+	call GetMoveName
 	ld de, wNameBuffer
 	call CopyToStringBuffer
 EnemyCanExecuteMove:
@@ -6446,7 +6443,8 @@ GetCurrentMove:: ; edited, double colon
 	jr nz, .selected
 	ld a, [wPlayerSelectedMove]
 .selected
-	ld [wNameListIndex], a
+	; Use the common move-name lookup so this menu respects the selected case.
+	ld [wNamedObjectIndex], a
 	dec a
 	ld hl, Moves
 	ld bc, MOVE_LENGTH
@@ -6454,11 +6452,7 @@ GetCurrentMove:: ; edited, double colon
 	ld a, BANK(Moves)
 	call FarCopyData
 
-	ld a, BANK(MoveNames)
-	ld [wPredefBank], a
-	ld a, MOVE_NAME
-	ld [wNameListType], a
-	call GetName
+	call GetMoveName
 	ld de, wNameBuffer
 	jp CopyToStringBuffer
 

@@ -7,6 +7,7 @@ NamePointers::
 	dw wPartyMonOT ; player's OT names list
 	dw wEnemyMonOT ; enemy's OT names list
 	dw TrainerNames
+	dw MoveNamesLowercase ; same move IDs as MoveNames, in lowercase
 
 GetName::
 ; arguments:

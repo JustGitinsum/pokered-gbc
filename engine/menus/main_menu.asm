@@ -441,28 +441,36 @@ SaveScreenInfoText:
 	next "TIME@"
 
 DisplayOptionMenu:
+	; Four option rows are spaced evenly above the Cancel row.
 	hlcoord 0, 0
 	ld b, 3
 	ld c, 18
 	call TextBoxBorder
-	hlcoord 0, 5
+	hlcoord 0, 4
 	ld b, 3
 	ld c, 18
 	call TextBoxBorder
-	hlcoord 0, 10
+	hlcoord 0, 8
+	ld b, 3
+	ld c, 18
+	call TextBoxBorder
+	hlcoord 0, 12
 	ld b, 3
 	ld c, 18
 	call TextBoxBorder
 	hlcoord 1, 1
 	ld de, TextSpeedOptionText
 	call PlaceString
-	hlcoord 1, 6
+	hlcoord 1, 5
 	ld de, BattleAnimationOptionText
 	call PlaceString
-	hlcoord 1, 11
+	hlcoord 1, 9
 	ld de, BattleStyleOptionText
 	call PlaceString
-	hlcoord 2, 16
+	hlcoord 1, 13
+	ld de, MoveNameCaseOptionText
+	call PlaceString
+	hlcoord 2, 17
 	ld de, OptionMenuCancelText
 	call PlaceString
 	xor a
@@ -471,10 +479,10 @@ DisplayOptionMenu:
 	ASSERT BIT_FAST_TEXT_DELAY == 0
 	inc a ; 1 << BIT_FAST_TEXT_DELAY
 	ld [wLetterPrintingDelayFlags], a
-	ld [wOptionsCancelCursorX], a
 	ld a, 3 ; text speed cursor Y coordinate
 	ld [wTopMenuItemY], a
-	call SetCursorPositionsFromOptions
+	; These helpers live outside bank1 to keep that crowded bank within its size limit.
+	callfar SetCursorPositionsFromOptions
 	ld a, [wOptionsTextSpeedCursorX] ; text speed cursor X coordinate
 	ld [wTopMenuItemX], a
 	ld a, $01
@@ -482,7 +490,8 @@ DisplayOptionMenu:
 	call Delay3
 .loop
 	call PlaceMenuCursor
-	call SetOptionsFromCursorPositions
+	; Keep wOptions synchronized so consumers see changes immediately.
+	callfar SetOptionsFromCursorPositions
 .getJoypadStateLoop
 	call JoypadLowSensitivity
 	ldh a, [hJoy5]
@@ -496,7 +505,7 @@ DisplayOptionMenu:
 	bit B_PAD_A, b
 	jr z, .checkDirectionKeys
 	ld a, [wTopMenuItemY]
-	cp 16 ; is the cursor on Cancel?
+	cp 17 ; is the cursor on Cancel?
 	jr nz, .loop
 .exitMenu
 	ld a, SFX_PRESS_AB
@@ -512,45 +521,65 @@ DisplayOptionMenu:
 	jr nz, .downPressed
 	bit B_PAD_UP, b
 	jr nz, .upPressed
-	cp 8 ; cursor in Battle Animation section?
-	jr z, .cursorInBattleAnimation
-	cp 13 ; cursor in Battle Style section?
-	jr z, .cursorInBattleStyle
-	cp 16 ; cursor on Cancel?
+	cp 7 ; cursor in Battle Animation section?
+	jp z, .cursorInBattleAnimation
+	cp 11 ; cursor in Battle Style section?
+	jp z, .cursorInBattleStyle
+	cp 15 ; cursor in Move Name Case section?
+	jp z, .cursorInMoveNameCase
+	cp 17 ; cursor on Cancel?
 	jr z, .loop
 .cursorInTextSpeed
 	bit B_PAD_LEFT, b
 	jp nz, .pressedLeftInTextSpeed
 	jp .pressedRightInTextSpeed
 .downPressed
-	cp 16
-	ld b, -13
+	; Step between section rows; value rows also update their saved cursor X.
+	cp 17
+	ld b, -14
 	ld hl, wOptionsTextSpeedCursorX
-	jr z, .updateMenuVariables
-	ld b, 5
+	jp z, .updateMenuVariables
+	ld b, 4
 	cp 3
 	inc hl
-	jr z, .updateMenuVariables
-	cp 8
+	jp z, .updateMenuVariables
+	cp 7
 	inc hl
-	jr z, .updateMenuVariables
-	ld b, 3
+	jp z, .updateMenuVariables
+	cp 11
 	inc hl
-	jr .updateMenuVariables
+	jp z, .updateMenuVariables
+	ld b, 2
+	ld a, [wTopMenuItemY]
+	add b
+	ld [wTopMenuItemY], a
+	ld a, 1
+	ld [wTopMenuItemX], a
+	call PlaceUnfilledArrowMenuCursor
+	jp .loop
 .upPressed
-	cp 8
-	ld b, -5
+	cp 7
+	ld b, -4
 	ld hl, wOptionsTextSpeedCursorX
-	jr z, .updateMenuVariables
-	cp 13
+	jp z, .updateMenuVariables
+	cp 11
 	inc hl
-	jr z, .updateMenuVariables
-	cp 16
-	ld b, -3
+	jp z, .updateMenuVariables
+	cp 15
 	inc hl
-	jr z, .updateMenuVariables
-	ld b, 13
+	jp z, .updateMenuVariables
+	cp 17
+	ld b, -2
 	inc hl
+	jp z, .updateMenuVariables
+	ld b, 14
+	ld a, [wTopMenuItemY]
+	add b
+	ld [wTopMenuItemY], a
+	ld a, 1
+	ld [wTopMenuItemX], a
+	call PlaceUnfilledArrowMenuCursor
+	jp .loop
 .updateMenuVariables
 	add b
 	ld [wTopMenuItemY], a
@@ -567,6 +596,12 @@ DisplayOptionMenu:
 	ld a, [wOptionsBattleStyleCursorX] ; battle style cursor X coordinate
 	xor 1 ^ 10 ; toggle between 1 and 10
 	ld [wOptionsBattleStyleCursorX], a
+	jp .eraseOldMenuCursor
+.cursorInMoveNameCase
+	; The two case choices share the same left/right cursor positions as other toggles.
+	ld a, [wOptionsMoveNameCaseCursorX]
+	xor 1 ^ 10 ; toggle between uppercase and lowercase
+	ld [wOptionsMoveNameCaseCursorX], a
 	jp .eraseOldMenuCursor
 .pressedLeftInTextSpeed
 	ld a, [wOptionsTextSpeedCursorX] ; text speed cursor X coordinate
@@ -605,95 +640,13 @@ BattleStyleOptionText:
 	db   "BATTLE STYLE"
 	next " SHIFT    SET@"
 
+MoveNameCaseOptionText:
+	; Display the casing choices on the fourth option row.
+	db   "MOVE NAME CASE"
+	next " UPPER    lower@"
+
 OptionMenuCancelText:
 	db "CANCEL@"
-
-; sets the options variable according to the current placement of the menu cursors in the options menu
-SetOptionsFromCursorPositions:
-	ld hl, TextSpeedOptionData
-	ld a, [wOptionsTextSpeedCursorX] ; text speed cursor X coordinate
-	ld c, a
-.loop
-	ld a, [hli]
-	cp c
-	jr z, .textSpeedMatchFound
-	inc hl
-	jr .loop
-.textSpeedMatchFound
-	ld a, [hl]
-	ld d, a
-	ld a, [wOptionsBattleAnimCursorX] ; battle animation cursor X coordinate
-	dec a
-	jr z, .battleAnimationOn
-.battleAnimationOff
-	set BIT_BATTLE_ANIMATION, d
-	jr .checkBattleStyle
-.battleAnimationOn
-	res BIT_BATTLE_ANIMATION, d
-.checkBattleStyle
-	ld a, [wOptionsBattleStyleCursorX] ; battle style cursor X coordinate
-	dec a
-	jr z, .battleStyleShift
-.battleStyleSet
-	set BIT_BATTLE_SHIFT, d
-	jr .storeOptions
-.battleStyleShift
-	res BIT_BATTLE_SHIFT, d
-.storeOptions
-	ld a, d
-	ld [wOptions], a
-	ret
-
-; reads the options variable and places menu cursors in the correct positions within the options menu
-SetCursorPositionsFromOptions:
-	ld hl, TextSpeedOptionData + 1
-	ld a, [wOptions]
-	ld c, a
-	and $3f
-	push bc
-	ld de, 2
-	call IsInArray
-	pop bc
-	dec hl
-	ld a, [hl]
-	ld [wOptionsTextSpeedCursorX], a ; text speed cursor X coordinate
-	hlcoord 0, 3
-	call .placeUnfilledRightArrow
-	sla c
-	ld a, 1 ; On
-	jr nc, .storeBattleAnimationCursorX
-	ld a, 10 ; Off
-.storeBattleAnimationCursorX
-	ld [wOptionsBattleAnimCursorX], a ; battle animation cursor X coordinate
-	hlcoord 0, 8
-	call .placeUnfilledRightArrow
-	sla c
-	ld a, 1
-	jr nc, .storeBattleStyleCursorX
-	ld a, 10
-.storeBattleStyleCursorX
-	ld [wOptionsBattleStyleCursorX], a ; battle style cursor X coordinate
-	hlcoord 0, 13
-	call .placeUnfilledRightArrow
-; cursor in front of Cancel
-	hlcoord 0, 16
-	ld a, 1
-.placeUnfilledRightArrow
-	ld e, a
-	ld d, 0
-	add hl, de
-	ld [hl], "▷"
-	ret
-
-; table that indicates how the 3 text speed options affect frame delays
-; Format:
-; 00: X coordinate of menu cursor
-; 01: delay after printing a letter (in frames)
-TextSpeedOptionData:
-	db 14, TEXT_DELAY_SLOW
-	db  7, TEXT_DELAY_MEDIUM
-	db  1, TEXT_DELAY_FAST
-	db  7, -1 ; end (default X coordinate)
 
 CheckForPlayerNameInSRAM:
 ; Check if the player name data in SRAM has a string terminator character
