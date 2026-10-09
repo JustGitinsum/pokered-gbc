@@ -158,10 +158,10 @@ PokedexEntryPointers:
 	dw MissingNoDexEntry
 	dw GoldeenDexEntry
 	dw SeakingDexEntry
-	dw MissingNoDexEntry
-	dw MissingNoDexEntry
-	dw MissingNoDexEntry
-	dw MissingNoDexEntry
+	dw RaltsDexEntry
+	dw KirliaDexEntry
+	dw GardevoirDexEntry
+	dw GalladeDexEntry
 	dw PonytaDexEntry
 	dw RapidashDexEntry
 	dw RattataDexEntry
@@ -1161,6 +1161,34 @@ SeakingDexEntry:
 	db 4,3
 	dw 860
 	;text_far _SeakingDexEntry
+	text_end
+
+RaltsDexEntry:
+	db "FEELING@"
+	db 1,04
+	dw 146
+	;text_far _RaltsDexEntry
+	text_end
+
+KirliaDexEntry:
+	db "EMOTION@"
+	db 2,07
+	dw 445
+	;text_far _KirliaDexEntry
+	text_end
+
+GardevoirDexEntry:
+	db "EMBRACE@"
+	db 5,03
+	dw 1067
+	;text_far _GardevoirDexEntry
+	text_end
+
+GalladeDexEntry:
+	db "BLADE@"
+	db 5,03
+	dw 1146
+	;text_far _GalladeDexEntry
 	text_end
 
 PonytaDexEntry:

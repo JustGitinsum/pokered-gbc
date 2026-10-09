@@ -237,6 +237,10 @@ IF GEN_2_GRAPHICS
 	; const PAL_STEELIX
 	; const PAL_SCIZOR
 	; const PAL_KINGDRA
+	; const PAL_RALTS               ; $9F
+	; const PAL_KIRLIA              ; $A0
+	; const PAL_GARDEVOIR           ; $A1
+	; const PAL_GALLADE               ; $A2
 	; const PAL_ZORUA
 	const PAL_ZOROARK
 	; const PAL_CHARCADET

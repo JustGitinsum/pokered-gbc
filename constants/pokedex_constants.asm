@@ -159,6 +159,10 @@
 	const DEX_STEELIX     ; 153
 	const DEX_SCIZOR      ; 154
 	const DEX_KINGDRA     ; 155
+	const DEX_RALTS               ; $9F
+	const DEX_KIRLIA              ; $A0
+	const DEX_GARDEVOIR           ; $A1
+	const DEX_GALLADE               ; $A2
 	const DEX_ZORUA       ; 156
 	const DEX_ZOROARK     ; 157
 	const DEX_CHARCADET

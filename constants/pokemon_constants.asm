@@ -165,10 +165,10 @@
 	const_skip               ; $9C
 	const GOLDEEN            ; $9D
 	const SEAKING            ; $9E
-	const_skip               ; $9F
-	const_skip               ; $A0
-	const_skip               ; $A1
-	const_skip               ; $A2
+	const RALTS               ; $9F
+	const KIRLIA              ; $A0
+	const GARDEVOIR           ; $A1
+	const GALLADE               ; $A2
 	const PONYTA             ; $A3
 	const RAPIDASH           ; $A4
 	const RATTATA            ; $A5

@@ -170,10 +170,10 @@ EvosMovesPointerTable:
 	dw MissingNo9CEvosMoves
 	dw GoldeenEvosMoves
 	dw SeakingEvosMoves
-	dw MissingNo9FEvosMoves
-	dw MissingNoA0EvosMoves
-	dw MissingNoA1EvosMoves
-	dw MissingNoA2EvosMoves
+	dw RaltsEvosMoves
+	dw KirliaEvosMoves
+	dw GardevoirEvosMoves
+	dw GalladeEvosMoves
 	dw PonytaEvosMoves
 	dw RapidashEvosMoves
 	dw RattataEvosMoves
@@ -2273,28 +2273,76 @@ SeakingEvosMoves:
 	db 54, AGILITY
 	db 0
 
-MissingNo9FEvosMoves:
+RaltsEvosMoves:
 ; Evolutions
+	db EVOLVE_LEVEL, 20, KIRLIA
 	db 0
 ; Learnset
+	db 6, CONFUSION
+	db 9, HYPNOSIS
+	db 15, TELEPORT
+	db 18, DRAIN_KISS
+	db 20, MAGICAL_LEAF
+	db 24, CONFUSE_RAY
+	db 28, PSYBEAM
+	db 30, DOUBLE_TEAM
+	db 35, AMNESIA
+	db 38, PSYCHIC_M
+	db 44, MYSTICAL_FIRE
 	db 0
 
-MissingNoA0EvosMoves:
+KirliaEvosMoves:
 ; Evolutions
+	db EVOLVE_LEVEL, 30, GARDEVOIR
 	db 0
 ; Learnset
+	db 6, CONFUSION
+	db 9, HYPNOSIS
+	db 15, TELEPORT
+	db 18, DRAIN_KISS
+	db 20, MAGICAL_LEAF
+	db 24, CONFUSE_RAY
+	db 28, PSYBEAM
+	db 30, DOUBLE_TEAM
+	db 35, AMNESIA
+	db 38, PSYCHIC_M
+	db 44, MYSTICAL_FIRE
 	db 0
 
-MissingNoA1EvosMoves:
+GardevoirEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
+	db 6, CONFUSION
+	db 9, HYPNOSIS
+	db 15, TELEPORT
+	db 18, DRAIN_KISS
+	db 20, MAGICAL_LEAF
+	db 24, CONFUSE_RAY
+	db 28, PSYBEAM
+	db 30, DOUBLE_TEAM
+	db 35, AMNESIA
+	db 38, PSYCHIC_M
+	db 44, MYSTICAL_FIRE
+	db 49, MOONBLAST
+	db EVOLUTION_MOVE, HYPER_VOICE
 	db 0
 
-MissingNoA2EvosMoves:
+GalladeEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
+	db 6, CONFUSION
+	db 9, HYPNOSIS
+	db 15, TELEPORT
+	db 18, AERIAL_ACE
+	db 28, BARRIER
+	db 30, DOUBLE_TEAM
+	db 35, SWORDS_DANCE
+	db 42, PSYCHO_CUT
+	db 50, LEAF_BLADE
+	db 58, SACRED_SWORD
+	db EVOLUTION_MOVE, SLASH
 	db 0
 
 PonytaEvosMoves:

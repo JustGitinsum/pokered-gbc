@@ -3,7 +3,14 @@ SECTION "Pics 1", ROMX
 IF GEN_2_GRAPHICS
 MoltresPicFront::    INCBIN "gfx/pokemon/gsfront/moltres.pic"
 MoltresPicBack::     INCBIN "gfx/pokemon/gsback/moltresb.pic"
-
+RaltsPicFront::      INCBIN "gfx/pokemon/gsfront/ralts.pic"
+RaltsPicBack::       INCBIN "gfx/pokemon/gsback/raltsb.pic"
+KirliaPicFront::     INCBIN "gfx/pokemon/gsfront/kirlia.pic"
+KirliaPicBack::      INCBIN "gfx/pokemon/gsback/kirliab.pic"
+GardevoirPicFront::  INCBIN "gfx/pokemon/gsfront/gardevoir.pic"
+GardevoirPicBack::   INCBIN "gfx/pokemon/gsback/gardevoirb.pic"
+GalladePicFront::    INCBIN "gfx/pokemon/gsfront/gallade.pic"
+GalladePicBack::     INCBIN "gfx/pokemon/gsback/galladeb.pic"
 TentacoolPicFront::  INCBIN "gfx/pokemon/gsfront/tentacool.pic"
 TentacoolPicBack::   INCBIN "gfx/pokemon/gsback/tentacoolb.pic"
 ScytherPicFront::    INCBIN "gfx/pokemon/gsfront/scyther.pic"

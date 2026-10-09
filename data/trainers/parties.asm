@@ -106,7 +106,7 @@ BugCatcherData:
 LassData:
 ; Route 3
 	db 9, PIDGEY, PIDGEY, 0
-	db 10, RATTATA, NIDORAN_M, 0
+	db 10, RALTS, NIDORAN_M, 0
 	db 14, JIGGLYPUFF, 0
 ; Route 4
 	db 31, PARAS, PARAS, PARASECT, 0
@@ -151,9 +151,9 @@ JrTrainerMData:
 ; Route 24/Route 25
 	db 14, CHARCADET, EKANS, 0
 ; Route 24
-	db 18, MANKEY, 0
+	db 18, SQUIRTLE, 0
 ; Route 6
-	db 20, SQUIRTLE, 0
+	db 20, KIRLIA, 0
 	db 16, SPEAROW, RATICATE, 0
 ; Unused
 	db 18, DIGLETT, DIGLETT, SANDSHREW, 0
@@ -475,7 +475,7 @@ BlackbeltData:
 	db 37, HITMONLEE, HITMONCHAN, 0
 	db 31, MANKEY, MANKEY, PRIMEAPE, 0
 	db 32, MACHOP, MACHOKE, 0
-	db 36, PRIMEAPE, 0
+	db 36, GALLADE, 0
 	db 31, MACHOP, MANKEY, PRIMEAPE, 0
 ; Viridian Gym
 	db 40, MACHOP, MACHOKE, 0
@@ -664,7 +664,7 @@ BlaineData:
 	db $FF, 42, RAPIDASH, 42, ARMAROUGE, 44, CERULEDGE, 47, ARCANINE, 0
 
 SabrinaData:
-	db $FF, 38, KADABRA, 37, MR_MIME, 38, VENOMOTH, 43, ALAKAZAM, 0
+	db $FF, 38, KADABRA, 37, MR_MIME, 38, GARDEVOIR, 43, ALAKAZAM, 0
 
 GentlemanData:
 ; SS Anne 1F Rooms
