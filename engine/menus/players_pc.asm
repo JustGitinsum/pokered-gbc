@@ -95,7 +95,11 @@ PlayerPCDeposit:
 	and a
 	jr nz, .loop
 	;;;;;;;;;; marcelnote - new for bag pockets
+	; Deposit can begin from any of the three pockets.
 	ld a, [wNumBagKeyItems]
+	and a
+	jr nz, .loop
+	ld a, [wNumBagTMHMs]
 	and a
 	jr nz, .loop
 	;;;;;;;;;;
@@ -103,20 +107,10 @@ PlayerPCDeposit:
 	call PrintText
 	jp PlayerPCMenu
 .loop
-	;;;;;;;;; marcelnote - flag if depositing to PC (to prevent switching bag pocket), new for bag pockets
-	ld hl, wBagPocketsFlags
-	set BIT_PC_WITHDRAWING, [hl]
-	;;;;;;;;;;
 	ld hl, WhatToDepositText
 	call PrintText
-	ld hl, wNumBagItems
-; 	;;;;;;;;;; marcelnote - check which pocket we were last in, new for bag pockets
-; 	ld a, [wBagPocketsFlags]
-; 	bit BIT_KEY_ITEMS_POCKET, a
-; 	jr z, .gotBagPocket
-; 	ld hl, wNumBagKeyItems
-; .gotBagPocket
-; 	;;;;;;;;;;
+	; Display and remove from the currently selected pocket.
+	farcall GetCurrentBagList
 	ld a, l
 	ld [wListPointer], a
 	ld a, h
@@ -147,14 +141,7 @@ PlayerPCDeposit:
 	call PrintText
 	jp .loop
 .roomAvailable
-	ld hl, wNumBagItems
-	;;;;;;;;;; marcelnote - check which pocket we are in, new for bag pockets
-	ld a, [wBagPocketsFlags]
-	bit BIT_KEY_ITEMS_POCKET, a
-	jr z, .gotBagPocket2
-	ld hl, wNumBagKeyItems
-.gotBagPocket2
-	;;;;;;;;;;
+	farcall GetCurrentBagList
 	call RemoveItemFromInventory
 	call WaitForSoundToFinish
 	ld a, SFX_WITHDRAW_DEPOSIT
@@ -197,17 +184,16 @@ PlayerPCWithdraw:
 	ld [wItemQuantity], a
 	ld a, [wIsKeyItem]
 	and a
-	ld hl, wNumBagKeyItems ; marcelnote - new for bag pockets
 	jr nz, .next
 ; if it's not a key item, there can be more than one of the item
 	ld hl, WithdrawHowManyText
 	call PrintText
 	call DisplayChooseQuantityMenu
-	ld hl, wNumBagItems ; marcelnote - moved from below, new for bag pockets
 	cp $ff
 	jp z, .loop
 .next
-	ld hl, wNumBagItems
+	; The item determines its destination pocket when withdrawn from the PC.
+	farcall GetBagItemList
 	call AddItemToInventory
 	jr c, .roomAvailable
 	ld hl, CantCarryMoreText

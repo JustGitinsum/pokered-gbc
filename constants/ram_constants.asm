@@ -148,10 +148,10 @@ DEF NUM_BADGES EQU const_value
 ; wBagPocketsFlags ; marcelnote - new for bag pockets
 	const_def
 	const BIT_KEY_ITEMS_POCKET   ; 0 ; is 1 if currently in Key Items pocket
-	const_skip                   ; 1 ; unused, leave space for a possible TM pocket
+	const BIT_TM_HM_POCKET       ; 1 ; is 1 if currently in TM/HM pocket
 	const BIT_PRINT_INFO_BOX     ; 2 ; to know whether to print Item info box (i.e. only in start menu bag and battle)
 	const BIT_PC_WITHDRAWING     ; 3 ; to prevent switching pockets when selling and depositing/withdrawing items from PC
-	const_skip  
+	const BIT_PREVIOUS_POCKET    ; 4 ; transient input used while cycling pockets; cleared when storing pocket ID
 
 ; hFindPathFlags
 	const_def

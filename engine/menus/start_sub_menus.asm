@@ -343,18 +343,12 @@ StartMenu_Item::  ; marcelnote - BICYCLE does not have special handling anymore
 	call PrintText
 	jr .exitMenu
 .notInCableClubRoom
-	ld bc, wNumBagItems
-	;;;;;;;;;; marcelnote - check which pocket we were last in, new for bag pockets
-	ld a, [wBagPocketsFlags]
-	bit BIT_KEY_ITEMS_POCKET, a
-	jr z, .gotBagPocket
-	ld bc, wNumBagKeyItems
-.gotBagPocket
-	;;;;;;;;;;
-	ld hl, wListPointer
-	ld a, c
-	ld [hli], a
-	ld [hl], b ; store item bag pointer in wListPointer (for DisplayListMenuID)
+	; Reopen the bag at the pocket last selected by the player.
+	farcall GetCurrentBagList
+	ld a, h
+	ld [wListPointer + 1], a
+	ld a, l
+	ld [wListPointer], a ; store item bag pointer in wListPointer (for DisplayListMenuID)
 	xor a
 	ld [wPrintItemPrices], a
 	;;;;;;;;;; marcelnote - display bag info box, new for bag pockets
@@ -385,10 +379,11 @@ StartMenu_Item::  ; marcelnote - BICYCLE does not have special handling anymore
 	farcall DisplayItemDescription
 ; erase menu cursor (blank each tile in front of an item name)
 	ld a, " "
-	ldcoord_a 5, 4
-	ldcoord_a 5, 6
-	ldcoord_a 5, 8
-	ldcoord_a 5, 10
+	; Clear the cursor column; item names now begin one tile to its right.
+	ldcoord_a 4, 4
+	ldcoord_a 4, 6
+	ldcoord_a 4, 8
+	ldcoord_a 4, 10
 	call PlaceUnfilledArrowMenuCursor
 	xor a
 	ld [wMenuItemToSwap], a
@@ -488,7 +483,8 @@ StartMenu_Item::  ; marcelnote - BICYCLE does not have special handling anymore
 	inc a
 	jr z, .tossZeroItems
 .skipAskingQuantity
-	ld hl, wNumBagItems
+	; Resolve the item's own pocket before tossing, regardless of the open pocket.
+	farcall GetBagItemList
 	call TossItem
 .tossZeroItems
 	jp ItemMenuLoop

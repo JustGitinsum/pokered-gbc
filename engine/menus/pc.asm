@@ -116,18 +116,12 @@ AccessedMyPCText:
 
 ; removes one of the specified item ID [hItemToRemoveID] from bag (if existent)
 RemoveItemByID::
-	ld hl, wBagItems
 	ldh a, [hItemToRemoveID]
 	ld b, a
-	;;;;;;;;;; marcelnote - new for bag pockets
 	ld [wCurItem], a ; should we save what's in wCurItem before?
-	call IsKeyItem
-	ld a, [wIsKeyItem]
-	and a
-	jr z, .notKeyItem
-	ld hl, wBagKeyItems
-.notKeyItem
-	;;;;;;;;;;
+	; Resolve the item's pocket before searching its entries.
+	farcall GetBagItemList
+	inc hl
 	xor a
 	ldh [hItemToRemoveIndex], a
 .loop
@@ -146,12 +140,7 @@ RemoveItemByID::
 	ld [wItemQuantity], a
 	ldh a, [hItemToRemoveIndex]
 	ld [wWhichPokemon], a
-	ld hl, wNumBagItems
-	;;;;;;;;;; marcelnote - new for bag pockets
-	ld a, [wIsKeyItem]
-	and a
-	jr z, .notKeyItem2
-	ld hl, wNumBagKeyItems
-.notKeyItem2
-	;;;;;;;;;;
+	ld a, b
+	ld [wCurItem], a
+	farcall GetBagItemList
 	jp RemoveItemFromInventory

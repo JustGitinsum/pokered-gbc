@@ -2279,15 +2279,8 @@ OldManItemList:
 	db -1 ; end
 
 DisplayPlayerBag:
-	; get the pointer to player's bag when in a normal battle
-	ld hl, wNumBagItems
-	;;;;;;;;;; marcelnote - check which pocket we were last in, new for bag pockets
-	ld a, [wBagPocketsFlags]
-	bit BIT_KEY_ITEMS_POCKET, a
-	jr z, DisplayBagMenu
-	ld hl, wNumBagKeyItems
-	;;;;;;;;;;
-	; fallthrough
+	; Keep the battle bag on the pocket selected by the player.
+	callfar GetCurrentBagList
 
 DisplayBagMenu:
 	ld a, l

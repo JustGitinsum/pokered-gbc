@@ -210,6 +210,7 @@ DEF TM01 EQU const_value
 ASSERT NUM_TMS == const_value - TM01, "NUM_TMS ({d:NUM_TMS}) does not match the number of add_tm definitions"
 
 DEF NUM_TM_HM EQU NUM_TMS + NUM_HMS
+ASSERT BAG_TM_HM_CAPACITY >= NUM_TM_HM, "TM/HM pocket must fit every defined machine"
 
 ; 50 TMs + 5 HMs = 55 learnable TM/HM flags per Pokémon.
 ; These fit in 7 bytes, with one unused bit left over.

@@ -12,14 +12,34 @@ AddItemToInventory_::
 	push hl
 	push hl
 	ld d, PC_ITEM_CAPACITY ; how many items the PC can hold
+	; Bag lists each have their own capacity; all other inventory pointers are PC storage.
 	ld a, LOW(wNumBagItems)
 	cp l
-	jr nz, .checkIfInventoryFull
+	jr nz, .checkIfTMHMInventory
 	ld a, HIGH(wNumBagItems)
 	cp h
-	jr nz, .checkIfInventoryFull
+	jr nz, .checkIfTMHMInventory
 ; if the destination is the bag
 	ld d, BAG_ITEM_CAPACITY ; how many items the bag can hold
+	jr .checkIfInventoryFull
+.checkIfTMHMInventory
+	; Compare the count-byte address so the TM/HM list gets its own slot limit.
+	ld a, LOW(wNumBagTMHMs)
+	cp l
+	jr nz, .checkIfKeyInventory
+	ld a, HIGH(wNumBagTMHMs)
+	cp h
+	jr nz, .checkIfKeyInventory
+	ld d, BAG_TM_HM_CAPACITY
+	jr .checkIfInventoryFull
+.checkIfKeyInventory
+	ld a, LOW(wNumBagKeyItems)
+	cp l
+	jr nz, .checkIfInventoryFull
+	ld a, HIGH(wNumBagKeyItems)
+	cp h
+	jr nz, .checkIfInventoryFull
+	ld d, BAG_KEY_ITEM_CAPACITY
 .checkIfInventoryFull
 	ld a, [hl]
 	sub d

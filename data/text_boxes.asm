@@ -11,9 +11,11 @@ TextBoxCoordTable:
 	db MENU_TEMPLATE_03,  0,  0, 19, 14
 	;db MENU_TEMPLATE_07,  0,  0, 11,  6 ; marcelnote - replaced with USE_SLCT_MENU_TEMPLATE
 	db LIST_MENU_BOX,     4,  2, 19, 12
+	; Item lists use the extra column on the left for longer labels.
+	db ITEM_LIST_MENU_BOX, 3, 2, 19, 12
 	db MENU_TEMPLATE_10,  7,  0, 19, 17
 	db MON_SPRITE_POPUP,  6,  4, 14, 13
-	db BAG_INFO_BOX,      4,  0, 19,  2 ; marcelnote - new for bag pockets
+	db BAG_INFO_BOX,      3,  0, 19,  2 ; marcelnote - new for bag pockets
 	db BIG_MESSAGE_BOX,   0,  9, 19, 17 ; Added for item descriptions
 	db -1 ; end
 

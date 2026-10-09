@@ -1,5 +1,6 @@
 DEF BAG_ITEM_CAPACITY EQU 30
 DEF BAG_KEY_ITEM_CAPACITY EQU 20 ; marcelnote - new for bag pockets, a bit less than 30 key items currently
+DEF BAG_TM_HM_CAPACITY EQU 55 ; one slot for each TM/HM
 DEF PC_ITEM_CAPACITY  EQU 20
 
 ; text box IDs
@@ -32,6 +33,7 @@ DEF PC_ITEM_CAPACITY  EQU 20
 	const JP_POKEDEX_MENU_TEMPLATE          ; $1a
 	const SAFARI_BATTLE_MENU_TEMPLATE       ; $1b
 	const BAG_INFO_BOX                      ; $1c ; marcelnote - new for bag pockets
+	const ITEM_LIST_MENU_BOX                ; $1d ; wider, left-shifted item bag and shop list
 
 ; two option menu constants
 ; TwoOptionMenuStrings indexes (see data/yes_no_menu_strings.asm)

@@ -2,20 +2,14 @@ GetQuantityOfItemInBag:
 ; In: b = item ID
 ; Out: b = how many of that item are in the bag
 	call GetPredefRegisters
-	ld hl, wNumBagItems
-	;;;;;;;;;; marcelnote - new for bag pockets
 	ld a, [wCurItem]
 	ld c, a ; store current content of [wCurItem] in c
 	ld a, b
 	ld [wCurItem], a
-	call IsKeyItem
+	; Use the item's owning pocket rather than whichever pocket is currently open.
+	call GetBagItemList
 	ld a, c
 	ld [wCurItem], a ; restore [wCurItem], else issues with wild Silph Scope encounters
-	ld a, [wIsKeyItem]
-	and a
-	jr z, .loop
-	ld hl, wNumBagKeyItems
-	;;;;;;;;;;
 .loop
 	inc hl
 	ld a, [hli]
@@ -36,17 +30,16 @@ GetIndexOfItemInBag:
 ; In: b = item ID
 ; Out: b = index of item in bag (FF if not)
 	call GetPredefRegisters
-	ld hl, wBagItems - 1
 	ld c, -1
-	;;;;;;;;;; marcelnote - new for bag pockets
+	ld a, [wCurItem]
+	push af
 	ld a, b
 	ld [wCurItem], a
-	call IsKeyItem
-	ld a, [wIsKeyItem]
-	and a
-	jr z, .loop
-	ld hl, wBagKeyItems - 1
-	;;;;;;;;;;
+	; Resolve the same pocket used by the quantity lookup before scanning its entries.
+	call GetBagItemList
+	pop af
+	ld [wCurItem], a
+	dec hl
 .loop
 	inc c
 	inc hl

@@ -2124,16 +2124,13 @@ wSeafoamIslandsB3FCurScript:: db
 wRoute23CurScript:: db
 wSeafoamIslandsB4FCurScript:: db
 wRoute18Gate1FCurScript:: db
-	ds 78
 wGameProgressFlagsEnd::
 
-wPlayerGender::
-	; $00 = male
-	; $01 = female
-		ds 1
-	
-	; unused
-		ds 55
+; Reuse unused progress-flag padding and trailing reserved bytes for the saved
+; TM/HM list, avoiding a reduction in the WRAM stack allocation.
+wNumBagTMHMs:: db
+wBagTMHMs:: ds BAG_TM_HM_CAPACITY * 2 + 1
+	ds 22
 		
 wPlayerMoveAccuracyPercent:: db ; new, to host the accuracy in [0,100] rather than [0,255]
 
@@ -2181,8 +2178,8 @@ wLastBlackoutMap:: db
 ; destination map (for certain types of special warps, not ordinary walking)
 wDestinationMap:: db
 
-; initialized to $ff, but nothing ever reads it
-wUnusedPlayerDataByte:: db
+; $00 = male, $01 = female; stored in a previously unused saved-data byte.
+wPlayerGender:: db
 
 ; used to store the tile in front of the boulder when trying to push a boulder
 ; also used to store the result of the collision check ($ff for a collision and $00 for no collision)
@@ -2360,5 +2357,6 @@ SECTION "Stack", WRAM0
 ; the stack grows downward
 	ds $100 - 1
 wStack:: db
+ASSERT wStack == $dfff
 
 ENDSECTION

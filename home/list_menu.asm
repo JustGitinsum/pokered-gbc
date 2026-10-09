@@ -9,7 +9,7 @@ DisplayListMenuID::
 	ld a, [wBattleType]
 	and a ; is it the Old Man battle?
 	jr nz, .specialBattleType
-	call PrintBagInfoText ; marcelnote - new for bag pockets
+	callfar PrintBagInfoText ; marcelnote - new for bag pockets
 	ld a, $01 ; hardcoded bank
 	jr .bankswitch
 .specialBattleType ; Old Man battle
@@ -27,13 +27,20 @@ DisplayListMenuID::
 	ld h, a ; hl = address of the list
 	ld a, [hl] ; the first byte is the number of entries in the list
 	ld [wListCount], a
+	ld a, [wListMenuID]
+	sub PRICEDITEMLISTMENU
+	cp SPECIALLISTMENU - PRICEDITEMLISTMENU
+	jr c, .itemListBox ; priced and regular item menus have consecutive IDs
 	ld a, LIST_MENU_BOX
+	jr .drawListMenuBox
+.itemListBox
+	; Bag and shop item lists need one more column for their labels.
+	ld a, ITEM_LIST_MENU_BOX
+.drawListMenuBox
 	ld [wTextBoxID], a
 	call DisplayTextBoxID ; draw the menu text box
 	call UpdateSprites ; disable sprites behind the text box
-; the code up to .skipMovingSprites appears to be useless
-	hlcoord 4, 2 ; coordinates of upper left corner of menu text box
-	lb de, 9, 14 ; height and width of menu text box
+	; UpdateSprites takes no coordinate arguments; only the PC list needs its second update.
 	ld a, [wListMenuID]
 	and a ; PCPOKEMONLISTMENU?
 	jr nz, .skipMovingSprites
@@ -49,7 +56,15 @@ DisplayListMenuID::
 	ld [wMaxMenuItem], a
 	ld a, 4
 	ld [wTopMenuItemY], a
+	ld a, [wListMenuID]
+	sub PRICEDITEMLISTMENU
+	cp SPECIALLISTMENU - PRICEDITEMLISTMENU
+	jr c, .leftShiftItemContents
 	ld a, 5
+	jr .storeTopMenuItemX
+.leftShiftItemContents
+	ld a, 4
+.storeTopMenuItemX
 	ld [wTopMenuItemX], a
 	ld a, PAD_A | PAD_B | PAD_SELECT | PAD_RIGHT | PAD_LEFT ; marcelnote - added PAD_RIGHT for bag pockets
 	ld [wMenuWatchedKeys], a
@@ -147,7 +162,7 @@ DisplayListMenuIDLoop::
 	ld a, [hl] ; a = item quantity
 	ld [wMaxItemQuantity], a
 .skipGettingQuantity
-	ld a, [wCurItem]
+	ld a, [wNamedObjectIndex]
 	ld [wNameListIndex], a
 	ld a, ITEM_NAME ; marcelnote - added for robustness (needed for TM printing)
 	ld [wNameListType], a
@@ -186,9 +201,9 @@ DisplayListMenuIDLoop::
 	jp nz, HandleItemListSwapping ; if so, allow the player to swap menu entries
 	;;;;;;;;;; marcelnote - for bag pockets
 	bit B_PAD_RIGHT, a
-	jr nz, .switchBagPocket
+	jr nz, .switchBagPocketRight
 	bit B_PAD_LEFT, a
-	jr nz, .switchBagPocket
+	jr nz, .switchBagPocketLeft
 	;;;;;;;;;;
 	;ld b, a
 	bit B_PAD_DOWN, a ; marcelnote - changed from bit B_PAD_DOWN, b (no point in using b)
@@ -209,6 +224,14 @@ DisplayListMenuIDLoop::
 	jp z, DisplayListMenuIDLoop
 	dec [hl]
 	jp DisplayListMenuIDLoop
+.switchBagPocketRight
+	; The banked cycling helper consumes this transient direction bit.
+	ld hl, wBagPocketsFlags
+	res BIT_PREVIOUS_POCKET, [hl]
+	jr .switchBagPocket
+.switchBagPocketLeft
+	ld hl, wBagPocketsFlags
+	set BIT_PREVIOUS_POCKET, [hl]
 .switchBagPocket ; marcelnote - new for bag pockets
 	ld a, [wListMenuID]
 	cp ITEMLISTMENU
@@ -216,21 +239,7 @@ DisplayListMenuIDLoop::
 	ld hl, wBagPocketsFlags
 	bit BIT_PC_WITHDRAWING, [hl] ; if withdrawing from PC then cannot switch pocket
 	jp nz, DisplayListMenuIDLoop
-	ld bc, wNumBagItems
-	ld a, [wBagPocketsFlags]
-	bit BIT_KEY_ITEMS_POCKET, a
-	jr nz, .switchToMainPocket
-	ld bc, wNumBagKeyItems
-.switchToMainPocket
-	xor (1 << BIT_KEY_ITEMS_POCKET) ; this switches bit BIT_KEY_ITEMS_POCKET of a
-	ld [wBagPocketsFlags], a
-	ld a, c
-	ld hl, wListPointer
-	ld [hli], a
-	ld [hl], b ; store item bag pointer in wListPointer (for DisplayListMenuID)
-	xor a
-	ld [wCurrentMenuItem], a
-	ld [wListScrollOffset], a
+	callfar CycleBagPocket
 	call ExitListMenu ; this is to prevent an issue with BankswitchHome in DisplayListMenuID
 	jp DisplayListMenuID
 
@@ -410,9 +419,19 @@ ExitListMenu::
 	ret
 
 PrintListMenuEntries::
+	ld a, [wListMenuID]
+	sub PRICEDITEMLISTMENU
+	cp SPECIALLISTMENU - PRICEDITEMLISTMENU
+	jr c, .clearItemListArea
 	hlcoord 5, 3
 	ld b, 9
 	ld c, 14
+	jr .clearListArea
+.clearItemListArea
+	hlcoord 4, 3
+	ld b, 9
+	ld c, 15
+.clearListArea
 	call ClearScreenArea
 	ld a, [wListPointer]
 	ld e, a
@@ -435,7 +454,15 @@ PrintListMenuEntries::
 	jr nc, .noCarry
 	inc d
 .noCarry
+	ld a, [wListMenuID]
+	sub PRICEDITEMLISTMENU
+	cp SPECIALLISTMENU - PRICEDITEMLISTMENU
+	jr c, .leftShiftItemNames
 	hlcoord 6, 4 ; coordinates of first list entry name
+	jr .setFirstListEntry
+.leftShiftItemNames
+	hlcoord 5, 4 ; item names and related text shift with the wider list box
+.setFirstListEntry
 	ld b, 4 ; print 4 names
 .loop
 	ld a, b
@@ -456,7 +483,15 @@ PrintListMenuEntries::
 	jr z, .movesMenu
 .itemMenu
 	call GetItemName
-	jr .placeNameString
+	call PlaceString
+	ld a, [wBagPocketsFlags]
+	bit BIT_TM_HM_POCKET, a
+	jr z, .nameWasPrinted
+	; Print the corresponding move on the second row only in the TM/HM pocket.
+	ld d, h
+	ld e, l
+	callfar PrintTMHMMoveName
+	jr .nameWasPrinted
 .pokemonPCMenu
 	push hl
 	ld hl, wPartyCount
@@ -480,6 +515,7 @@ PrintListMenuEntries::
 	call GetMoveName
 .placeNameString
 	call PlaceString
+.nameWasPrinted
 	pop de
 	pop hl
 	ld a, [wPrintItemPrices]
@@ -492,7 +528,20 @@ PrintListMenuEntries::
 	ld [wCurItem], a
 	call GetItemPrice
 	pop hl
+	ld a, [wListMenuID]
+	cp PRICEDITEMLISTMENU
+	jr nz, .itemPriceOnSecondLine
+	; TM prices share their item-name row; all other prices stay on the next row.
+	ld a, [wNamedObjectIndex]
+	cp TM01
+	jr c, .itemPriceOnSecondLine
+	cp TM01 + NUM_TMS
+	jr nc, .itemPriceOnSecondLine
+	ld bc, 5 ; same line, 5 columns right
+	jr .placeItemPrice
+.itemPriceOnSecondLine
 	ld bc, SCREEN_WIDTH + 5 ; 1 row down and 5 columns right
+.placeItemPrice
 	add hl, bc
 	ld c, 3 | LEADING_ZEROES | MONEY_SIGN
 	call PrintBCDNumber
@@ -550,7 +599,15 @@ PrintListMenuEntries::
 	and a ; is the item unsellable?
 	jr nz, .skipPrintingItemQuantity ; if so, don't print the quantity
 	push hl
+	ld a, [wBagPocketsFlags]
+	bit BIT_TM_HM_POCKET, a
+	jr nz, .printTMQuantity
 	ld bc, SCREEN_WIDTH + 8 ; 1 row down and 8 columns right
+	jr .printQuantity
+.printTMQuantity
+	; The TM/HM move name uses the next row, so keep its stack count beside the item.
+	ld bc, 8 ; same row, 8 columns right
+.printQuantity
 	add hl, bc
 	ld a, "×"
 	ld [hli], a
@@ -591,6 +648,13 @@ PrintListMenuEntries::
 	jp nz, .loop
 	ld bc, -8
 	add hl, bc
+	; Keep the item-list scroll arrow at its original bottom-right tile.
+	ld a, [wListMenuID]
+	sub PRICEDITEMLISTMENU
+	cp SPECIALLISTMENU - PRICEDITEMLISTMENU
+	jr nc, .placeScrollArrow
+	inc hl
+.placeScrollArrow
 	ld a, "▼"
 	ld [hl], a
 	ret
@@ -598,65 +662,6 @@ PrintListMenuEntries::
 	ld de, ListMenuCancelText
 	jp PlaceString
 
-PrintBagInfoText: ; marcelnote - new for bag pockets
-	; hlcoord 0, 12
-	; lb bc, 4, 18  ; height, width
-	; call TextBoxBorder
-	; call UpdateSprites
-	
-	ld hl, wBagPocketsFlags
-	bit BIT_PRINT_INFO_BOX, [hl]
-	ret z ; do not display the info box
-	hlcoord 5, 1
-	ld de, BagItemsText
-	ld a, [wBagPocketsFlags]
-	bit BIT_KEY_ITEMS_POCKET, a
-	jr z, .mainPocket
-	ld de, BagKeyItemsText
-	jp PlaceString
-.mainPocket
-	;ld a, [wCurListMenuItem]
-	;cp $ff
-	;ret z
-	;cp TM_AERIAL_ACE ; first TM (TMs are last items)
-	;jp c, .notTM
-	;ld de, IsTMText
-;.notTM
-	call PlaceString
-	ld a, [wNumBagItems]
-	ld b, a
-	ld c, BAG_ITEM_CAPACITY
-	jr .loadText
-
-.loadText
-	hlcoord 13, 1 ; Item quantity counter coordinates
-	ld de, w2CharStringBuffer
-	ld a, b
-	ld [de], a
-	inc de
-	ld a, c
-	ld [de], a
-	dec de
-	lb bc, 1 | LEADING_ZEROES, 2
-	call PrintNumber
-	ld [hl], "/"
-	inc hl
-	inc de
-	inc de
-	call PrintNumber
-	; hlcoord  4, 2
-	; ld [hl], $65
-	; hlcoord 19, 2
-	; ld [hl], $66
-	ret
-
-
 ListMenuCancelText::
 	db "CANCEL@"
-
-BagItemsText:
-	db "◀ITEMS       ▶@"
-
-BagKeyItemsText:
-	db "◀KEY ITEMS   ▶@" ; ▶
 	

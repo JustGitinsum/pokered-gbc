@@ -73,6 +73,8 @@ INCLUDE "engine/events/heal_party.asm"
 INCLUDE "engine/math/bcd.asm"
 INCLUDE "engine/movie/oak_speech/init_player_data.asm"
 INCLUDE "engine/items/get_bag_item_quantity.asm"
+; Shared selectors for TM/HM, key-item, and currently open bag lists.
+INCLUDE "engine/menus/bag_pockets.asm"
 INCLUDE "engine/overworld/pathfinding.asm"
 INCLUDE "engine/gfx/hp_bar.asm"
 INCLUDE "engine/events/hidden_objects/bookshelves.asm"

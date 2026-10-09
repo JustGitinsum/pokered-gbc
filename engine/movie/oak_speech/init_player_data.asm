@@ -9,9 +9,6 @@ InitPlayerData2:
 	ldh a, [hRandomAdd]
 	ld [wPlayerID + 1], a
 
-	ld a, $ff
-	ld [wUnusedPlayerDataByte], a
-
 	ld hl, wPartyCount
 	call InitializeEmptyList
 	ld hl, wBoxCount
@@ -19,6 +16,9 @@ InitPlayerData2:
 	ld hl, wNumBagItems
 	call InitializeEmptyList
 	ld hl, wNumBagKeyItems    ; marcelnote - new for Key Items pocket
+	call InitializeEmptyList
+	; Initialize the TM/HM list with the same empty-list terminator.
+	ld hl, wNumBagTMHMs
 	call InitializeEmptyList
 	ld hl, wNumBoxItems
 	call InitializeEmptyList

@@ -1221,7 +1221,32 @@ ItemUseMedicine:
 	and a ; using Softboiled?
 	jr nz, .skipRemovingItem ; no item to remove if using Softboiled
 	push hl
+	; GetBagItemList checks key items through wBuffer, which overlaps HP animation data.
+	ld a, [wHPBarMaxHP]
+	push af
+	ld a, [wHPBarMaxHP + 1]
+	push af
+	ld a, [wHPBarOldHP]
+	push af
+	ld a, [wHPBarOldHP + 1]
+	push af
+	ld a, [wHPBarNewHP]
+	push af
+	ld a, [wHPBarNewHP + 1]
+	push af
 	call RemoveUsedItem
+	pop af
+	ld [wHPBarNewHP + 1], a
+	pop af
+	ld [wHPBarNewHP], a
+	pop af
+	ld [wHPBarOldHP + 1], a
+	pop af
+	ld [wHPBarOldHP], a
+	pop af
+	ld [wHPBarMaxHP + 1], a
+	pop af
+	ld [wHPBarMaxHP], a
 	pop hl
 .skipRemovingItem
 	ld a, [wCurItem]
@@ -2337,7 +2362,8 @@ PrintItemUseTextAndRemoveItem:
 	call WaitForTextScrollButtonPress ; wait for button press
 
 RemoveUsedItem:
-	ld hl, wNumBagItems
+	; A consumed item is removed from its owning pocket, not always the general bag.
+	call GetBagItemList
 	ld a, 1 ; one item
 	ld [wItemQuantity], a
 	jp RemoveItemFromInventory

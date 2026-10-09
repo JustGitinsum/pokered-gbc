@@ -50,27 +50,22 @@ DisplayPokemartDialogue_::
 
 	ld a, [wNumBagItems]
 	and a
+	jr nz, .hasSellableItems
+	; TMs are ordinary sellable items; check their pocket when the main bag is empty.
+	ld a, [wNumBagTMHMs]
+	and a
 	jp z, .bagEmpty
+.hasSellableItems
 	ld hl, PokemonSellingGreetingText
 	call PrintText
 	call SaveScreenTilesToBuffer1 ; save screen
 .sellMenuLoop
-	;;;;;;;;; marcelnote - flag if selling (to prevent switching bag pocket), new for bag pockets
-	ld hl, wBagPocketsFlags
-	set BIT_PC_WITHDRAWING, [hl]
-	;;;;;;;;;;
 	call LoadScreenTilesFromBuffer1 ; restore saved screen
 	ld a, MONEY_BOX
 	ld [wTextBoxID], a
 	call DisplayTextBoxID ; draw money text box
-	ld hl, wNumBagItems
-; 	;;;;;;;;;; marcelnote - check which pocket we were last in, new for bag pockets
-; 	ld a, [wBagPocketsFlags]
-; 	bit BIT_KEY_ITEMS_POCKET, a
-; 	jr z, .gotBagPocket
-; 	ld hl, wNumBagKeyItems
-; .gotBagPocket
-; 	;;;;;;;;;;
+	; The sell list follows the currently selected pocket.
+	farcall GetCurrentBagList
 	ld a, l
 	ld [wListPointer], a
 	ld a, h
@@ -123,7 +118,8 @@ DisplayPokemartDialogue_::
 	ld [wBoughtOrSoldItemInMart], a
 .skipSettingFlag1
 	call AddAmountSoldToMoney
-	ld hl, wNumBagItems
+	; TMs return to their dedicated pocket after sale; HMs are rejected above.
+	farcall GetBagItemList
 	call RemoveItemFromInventory
 	jp .sellMenuLoop
 .unsellableItem
@@ -198,7 +194,8 @@ DisplayPokemartDialogue_::
 .buyItem
 	call .isThereEnoughMoney
 	jr c, .notEnoughMoney
-	ld hl, wNumBagItems
+	; Purchased TMs go directly into the TM/HM pocket.
+	farcall GetBagItemList
 	call AddItemToInventory
 	jr nc, .bagFull
 	call SubtractAmountPaidFromMoney

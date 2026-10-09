@@ -7,15 +7,8 @@ GiveItem::
 	ld [wCurItem], a
 	ld a, c
 	ld [wItemQuantity], a
-	ld hl, wNumBagItems
-	;;;;;;;;;; marcelnote - new for bag pockets
-	call IsKeyItem ; b already loaded in [wCurItem]
-	ld a, [wIsKeyItem]
-	and a
-	jr z, .notKeyItem
-	ld hl, wNumBagKeyItems
-.notKeyItem
-	;;;;;;;;;;
+	; Route each received item to the pocket that owns its item class.
+	callfar GetBagItemList
 	call AddItemToInventory
 	ret nc
 	call GetItemName

@@ -62,7 +62,7 @@ IF DEF(_DEBUG)
 
 	; Jolteon gets Thunderbolt.
 	ld hl, wPartyMon3Moves + 3
-	ld a, SHADOW_BALL
+	ld a, SURF
 	ld [hl], a
 	ld hl, wPartyMon3PP + 3
 	ld a, 15
@@ -107,6 +107,8 @@ IF DEF(_DEBUG)
 	ld a, [de]
 	inc de
 	ld [wItemQuantity], a
+	; Debug-granted items use the same item-to-pocket routing as normal rewards.
+	farcall GetBagItemList
 	call AddItemToInventory
 	jr .items_loop
 .items_end
@@ -123,6 +125,8 @@ IF DEF(_DEBUG)
 	ld a, [de]
 	inc de
 	ld [wItemQuantity], a
+	; Keep debug key items in their dedicated pocket.
+	farcall GetBagItemList
 	call AddItemToInventory
 	jr .key_items_loop
 .key_items_end
@@ -160,6 +164,8 @@ DebugNewGameItemsList:
 	db MAX_REPEL, 99
 	db FULL_RESTORE, 99
 	db FULL_HEAL, 99
+	db ELIXER, 99
+	db ETHER, 99
 	db ESCAPE_ROPE, 99
 	db RARE_CANDY, 99
 	db MASTER_BALL, 99
