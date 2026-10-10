@@ -133,8 +133,8 @@ PokedexEntryPointers:
 	dw MewtwoDexEntry
 	dw SnorlaxDexEntry
 	dw MagikarpDexEntry
-	dw MissingNoDexEntry
-	dw MissingNoDexEntry
+	dw RioluDexEntry
+	dw LucarioDexEntry
 	dw MukDexEntry
 	dw MissingNoDexEntry
 	dw KinglerDexEntry
@@ -1028,6 +1028,20 @@ MagikarpDexEntry:
 	db 2,11
 	dw 220
 	;text_far _MagikarpDexEntry
+	text_end
+
+RioluDexEntry:
+	db "EMANATION@"
+	db 2,04
+	dw 445
+	;text_far _RioluDexEntry
+	text_end
+
+LucarioDexEntry:
+	db "AURA@"
+	db 3,11
+	dw 1190
+	;text_far _LucarioDexEntry
 	text_end
 
 MukDexEntry:

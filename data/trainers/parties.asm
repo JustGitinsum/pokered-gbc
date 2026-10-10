@@ -149,7 +149,7 @@ JrTrainerMData:
 ; Pewter Gym
 	db 11, DIGLETT, SANDSHREW, 0
 ; Route 24/Route 25
-	db 14, CHARCADET, EKANS, 0
+	db 14, CHARCADET, RIOLU, 0
 ; Route 24
 	db 18, SQUIRTLE, 0
 ; Route 6
@@ -204,7 +204,7 @@ JrTrainerFData:
 PokemaniacData:
 ; Route 10
 	db 30, RHYHORN, LICKITUNG, 0
-	db 20, CUBONE, SLOWPOKE, 0
+	db 20, CUBONE, RIOLU, 0
 ; Rock Tunnel B1F
 	db 20, SLOWPOKE, SLOWPOKE, SLOWPOKE, 0
 	db 22, CHARMANDER, CUBONE, 0
@@ -476,7 +476,7 @@ BlackbeltData:
 	db 31, MANKEY, MANKEY, PRIMEAPE, 0
 	db 32, MACHOP, MACHOKE, 0
 	db 36, GALLADE, 0
-	db 31, MACHOP, MANKEY, PRIMEAPE, 0
+	db 31, MACHOP, MANKEY, LUCARIO, 0
 ; Viridian Gym
 	db 40, MACHOP, MACHOKE, 0
 	db 43, MACHOKE, 0
@@ -643,7 +643,7 @@ CooltrainerFData:
 	db 43, PERSIAN, NINETALES, RAICHU, 0
 
 BrunoData:
-	db $FF, 53, ONIX, 55, HITMONCHAN, 55, HITMONLEE, 56, ONIX, 58, MACHAMP, 0
+	db $FF, 53, ONIX, 55, LUCARIO, 55, HITMONLEE, 56, ONIX, 58, MACHAMP, 0
 
 BrockData:
 	db $FF, 12, GEODUDE, 14, ONIX, 0

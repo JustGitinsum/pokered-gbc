@@ -2,8 +2,8 @@ Route5WildMons:
 	def_grass_wildmons 15 ; encounter rate
 	db 13, NIDORINO
 	db 13, NIDORINA
-	db 15, PIDGEY
-	db 19, MANKEY
+	db 15, RIOLU
+	db 19, RIOLU
 	db 17, NIDORINA
 	db 18, NIDORINO
 	db 16, CHARCADET

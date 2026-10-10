@@ -240,6 +240,8 @@ IF GEN_2_GRAPHICS
 	; const PAL_RALTS               ; $9F
 	; const PAL_KIRLIA              ; $A0
 	; const PAL_GARDEVOIR           ; $A1
+	; const PAL_RIOLU			   ; $A2
+	; const PAL_LUCARIO
 	; const PAL_GALLADE               ; $A2
 	; const PAL_ZORUA
 	const PAL_ZOROARK

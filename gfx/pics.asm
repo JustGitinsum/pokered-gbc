@@ -29,7 +29,6 @@ ArmarougePicFront::    INCBIN "gfx/pokemon/gsfront/armarouge.pic"
 ArmarougePicBack::     INCBIN "gfx/pokemon/gsback/armarougeb.pic"
 CeruledgePicFront::    INCBIN "gfx/pokemon/gsfront/ceruledge.pic"
 CeruledgePicBack::     INCBIN "gfx/pokemon/gsback/ceruledgeb.pic"
-
 JolteonPicFront::    INCBIN "gfx/pokemon/gsfront/jolteon.pic"
 JolteonPicBack::     INCBIN "gfx/pokemon/gsback/jolteonb.pic"
 VaporeonPicFront::   INCBIN "gfx/pokemon/gsfront/vaporeon.pic"
@@ -146,7 +145,10 @@ ENDC
 
 SECTION "Pics 3", ROMX
 
-; Removed 'mon sprites from here
+RioluPicFront::     INCBIN "gfx/pokemon/gsfront/riolu.pic"
+RioluPicBack::      INCBIN "gfx/pokemon/gsback/riolub.pic"
+LucarioPicFront::   INCBIN "gfx/pokemon/gsfront/lucario.pic"
+LucarioPicBack::    INCBIN "gfx/pokemon/gsback/lucariob.pic"
 
 
 SECTION "Pics 4", ROMX

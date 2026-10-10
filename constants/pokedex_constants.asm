@@ -162,6 +162,8 @@
 	const DEX_RALTS               ; $9F
 	const DEX_KIRLIA              ; $A0
 	const DEX_GARDEVOIR           ; $A1
+	const DEX_RIOLU			   ; $A2
+	const DEX_LUCARIO
 	const DEX_GALLADE               ; $A2
 	const DEX_ZORUA       ; 156
 	const DEX_ZOROARK     ; 157

@@ -158,6 +158,8 @@ MonPartyData:
 	nybble ICON_MON       ; Ralts
 	nybble ICON_MON       ; Kirlia
 	nybble ICON_MON       ; Gardevoir
+	nybble ICON_MON       ; Riolu
+	nybble ICON_MON       ; Lucario
 	nybble ICON_MON       ; Gallade
 	nybble ICON_QUADRUPED ; Zorua
 	nybble ICON_MON       ; Zoroark

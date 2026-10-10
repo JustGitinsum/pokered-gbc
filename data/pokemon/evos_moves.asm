@@ -145,8 +145,8 @@ EvosMovesPointerTable:
 	dw MewtwoEvosMoves
 	dw SnorlaxEvosMoves
 	dw MagikarpEvosMoves
-	dw MissingNo86EvosMoves
-	dw MissingNo87EvosMoves
+	dw RioluEvosMoves
+	dw LucarioEvosMoves
 	dw MukEvosMoves
 	dw MissingNo8AEvosMoves
 	dw KinglerEvosMoves
@@ -1974,16 +1974,35 @@ MagikarpEvosMoves:
 	db 15, WATER_GUN
 	db 0
 
-MissingNo86EvosMoves:
+RioluEvosMoves:
 ; Evolutions
+	db EVOLVE_ITEM, DAWN_STONE, 1, LUCARIO
 	db 0
-; Learnset
+; Learnset ZA
+	db 8, METAL_CLAW
+	db 16, MEDITATE
+	db 20, LOW_SWEEP
+	db 24, SCREECH
+	db 25, BULLDOZE
+	db 28, DOUBLE_TEAM
+	db 35, SWORDS_DANCE
 	db 0
 
-MissingNo87EvosMoves:
+LucarioEvosMoves:
 ; Evolutions
 	db 0
-; Learnset
+; Learnset ZA
+	db 8, METAL_CLAW
+	db 16, MEDITATE
+	db 20, LOW_SWEEP
+	db 24, SCREECH
+	db 25, BULLDOZE
+	db 28, DOUBLE_TEAM
+	db 32, AURA_SPHERE
+	db 35, SWORDS_DANCE
+	db 38, DRAGON_PULSE
+	db 45, EXTREMESPEED
+	db 54, CLOSE_COMBAT
 	db 0
 
 MukEvosMoves:
