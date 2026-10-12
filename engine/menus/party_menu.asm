@@ -333,8 +333,15 @@ GetPartyMenuWatchedKeys::
 .inBattle
 	ld a, [wForcePlayerToChooseMon]
 	and a
+	jr nz, .forceChooseMon
+	ld a, [wPartyMenuTypeOrMessageID]
+	and a ; normal battle party menu
 	ld d, PAD_A | PAD_B
-	ret z
+	jr nz, .done
+	ld d, PAD_A | PAD_B | PAD_SELECT | PAD_START
+.done
+	ret
+.forceChooseMon
 	xor a
 	ld [wForcePlayerToChooseMon], a
 	ld d, PAD_A

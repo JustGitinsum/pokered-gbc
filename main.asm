@@ -242,6 +242,7 @@ INCLUDE "engine/movie/trade2.asm"
 INCLUDE "engine/menus/movedex.asm"
 INCLUDE "data/moves/movedex_type_palettes.asm"
 INCLUDE "engine/menus/learnsets.asm"
+INCLUDE "engine/menus/battle_party_select.asm"
 
 ; Hooks for color hack
 INCLUDE "color/trade.asm"

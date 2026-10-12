@@ -506,8 +506,12 @@ ShowPokedexDataInternal:
 	hlcoord 1, 1
 	call LoadFlippedFrontSpriteByMonIndex ; draw pokemon picture
 	ld a, [wCurPartySpecies]
-	call PlayCry
+	ld a, [wOptions]
+	and TEXT_DELAY_MASK
+	jr z, .skipCry
 
+	call PlayCry
+.skipCry
 	pop hl
 	pop de
 	pop bc

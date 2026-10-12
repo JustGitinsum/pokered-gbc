@@ -2411,6 +2411,19 @@ PartyMenuOrRockOrRun:
 	call GoBackToPartyMenu
 	jr .checkIfPartyMonWasSelected
 .partyMonWasSelected
+	ld a, [wMenuItemToSwap]
+	cp $ff
+	jr z, .selectSwitchFromPartyMenu
+	cp $fe
+	jr nz, .showPartyActionMenu
+	xor a
+	ld [wMenuItemToSwap], a
+	jr .displayStatusScreen
+.selectSwitchFromPartyMenu
+	xor a
+	ld [wMenuItemToSwap], a
+	jp .switchMon
+.showPartyActionMenu
 	ld a, SWITCH_STATS_CANCEL_MENU_TEMPLATE
 	ld [wTextBoxID], a
 	call DisplayTextBoxID
@@ -2438,12 +2451,27 @@ PartyMenuOrRockOrRun:
 	and a ; was Switch selected?
 	jr z, .switchMon ; if so, jump
 ; Stats was selected
+.displayStatusScreen
 	xor a ; PLAYER_PARTY_DATA
 	ld [wMonDataLocation], a
 	ld hl, wPartyMon1
 	call ClearSprites
 ; display the two status screens
+	ld a, [wBattleMonSpecies]
+	push af
 	predef StatusScreenLoop
+; The Movedex reuses VRAM tiles needed by the battle move menu; reload the
+; battle font and HUD/status patterns before returning to battle.
+	call LoadFontTilePatterns
+	call LoadHudAndHpBarAndStatusTilePatterns
+; The party status flow can leave its selected species in wBattleMonSpecies2.
+; Restore the active battle species saved above because LoadMonBackPic reads
+; wBattleMonSpecies2 when loading the player's battle sprite.
+	pop af
+	ld [wBattleMonSpecies2], a
+	ld [wCurSpecies], a
+	call GetMonHeader
+	predef LoadMonBackPic
 ; now we need to reload the enemy mon pic
 	ld a, [wEnemyBattleStatus2]
 	bit HAS_SUBSTITUTE_UP, a ; does the enemy mon have a substitute?
@@ -2595,11 +2623,12 @@ MoveSelectionMenu:
 	jr .menuset
 .relearnmenu
 	ld a, [wWhichPokemon]
+	push af
+	call PrintMenuItem
+	pop af
+	ld [wWhichPokemon], a
 	ld hl, wPartyMon1Moves
 	ld bc, wPartyMon2 - wPartyMon1
-	call PrintMenuItem
-	ld a, [wMenuItemToSwap]
-	and a
 	call AddNTimes
 	call .loadmoves
 	hlcoord 4, 7

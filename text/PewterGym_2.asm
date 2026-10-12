@@ -23,9 +23,7 @@ _PewterGymReceivedTM34Text::
 	text_end
 
 _TM34ExplanationText::
-	text_start
-
-	para "A TM contains a"
+	text "A TM contains a"
 	line "technique that"
 	cont "can be taught to"
 	cont "#MON!"
@@ -63,21 +61,21 @@ _PewterGymBrockReceivedBoulderBadgeText::
 	line "the BOULDERBADGE!@"
 	text_end
 
-_PewterGymBrockBoulderBadgeInfoText::
-	text_start
+; _PewterGymBrockBoulderBadgeInfoText::
+; 	text_start
 
-	para "That's an official"
-	line "#MON LEAGUE"
-	cont "BADGE!"
+; 	para "That's an official"
+; 	line "#MON LEAGUE"
+; 	cont "BADGE!"
 
-	para "Its bearer's"
-	line "#MON become"
-	cont "more powerful!"
+; 	para "Its bearer's"
+; 	line "#MON become"
+; 	cont "more powerful!"
 
-	para "The technique"
-	line "FLASH can now be"
-	cont "used any time!"
-	prompt
+; 	para "The technique"
+; 	line "FLASH can now be"
+; 	cont "used any time!"
+; 	prompt
 
 _PewterGymCooltrainerMBattleText::
 	text "Stop right there,"

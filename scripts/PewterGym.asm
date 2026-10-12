@@ -54,6 +54,13 @@ PewterGymScriptReceiveTM34:
 	ld a, TEXT_PEWTERGYM_RECEIVED_TM34
 	ldh [hTextID], a
 	call DisplayTextID
+	ld a, [wOptions]
+	and TEXT_DELAY_MASK
+	jr z, .fastBrockVictory
+	ld a, TEXT_PEWTERGYM_TM34_EXPLANATION
+	ldh [hTextID], a
+	call DisplayTextID
+.fastBrockVictory
 	SetEvent EVENT_GOT_TM34
 	jr .gymVictory
 .BagFull
@@ -88,6 +95,7 @@ PewterGym_TextPointers:
 	dw_const PewterGymBrockWaitTakeThisText, TEXT_PEWTERGYM_BROCK_WAIT_TAKE_THIS
 	dw_const PewterGymReceivedTM34Text,      TEXT_PEWTERGYM_RECEIVED_TM34
 	dw_const PewterGymTM34NoRoomText,        TEXT_PEWTERGYM_TM34_NO_ROOM
+	dw_const PewterGymTM34ExplanationText,   TEXT_PEWTERGYM_TM34_EXPLANATION
 
 PewterGymTrainerHeaders:
 	def_trainers 2
@@ -146,6 +154,9 @@ PewterGymBrockWaitTakeThisText:
 PewterGymReceivedTM34Text:
 	text_far _PewterGymReceivedTM34Text
 	sound_get_item_1
+	text_end
+
+PewterGymTM34ExplanationText:
 	text_far _TM34ExplanationText
 	text_end
 
@@ -156,7 +167,7 @@ PewterGymTM34NoRoomText:
 PewterGymBrockReceivedBoulderBadgeText:
 	text_far _PewterGymBrockReceivedBoulderBadgeText
 	sound_level_up ; probably supposed to play SFX_GET_ITEM_1 but the wrong music bank is loaded
-	text_far _PewterGymBrockBoulderBadgeInfoText ; Text to tell that the flash technique can be used
+	; text_far _PewterGymBrockBoulderBadgeInfoText ; Text to tell that the flash technique can be used
 	text_end
 
 PewterGymCooltrainerMText:

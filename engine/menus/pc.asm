@@ -1,10 +1,14 @@
 ActivatePC::
 	call SaveScreenTilesToBuffer2
+	ld a, [wOptions]
+	and TEXT_DELAY_MASK
+	jr z, .fastPC
 	ld a, SFX_TURN_ON_PC
 	call PlaySound
 	ld hl, TurnedOnPC1Text
 	call PrintText
 	call WaitForSoundToFinish
+.fastPC
 	ld hl, wMiscFlags
 	set BIT_USING_GENERIC_PC, [hl]
 	call LoadScreenTilesFromBuffer2
@@ -51,17 +55,25 @@ PCMainMenu:
 	ld hl, wMiscFlags
 	res BIT_NO_MENU_BUTTON_SOUND, [hl]
 	set BIT_USING_GENERIC_PC, [hl]
+	ld a, [wOptions]
+	and TEXT_DELAY_MASK
+	jr z, .fastPlayersPC
 	ld a, SFX_ENTER_PC
 	call PlaySound
 	call WaitForSoundToFinish
 	ld hl, AccessedMyPCText
 	call PrintText
+.fastPlayersPC
 	farcall PlayerPC
 	jr ReloadMainMenu
 OaksPC:
+	ld a, [wOptions]
+	and TEXT_DELAY_MASK
+	jr z, .fastOaksPC
 	ld a, SFX_ENTER_PC
 	call PlaySound
 	call WaitForSoundToFinish
+.fastOaksPC
 	farcall OpenOaksPC
 	jr ReloadMainMenu
 PKMNLeague:
@@ -71,9 +83,13 @@ PKMNLeague:
 	farcall PKMNLeaguePC
 	jr ReloadMainMenu
 BillsPC:
+	ld a, [wOptions]
+	and TEXT_DELAY_MASK
+	jr z, .fastBillsPC
 	ld a, SFX_ENTER_PC
 	call PlaySound
 	call WaitForSoundToFinish
+
 	CheckEvent EVENT_MET_BILL
 	jr nz, .billsPC ;if you've met bill, use that bill's instead of someone's
 	ld hl, AccessedSomeonesPCText
@@ -82,6 +98,7 @@ BillsPC:
 	ld hl, AccessedBillsPCText
 .printText
 	call PrintText
+.fastBillsPC
 	farcall BillsPC_
 ReloadMainMenu:
 	xor a
@@ -90,9 +107,13 @@ ReloadMainMenu:
 	call UpdateSprites
 	jp PCMainMenu
 LogOff:
+	ld a, [wOptions]
+	and TEXT_DELAY_MASK
+	jr z, .fastLogOff
 	ld a, SFX_TURN_OFF_PC
 	call PlaySound
 	call WaitForSoundToFinish
+.fastLogOff
 	ld hl, wMiscFlags
 	res BIT_USING_GENERIC_PC, [hl]
 	res BIT_NO_MENU_BUTTON_SOUND, [hl]

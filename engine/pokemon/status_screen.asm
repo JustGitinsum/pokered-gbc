@@ -198,7 +198,12 @@ ENDC
 	hlcoord 1, 0
 	call LoadFlippedFrontSpriteByMonIndex ; draw Pokémon picture
 	ld a, [wCurPartySpecies]
+	ld a, [wOptions]
+	and TEXT_DELAY_MASK
+	jr z, .skipCry
+
 	call PlayCry
+.skipCry
 	; call WaitForTextScrollButtonPress
 	pop af
 	; ldh [hTileAnimations], a
@@ -578,9 +583,11 @@ StatusScreenOriginal:
 	push af
 	call StatusScreen
 .continue
-	ld b, PAD_A | PAD_B | PAD_START
+	ld b, PAD_A | PAD_B | PAD_SELECT | PAD_START
 	call PokedexStatusWaitForButtonPressLoop
 	bit B_PAD_START, a
+	jr nz, ExitStatusScreen.select
+	bit B_PAD_SELECT, a
 	jr nz, ExitStatusScreen.select
 	ResetEvent FLAG_STAT_EXP_SHOWING_IN_STATUS_SCREEN
 	bit B_PAD_B, a
@@ -609,11 +616,13 @@ StatusScreenLoop:
 .displayNextMon
 	call StatusScreen
 .continue
-	ld a, PAD_A | PAD_B | PAD_START
+	ld a, PAD_A | PAD_B | PAD_SELECT | PAD_START
 	call PokemonStatusWaitForButtonPress
-	bit B_PAD_START, a
+	bit B_PAD_SELECT, a
 	jr nz, .changeStatData
 	ResetEvent FLAG_STAT_EXP_SHOWING_IN_STATUS_SCREEN
+	bit B_PAD_START, a
+	jr nz, .learnsetScreen
 	bit B_PAD_UP, a
 	jr nz, .prevMon
 	bit B_PAD_DOWN, a
@@ -644,6 +653,20 @@ StatusScreenLoop:
 .changeStatData
 	call ToggleStatData
 	jr .continue
+.learnsetScreen
+	push bc
+	ld a, SFX_PRESS_AB
+	call PlaySound
+	; The Learnset loader expects the internal species index, not the
+	; Pokedex display number; wMonHIndex is the status-screen species.
+	ld a, [wMonHIndex]
+	ld [wPokedexNum], a
+	; ShowMonLearnsetMenu is in another ROM bank, so switch banks for the call.
+	callfar ShowMonLearnsetMenu
+	pop bc
+	; Return to the same Pokemon's status page rather than unwinding to the
+	; party menu that originally opened the status screen.
+	jr .displayNextMon
 
 ToggleStatData:
 	hlcoord 1, 9

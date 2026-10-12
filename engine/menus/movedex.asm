@@ -36,6 +36,9 @@ ShowMoveDataFromBattle:
 ShowMoveDataFromPokedex:
 	call HalfVolume
 	call ClearScreen
+	; Learnset can open this page without Pokedex tiles loaded. Load them only
+	; after clearing the Learnset page so its graphics remain until transition.
+	callfar LoadPokedexTilePatterns
 	ldh a, [hTileAnimations]
 	push af
 	xor a
@@ -406,4 +409,3 @@ MovedexTitleDividerLine:
 
 ; MoveDashedLine:
 ; 	db "-----------@"
-

@@ -11,10 +11,11 @@ ChangeUpdateSpritesEnabled:
 
 LoadLearnsetTiles:
 	; call DisableSpriteUpdates
-	; load mon's header data into wram
+	; wPokedexNum carries the internal species index here; use it for both
+	; the header lookup and the name lookup performed by GetMonName.
 	ld a, [wPokedexNum]
 	ld [wCurSpecies], a
-	push af
+	ld [wNamedObjectIndex], a
 	call GetMonHeader
 	; call DisableLCD
 	; ; ld de, vChars1 tile $57
@@ -26,8 +27,6 @@ LoadLearnsetTiles:
 	; ; ld bc, 32
 	; ; call CopyData
 	; call EnableLCD
-	pop af
-	ld [wPokedexNum], a
 	; load menu graphics
 	ld de, LearnsetMenuUI2BPP
 	ld hl, vChars1 tile $40
@@ -59,6 +58,12 @@ LoadLearnsetTiles:
 	ret
 
 ShowMonLearnsetMenu:
+	; The learnset can be opened from screens with different sprite-update
+	; states, so preserve the caller's state and use one palette consistently.
+	ld a, [wUpdateSpritesEnabled]
+	push af
+	ld b, SET_PAL_GENERIC
+	call RunPaletteCommand
 	call ClearScreen
 	call LoadLearnsetTiles
 	xor a
@@ -100,12 +105,18 @@ ShowMonLearnsetMenu:
 	jr z, .changePage
 	call EnableSpriteUpdates
 .exitLearnset
+	; Return sprite-update control to the screen that opened the Learnset;
+	; do not assume the caller had updates enabled on entry.
+	pop af
+	ld [wUpdateSpritesEnabled], a
 	ret
 .changePage
 	ld a, SFX_LEDGE
 	call PlaySound
 	jr .showLearnsetPage
 .showMovedex
+	; Keep the species index so it can be restored after the Movedex uses
+	; shared menu state and the Learnset header is redrawn.
 	ld a, [wPokedexNum]
 	push af
 	ld a, [wCurrentMenuItem]
@@ -133,12 +144,22 @@ ShowMonLearnsetMenu:
 	; ld hl, wMovedexSeen
 	; call IsMoveBitSet
 	; jr z, .notSeen
-	call EnableSpriteUpdates
+	; The Movedex uses shared tile/sprite resources; pause sprite updates
+	; while it is displayed, then restore the state expected by the caller.
+	ld a, [wUpdateSpritesEnabled]
+	push af
+	call DisableSpriteUpdates
 	ld hl, wPokedexDataFlags
 	set 3, [hl]
 	call ShowMoveDataFromPokedex
 	pop af
+	ld [wUpdateSpritesEnabled], a
+	pop af
 	ld [wPokedexNum], a
+	; The Movedex may change palettes and tile data; restore the Learnset
+	; palette and redraw its title/header before showing the list again.
+	ld b, SET_PAL_GENERIC
+	call RunPaletteCommand
 	call LoadLearnsetTiles
 	jr .reshowLearnsetPage
 ; .notSeen
@@ -183,7 +204,9 @@ ShowLevelUpLearnset:
 	; ld [wListScrollOffset], a
 	; ld [wCurrentMenuItem], a
 	
-	ld a, PAD_RIGHT | PAD_B | PAD_A
+	; Start requests the selected move's Movedex entry; B still exits and
+	; Right still changes pages.
+	ld a, PAD_RIGHT | PAD_B | PAD_START
 	ld [wMenuWatchedKeys], a
 	callfar LoadLevelUpLearnsetIntoWRAM
 	hlcoord 7, 3
@@ -304,8 +327,8 @@ ShowLevelUpLearnset:
 	call HandleMenuInput
 	bit B_PAD_B, a
 	jp nz, .buttonBPressed
-	bit B_PAD_A, a 
-	jp nz, .buttonAPressed
+	bit B_PAD_START, a
+	jp nz, .buttonStartPressed
 .checkIfUpPressed
 	bit B_PAD_UP, a
 	jr z, .checkIfDownPressed
@@ -342,14 +365,15 @@ ShowLevelUpLearnset:
 	ret
 .checkIfLeftPressed
 	bit B_PAD_LEFT, a
-	jr z, .buttonAPressed
+	jr z, .buttonStartPressed
 .leftPressed
 	ld hl, wLearnsetPage
 	dec [hl]
 	ld a, 1
 	and a
 	ret
-.buttonAPressed
+.buttonStartPressed
+	; Carry signals ShowMonLearnsetMenu to open the selected move in Movedex.
 	xor a
 	scf
 	ret
@@ -397,7 +421,8 @@ ShowTMLearnset:
 	; ld [wListScrollOffset], a
 	; ld [wCurrentMenuItem], a
 	
-	ld a, PAD_LEFT | PAD_RIGHT | PAD_B | PAD_A
+	; Start requests the selected move's Movedex entry on this page too.
+	ld a, PAD_LEFT | PAD_RIGHT | PAD_B | PAD_START
 	ld [wMenuWatchedKeys], a
 	hlcoord 7, 3
 	call DrawNonCurrentLearnsetTab
@@ -488,8 +513,8 @@ ShowTMLearnset:
 	call HandleMenuInput
 	bit B_PAD_B, a
 	jp nz, CheckPageLeftRight.buttonBPressed
-	bit B_PAD_A, a 
-	jp nz, CheckPageLeftRight.buttonAPressed
+	bit B_PAD_START, a
+	jp nz, CheckPageLeftRight.buttonStartPressed
 .checkIfUpPressed
 	bit B_PAD_UP, a
 	jr z, .checkIfDownPressed
@@ -520,7 +545,9 @@ ShowTMLearnset:
 	ld de, NoneText
 	call PlaceString
 	ld hl, wMenuWatchedKeys
-	res B_PAD_A, [hl]
+	; There is no selected TM move to inspect, so don't treat Start as a
+	; Movedex request while this empty-list message is shown.
+	res B_PAD_START, [hl]
 	jp ShowEvolutions.waitForButtonPress
 
 CheckPageLeftRight:
@@ -533,7 +560,7 @@ CheckPageLeftRight:
 	jr .changedPage
 .checkIfLeftPressed
 	bit B_PAD_LEFT, a
-	jr z, .buttonAPressed
+	jr z, .buttonStartPressed
 .leftPressed
 	ld hl, wLearnsetPage
 	dec [hl]
@@ -541,7 +568,8 @@ CheckPageLeftRight:
 	ld a, 1
 	and a
 	ret
-.buttonAPressed
+.buttonStartPressed
+	; Carry signals ShowMonLearnsetMenu to open the selected move in Movedex.
 	xor a
 	scf
 	ret

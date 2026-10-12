@@ -255,18 +255,12 @@ HandlePartyMenuInput::
 	ld [wPartyAndBillsPCSavedMenuItem], a
 	bit B_PAD_SELECT, b
 	jr z, .notSelect
-	push af
-	ld a, SFX_PRESS_AB
-	call PlaySound
-	ld a, [wMenuItemToSwap]
-	and a
-	jr nz, .swap
-	pop af
-	inc a ; [wMenuItemToSwap] counts from 1
-	ld [wMenuItemToSwap], a
-	jr HandlePartyMenuInput
-.swap
-	pop af
+	push bc
+	callfar HandlePartyMenuSelect
+	pop bc
+	; Carry means Select chose an immediate battle switch.
+	jr c, .battleSelect
+	jr nz, HandlePartyMenuInput
 .notSelect
 	ld hl, wStatusFlags5
 	res BIT_NO_TEXT_DELAY, [hl]
@@ -279,6 +273,7 @@ HandlePartyMenuInput::
 	jr nz, .viewStats
 	bit B_PAD_B, b
 	jr nz, .noPokemonChosen
+.selectPokemon
 	ld a, [wPartyCount]
 	and a
 	jr z, .noPokemonChosen
@@ -294,23 +289,25 @@ HandlePartyMenuInput::
 	call BankswitchBack
 	and a
 	ret
+.battleSelect
+	pop af
+	ldh [hTileAnimations], a
+	jr .selectPokemon
 .viewStats
-	ld a, [wCurrentMenuItem]
-	ld [wWhichPokemon], a
-	call ClearSprites
-	xor a ; PLAYER_PARTY_DATA
-	ld [wMonDataLocation], a
-	predef StatusScreenLoop
-	ld a, 1
-	ld [wPartyMenuStatScreenUsed], a
+	callfar HandlePartyMenuStart
+	jr c, .selectPokemon
+	; The helper must return with a balanced stack, so save the animation
+	; state that the next HandlePartyMenuInput pass expects here instead.
 	ldh a, [hTileAnimations]
 	push af
+	; PartyMenuInit overwrites the saved home bank, so preserve it.
 	ld a, [wBankswitchHomeSavedROMBank]
 	push af
 	call PartyMenuInit
 	pop af
 	ld [wBankswitchHomeSavedROMBank], a
-	call RedrawPartyMenu
+	; Status/Learnset screens reuse party-icon tiles, so redraw the full menu.
+	call DrawPartyMenu
 	jp HandlePartyMenuInput
 .noPokemonChosen
 	call BankswitchBack
