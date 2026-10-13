@@ -23,6 +23,9 @@ LoadBillsPCExtraTiles::
 ; PureRGBnote: MOVED: moved from save.asm to here since it didn't rely on much from the other file
 ; this function was updated a bunch to display extra information about boxes and reformat the layout
 DisplayChangeBoxMenu:
+	ld b, SET_PAL_GENERIC
+	call RunPaletteCommand
+	call ClearScreen
 	xor a
 	ldh [hAutoBGTransferEnabled], a
 	ld a, PAD_A | PAD_B
@@ -188,6 +191,22 @@ DrawCurrentBoxPrompt::
 	jp PlaceString
 
 BoxText:
-	db "BOX@"
+	db " BOX @"
+BoxWithArrowsText:
+	db "◀BOX▶@"
 BoxOutOf20:
 	db "/20@"
+
+; Redraws the "BOX" label of the box prompt drawn at (13, 13) on the PC screen.
+; d = 0: plain label, nonzero: label with left/right arrows (CHANGE BOX is highlighted)
+; (passed in d because callfar's Bankswitch overwrites a)
+SetBoxPromptArrows::
+	ld a, d
+	and a
+	hlcoord 14, 14
+	jr nz, .arrows
+	ld de, BoxText
+	jp PlaceString
+.arrows
+	ld de, BoxWithArrowsText
+	jp PlaceString

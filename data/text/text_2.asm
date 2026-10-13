@@ -1562,6 +1562,11 @@ _WhatText::
 	text "What?"
 	done
 
+_WithdrawWhichMonText::
+	text "Withdraw which"
+	line "#MON?"
+	done
+
 _DepositWhichMonText::
 	text "Deposit which"
 	line "#MON?"
@@ -1573,6 +1578,11 @@ _MonWasStoredText::
 	line "stored in Box @"
 	text_ram wBoxNumString
 	text "."
+	prompt
+
+_CantReleaseLastMonText::
+	text "You can't release"
+	line "the last #MON!"
 	prompt
 
 _CantDepositLastMonText::

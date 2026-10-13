@@ -278,6 +278,15 @@ wTextDest:: dw
 ; if non-zero, skip waiting for a button press after displaying text in DisplayTextID
 wDoNotWaitForButtonPressAfterDisplayingText:: db
 
+; Bill's PC deposit screen, which shows the party list and the box list together
+; 0 = single list screen, 1 = deposit screen, 2 = switching to the other list
+wPCDualList:: db
+; which list the cursor is in: 0 = party, 1 = box
+wPCListSide:: db
+; scroll offset and cursor position of the list the cursor is not in
+wPCOtherScroll:: db
+wPCOtherCursor:: db
+
 UNION
 ; the received menu selection is stored twice
 wLinkMenuSelectionReceiveBuffer:: dw

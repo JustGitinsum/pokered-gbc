@@ -424,6 +424,441 @@ PlacePartyMonSprite:
 	pop hl
 	ret
 
+PUSHS
+SECTION "PC List Icons", ROMX
+
+; Opens the Learnset screen for the status-screen species.
+ShowLearnsetFromStatus::
+	; the Learnset screen overwrites the menu state of the screen below it, so keep it
+	ld hl, wTopMenuItemY
+	ld c, wLastMenuItem - wTopMenuItemY + 1
+.save
+	ld a, [hli]
+	push af
+	dec c
+	jr nz, .save
+	ld a, [wMenuCursorLocation]
+	push af
+	ld a, [wMenuCursorLocation + 1]
+	push af
+	ld a, [wMenuWatchMovingOutOfBounds]
+	push af
+	ld a, SFX_PRESS_AB
+	call PlaySound
+	; The Learnset loader expects the internal species index, not the
+	; Pokedex display number; wMonHIndex is the status-screen species.
+	ld a, [wMonHIndex]
+	ld [wPokedexNum], a
+	callfar ShowMonLearnsetMenu
+	pop af
+	ld [wMenuWatchMovingOutOfBounds], a
+	pop af
+	ld [wMenuCursorLocation + 1], a
+	pop af
+	ld [wMenuCursorLocation], a
+	ld hl, wLastMenuItem
+	ld c, wLastMenuItem - wTopMenuItemY + 1
+.restore
+	pop af
+	ld [hld], a
+	dec c
+	jr nz, .restore
+	ret
+
+; Deposit screen: START shows the status screen of the selected #MON.
+PCStartPressed::
+	ld a, [wPCDualList]
+	and a
+	ret z
+	ld a, [wCurrentMenuItem]
+	ld hl, wListScrollOffset
+	add [hl]
+	ld c, a
+	ld a, [wListCount]
+	cp c
+	ret c
+	ret z ; CANCEL or an empty list
+	ld a, c
+	ld [wWhichPokemon], a
+	ld a, [wListMenuID]
+	and a
+	ld a, PLAYER_PARTY_DATA
+	jr z, .gotLocation
+	ld a, BOX_DATA
+.gotLocation
+	ld [wMonDataLocation], a
+	call ClearSprites
+	call SaveScreenTilesToBuffer1
+	predef StatusScreenOriginal
+	call LoadScreenTilesFromBuffer1
+	call ReloadTilesetTilePatterns
+	call RunDefaultPaletteCommand
+	call LoadGBPal
+	callfar LoadBillsPCExtraTiles ; the status screen overwrote the Box Info tiles
+	ld a, $ff
+	ld [wUnusedCreditsByte], a ; the icons were cleared, so reload them
+	ret
+
+; Deposit screen: RIGHT moves from the party list to the box list, LEFT moves back.
+; Returns carry if the list should be exited to switch lists.
+PCSideSwitch::
+	ldh a, [hJoyPressed]
+	bit B_PAD_START, a
+	jr z, .notStart
+	call PCStartPressed
+	and a
+	ret
+.notStart
+	ld a, [wPCDualList]
+	and a
+	ret z
+	ldh a, [hJoy5]
+	bit B_PAD_DOWN, a
+	jr nz, PCBottomMenu ; DOWN from the last party #MON
+	ld a, [wBagPocketsFlags]
+	bit BIT_PREVIOUS_POCKET, a
+	ld a, [wListMenuID]
+	jr z, .right
+	cp PCWITHDRAWLISTMENU
+	jr .check
+.right
+	and a
+.check
+	jr nz, .stay
+	ld a, 2
+	ld [wPCDualList], a
+	scf
+	ret
+.stay
+	and a
+	ret
+
+; Deposit screen: DOWN from the last party #MON moves the cursor to CHANGE BOX / SEE YA.
+; UP or B moves back. Returns carry with wPCDualList = 4 (CHANGE BOX) or 5 (SEE YA)
+; if one of them was chosen.
+PCBottomMenu::
+	ld a, [wPCDualList]
+	and a
+	ret z
+	ld a, [wCurrentMenuItem]
+	call PlaceUnfilledArrowMenuCursor
+	ld hl, wTopMenuItemY
+	ld c, wLastMenuItem - wTopMenuItemY + 1
+.save
+	ld a, [hli]
+	push af
+	dec c
+	jr nz, .save
+	ld a, [wMenuCursorLocation]
+	push af
+	ld a, [wMenuCursorLocation + 1]
+	push af
+	ld a, [wMenuWatchMovingOutOfBounds]
+	push af
+	ld hl, wTopMenuItemY
+	ld a, 14
+	ld [hli], a ; wTopMenuItemY
+	ld a, 1
+	ld [hli], a ; wTopMenuItemX
+	xor a
+	ld [hli], a ; wCurrentMenuItem
+	inc hl ; wTileBehindCursor
+	inc a
+	ld [hli], a ; wMaxMenuItem
+	ld a, PAD_A | PAD_B | PAD_LEFT | PAD_RIGHT | PAD_UP | PAD_DOWN ; UP/DOWN are watched to update the box label
+	ld [hli], a ; wMenuWatchedKeys
+	xor a
+	ld [hl], a ; wLastMenuItem
+	inc a
+	ld [wMenuWatchMovingOutOfBounds], a
+	call .arrowsOn
+.loop
+	ld a, [wCurrentMenuItem]
+	push af ; item before the keypress
+	call HandleMenuInput
+	ld b, a
+	pop af
+	bit B_PAD_UP, b
+	jr z, .notUp
+	and a
+	jr z, .back ; UP from CHANGE BOX
+	call .arrowsOn ; moved up to CHANGE BOX
+	jr .loop
+.notUp
+	bit B_PAD_DOWN, b
+	jr z, .notDown
+	ld d, 0
+	call .setArrows ; on SEE YA!
+	jr .loop
+.notDown
+	bit B_PAD_B, b
+	jr nz, .back
+	bit B_PAD_A, b
+	jr nz, .chosen
+	ld a, [wCurrentMenuItem]
+	and a
+	jr nz, .loop ; only CHANGE BOX reacts to LEFT/RIGHT
+	callfar QuickChangeBox
+	xor a
+	ld [wPCOtherScroll], a
+	ld [wPCOtherCursor], a
+	ldh [hAutoBGTransferEnabled], a
+	call PCDrawBothLists
+	decoord 13, 13
+	callfar DrawCurrentBoxPrompt
+	call .arrowsOn ; the prompt was redrawn with the plain label
+	ld a, 1
+	ldh [hAutoBGTransferEnabled], a
+	jr .loop
+.arrowsOn
+	ld d, 1
+.setArrows
+	callfar SetBoxPromptArrows ; d = arrows on/off
+	ret
+.chosen
+	ld a, [wCurrentMenuItem]
+	add 4
+	jr .done
+.back
+	xor a
+.done
+	push af
+	ld d, 0
+	call .setArrows ; plain label whenever CHANGE BOX isn't highlighted
+	pop af
+	ld b, a
+	call EraseMenuCursor
+	pop af
+	ld [wMenuWatchMovingOutOfBounds], a
+	pop af
+	ld [wMenuCursorLocation + 1], a
+	pop af
+	ld [wMenuCursorLocation], a
+	call EraseMenuCursor ; the list cursor is redrawn by the menu input
+	ld hl, wLastMenuItem
+	ld c, wLastMenuItem - wTopMenuItemY + 1
+.restore
+	pop af
+	ld [hld], a
+	dec c
+	jr nz, .restore
+	ld a, b
+	and a
+	ret z
+	ld [wPCDualList], a
+	scf
+	ret
+
+; Draws the party list and the box list together for the deposit screen.
+; The list the cursor is in uses wListScrollOffset; the other one uses wPCOtherScroll.
+PCDrawBothLists::
+	ld a, [wPCDualList]
+	and a
+	jr nz, .dual
+	ld a, [wListMenuID]
+	and a
+	call z, PCListMonIcons
+	jp PrintListMenuEntries
+.dual
+	ld a, [wListScrollOffset]
+	ld b, a
+	ld a, [wPCOtherScroll]
+	ld e, a
+	ld d, b ; assume the party list has the cursor
+	ld a, [wPCListSide]
+	and a
+	jr z, .gotScrolls
+	ld d, e
+	ld e, b
+.gotScrolls
+	push de
+	ld a, d
+	ld [wListScrollOffset], a
+	xor a
+	call PCSetupListSide
+	call PCListMonIcons
+	call PrintListMenuEntries ; the party list is drawn first so the box list covers it
+	pop de
+	push de
+	hlcoord 7, 0
+	ld b, 11
+	ld c, 11
+	call TextBoxBorder
+	pop de
+	push de
+	ld a, e
+	ld [wListScrollOffset], a
+	ld a, 1
+	call PCSetupListSide
+	call PrintListMenuEntries
+	pop de
+	ld a, [wPCListSide]
+	and a
+	ld a, d
+	jr z, .restoreScroll
+	ld a, e
+.restoreScroll
+	ld [wListScrollOffset], a
+	ld a, [wPCListSide]
+	; fall through to restore the list the cursor is in
+
+; a = 0 for the party list, 1 for the box list
+PCSetupListSide:
+	and a
+	ld hl, wPartyCount
+	ld b, PCPOKEMONLISTMENU
+	jr z, .gotList
+	ld hl, wBoxCount
+	ld b, PCWITHDRAWLISTMENU
+.gotList
+	ld a, l
+	ld [wListPointer], a
+	ld a, h
+	ld [wListPointer + 1], a
+	ld a, b
+	ld [wListMenuID], a
+	ld a, [hl]
+	ld [wListCount], a
+	ret
+
+; Bill's PC list icons. Called on every redraw of the list, with the LCD on.
+; Icons are loaded into vSprites slot = visible row whenever the scroll offset
+; changes ([wUnusedCreditsByte] holds the last loaded offset, $ff = none).
+PCListMonIcons::
+	ld a, [wUnusedCreditsByte]
+	ld b, a
+	ld a, [wListScrollOffset]
+	cp b
+	jr z, .placeOAM
+	ld [wUnusedCreditsByte], a
+	CALL_INDIRECT ClearSpritePaletteMap
+	ld hl, wListPointer
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	inc hl
+	ld a, [wListScrollOffset]
+	ld e, a
+	ld d, 0
+	add hl, de
+	ld b, 0
+.loadLoop
+	ld a, [hli]
+	cp $ff
+	jr z, .placeOAM
+	push hl
+	push bc
+	call .loadIcon
+	pop bc
+	pop hl
+	inc b
+	ld a, b
+	cp PC_LIST_VISIBLE_ROWS
+	jr nz, .loadLoop
+.placeOAM
+	call ClearSprites
+	ld a, [wListCount]
+	ld hl, wListScrollOffset
+	sub [hl]
+	cp PC_LIST_VISIBLE_ROWS
+	jr c, .gotCount
+	ld a, PC_LIST_VISIBLE_ROWS
+.gotCount
+	and a
+	ret z
+	ld c, a
+	ld hl, wShadowOAM
+	ld d, 16 ; y of the first row's name line
+	ld e, 0
+.oamLoop
+	ld a, d
+	ld [hli], a
+	ld a, 8 * 1 + 8
+	ld [hli], a
+	ld a, e
+	ld [hli], a
+	xor a
+	ld [hli], a
+	ld a, d
+	ld [hli], a
+	ld a, 8 * 2 + 8
+	ld [hli], a
+	ld a, e
+	inc a
+	ld [hli], a
+	xor a
+	ld [hli], a
+	ld a, d
+	add 8
+	ld [hli], a
+	ld a, 8 * 1 + 8
+	ld [hli], a
+	ld a, e
+	add 4
+	ld [hli], a
+	xor a
+	ld [hli], a
+	ld a, d
+	add 8
+	ld [hli], a
+	ld a, 8 * 2 + 8
+	ld [hli], a
+	ld a, e
+	add 5
+	ld [hli], a
+	xor a
+	ld [hli], a
+	ld a, d
+	add 16
+	ld d, a
+	ld a, e
+	add 8
+	ld e, a
+	dec c
+	jr nz, .oamLoop
+	ret
+
+; a = species, b = slot
+.loadIcon
+	push bc
+	ld [wPokedexNum], a
+	predef IndexToPokedex
+	pop bc
+	ld a, [wPokedexNum]
+	dec a
+	ld l, a
+	ld h, 0
+	add hl, hl
+	add hl, hl
+	add hl, hl
+	add hl, hl
+	add hl, hl
+	add hl, hl
+	add hl, hl
+	bit 6, h
+	set 6, h
+	ld a, BANK(PartyMonSprites)
+	jr z, .gotBank
+	inc a
+.gotBank
+	ld d, h
+	ld e, l
+	push af
+	ld a, b
+	srl a
+	add HIGH(vSprites)
+	ld h, a
+	ld a, b
+	and 1
+	rrca
+	ld l, a
+	pop af
+	ld b, a
+	ld c, 8
+	jp CopyVideoData
+
+POPS
+
 PartyMonOAM:
 	db $10, $10, $00, $00
 	db $10, $18, $01, $00

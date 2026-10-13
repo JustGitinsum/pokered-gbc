@@ -881,6 +881,8 @@ StartMenu_SelectPressed::
 	call SaveScreenTilesToBuffer2 ; copy background from wTileMap to wTileMapBackup2
 	callfar LoadBillsPCExtraTiles
 	farcall ChangeBox
+	ld b, SET_PAL_OVERWORLD ; undo the generic palette used by the change box menu
+	call RunPaletteCommand
 	call LoadScreenTilesFromBuffer2 ; restore saved screen
 	call Delay3 ; allow the old screen to load before putting back the textbox tile patterns
 	call LoadTextBoxTilePatterns

@@ -118,9 +118,9 @@ HandleMenuInput_::
 
 PlaceMenuCursor::
 	ld a, [wTopMenuItemY]
+	hlcoord 0, 0
 	and a ; is the y coordinate 0?
 	jr z, .adjustForXCoord
-	hlcoord 0, 0
 	ld bc, SCREEN_WIDTH
 .topMenuItemLoop
 	add hl, bc

@@ -34,6 +34,8 @@ DEF PC_ITEM_CAPACITY  EQU 20
 	const SAFARI_BATTLE_MENU_TEMPLATE       ; $1b
 	const BAG_INFO_BOX                      ; $1c ; marcelnote - new for bag pockets
 	const ITEM_LIST_MENU_BOX                ; $1d ; wider, left-shifted item bag and shop list
+	const PC_LIST_MENU_BOX                  ; $1e ; Bills PC pokemon list, one row taller at the top
+	const WITHDRAW_LIST_MENU_BOX            ; $1f ; Bills PC withdraw list, taller and narrower
 
 ; two option menu constants
 ; TwoOptionMenuStrings indexes (see data/yes_no_menu_strings.asm)

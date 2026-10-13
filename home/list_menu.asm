@@ -20,7 +20,6 @@ DisplayListMenuID::
 	set BIT_NO_TEXT_DELAY, [hl]
 	xor a
 	ld [wMenuItemToSwap], a ; 0 means no item is currently being swapped
-	ld [wListCount], a
 	ld a, [wListPointer]
 	ld l, a
 	ld a, [wListPointer + 1]
@@ -28,6 +27,14 @@ DisplayListMenuID::
 	ld a, [hl] ; the first byte is the number of entries in the list
 	ld [wListCount], a
 	ld a, [wListMenuID]
+	and a ; PCPOKEMONLISTMENU?
+	jr z, .skipMovingSprites
+.notPCList
+	cp PCWITHDRAWLISTMENU
+	jr nz, .notWithdrawBox
+	ld a, WITHDRAW_LIST_MENU_BOX
+	jr .drawListMenuBox
+.notWithdrawBox
 	sub PRICEDITEMLISTMENU
 	cp SPECIALLISTMENU - PRICEDITEMLISTMENU
 	jr c, .itemListBox ; priced and regular item menus have consecutive IDs
@@ -42,21 +49,73 @@ DisplayListMenuID::
 	call UpdateSprites ; disable sprites behind the text box
 	; UpdateSprites takes no coordinate arguments; only the PC list needs its second update.
 	ld a, [wListMenuID]
-	and a ; PCPOKEMONLISTMENU?
+	cp PCWITHDRAWLISTMENU
 	jr nz, .skipMovingSprites
 	call UpdateSprites
 .skipMovingSprites
 	ld a, 1 ; max menu item ID is 1 if the list has less than 2 entries
 	ld [wMenuWatchMovingOutOfBounds], a
+	ld a, [wListMenuID]
+	and a ; PCPOKEMONLISTMENU?
+	jr nz, .notPCMaxItem
 	ld a, [wListCount]
-	cp 2 ; does the list have less than 2 entries?
+	and a
+	jr z, .setMenuVariables ; empty list
+	cp PC_LIST_VISIBLE_ROWS
+	jr c, .pcVisibleCount
+	ld a, PC_LIST_VISIBLE_ROWS
+.pcVisibleCount
+	ld b, a ; b = number of visible entries
+	ld a, [wListCount]
+	sub b
+	ld c, a ; c = highest valid scroll offset
+	ld a, [wListScrollOffset]
+	cp c
+	jr c, .pcOffsetValid
+	jr z, .pcOffsetValid
+	ld a, c
+	ld [wListScrollOffset], a
+.pcOffsetValid
+	dec b ; b = max menu item ID
+	ld a, [wCurrentMenuItem]
+	cp b
+	jr c, .pcCursorValid
+	jr z, .pcCursorValid
+	ld a, b
+	ld [wCurrentMenuItem], a
+.pcCursorValid
+	ld a, b
+	jr .setMenuVariables
+.notPCMaxItem
+	ld b, 2
+	ld a, [wListMenuID]
+	cp PCWITHDRAWLISTMENU
+	jr nz, .gotMaxItemLimit
+	ld b, 3 ; the withdraw list has one more selectable row
+.gotMaxItemLimit
+	ld a, [wListCount]
+	cp b ; does the list have fewer entries than the limit?
 	jr c, .setMenuVariables
-	ld a, 2 ; max menu item ID is 2 if the list has at least 2 entries
+	ld a, b
 .setMenuVariables
 	ld [wMaxMenuItem], a
 	ld a, 4
 	ld [wTopMenuItemY], a
 	ld a, [wListMenuID]
+	and a ; PCPOKEMONLISTMENU?
+	jr nz, .notPCCursor
+	ld a, 1 ; the PC list cursor sits on the level row, below each name
+	ld [wTopMenuItemY], a
+	xor a ; cursor stays in column 0
+	jr .storeTopMenuItemX
+.notPCCursor
+	cp PCWITHDRAWLISTMENU
+	jr nz, .notWithdrawCursor
+	ld a, 1
+	ld [wTopMenuItemY], a
+	ld a, 8
+	jr .storeTopMenuItemX
+.notWithdrawCursor
 	sub PRICEDITEMLISTMENU
 	cp SPECIALLISTMENU - PRICEDITEMLISTMENU
 	jr c, .leftShiftItemContents
@@ -66,15 +125,20 @@ DisplayListMenuID::
 	ld a, 4
 .storeTopMenuItemX
 	ld [wTopMenuItemX], a
-	ld a, PAD_A | PAD_B | PAD_SELECT | PAD_RIGHT | PAD_LEFT ; marcelnote - added PAD_RIGHT for bag pockets
+	ld a, PAD_A | PAD_B | PAD_SELECT | PAD_RIGHT | PAD_LEFT | PAD_START ; marcelnote - added PAD_RIGHT for bag pockets
 	ld [wMenuWatchedKeys], a
+	ld a, [wPCDualList]
+	and a
 	ld c, 10
+	jr z, .delay
+	ld c, 2 ; deposit screen redraws often, keep the pause short
+.delay
 	call DelayFrames
 
 DisplayListMenuIDLoop::
 	xor a
 	ldh [hAutoBGTransferEnabled], a ; disable transfer
-	call PrintListMenuEntries
+	callfar PCDrawBothLists
 	ld a, 1
 	ldh [hAutoBGTransferEnabled], a ; enable transfer
 	call Delay3
@@ -103,7 +167,7 @@ DisplayListMenuIDLoop::
 	pop af
 	bit B_PAD_A, a
 	jp z, .checkOtherKeys
-.buttonAPressed
+.buttonAPressed::
 	ld a, [wCurrentMenuItem]
 	call PlaceUnfilledArrowMenuCursor
 
@@ -145,6 +209,8 @@ DisplayListMenuIDLoop::
 	ld a, [wListMenuID]
 	and a ; PCPOKEMONLISTMENU?
 	jr z, .pokemonList
+	cp PCWITHDRAWLISTMENU
+	jr z, .pokemonList
 ; if it's an item menu
 	ASSERT wCurListMenuItem == wCurItem
 	push hl
@@ -162,7 +228,7 @@ DisplayListMenuIDLoop::
 	ld a, [hl] ; a = item quantity
 	ld [wMaxItemQuantity], a
 .skipGettingQuantity
-	ld a, [wNamedObjectIndex]
+	ld a, [wCurItem] ; the print loop leaves wNamedObjectIndex at the CANCEL terminator
 	ld [wNameListIndex], a
 	ld a, ITEM_NAME ; marcelnote - added for robustness (needed for TM printing)
 	ld [wNameListType], a
@@ -197,6 +263,8 @@ DisplayListMenuIDLoop::
 .checkOtherKeys ; check B, SELECT, Up, and Down keys
 	bit B_PAD_B, a
 	jp nz, ExitListMenu ; if so, exit the menu
+	bit B_PAD_START, a
+	jr nz, .switchPCList ; deposit screen only: shows the stats of the selected #MON
 	bit B_PAD_SELECT, a
 	jp nz, HandleItemListSwapping ; if so, allow the player to swap menu entries
 	;;;;;;;;;; marcelnote - for bag pockets
@@ -210,7 +278,26 @@ DisplayListMenuIDLoop::
 	ld hl, wListScrollOffset
 	jr z, .upPressed
 .downPressed
+	ld a, [wListMenuID]
+	and a ; PCPOKEMONLISTMENU?
 	ld a, [hl]
+	jr nz, .notPCScroll
+	add PC_LIST_VISIBLE_ROWS
+	ld b, a
+	ld a, [wListCount]
+	cp b ; is the last mon already visible?
+	jr c, .switchPCList ; deposit screen: moves to CHANGE BOX / SEE YA
+	jr z, .switchPCList
+	inc [hl]
+	jp DisplayListMenuIDLoop
+.notPCScroll
+	ld b, a
+	ld a, [wListMenuID]
+	cp PCWITHDRAWLISTMENU
+	ld a, b
+	jr nz, .notWithdrawScroll
+	inc a ; the withdraw list shows one more row
+.notWithdrawScroll
 	add 3
 	ld b, a
 	ld a, [wListCount]
@@ -235,7 +322,13 @@ DisplayListMenuIDLoop::
 .switchBagPocket ; marcelnote - new for bag pockets
 	ld a, [wListMenuID]
 	cp ITEMLISTMENU
-	jp nz, DisplayListMenuIDLoop
+	jr z, .cycleBagPocket
+.switchPCList
+	callfar PCSideSwitch
+.switchDone
+	jp nc, DisplayListMenuIDLoop
+	jp ExitListMenu
+.cycleBagPocket
 	ld hl, wBagPocketsFlags
 	bit BIT_PC_WITHDRAWING, [hl] ; if withdrawing from PC then cannot switch pocket
 	jp nz, DisplayListMenuIDLoop
@@ -244,157 +337,9 @@ DisplayListMenuIDLoop::
 	jp DisplayListMenuID
 
 DisplayChooseQuantityMenu::
-	hlcoord 15, 9 ; coordinates of TOSS item text box
-	lb bc, 1, 3 ; height, width of TOSS item text box
-	; Check for Shop menu
-	ld a, [wListMenuID]
-	cp PRICEDITEMLISTMENU
-	jr nz, .drawTextBox
-    ; text box dimensions/coordinates for quantity and price
-	hlcoord 7, 7
-	lb bc, 3, 11 ; height, width
-.drawTextBox
-	call TextBoxBorder
-	hlcoord 16, 10 ; coordinates TOSS item quantity text
-	ld a, [wListMenuID]
-	cp PRICEDITEMLISTMENU
-	jr nz, .printInitialQuantity
-	callfar PrintHowManyOfThisItemAreOwned ; How many of this item are owned
-	hlcoord 8, 10 ; coordinates SELL item quantity text
-.printInitialQuantity
-	ld de, InitialQuantityText
-	call PlaceString
-	xor a
-	ld [wItemQuantity], a ; initialize current quantity to 0
-	jp .incrementQuantity
-.waitForKeyPressLoop
-	call JoypadLowSensitivity
-	ldh a, [hJoyPressed] ; newly pressed buttons
-	bit B_PAD_A, a
-	jp nz, .buttonAPressed
-	bit B_PAD_B, a
-	jp nz, .buttonBPressed
-	bit B_PAD_UP, a
-	jr nz, .incrementQuantity
-	bit B_PAD_DOWN, a
-	jr nz, .decrementQuantity
-	; Added for Add or Subtract 10
-	bit B_PAD_RIGHT, a
-	jr nz, .incrementQuantityBy10
-	bit B_PAD_LEFT, a
-	jr nz, .decrementQuantityBy10
-	;------------------------------
-	jr .waitForKeyPressLoop
-.incrementQuantity
-	ld a, [wMaxItemQuantity]
-	inc a
-	ld b, a
-	ld hl, wItemQuantity ; current quantity
-	inc [hl]
-	ld a, [hl]
-	cp b
-	jr nz, .handleNewQuantity
-; wrap to 1 if the player goes above the max quantity
-	ld a, 1
-	ld [hl], a
-	jr .handleNewQuantity
-
-.incrementQuantityBy10 ; Added for Add or Subtract 10
-	ld a, [wMaxItemQuantity]
-	inc a
-	ld b, a
-	ld hl, wItemQuantity ; current quantity
-	ld a, [hl]
-	add 10
-	ld [hl], a
-	cp b
-	jr c, .handleNewQuantity
-    ; Set to Max if the player goes above the max quantity
-	ld a, [wMaxItemQuantity]
-	ld [hl], a
-	jr .handleNewQuantity
-.decrementQuantityBy10
-	ld hl, wItemQuantity ; current quantity
-	ld a, [hl]
-	sub 11 ; sub 11 instead of 10 to also set carry when a is 10,
-    ; this is to avoid an extra jr z that is slower than the inc a below
-	jr nc, .adjustDecrementedQuantity
-    ; Set to 1 if the player goes below 1
-	xor a ; fallthrough will set it to 1
-.adjustDecrementedQuantity
-	inc a ; [hl] - 11 + 1 = [hl] - 10
-	ld [hl], a
-	jr .handleNewQuantity
-
-.decrementQuantity
-	ld hl, wItemQuantity ; current quantity
-	dec [hl]
-	jr nz, .handleNewQuantity
-; wrap to the max quantity if the player goes below 1
-	ld a, [wMaxItemQuantity]
-	ld [hl], a
-.handleNewQuantity
-	hlcoord 17, 10
-	ld a, [wListMenuID]
-	cp PRICEDITEMLISTMENU
-	jr nz, .printQuantity
-.printPrice
-	ld c, $03
-	ld a, [wItemQuantity]
-	ld b, a
-	ld hl, hMoney ; total price
-; initialize total price to 0
-	xor a
-	ld [hli], a
-	ld [hli], a
-	ld [hl], a
-.addLoop ; loop to multiply the individual price by the quantity to get the total price
-	ld de, hMoney + 2
-	ld hl, hItemPrice + 2
-	push bc
-	predef AddBCDPredef ; add the individual price to the current sum
-	pop bc
-	dec b
-	jr nz, .addLoop
-	ldh a, [hHalveItemPrices]
-	and a ; should the price be halved (for selling items)?
-	jr z, .skipHalvingPrice
-	xor a
-	ldh [hDivideBCDDivisor], a
-	ldh [hDivideBCDDivisor + 1], a
-	ld a, $02
-	ldh [hDivideBCDDivisor + 2], a
-	predef DivideBCDPredef3 ; halves the price
-; store the halved price
-	ldh a, [hDivideBCDQuotient]
-	ldh [hMoney], a
-	ldh a, [hDivideBCDQuotient + 1]
-	ldh [hMoney + 1], a
-	ldh a, [hDivideBCDQuotient + 2]
-	ldh [hMoney + 2], a
-.skipHalvingPrice
-	hlcoord 12, 10
-	ld de, SpacesBetweenQuantityAndPriceText
-	call PlaceString
-	ld de, hMoney ; total price
-	ld c, 3 | LEADING_ZEROES | MONEY_SIGN
-	call PrintBCDNumber
-	hlcoord 9, 10
-.printQuantity
-	ld de, wItemQuantity ; current quantity
-	lb bc, LEADING_ZEROES | 1, 2 ; 1 byte, 2 digits
-	call PrintNumber
-	jp .waitForKeyPressLoop
-.buttonAPressed ; the player chose to make the transaction
-	xor a
-	ld [wMenuItemToSwap], a ; 0 means no item is currently being swapped
+	callfar _DisplayChooseQuantityMenu
+	ld a, e ; Bankswitch clobbers a, so the result comes back in e
 	ret
-.buttonBPressed ; the player chose to cancel the transaction
-	xor a
-	ld [wMenuItemToSwap], a ; 0 means no item is currently being swapped
-	ld a, $ff
-	ret
-
 
 InitialQuantityText::
 	db "×01@"
@@ -420,6 +365,20 @@ ExitListMenu::
 
 PrintListMenuEntries::
 	ld a, [wListMenuID]
+	and a ; PCPOKEMONLISTMENU?
+	jr nz, .notPCClear
+	hlcoord 0, 0
+	ld b, 12
+	ld c, 20
+	jr .clearListArea
+.notPCClear
+	cp PCWITHDRAWLISTMENU
+	jr nz, .notWithdrawClear
+	hlcoord 8, 1
+	ld b, 11
+	ld c, 11
+	jr .clearListArea
+.notWithdrawClear
 	sub PRICEDITEMLISTMENU
 	cp SPECIALLISTMENU - PRICEDITEMLISTMENU
 	jr c, .clearItemListArea
@@ -454,16 +413,27 @@ PrintListMenuEntries::
 	jr nc, .noCarry
 	inc d
 .noCarry
+	ld b, 4 ; print 4 names
 	ld a, [wListMenuID]
+	and a ; PCPOKEMONLISTMENU?
+	jr nz, .notPCNames
+	hlcoord 3, 0 ; icons use columns 1-2
+	ld b, PC_LIST_VISIBLE_ROWS
+	jr .loop
+.notPCNames
+	cp PCWITHDRAWLISTMENU
+	jr nz, .notWithdrawNames
+	hlcoord 9, 1
+	ld b, 5
+	jr .loop
+.notWithdrawNames
 	sub PRICEDITEMLISTMENU
 	cp SPECIALLISTMENU - PRICEDITEMLISTMENU
 	jr c, .leftShiftItemNames
 	hlcoord 6, 4 ; coordinates of first list entry name
-	jr .setFirstListEntry
+	jr .loop
 .leftShiftItemNames
 	hlcoord 5, 4 ; item names and related text shift with the wider list box
-.setFirstListEntry
-	ld b, 4 ; print 4 names
 .loop
 	ld a, b
 	ld [wWhichPokemon], a
@@ -478,6 +448,8 @@ PrintListMenuEntries::
 	push de
 	ld a, [wListMenuID]
 	and a ; PCPOKEMONLISTMENU?
+	jr z, .pokemonPCMenu
+	cp PCWITHDRAWLISTMENU
 	jr z, .pokemonPCMenu
 	cp MOVESLISTMENU
 	jr z, .movesMenu
@@ -501,13 +473,7 @@ PrintListMenuEntries::
 	jr z, .getPokemonName
 	ld hl, wBoxMonNicks ; box pokemon names
 .getPokemonName
-	ld a, [wWhichPokemon]
-	ld b, a
-	ld a, 4
-	sub b
-	ld b, a
-	ld a, [wListScrollOffset]
-	add b
+	call GetPCListEntryIndex
 	call GetPartyMonName
 	pop hl
 	jr .placeNameString
@@ -548,6 +514,8 @@ PrintListMenuEntries::
 .skipPrintingItemPrice
 	ld a, [wListMenuID]
 	and a ; PCPOKEMONLISTMENU?
+	jr z, .printPokemonLevel
+	cp PCWITHDRAWLISTMENU
 	jr nz, .skipPrintingPokemonLevel
 .printPokemonLevel
 	ld a, [wNamedObjectIndex]
@@ -561,15 +529,8 @@ PrintListMenuEntries::
 	ld a, BOX_DATA
 .next
 	ld [wMonDataLocation], a
-	ld hl, wWhichPokemon
-	ld a, [hl]
-	ld b, a
-	ld a, $04
-	sub b
-	ld b, a
-	ld a, [wListScrollOffset]
-	add b
-	ld [hl], a
+	call GetPCListEntryIndex
+	ld [wWhichPokemon], a
 	call LoadMonData
 	ld a, [wMonDataLocation]
 	and a ; is it a list of party pokemon or box pokemon?
@@ -579,7 +540,12 @@ PrintListMenuEntries::
 	ld [wLoadedMonLevel], a
 .skipCopyingLevel
 	pop hl
-	ld bc, $1c
+	ld bc, $19 ; level is on the row below the name
+	ld a, [wListMenuID]
+	and a
+	jr nz, .gotLevelOffset
+	ld c, $15 ; the PC list shows the level 5 columns further left
+.gotLevelOffset
 	add hl, bc
 	call PrintLevel
 	pop af
@@ -648,8 +614,29 @@ PrintListMenuEntries::
 	jp nz, .loop
 	ld bc, -8
 	add hl, bc
-	; Keep the item-list scroll arrow at its original bottom-right tile.
 	ld a, [wListMenuID]
+	and a ; PCPOKEMONLISTMENU?
+	jr nz, .notPCScrollArrow
+	ld bc, 3
+	add hl, bc ; arrow goes at the bottom-right of the list
+	; only show the arrow if more mons are below the visible ones
+	ld a, [wListScrollOffset]
+	add PC_LIST_VISIBLE_ROWS
+	ld b, a
+	ld a, [wListCount]
+	cp b
+	ret c
+	ret z
+	jr .placeScrollArrow
+.notPCScrollArrow
+	ld a, [wListMenuID]
+	cp PCWITHDRAWLISTMENU
+	jr nz, .notWithdrawArrow
+	ld bc, 17 ; names start at column 9, so the arrow lands at the bottom-right of the box
+	add hl, bc
+	jr .placeScrollArrow
+.notWithdrawArrow
+	; Keep the item-list scroll arrow at its original bottom-right tile.
 	sub PRICEDITEMLISTMENU
 	cp SPECIALLISTMENU - PRICEDITEMLISTMENU
 	jr nc, .placeScrollArrow
@@ -659,8 +646,27 @@ PrintListMenuEntries::
 	ld [hl], a
 	ret
 .printCancelMenuItem
+	ld a, [wListMenuID]
+	and a ; PCPOKEMONLISTMENU?
+	ret z ; the PC list has no CANCEL entry
 	ld de, ListMenuCancelText
 	jp PlaceString
+
+; returns a = index of the mon in the list for the print loop row counter in [wWhichPokemon]
+GetPCListEntryIndex:
+	ld a, [wWhichPokemon]
+	ld b, a
+	ld a, [wListMenuID]
+	and a ; PCPOKEMONLISTMENU?
+	ld a, PC_LIST_VISIBLE_ROWS
+	jr z, .gotRows
+	ld a, 5 ; the withdraw list shows 5 entries
+.gotRows
+	sub b
+	ld b, a
+	ld a, [wListScrollOffset]
+	add b
+	ret
 
 ListMenuCancelText::
 	db "CANCEL@"

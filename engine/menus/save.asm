@@ -361,7 +361,64 @@ ChangeBox::
 	jr nz, .done
 	ld a, [wCurrentMenuItem]
 	ld d, a
+	jr ChangeBoxTo
+.done
+	; xor a
+	; ldh [hJoy7], a
+	; pop af
+	; ld [wStatusFlags5], a
+	ret
+
+; Changes to the previous or next box (LEFT/RIGHT on the Deposit screen's CHANGE BOX).
+QuickChangeBox::
+	ld hl, wCurrentBoxNum
+	bit BIT_HAS_CHANGED_BOXES, [hl] ; is it the first time player is changing the box?
+	call z, EmptyAllSRAMBoxes ; if so, empty all boxes in SRAM
+	ld a, [wCurrentBoxNum]
+	and $7f
+	ld d, a
+	ldh a, [hJoy5]
+	bit B_PAD_RIGHT, a
+	jr nz, .next
+	ld a, d
+	and a
+	jr nz, .previous
+	ld a, NUM_BOXES
+.previous
+	dec a
+	jr .go
+.next
+	ld a, d
+	inc a
+	cp NUM_BOXES
+	jr nz, .go
+	xor a
+.go
+	ld d, a
 	call ChangeBoxData
+	ld a, 1
+	ldh [hUnusedCoinsByte], a ; box change not saved yet; see FlushBoxChange
+	ld a, SFX_PRESS_AB
+	jp PlaySound
+
+; Saves a box change made by QuickChangeBox.
+FlushBoxChange::
+	ldh a, [hUnusedCoinsByte]
+	and a
+	ret z
+	jr SaveBoxChangeSilently
+
+; d = the box to change to
+ChangeBoxTo:
+	call ChangeBoxData
+	call SaveBoxChangeSilently
+	ld a, SFX_SAVE
+	call PlaySoundWaitForCurrent
+	jp WaitForSoundToFinish
+
+SaveBoxChangeSilently:
+	xor a
+	ldh [hUnusedCoinsByte], a
 	ld hl, wCurMapTextPtr
 	ld de, wChangeBoxSavedMapTextPointer
 	ld a, [hli]
@@ -373,14 +430,6 @@ ChangeBox::
 	call SaveSAVtoSRAM
 	ld hl, wChangeBoxSavedMapTextPointer
 	call SetMapTextPointer
-	ld a, SFX_SAVE
-	call PlaySoundWaitForCurrent
-	call WaitForSoundToFinish
-.done
-	; xor a
-	; ldh [hJoy7], a
-	; pop af
-	; ld [wStatusFlags5], a
 	ret
 
 ChangeBoxData::

@@ -1,7 +1,14 @@
 HandleItemListSwapping::
 	ld a, [wListMenuID]
 	cp ITEMLISTMENU
-	jp nz, DisplayListMenuIDLoop ; only rearrange item list menus
+	jr z, .itemList
+	ld a, [wPCDualList]
+	and a
+	jp z, DisplayListMenuIDLoop ; only rearrange item list menus
+	ld a, 6 ; wPCDualList = 6: SELECT acts like A and skips the sub-menu
+	ld [wPCDualList], a
+	jp DisplayListMenuIDLoop.buttonAPressed
+.itemList
 	push hl
 	ld hl, wListPointer
 	ld a, [hli]

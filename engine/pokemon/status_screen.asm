@@ -581,12 +581,19 @@ StatusScreen_PrintPP:
 StatusScreenOriginal:
 	ldh a, [hTileAnimations]
 	push af
+.displayMon
 	call StatusScreen
 .continue
 	ld b, PAD_A | PAD_B | PAD_SELECT | PAD_START
 	call PokedexStatusWaitForButtonPressLoop
 	bit B_PAD_START, a
-	jr nz, ExitStatusScreen.select
+	jr z, .notStart
+	ld a, [wPCDualList]
+	and a
+	jr z, ExitStatusScreen.select ; outside the PC deposit screen START still toggles the stat data
+	callfar ShowLearnsetFromStatus
+	jr .displayMon
+.notStart
 	bit B_PAD_SELECT, a
 	jr nz, ExitStatusScreen.select
 	ResetEvent FLAG_STAT_EXP_SHOWING_IN_STATUS_SCREEN
@@ -654,16 +661,7 @@ StatusScreenLoop:
 	call ToggleStatData
 	jr .continue
 .learnsetScreen
-	push bc
-	ld a, SFX_PRESS_AB
-	call PlaySound
-	; The Learnset loader expects the internal species index, not the
-	; Pokedex display number; wMonHIndex is the status-screen species.
-	ld a, [wMonHIndex]
-	ld [wPokedexNum], a
-	; ShowMonLearnsetMenu is in another ROM bank, so switch banks for the call.
-	callfar ShowMonLearnsetMenu
-	pop bc
+	callfar ShowLearnsetFromStatus
 	; Return to the same Pokemon's status page rather than unwinding to the
 	; party menu that originally opened the status screen.
 	jr .displayNextMon

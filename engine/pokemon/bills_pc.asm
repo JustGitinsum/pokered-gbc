@@ -92,7 +92,11 @@ OaksPCText:       db "PROF.OAK's PC@"
 PKMNLeaguePCText: db "<PKMN>LEAGUE@"
 LogOffPCText:     db "LOG OFF@"
 
+; Entry point for the Bill's PC. Sets up state and enters the main screen; the
+; two values pushed here are restored by ExitBillsPC.
 BillsPC_::
+	xor a
+	ldh [hUnusedCoinsByte], a ; no unsaved box change
 	ld hl, wStatusFlags5
 	set BIT_NO_TEXT_DELAY, [hl]
 	xor a
@@ -102,109 +106,175 @@ BillsPC_::
 	call LoadHpBarAndStatusTilePatterns
 	ld a, [wListScrollOffset]
 	push af
+	ld a, [wUpdateSpritesEnabled]
+	push af
+	ld a, $ff ; the list icons use the shadow OAM, so stop overworld sprite updates for the PC session
+	ld [wUpdateSpritesEnabled], a
 	ld a, [wMiscFlags]
 	bit BIT_USING_GENERIC_PC, a
-	jr nz, BillsPCMenu
+	jr nz, .start
 ; accessing it directly
 	ld a, SFX_TURN_ON_PC
 	call PlaySound
 	ld hl, SwitchOnText
 	call PrintText
-
-BillsPCMenu:
-	ld a, [wParentMenuItem]
-	ld [wCurrentMenuItem], a
+.start
 	callfar LoadBillsPCExtraTiles
-	call LoadScreenTilesFromBuffer2DisableBGTransfer
-	hlcoord 0, 0
-	ld b, 10
-	ld c, 12
-	call TextBoxBorder
-	hlcoord 2, 2
-	ld de, BillsPCMenuText
-	call PlaceString
-	ld hl, wTopMenuItemY
-	ld a, 2
-	ld [hli], a ; wTopMenuItemY
-	dec a
-	ld [hli], a ; wTopMenuItemX
-	inc hl
-	inc hl
-	ld a, 4
-	ld [hli], a ; wMaxMenuItem
-	ld a, PAD_A | PAD_B
-	ld [hli], a ; wMenuWatchedKeys
-	xor a
-	ld [hli], a ; wLastMenuItem
-	ld [hli], a ; wPartyAndBillsPCSavedMenuItem
-	ld hl, wListScrollOffset
-	ld [hli], a ; wListScrollOffset
-	ld [hl], a ; wMenuWatchMovingOutOfBounds
-	ld [wPlayerMonNumber], a
-	ld hl, WhatText
-	call PrintText
-	decoord 13, 13
-	callfar DrawCurrentBoxPrompt
-	ld a, 1
-	ldh [hAutoBGTransferEnabled], a
-	call Delay3
-	call HandleMenuInput
-	bit B_PAD_B, a
-	jp nz, ExitBillsPC
-	call PlaceUnfilledArrowMenuCursor
-	ld a, [wCurrentMenuItem]
-	ld [wParentMenuItem], a
-	and a
-	jp z, BillsPCWithdraw ; withdraw
-	cp $1
-	jp z, BillsPCDeposit ; deposit
-	cp $2
-	jp z, BillsPCRelease ; release
-	cp $3
-	jp z, BillsPCChangeBox ; change box
+	jp BillsPCMain
 
+; Leaves the PC screen: commits any pending box change, cleans up the display and
+; pops the values pushed by BillsPC_. Returns to the caller of BillsPC_.
 ExitBillsPC:
+	callfar FlushBoxChange
 	ld a, [wMiscFlags]
 	bit BIT_USING_GENERIC_PC, a
-	jr nz, .next
+	jr nz, .generic
 ; accessing it directly
-	call LoadTextBoxTilePatterns
 	ld a, SFX_TURN_OFF_PC
 	call PlaySound
 	call WaitForSoundToFinish
+	; the screen backup was reused by the PC screen, so rebuild the map view in one step
+	call ReloadMapData ; fills wTileMap with the map view
+	ld a, 1
+	ldh [hAutoBGTransferEnabled], a
+	call Delay3
+	jr .next
+.generic
+	; blank the list so the caller's tile reload doesn't show it as garbage
+	call ClearScreen
 .next
 	ld hl, wMiscFlags
 	res BIT_NO_MENU_BUTTON_SOUND, [hl]
-	call LoadScreenTilesFromBuffer2
+	pop af
+	ld [wUpdateSpritesEnabled], a
+	call ReloadMapSpriteTilePatterns ; the list icons overwrote the overworld sprite tiles
 	pop af
 	ld [wListScrollOffset], a
 	ld hl, wStatusFlags5
 	res BIT_NO_TEXT_DELAY, [hl]
 	ret
 
-BillsPCDeposit:
+; Main Bill's PC screen: party list on the left, current box (withdraw) list on the right,
+; with CHANGE BOX / SEE YA! in the bottom text box. Every action returns here to redraw.
+; wPCDualList values used on this screen:
+;   1 = normal, 2 = list switch requested, 3 = skip full redraw on next display,
+;   4 = CHANGE BOX chosen, 5 = SEE YA! chosen, 6 = SELECT quick-move (skips the sub-menu)
+; wPCListSide: 0 = party list active, 1 = box list active.
+; wPCOtherScroll/wPCOtherCursor hold the scroll/cursor of the inactive list.
+BillsPCMain:
+	xor a
+	ld [wPCListSide], a
+	ld [wPCOtherScroll], a
+	ld [wPCOtherCursor], a
+	ld [wListScrollOffset], a
+	ld [wPartyAndBillsPCSavedMenuItem], a
+	inc a
+	ld [wPCDualList], a
+.showList
+	ld hl, wPartyCount
+	ld a, [wPCListSide]
+	and a
+	ld a, 1 ; depositing
+	jr z, .gotList
+	ld hl, wBoxCount
+	xor a ; withdrawing
+.gotList
+	ld [wParentMenuItem], a
+	call DisplayMonListMenu
+	jr nc, .chose
+	ld a, [wPCDualList]
+	cp 2 ; switching lists?
+	jr z, .switchLists
+	cp 4 ; CHANGE BOX or SEE YA?
+	jr nc, .bottomChoice
+	xor a
+	ld [wPCDualList], a
+	jp ExitBillsPC
+.bottomChoice
+	push af
+	xor a
+	ld [wPCDualList], a
+	call ClearSprites
+	pop af
+	cp 5 ; SEE YA?
+	jp z, ExitBillsPC
+	farcall ChangeBox
+	ld b, SET_PAL_OVERWORLD ; undo the generic palette used by the change box menu
+	call RunPaletteCommand
+	callfar LoadBillsPCExtraTiles
+	jp BillsPCMain
+.switchLists
+	ld a, 3 ; tells DisplayMonListMenu to skip the full redraw
+	ld [wPCDualList], a
+	ld a, [wPCListSide]
+	and a
+	jr nz, .doSwitch
+	ld a, [wBoxCount]
+	and a
+	jr z, .showList ; nothing to withdraw
+.doSwitch
+	ld de, wListScrollOffset
+	ld hl, wPCOtherScroll
+	call .exchange
+	ld de, wPartyAndBillsPCSavedMenuItem
+	ld hl, wPCOtherCursor
+	call .exchange
+	ld a, [wPCListSide]
+	xor 1
+	ld [wPCListSide], a
+	jr .showList
+.exchange
+	ld a, [de]
+	ld b, [hl]
+	ld [hl], a
+	ld a, b
+	ld [de], a
+	ret
+.chose
+	ld a, [wPCListSide]
+	and a
+	jp nz, .withdrawChosen
 	ld a, [wPartyCount]
 	dec a
 	jr nz, .partyLargeEnough
 	ld hl, CantDepositLastMonText
-	call PrintText
-	jp BillsPCMenu
+	call PrintTextKeepScreen
+	jp .showList
 .partyLargeEnough
 	ld a, [wBoxCount]
 	cp MONS_PER_BOX
 	jr nz, .boxNotFull
 	ld hl, BoxFullText
-	call PrintText
-	jp BillsPCMenu
+	call PrintTextKeepScreen
+	jp .showList
 .boxNotFull
-	ld hl, wPartyCount
-	call DisplayMonListMenu
-	jp c, BillsPCMenu
-	call DisplayDepositWithdrawMenu
-	jp nc, BillsPCMenu
+	ld a, [wPCDualList]
+	cp 6
+	jr z, .confirmed ; SELECT: deposit without the sub-menu
+	call OpenPCSubMenu
+	jr c, .confirmed
+	jp .showList
+.withdrawChosen
+	ld a, [wPartyCount]
+	cp PARTY_LENGTH
+	jr nz, .partyHasRoom
+	ld hl, CantTakeMonText
+	call PrintTextKeepScreen
+	jp .showList
+.partyHasRoom
+	ld a, [wPCDualList]
+	cp 6
+	jp z, DoBillsPCWithdraw ; SELECT: withdraw without the sub-menu
+	call OpenPCSubMenu
+	jp nc, .showList
+	jp DoBillsPCWithdraw
+.confirmed
+	call PCSkipCry
+	jr c, .skipDepositCry
 	ld a, [wCurPartySpecies]
 	call GetCryData
 	call PlaySoundWaitForCurrent
+.skipDepositCry
 	ld a, PARTY_TO_BOX
 	ld [wMoveMonType], a
 	call MoveMon
@@ -227,36 +297,93 @@ BillsPCDeposit:
 .next
 	ld [hli], a
 	ld [hl], "@"
-	ld hl, MonWasStoredText
-	call PrintText
-	jp BillsPCMenu
+	jp BillsPCMain ; stay on the PC screen
 
-BillsPCWithdraw:
-	ld a, [wBoxCount]
-	and a
-	jr nz, .boxNotEmpty
-	ld hl, NoMonText
+; Returns carry if cries are skipped (Fast text speed).
+PCSkipCry:
+	ld a, [wOptions]
+	and TEXT_DELAY_MASK
+	ret nz
+	scf
+	ret
+
+; Prints hl on the deposit screen, then restores the screen so no redraw is needed.
+PrintTextKeepScreen:
+	push hl
+	call SaveScreenTilesToBuffer2
+	pop hl
 	call PrintText
-	jp BillsPCMenu
-.boxNotEmpty
-	ld a, [wPartyCount]
-	cp PARTY_LENGTH
-	jr nz, .partyNotFull
-	ld hl, CantTakeMonText
-	call PrintText
-	jp BillsPCMenu
-.partyNotFull
-	ld hl, wBoxCount
-	call DisplayMonListMenu
-	jp c, BillsPCMenu
+	call LoadScreenTilesFromBuffer2
+	ld a, 3 ; skip the full redraw
+	ld [wPCDualList], a
+	ret
+
+; Opens the DEPOSIT/WITHDRAW/STATS box on the deposit screen. Returns carry if an
+; option was chosen. On cancel, the list position and screen are restored and the
+; next DisplayMonListMenu skips the full redraw.
+OpenPCSubMenu:
+	ld a, [wListScrollOffset]
+	ld b, a
+	ld a, [wPartyAndBillsPCSavedMenuItem]
+	ld c, a
+	push bc
 	call DisplayDepositWithdrawMenu
-	jp nc, BillsPCMenu
+	pop bc
+	ld a, b
+	ld [wListScrollOffset], a
+	ld a, c
+	ld [wPartyAndBillsPCSavedMenuItem], a
+	jr nc, .cancel
+	ld a, [wCurrentMenuItem]
+	cp 2 ; RELEASE?
+	ret nz ; DEPOSIT/WITHDRAW, carry is still set
+	call LoadScreenTilesFromBuffer2
+	ld a, [wPCListSide]
+	and a
+	jr nz, .askRelease
+	ld a, [wPartyCount]
+	dec a
+	jr nz, .askRelease
+	ld hl, CantReleaseLastMonText
+	call PrintTextKeepScreen
+	and a
+	ret
+.askRelease
+	ld hl, OnceReleasedText
+	call PrintText
+	call YesNoChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	jr z, .doRelease
+.cancel
+	call LoadScreenTilesFromBuffer2
+	ld a, 3 ; skip the full redraw
+	ld [wPCDualList], a
+	and a
+	ret
+.doRelease
+	ld a, [wPCListSide]
+	ld [wRemoveMonFromBox], a ; 0 = party, 1 = box
+	call RemovePokemon
+	call PCSkipCry
+	jr c, .skipReleaseCry
+	call WaitForSoundToFinish
+	ld a, [wCurPartySpecies]
+	call PlayCry
+.skipReleaseCry
+	pop hl ; drop this routine's return address and restart the screen, as after a deposit
+	jp BillsPCMain
+
+DoBillsPCWithdraw:
 	ld a, [wWhichPokemon]
 	ld hl, wBoxMonNicks
 	call GetPartyMonName
+	call PCSkipCry
+	jr c, .skipCry
 	ld a, [wCurPartySpecies]
 	call GetCryData
 	call PlaySoundWaitForCurrent
+.skipCry
 	xor a ; BOX_TO_PARTY
 	ld [wMoveMonType], a
 	call MoveMon
@@ -264,41 +391,11 @@ BillsPCWithdraw:
 	ld [wRemoveMonFromBox], a
 	call RemovePokemon
 	call WaitForSoundToFinish
-	ld hl, MonIsTakenOutText
-	call PrintText
-	jp BillsPCMenu
+	jp BillsPCMain ; stay on the PC screen, no message
 
-BillsPCRelease:
-	ld a, [wBoxCount]
-	and a
-	jr nz, .loop
-	ld hl, NoMonText
-	call PrintText
-	jp BillsPCMenu
-.loop
-	ld hl, wBoxCount
-	call DisplayMonListMenu
-	jp c, BillsPCMenu
-	ld hl, OnceReleasedText
-	call PrintText
-	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
-	jr nz, .loop
-	inc a
-	ld [wRemoveMonFromBox], a
-	call RemovePokemon
-	call WaitForSoundToFinish
-	ld a, [wCurPartySpecies]
-	call PlayCry
-	ld hl, MonWasReleasedText
-	call PrintText
-	jp BillsPCMenu
-
-BillsPCChangeBox:
-	farcall ChangeBox
-	jp BillsPCMenu
-
+; Sets up and draws the list for the active side (hl = party or box count).
+; The first display draws the whole screen; after a list switch (wPCDualList = 3)
+; only the list is refreshed.
 DisplayMonListMenu:
 	ld a, l
 	ld [wListPointer], a
@@ -306,25 +403,43 @@ DisplayMonListMenu:
 	ld [wListPointer + 1], a
 	xor a
 	ld [wPrintItemPrices], a
+	ld a, [wParentMenuItem]
+	and a ; withdrawing?
+	ld a, PCWITHDRAWLISTMENU
+	jr z, .gotListMenuID
+	xor a ; PCPOKEMONLISTMENU
+.gotListMenuID
 	ld [wListMenuID], a
-	inc a                ; MONSTER_NAME
+	ld a, MONSTER_NAME
 	ld [wNameListType], a
 	ld a, [wPartyAndBillsPCSavedMenuItem]
 	ld [wCurrentMenuItem], a
+	ld a, [wPCDualList]
+	cp 3 ; just switched lists? the screen and icons are already drawn
+	jr nz, .fullRedraw
+	ld a, 1
+	ld [wPCDualList], a
+	jr .display
+.fullRedraw
+	ld a, $ff
+	ld [wUnusedCreditsByte], a ; no icons loaded yet
+	call ClearScreen ; the list is drawn over a blank screen like the party menu
+	hlcoord 0, 12 ; bottom text box holding CHANGE BOX / SEE YA!
+	ld b, 4
+	ld c, 18
+	call TextBoxBorder
+	hlcoord 2, 14
+	ld de, ChangeBoxSeeYaPCText
+	call PlaceString
+	decoord 13, 13
+	callfar DrawCurrentBoxPrompt
+.display
 	call DisplayListMenuID
 	ld a, [wCurrentMenuItem]
 	ld [wPartyAndBillsPCSavedMenuItem], a
 	ret
 
-BillsPCMenuText:
-	db   "WITHDRAW <PKMN>"
-	next "DEPOSIT <PKMN>"
-	next "RELEASE <PKMN>"
-	next "CHANGE BOX"
-	next "SEE YA!"
-	db "@"
 
-; BoxNoPCText:
 ; 	db "BOX No.@"
 
 KnowsHMMove::
@@ -357,31 +472,32 @@ KnowsHMMove::
 HMMoveArray:
 INCLUDE "data/moves/hm_moves.asm"
 
+; Draws the DEPOSIT/WITHDRAW, STATS, RELEASE, CANCEL box and handles it.
+; Returns carry if DEPOSIT/WITHDRAW/RELEASE was chosen (wCurrentMenuItem 0 or 2).
 DisplayDepositWithdrawMenu:
-	hlcoord 9, 10
-	ld b, 6
-	ld c, 9
+	call SaveScreenTilesToBuffer2 ; lets a cancel restore the screen without a redraw
+	hlcoord 9, 8
+	lb bc, 8, 9 ; box with DEPOSIT/WITHDRAW, STATS, RELEASE, CANCEL
 	call TextBoxBorder
 	ld a, [wParentMenuItem]
-	and a ; was the Deposit or Withdraw item selected in the parent menu?
+	and a ; deposit list (1) or withdraw list (0)?
 	ld de, DepositPCText
 	jr nz, .next
 	ld de, WithdrawPCText
 .next
+	hlcoord 11, 10
+	call PlaceString
+	ld de, StatsReleaseCancelPCText
 	hlcoord 11, 12
 	call PlaceString
-	hlcoord 11, 14
-	ld de, StatsCancelPCText
-	call PlaceString
 	ld hl, wTopMenuItemY
-	ld a, 12
-	ld [hli], a ; wTopMenuItemY
 	ld a, 10
-	ld [hli], a ; wTopMenuItemX
+	ld [hli], a ; wTopMenuItemY
+	ld [hli], a ; wTopMenuItemX (also 10)
 	xor a
 	ld [hli], a ; wCurrentMenuItem
 	inc hl
-	ld a, 2
+	ld a, 3
 	ld [hli], a ; wMaxMenuItem
 	ld a, PAD_A | PAD_B
 	ld [hli], a ; wMenuWatchedKeys
@@ -401,13 +517,17 @@ DisplayDepositWithdrawMenu:
 	jr z, .choseDepositWithdraw
 	dec a
 	jr z, .viewStats
+	ld a, [wCurrentMenuItem]
+	cp 2 ; RELEASE?
+	jr z, .choseDepositWithdraw
 .exit
-	and a
+	and a ; clear carry; the deposit screen keeps its icons
 	ret
 .choseDepositWithdraw
 	scf
 	ret
 .viewStats
+	call ClearSprites
 	call SaveScreenTilesToBuffer1
 	ld a, [wParentMenuItem]
 	and a
@@ -418,63 +538,47 @@ DisplayDepositWithdrawMenu:
 	ld [wMonDataLocation], a
 	predef StatusScreenOriginal
 	call LoadScreenTilesFromBuffer1
+	ld a, $ff
+	ld [wUnusedCreditsByte], a ; the icons were cleared, so reload them
 	call ReloadTilesetTilePatterns
 	call RunDefaultPaletteCommand
 	call LoadGBPal
+	callfar LoadBillsPCExtraTiles ; the status screen overwrote the Box Info tiles
 	jr .loop
 
 DepositPCText:  db "DEPOSIT@"
 WithdrawPCText: db "WITHDRAW@"
-StatsCancelPCText:
+StatsReleaseCancelPCText:
 	db   "STATS"
+	next "RELEASE"
 	next "CANCEL@"
+
+ChangeBoxSeeYaPCText:
+	db   "CHANGE BOX"
+	next "SEE YA!@"
 
 SwitchOnText:
 	text_far _SwitchOnText
-	text_end
-
-WhatText:
-	text_far _WhatText
-	text_end
-
-DepositWhichMonText:
-	text_far _DepositWhichMonText
-	text_end
-
-MonWasStoredText:
-	text_far _MonWasStoredText
 	text_end
 
 CantDepositLastMonText:
 	text_far _CantDepositLastMonText
 	text_end
 
+CantReleaseLastMonText:
+	text_far _CantReleaseLastMonText
+	text_end
+
 BoxFullText:
 	text_far _BoxFullText
-	text_end
-
-MonIsTakenOutText:
-	text_far _MonIsTakenOutText
-	text_end
-
-NoMonText:
-	text_far _NoMonText
 	text_end
 
 CantTakeMonText:
 	text_far _CantTakeMonText
 	text_end
 
-ReleaseWhichMonText:
-	text_far _ReleaseWhichMonText
-	text_end
-
 OnceReleasedText:
 	text_far _OnceReleasedText
-	text_end
-
-MonWasReleasedText:
-	text_far _MonWasReleasedText
 	text_end
 
 CableClubLeftGameboy::

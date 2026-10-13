@@ -11,6 +11,8 @@ TextBoxCoordTable:
 	db MENU_TEMPLATE_03,  0,  0, 19, 14
 	;db MENU_TEMPLATE_07,  0,  0, 11,  6 ; marcelnote - replaced with USE_SLCT_MENU_TEMPLATE
 	db LIST_MENU_BOX,     4,  2, 19, 12
+	db PC_LIST_MENU_BOX,  4,  1, 19, 15
+	db WITHDRAW_LIST_MENU_BOX, 7, 0, 19, 12
 	; Item lists use the extra column on the left for longer labels.
 	db ITEM_LIST_MENU_BOX, 3, 2, 19, 12
 	db MENU_TEMPLATE_10,  7,  0, 19, 17
