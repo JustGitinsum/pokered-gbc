@@ -139,36 +139,21 @@ ColorOverworldSprite::
 	ld a, SPR_PAL_GREEN ; Overwork palette for Green (Girl player)
 	jr .norandomColor
 .surfing
-	ld a, [wSurfingPokemonID]
-	cp LAPRAS
-	jr z, .blueSprite
-	cp GYARADOS
-	jr z, .blueSprite
-	cp BLASTOISE
-	jr z, .blueSprite
-	ld a, SPR_PAL_EMOJI
-    jr .norandomColor
+	push hl
+	push bc
+	farcall GetSurfingMonSpriteData
+	ld a, l
+	pop bc
+	pop hl
+	jr .norandomColor
 .flying
-	ld a, [wFlyingPokemonID]
-	cp CHARIZARD
-	jr z, .orangeSprite
-	cp ARTICUNO
-	jr z, .blueSprite
-	cp ZAPDOS
-	jr z, .purpleSprite
-	cp MOLTRES
-	jr z, .orangeSprite
-	ld a, SPR_PAL_BROWN
-    jr .norandomColor
-.orangeSprite
-	ld a, SPR_PAL_ORANGE
-    jr .norandomColor
-.blueSprite
-	ld a, SPR_PAL_BLUE
-    jr .norandomColor
-.purpleSprite
-	ld a, SPR_PAL_PURPLE
-    jr .norandomColor
+	push hl
+	push bc
+	farcall GetFlyingMonSpriteData
+	ld a, l
+	pop bc
+	pop hl
+	jr .norandomColor
 ; This is called whenever [wUpdateSpritesEnabled] != 1 (overworld sprites not enabled?).
 ;
 ; This sometimes does occur on the overworld, such as when exclamation marks appear, and

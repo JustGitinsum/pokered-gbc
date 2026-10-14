@@ -342,21 +342,17 @@ SetPal_TownMap:
 	CALL_INDIRECT LoadOverworldSpritePalettes
 	xor a
 	ld [W2_UseOBP1], a
+	farcall GetSurfingMonSpriteData
+	ld a, l
 	ld hl, W2_SpritePaletteMap
 	ld bc, $4
-	ld a, SPR_PAL_EMOJI
 .doneMap
 	call FillMemory
+	push hl
+	farcall GetFlyingMonSpriteData
+	ld a, l
+	pop hl
 	ld bc, $4
-	ld a, [wFlyingPokemonID]
-	cp ARTICUNO
-	jr z, .blueSprite
-	cp ZAPDOS
-	jr z, .purpleSprite
-	cp MOLTRES
-	jr z, .orangeSprite
-	ld a, SPR_PAL_BROWN
-.colorslockedin	
 	call FillMemory
 
 	ld d, PAL_TOWNMAP
@@ -382,19 +378,6 @@ SetPal_TownMap:
 	xor a
 	ldh [rWBK], a
 	ret
-
-.orangeSprite
-	ld a, SPR_PAL_ORANGE
-    jr .colorslockedin
-.blueSprite
-	ld a, SPR_PAL_BLUE
-    jr .colorslockedin
-.purpleSprite
-	ld a, SPR_PAL_PURPLE
-    jr .colorslockedin
-.whiteSprite
-	ld a, SPR_PAL_EMOJI
-	jr .colorslockedin
 
 ; Status screen
 SetPal_StatusScreen:

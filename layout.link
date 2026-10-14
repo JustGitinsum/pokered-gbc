@@ -200,6 +200,8 @@ ROMX $2B
 ROMX $2C
 	"bank2C"
 	"Move Names"
+ROMX $2D
+	"Mon Overworld Sprites"
 ROMX $31
 	"bank31"
 ROMX $32
