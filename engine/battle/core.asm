@@ -1876,7 +1876,7 @@ DrawPlayerHUDAndHPBar:
 	callfar PlacePlayerHUDTiles
 	hlcoord 18, 9
 	ld [hl], $73
-	ld de, wBattleMonNick
+	call GetBattleMonDisplayName
 	hlcoord 10, 7
 IF GEN_2_GRAPHICS
 	call PlaceString ; Note: "CenterMonName" not called to be consistent with gen 2
@@ -1940,7 +1940,7 @@ DrawEnemyHUDAndHPBar:
 	lb bc, 4, 12
 	call ClearScreenArea
 	callfar PlaceEnemyHUDTiles
-	ld de, wEnemyMonNick
+	call GetEnemyMonDisplayName
 	hlcoord 1, 0
 	call CenterMonName
 	call PlaceString

@@ -295,7 +295,7 @@ OverworldLoopLessDelay::
     jr nz, .speedUp
 	ld a, [wWalkBikeSurfState]
 	dec a ; riding a bike?
-	jr z, .speedUp
+	jr z, .bikeSpeedUp
 	ldh a, [hJoyHeld]
     and PAD_B
     jr nz, .checkIfWalking
@@ -310,6 +310,14 @@ OverworldLoopLessDelay::
 	res BIT_RUNNING, [hl]
 	call LoadWalkingPlayerSpriteGraphics
 	jr .normalPlayerSpriteAdvancement
+.bikeSpeedUp
+	ldh a, [hJoyHeld]
+	and PAD_B
+	jr z, .speedUp
+	; holding B on a bike: 4 steps per frame in total (must divide the 8-step walk counter)
+	call DoBikeSpeedup
+	call DoBikeSpeedup
+	jr .speedUp
 .checkIfWalking
 	;;;;;;;;Removes until i can figure out how to make wild encounters not diabled while running
 	; ld a, [wWalkBikeSurfState]
@@ -1216,18 +1224,36 @@ IsSpriteInFrontOfPlayer2::
 	ld a, [hli] ; image (0 if no sprite)
 	and a
 	jr z, .nextSprite
+	cp SPRITE_ONIX
+	ld a, 0
+	jr nz, .notOnix
+	ld a, $10 ; SPRITE_ONIX also occupies the tiles to the right and below
+.notOnix
+	ldh [hOnixSpriteTmp], a
 	inc l
 	ld a, [hli] ; sprite visibility
 	inc a
 	jr z, .nextSprite
 	inc l
-	ld a, [hli] ; Y location
-	cp b
+	ld a, b
+	sub [hl] ; player target Y - sprite Y
+	jr z, .yMatched
+	cp $10
 	jr nz, .nextSprite
+	ldh a, [hOnixSpriteTmp]
+	and a
+	jr z, .nextSprite
+.yMatched
 	inc l
-	ld a, [hl] ; X location
-	cp c
+	inc l
+	ld a, c
+	sub [hl] ; player target X - sprite X
 	jr z, .foundSpriteInFrontOfPlayer
+	cp $10
+	jr nz, .nextSprite
+	ldh a, [hOnixSpriteTmp]
+	and a
+	jr nz, .foundSpriteInFrontOfPlayer
 .nextSprite
 	pop hl
 	ld a, l

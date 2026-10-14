@@ -7,6 +7,32 @@ UseSelectButtonItem::
 	call IsItemInBag
 	ret z ; if associated item is not in bag, do nothing
 
+	; Fast path: getting on/off the bike prints no text, so skip the text box
+	; setup/teardown (screen copies, font and sprite reloads) that causes a pause.
+	ld a, [wSelectButtonItem]
+	cp BICYCLE
+	jr nz, .normalPath
+	ld a, [wIsInBattle]
+	and a
+	jr nz, .normalPath
+	ld a, [wStatusFlags6]
+	bit BIT_ALWAYS_ON_BIKE, a
+	jr nz, .normalPath
+	ld a, [wWalkBikeSurfState]
+	cp 2 ; surfing?
+	jr z, .normalPath
+	and a
+	jr nz, .fastToggle ; already biking, so getting off is always allowed
+	call IsBikingAllowed
+	jr nc, .normalPath ; let the normal path print the error text
+.fastToggle
+	ld a, BICYCLE
+	ld [wCurItem], a
+	call UseItem
+	call LoadPlayerSpriteGraphics
+	jp UpdateSprites
+
+.normalPath
 	predef GetTileAndCoordsInFrontOfPlayer ; update tile in front of player for rods
 
 	; initialize a text box without drawing anything special

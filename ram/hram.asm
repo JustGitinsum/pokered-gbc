@@ -405,6 +405,9 @@ hDelayFrameHookBank:: db
 ; Used for convenience in color hack (in the _ColorOverworldSprite function)
 hColorHackTmp:: db
 
-	ds 3
+; Used for the multi-tile SPRITE_ONIX in sprite collision / talking checks
+hOnixSpriteTmp:: db
+
+	ds 2
 
 ENDSECTION

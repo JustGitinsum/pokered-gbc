@@ -11,6 +11,13 @@ AskName:
 	ld a, [wCurPartySpecies]
 	ld [wNamedObjectIndex], a
 	call GetMonName
+	; Automatic naming uses the species name under HIDE; the Name Rater bypasses AskName.
+	ld a, [wOptions]
+	bit BIT_HIDE_NICKNAMES, a
+	jr z, .promptNickname
+	pop hl
+	jr .declinedNickname
+.promptNickname
 	ld hl, DoYouWantToNicknameText
 	call PrintText
 	hlcoord 14, 7

@@ -134,3 +134,49 @@ GetMoveName::
 	pop hl
 	pop bc
 	ret
+
+; A = original species, DE = nickname. Return the configured display name in DE.
+; Separate sections fit the small ROM0 gaps without growing the fixed-address sections.
+PUSHS
+SECTION "Nickname Display Home", ROM0
+GetMonDisplayName::
+	push bc
+	push hl
+	ld c, a
+	; homecall preserves the input C/DE; callfar would overwrite BC/HL.
+	homecall GetMonDisplayName_
+	pop hl
+	pop bc
+	ret
+POPS
+
+PUSHS
+SECTION "Battle Nickname Display Home", ROM0
+GetBattleMonDisplayName::
+	ld de, wBattleMonNick
+	ld a, [wBattleMonSpecies2]
+	jp GetMonDisplayName
+
+GetEnemyMonDisplayName::
+	ld de, wEnemyMonNick
+	ld a, [wEnemyMonSpecies2]
+	jp GetMonDisplayName
+
+GetLoadedMonDisplayName::
+	ld d, h
+	ld e, l
+	ld a, [wLoadedMonSpecies]
+	jp GetMonDisplayName
+POPS
+
+PUSHS
+SECTION "Nickname Dialogue Home", ROM0
+; Resolve direct nickname references without altering the text script or its cursor.
+PlaceNicknameAwareString::
+	push bc
+	push hl
+	callfar ResolveNicknameTextPointer
+	pop hl
+	pop bc
+	jp PlaceString
+POPS

@@ -267,7 +267,15 @@ ENDR
 
 ; This is the last vblank-timing-sensitive thing that's called
 GbcVBlankHook::
+	; UpdateMovingBgTiles reads and writes VRAM, so it must run inside vblank. If
+	; earlier vblank work overran, VRAM reads return $FF (black lines in water
+	; tiles), so skip it and retry next frame.
+	ldh a, [rLY]
+	sub LY_VBLANK
+	cp 8
+	jr nc, .skipTileAnim
 	call UpdateMovingBgTiles ; Removed from caller to make space
+.skipTileAnim
 
 	; Use the hblank interrupt to get a head-start with vblank stuff
 	ldh a, [rIE]

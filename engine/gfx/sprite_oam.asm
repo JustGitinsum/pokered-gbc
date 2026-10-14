@@ -33,7 +33,7 @@ PrepareOAMData::
 	jr nz, .visible
 
 	call GetSpriteScreenXY
-	jr .nextSprite
+	jp .nextSprite
 
 .visible
 	cp $a0 ; is the sprite unchanging like an item ball or boulder?
@@ -74,6 +74,18 @@ PrepareOAMData::
 	ld a, [hli]
 	ld h, [hl]
 	ld l, a
+
+; SPRITE_ONIX is 16 tiles and has its own tile/OAM tables
+	dec e
+	dec e
+	ld a, [de] ; [x#SPRITESTATEDATA1_PICTUREID]
+	inc e
+	inc e
+	cp SPRITE_ONIX
+	jr nz, .notOnix
+	ld bc, OnixTileIDs
+	ld hl, OnixOAM
+.notOnix
 
 	call GetSpriteScreenXY
 

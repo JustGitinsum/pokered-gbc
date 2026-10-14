@@ -2,6 +2,12 @@
 
 Pokémon Red/Blue overhauled with full GBC support. Made by FroggestSpirit, Drenn, and dannye. Also check out the crysaudio branch.
 
+The Options Menu includes **POKEMON NICKNAMES**, which defaults to **SHOW**.
+Use Left/Right to switch it to **HIDE** to display species names instead; saved
+nicknames are preserved and reappear when the option is switched back to **SHOW**.
+**HIDE** also skips nickname prompts for newly received or caught Pokemon, using
+their species names instead. The Name Rater remains available for renaming.
+
 Original README follows...
 
 # Pokémon Red and Blue [![Build Status][ci-badge]][ci]

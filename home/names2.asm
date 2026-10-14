@@ -53,7 +53,7 @@ GetName::
 	ld d, h
 	jr .gotPtr
 .otherEntries
-	; 2-7 = other names
+	; 2-8 = other names, including the alternate move-name table
 	ld a, [wPredefBank]
 	ldh [hLoadedROMBank], a
 	ld [rROMB], a

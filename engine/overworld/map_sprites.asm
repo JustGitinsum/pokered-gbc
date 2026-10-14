@@ -98,11 +98,17 @@ LoadMapSpriteTilePatterns:
 	push af
 	ld a, [hl] ; [x#SPRITESTATEDATA2_IMAGEBASEOFFSET]
 	ld b, a ; b = current sprite picture ID
+	cp SPRITE_ONIX
+	jr z, .onixSprite
 	cp FIRST_STILL_SPRITE ; is it a 4-tile sprite?
 	jr c, .notFourTileSprite
 	pop af
 	ldh a, [hFourTileSpriteCount]
 	add 11
+	jr .storeVRAMSlot
+.onixSprite
+	pop af
+	ld a, ONIX_VRAM_SLOT
 	jr .storeVRAMSlot
 .notFourTileSprite
 	pop af
@@ -143,6 +149,9 @@ LoadMapSpriteTilePatterns:
 	jr nz, .calculateVRAMAddrLoop
 	jr .loadStillTilePattern
 .fourTileSpriteVRAMAddr
+	cp ONIX_VRAM_SLOT
+	ld hl, vSprites tile $70
+	jr z, .loadStillTilePattern
 	ld hl, vSprites tile $7c ; address for second 4-tile sprite
 	ldh a, [hFourTileSpriteCount]
 	and a
@@ -166,6 +175,14 @@ LoadMapSpriteTilePatterns:
 	jr nz, .skipFirstLoad ; if so, skip loading data into the lower half
 	ld a, b
 	ld b, 0
+	push af
+	ldh a, [hVRAMSlot]
+	cp ONIX_VRAM_SLOT
+	jr nz, .notOnixLength
+	inc b ; Onix is 16 tiles (256 bytes), which doesn't fit in the table's length byte
+	ld c, 0
+.notOnixLength
+	pop af
 	call FarCopyData2 ; load tile pattern data for sprite when standing still
 .skipFirstLoad
 	pop de

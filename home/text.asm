@@ -157,7 +157,7 @@ PlaceMoveUsersName::
 	and a
 	jr nz, .enemy
 
-	ld de, wBattleMonNick
+	call GetBattleMonDisplayName
 	jr PlaceCommandCharacter
 
 .enemy
@@ -165,7 +165,7 @@ PlaceMoveUsersName::
 	call PlaceString
 	ld h, b
 	ld l, c
-	ld de, wEnemyMonNick
+	call GetEnemyMonDisplayName
 	; fallthrough
 
 PlaceCommandCharacter::
@@ -392,7 +392,7 @@ TextCommand_RAM::
 	push hl
 	ld h, b
 	ld l, c
-	call PlaceString
+	call PlaceNicknameAwareString
 	pop hl
 	jr NextTextCommand
 

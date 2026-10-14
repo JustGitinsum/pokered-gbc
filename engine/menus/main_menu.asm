@@ -441,34 +441,25 @@ SaveScreenInfoText:
 	next "TIME@"
 
 DisplayOptionMenu:
-	; Four option rows are spaced evenly above the Cancel row.
+	; Enclose all option rows in one border, leaving Cancel below it.
 	hlcoord 0, 0
-	ld b, 3
-	ld c, 18
-	call TextBoxBorder
-	hlcoord 0, 4
-	ld b, 3
-	ld c, 18
-	call TextBoxBorder
-	hlcoord 0, 8
-	ld b, 3
-	ld c, 18
-	call TextBoxBorder
-	hlcoord 0, 12
-	ld b, 3
+	ld b, 15
 	ld c, 18
 	call TextBoxBorder
 	hlcoord 1, 1
 	ld de, TextSpeedOptionText
 	call PlaceString
-	hlcoord 1, 5
+	hlcoord 1, 4
 	ld de, BattleAnimationOptionText
 	call PlaceString
-	hlcoord 1, 9
+	hlcoord 1, 7
 	ld de, BattleStyleOptionText
 	call PlaceString
-	hlcoord 1, 13
+	hlcoord 1, 10
 	ld de, MoveNameCaseOptionText
+	call PlaceString
+	hlcoord 1, 13
+	ld de, ShowNicknamesOptionText
 	call PlaceString
 	hlcoord 2, 17
 	ld de, OptionMenuCancelText
@@ -479,19 +470,17 @@ DisplayOptionMenu:
 	ASSERT BIT_FAST_TEXT_DELAY == 0
 	inc a ; 1 << BIT_FAST_TEXT_DELAY
 	ld [wLetterPrintingDelayFlags], a
-	ld a, 3 ; text speed cursor Y coordinate
+	ld a, 2 ; text speed cursor Y coordinate
 	ld [wTopMenuItemY], a
 	; These helpers live outside bank1 to keep that crowded bank within its size limit.
 	callfar SetCursorPositionsFromOptions
-	ld a, [wOptionsTextSpeedCursorX] ; text speed cursor X coordinate
-	ld [wTopMenuItemX], a
 	ld a, $01
 	ldh [hAutoBGTransferEnabled], a ; enable auto background transfer
 	call Delay3
 .loop
-	call PlaceMenuCursor
 	; Keep wOptions synchronized so consumers see changes immediately.
 	callfar SetOptionsFromCursorPositions
+	callfar DrawSelectedOptionValues
 .getJoypadStateLoop
 	call JoypadLowSensitivity
 	ldh a, [hJoy5]
@@ -511,22 +500,26 @@ DisplayOptionMenu:
 	ld a, SFX_PRESS_AB
 	call PlaySound
 	ret
-.eraseOldMenuCursor
-	ld [wTopMenuItemX], a
-	call EraseMenuCursor
-	jp .loop
 .checkDirectionKeys
 	ld a, [wTopMenuItemY]
 	bit B_PAD_DOWN, b
 	jr nz, .downPressed
 	bit B_PAD_UP, b
 	jr nz, .upPressed
-	cp 7 ; cursor in Battle Animation section?
+	; Ignore buttons other than Left/Right when changing a value.
+	ld c, a
+	ld a, b
+	and PAD_LEFT | PAD_RIGHT
+	jp z, .loop
+	ld a, c
+	cp 5 ; cursor in Battle Animation section?
 	jp z, .cursorInBattleAnimation
-	cp 11 ; cursor in Battle Style section?
+	cp 8 ; cursor in Battle Style section?
 	jp z, .cursorInBattleStyle
-	cp 15 ; cursor in Move Name Case section?
+	cp 11 ; cursor in Move Name Case section?
 	jp z, .cursorInMoveNameCase
+	cp 14 ; cursor in Show Nicknames section?
+	jp z, .cursorInNicknames
 	cp 17 ; cursor on Cancel?
 	jr z, .loop
 .cursorInTextSpeed
@@ -534,75 +527,38 @@ DisplayOptionMenu:
 	jp nz, .pressedLeftInTextSpeed
 	jp .pressedRightInTextSpeed
 .downPressed
-	; Step between section rows; value rows also update their saved cursor X.
+	; All five value rows are three tiles apart; Cancel follows the last row.
 	cp 17
-	ld b, -14
-	ld hl, wOptionsTextSpeedCursorX
-	jp z, .updateMenuVariables
-	ld b, 4
-	cp 3
-	inc hl
-	jp z, .updateMenuVariables
-	cp 7
-	inc hl
-	jp z, .updateMenuVariables
-	cp 11
-	inc hl
-	jp z, .updateMenuVariables
-	ld b, 2
-	ld a, [wTopMenuItemY]
-	add b
-	ld [wTopMenuItemY], a
-	ld a, 1
-	ld [wTopMenuItemX], a
-	call PlaceUnfilledArrowMenuCursor
-	jp .loop
+	ld b, -15
+	jr z, .updateMenuVariables
+	ld b, 3
+	jr .updateMenuVariables
 .upPressed
-	cp 7
-	ld b, -4
-	ld hl, wOptionsTextSpeedCursorX
-	jp z, .updateMenuVariables
-	cp 11
-	inc hl
-	jp z, .updateMenuVariables
-	cp 15
-	inc hl
-	jp z, .updateMenuVariables
-	cp 17
-	ld b, -2
-	inc hl
-	jp z, .updateMenuVariables
-	ld b, 14
-	ld a, [wTopMenuItemY]
-	add b
-	ld [wTopMenuItemY], a
-	ld a, 1
-	ld [wTopMenuItemX], a
-	call PlaceUnfilledArrowMenuCursor
-	jp .loop
+	cp 2
+	ld b, 15
+	jr z, .updateMenuVariables
+	ld b, -3
 .updateMenuVariables
 	add b
 	ld [wTopMenuItemY], a
-	ld a, [hl]
-	ld [wTopMenuItemX], a
-	call PlaceUnfilledArrowMenuCursor
 	jp .loop
 .cursorInBattleAnimation
-	ld a, [wOptionsBattleAnimCursorX] ; battle animation cursor X coordinate
-	xor 1 ^ 10 ; toggle between 1 and 10
-	ld [wOptionsBattleAnimCursorX], a
-	jp .eraseOldMenuCursor
+	ld hl, wOptionsBattleAnimCursorX
+	jr .toggleChoice
 .cursorInBattleStyle
-	ld a, [wOptionsBattleStyleCursorX] ; battle style cursor X coordinate
-	xor 1 ^ 10 ; toggle between 1 and 10
-	ld [wOptionsBattleStyleCursorX], a
-	jp .eraseOldMenuCursor
+	ld hl, wOptionsBattleStyleCursorX
+	jr .toggleChoice
 .cursorInMoveNameCase
-	; The two case choices share the same left/right cursor positions as other toggles.
-	ld a, [wOptionsMoveNameCaseCursorX]
-	xor 1 ^ 10 ; toggle between uppercase and lowercase
-	ld [wOptionsMoveNameCaseCursorX], a
-	jp .eraseOldMenuCursor
+	ld hl, wOptionsMoveNameCaseCursorX
+	jr .toggleChoice
+.cursorInNicknames
+	ld hl, wOptionsNicknamesCursorX
+.toggleChoice
+	; Binary settings retain the original choice encodings, not screen columns.
+	ld a, [hl]
+	xor 1 ^ 10
+	ld [hl], a
+	jp .loop
 .pressedLeftInTextSpeed
 	ld a, [wOptionsTextSpeedCursorX] ; text speed cursor X coordinate
 	cp 1
@@ -626,27 +582,25 @@ DisplayOptionMenu:
 	add 6
 .updateTextSpeedXCoord
 	ld [wOptionsTextSpeedCursorX], a ; text speed cursor X coordinate
-	jp .eraseOldMenuCursor
+	jp .loop
 
 TextSpeedOptionText:
-	db   "TEXT SPEED"
-	next " FAST  MEDIUM SLOW@"
+	db "TEXT SPEED@"
 
 BattleAnimationOptionText:
-	db   "BATTLE ANIMATION"
-	next " ON       OFF@"
+	db "BATTLE ANIMATION@"
 
 BattleStyleOptionText:
-	db   "BATTLE STYLE"
-	next " SHIFT    SET@"
+	db "BATTLE STYLE@"
 
 MoveNameCaseOptionText:
-	; Display the casing choices on the fourth option row.
-	db   "MOVE NAME CASE"
-	next " UPPER    lower@"
+	db "MOVE NAME CASE@"
+
+ShowNicknamesOptionText:
+	db "#MON NICKNAMES@"
 
 OptionMenuCancelText:
-	db "CANCEL@"
+	db "DONE@"
 
 CheckForPlayerNameInSRAM:
 ; Check if the player name data in SRAM has a string terminator character

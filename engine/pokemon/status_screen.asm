@@ -177,8 +177,7 @@ ENDC
 .statusTypeIconsDone
 	ld hl, NamePointers2
 	call .GetStringPointer
-	ld d, h
-	ld e, l
+	call GetLoadedMonDisplayName
 	hlcoord 9, 1
 	call PlaceString ; Pokémon name
 	ld hl, OTPointers

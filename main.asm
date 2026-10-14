@@ -8,7 +8,6 @@ INCLUDE "engine/movie/title.asm"
 INCLUDE "engine/pokemon/load_mon_data.asm"
 INCLUDE "data/items/prices.asm"
 INCLUDE "data/items/names.asm"
-INCLUDE "data/text/unused_names.asm"
 INCLUDE "engine/gfx/sprite_oam.asm"
 INCLUDE "engine/gfx/oam_dma.asm"
 INCLUDE "engine/link/print_waiting_text.asm"
@@ -48,6 +47,7 @@ ENDC
 
 SECTION "bank3", ROMX
 
+INCLUDE "data/text/unused_names.asm" ; moved from bank1 to make room
 INCLUDE "engine/joypad.asm"
 INCLUDE "data/maps/songs.asm"
 INCLUDE "data/maps/map_header_banks.asm"
@@ -435,4 +435,6 @@ INCLUDE "engine/battle/wild_encounters.asm"
 INCLUDE "engine/battle/move_effects/conversion.asm"
 INCLUDE "engine/battle/end_of_battle.asm"
 ; Keep added options and move-name helpers out of the full bank1 section.
+SECTION "Options Helpers", ROMX
 INCLUDE "engine/menus/options_menu_helpers.asm"
+INCLUDE "engine/menus/nickname_display.asm"

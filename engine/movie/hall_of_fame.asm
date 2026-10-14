@@ -166,6 +166,8 @@ HoFDisplayMonInfo:
 	call PlaceString
 	hlcoord 1, 4
 	ld de, wNameBuffer
+	ld a, [wHoFMonSpecies]
+	call GetMonDisplayName
 	call PlaceString
 	ld a, [wHoFMonLevel]
 	hlcoord 8, 7
@@ -303,7 +305,10 @@ HoFRecordMonInfo:
 	ld [hli], a
 	ld e, l
 	ld d, h
-	ld hl, wNameBuffer
+	; Record the real nickname, not the optional species-name display substitute.
+	ld hl, wPartyMonNicks
+	ld a, [wHoFPartyMonIndex]
+	call SkipFixedLengthTextEntries
 	ld bc, NAME_LENGTH
 	jp CopyData
 

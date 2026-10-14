@@ -112,6 +112,10 @@ DetectCollisionBetweenSprites:
 
 .loop
 	ldh [hCollidingSpriteOffset], a
+	xor a
+	ldh [hOnixSpriteTmp], a ; SPRITE_ONIX part index (0-3), see .next
+.loopPart
+	ldh a, [hCollidingSpriteOffset]
 	swap a
 	ld e, a
 	ldh a, [hCurrentSpriteOffset]
@@ -139,6 +143,14 @@ DetectCollisionBetweenSprites:
 
 	inc e
 	ld a, [de] ; a = [j#SPRITESTATEDATA1_YPIXELS]
+	push bc
+	ld b, a
+	ldh a, [hOnixSpriteTmp]
+	and 2
+	swap a
+	srl a ; $10 for the lower half of SPRITE_ONIX, else 0
+	add b
+	pop bc
 	add 4 ; align with multiple of $10
 
 ; The effect of the following 3 lines is to
@@ -209,7 +221,13 @@ DetectCollisionBetweenSprites:
 	call SetSpriteCollisionValues
 	inc e
 	ld a, [de] ; a = [j#SPRITESTATEDATA1_XPIXELS]
-
+	push bc
+	ld b, a
+	ldh a, [hOnixSpriteTmp]
+	and 1
+	swap a ; $10 for the right half of SPRITE_ONIX, else 0
+	add b
+	pop bc
 ; The effect of the following 3 lines is to
 ; add 7 to a if moving east or
 ; subtract 7 from a if moving west.
@@ -313,6 +331,22 @@ DetectCollisionBetweenSprites:
 	ld [hl], a
 
 .next
+; SPRITE_ONIX occupies 2x2 map tiles, so check it once per 16x16 part
+	ldh a, [hCollidingSpriteOffset]
+	swap a
+	ld e, a
+	ld d, HIGH(wSpriteStateData1)
+	ld a, [de]
+	cp SPRITE_ONIX
+	jr nz, .nextSprite
+	ldh a, [hOnixSpriteTmp]
+	inc a
+	cp 4
+	jr z, .nextSprite
+	ldh [hOnixSpriteTmp], a
+	ld h, HIGH(wSpriteStateData1)
+	jp .loopPart
+.nextSprite
 	ldh a, [hCollidingSpriteOffset]
 	inc a
 	cp $10

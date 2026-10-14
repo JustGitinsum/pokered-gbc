@@ -489,14 +489,11 @@ GetPartyMonName2::
 
 ; this is called more often
 GetPartyMonName::
+	; Keep party/box/day-care lookup display-only; never replace stored nicknames.
 	push hl
 	push bc
-	call SkipFixedLengthTextEntries ; add NAME_LENGTH to hl, a times
-	ld de, wNameBuffer
-	push de
-	ld bc, NAME_LENGTH
-	call CopyData
-	pop de
+	ld c, a
+	homecall GetPartyMonDisplayName
 	pop bc
 	pop hl
 	ret

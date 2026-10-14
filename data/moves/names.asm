@@ -215,6 +215,7 @@ MoveNames::
 	li "GLACIALLANCE"
 	li "BITTER BLADE"
 	li "STRUGGLE"
+	assert_list_length NUM_ATTACKS
 
 ; Keep this table in exactly the same move-ID order as MoveNames for name lookup.
 MoveNamesLowercase::

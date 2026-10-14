@@ -800,6 +800,7 @@ wOptionsTextSpeedCursorX:: db
 wOptionsBattleAnimCursorX:: db
 wOptionsBattleStyleCursorX:: db
 wOptionsMoveNameCaseCursorX:: db ; cursor X position for UPPER/lower move names
+wOptionsNicknamesCursorX:: db ; SHOW=1, HIDE=10 (choice encodings, not screen columns)
 
 NEXTU
 ; tile ID of the badge number being drawn

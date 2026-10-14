@@ -57,3 +57,19 @@ SpriteFacingAndAnimationTable:
 	db 0, 0, OAM_XFLIP ; top right
 	db 8, 8, OAM_XFLIP | UNDER_GRASS ; bottom left
 	db 8, 0, OAM_XFLIP | UNDER_GRASS | FACING_END ; bottom right
+
+; SPRITE_ONIX: 4x4 tiles, row-major, loaded at vSprites tile $70.
+; Tile ids are relative to the base computed for ONIX_VRAM_SLOT ($90).
+OnixTileIDs:
+FOR i, 16
+	db LOW($70 - $90 + i)
+ENDR
+
+OnixOAM:
+FOR i, 16
+	IF i == 15
+		db (i / 4) * 8, (i % 4) * 8, FACING_END
+	ELSE
+		db (i / 4) * 8, (i % 4) * 8, 0
+	ENDC
+ENDR
