@@ -161,6 +161,8 @@ MonPartyData:
 	nybble ICON_MON       ; Riolu
 	nybble ICON_MON       ; Lucario
 	nybble ICON_MON       ; Gallade
+	nybble ICON_MON       ; Tyrunt
+	nybble ICON_MON       ; Tyrantrum
 	nybble ICON_QUADRUPED ; Zorua
 	nybble ICON_MON       ; Zoroark
 	nybble ICON_MON       ; Charcadet

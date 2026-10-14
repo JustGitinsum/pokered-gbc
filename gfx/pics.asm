@@ -149,6 +149,10 @@ RioluPicFront::     INCBIN "gfx/pokemon/gsfront/riolu.pic"
 RioluPicBack::      INCBIN "gfx/pokemon/gsback/riolub.pic"
 LucarioPicFront::   INCBIN "gfx/pokemon/gsfront/lucario.pic"
 LucarioPicBack::    INCBIN "gfx/pokemon/gsback/lucariob.pic"
+TyruntPicFront::     INCBIN "gfx/pokemon/gsfront/tyrunt.pic"
+TyruntPicBack::      INCBIN "gfx/pokemon/gsback/tyruntb.pic"
+TyrantrumPicFront::  INCBIN "gfx/pokemon/gsfront/tyrantrum.pic"
+TyrantrumPicBack::   INCBIN "gfx/pokemon/gsback/tyrantrumb.pic"
 
 
 SECTION "Pics 4", ROMX

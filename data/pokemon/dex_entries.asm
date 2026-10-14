@@ -85,8 +85,8 @@ PokedexEntryPointers:
 	dw NinetalesDexEntry
 	dw PikachuDexEntry
 	dw RaichuDexEntry
-	dw MissingNoDexEntry
-	dw MissingNoDexEntry
+	dw TyruntDexEntry
+	dw TyrantrumDexEntry
 	dw DratiniDexEntry
 	dw DragonairDexEntry
 	dw KabutoDexEntry
@@ -720,6 +720,20 @@ RaichuDexEntry:
 	db 2,7
 	dw 660
 	;text_far _RaichuDexEntry
+	text_end
+
+TyruntDexEntry:
+	db "ROYAL HEIR@"
+	db 2,07
+	dw 573
+	;text_far _TyruntDexEntry
+	text_end
+
+TyrantrumDexEntry:
+	db "DESPOT@"
+	db 8,02
+	dw 5952
+	;text_far _TyrantrumDexEntry
 	text_end
 
 DratiniDexEntry:

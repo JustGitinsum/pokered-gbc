@@ -19,8 +19,8 @@ DebugNewGameParty: ; unreferenced except in _DEBUG
 	; From https://web.archive.org/web/20000607152840/http://pocket.ign.com/news/14973.html
 	db EXEGGUTOR, 90
 	db MEW, 10
-	db ZAPDOS, 56
-	db MOLTRES, 56
+	db TYRANTRUM, 56
+	db TYRUNT, 56
 	db ARTICUNO, 90
 	db PIKACHU, 5
 	db -1 ; end

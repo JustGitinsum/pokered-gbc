@@ -165,6 +165,8 @@
 	const DEX_RIOLU			   ; $A2
 	const DEX_LUCARIO
 	const DEX_GALLADE               ; $A2
+	const DEX_TYRUNT
+	const DEX_TYRANTRUM
 	const DEX_ZORUA       ; 156
 	const DEX_ZOROARK     ; 157
 	const DEX_CHARCADET

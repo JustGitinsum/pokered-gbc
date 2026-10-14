@@ -243,6 +243,8 @@ IF GEN_2_GRAPHICS
 	; const PAL_RIOLU			   ; $A2
 	; const PAL_LUCARIO
 	; const PAL_GALLADE               ; $A2
+	; const PAL_TYRUNT
+	; const PAL_TYRANTRUM
 	; const PAL_ZORUA
 	const PAL_ZOROARK
 	; const PAL_CHARCADET

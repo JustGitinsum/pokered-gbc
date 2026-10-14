@@ -97,8 +97,8 @@ EvosMovesPointerTable:
 	dw NinetalesEvosMoves
 	dw PikachuEvosMoves
 	dw RaichuEvosMoves
-	dw MissingNo56EvosMoves
-	dw MissingNo57EvosMoves
+	dw TyruntEvosMoves
+	dw TyrantrumEvosMoves
 	dw DratiniEvosMoves
 	dw DragonairEvosMoves
 	dw KabutoEvosMoves
@@ -1341,16 +1341,37 @@ RaichuEvosMoves:
 	db EVOLUTION_MOVE, THUNDERPUNCH
 	db 0
 
-MissingNo56EvosMoves:
+TyruntEvosMoves:
 ; Evolutions
+	db EVOLVE_LEVEL, 39, TYRANTRUM
 	db 0
-; Learnset
+; Learnset ZA/SV
+	db 4, ROAR
+	db 8, ROCK_TOMB
+	db 12, SHARPEN
+	db 16, BITE
+	db 24, STOMP
+	db 28, ROCK_SLIDE
+	db 32, CRUNCH
+	db 36, DRAGON_CLAW
+	db 44, EARTHQUAKE
 	db 0
 
-MissingNo57EvosMoves:
+TyrantrumEvosMoves:
 ; Evolutions
 	db 0
-; Learnset
+; Learnset ZA/SV
+	db 4, ROAR
+	db 8, ROCK_TOMB
+	db 12, SHARPEN
+	db 16, BITE
+	db 24, STOMP
+	db 28, ROCK_SLIDE
+	db 32, CRUNCH
+	db 36, DRAGON_CLAW
+	db 44, EARTHQUAKE
+	db 52, OUTRAGE
+	db 58, IRON_HEAD
 	db 0
 
 DratiniEvosMoves:

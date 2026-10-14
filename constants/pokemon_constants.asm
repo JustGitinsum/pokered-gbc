@@ -92,8 +92,8 @@
 	const NINETALES          ; $53
 	const PIKACHU            ; $54
 	const RAICHU             ; $55
-	const_skip               ; $56
-	const_skip               ; $57
+	const TYRUNT             ; $56
+	const TYRANTRUM          ; $57
 	const DRATINI            ; $58
 	const DRAGONAIR          ; $59
 	const KABUTO             ; $5A
