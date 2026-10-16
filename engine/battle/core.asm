@@ -2079,6 +2079,7 @@ DisplayBattleMenu::
 .menuselected
 	ld [wTextBoxID], a
 	call DisplayTextBoxID
+	call DrawBattleMenuBall
  ; handle menu input if it's not the old man tutorial
 	ld a, [wBattleType]
 	ASSERT BATTLE_TYPE_OLD_MAN == 1
@@ -2152,8 +2153,15 @@ DisplayBattleMenu::
 	inc hl
 	ld a, $1
 	ld [hli], a ; wMaxMenuItem
-	ld [hl], PAD_RIGHT | PAD_A ; wMenuWatchedKeys
-	call HandleMenuInput
+	ld a, PAD_RIGHT | PAD_A
+	call WatchBattleMenuBallKey
+	ld [wMenuWatchedKeys], a
+	farcall HandleBattleMenuInput
+	ldh a, [hJoy5]
+	bit B_PAD_SELECT, a
+	jp nz, .selectQuickBall
+	bit B_PAD_LEFT, a
+	jp nz, .cycleQuickBallFromItems
 	bit B_PAD_RIGHT, a
 	jr nz, .rightColumn
 	jr .AButtonPressed ; the A button was pressed
@@ -2186,14 +2194,19 @@ DisplayBattleMenu::
 	ld a, $1
 	ld [hli], a ; wMaxMenuItem
 	ld a, PAD_LEFT | PAD_A
-	ld [hli], a ; wMenuWatchedKeys
-	call HandleMenuInput
+	call WatchBattleMenuBallKey
+	ld [wMenuWatchedKeys], a
+	farcall HandleBattleMenuInput
+	ldh a, [hJoy5]
+	bit B_PAD_SELECT, a
+	jr nz, .selectQuickBallRightColumn
 	bit B_PAD_LEFT, a
-	jr nz, .leftColumn ; if left was pressed, jump
+	jp nz, .leftColumn ; if left was pressed, jump
 	ld a, [wCurrentMenuItem]
 	add $2 ; if we're in the right column, the actual id is +2
 	ld [wCurrentMenuItem], a
 .AButtonPressed
+	call ClearBattleMenuBall
 	call PlaceUnfilledArrowMenuCursor
 	ld a, [wBattleType]
 	cp BATTLE_TYPE_SAFARI
@@ -2247,12 +2260,160 @@ DisplayBattleMenu::
 	call SaveScreenTilesToBuffer2
 	ld a, [wBattleType]
 	cp BATTLE_TYPE_SAFARI
-	jr nz, BagWasSelected
+	jp nz, BagWasSelected
 
 ; bait was selected
 	ld a, SAFARI_BAIT
 	ld [wCurItem], a
-	jr UseBagItem
+	jp UseBagItem
+
+.selectQuickBallRightColumn
+	ld a, [wCurrentMenuItem]
+	add 2
+	ld [wCurrentMenuItem], a
+.selectQuickBall
+	ld a, [wCurrentMenuItem]
+	ld [wBattleAndStartSavedMenuItem], a
+	call FindBattleMenuBall
+	jp nc, DisplayBattleMenu
+	ld [wCurItem], a
+	ld a, c
+	ld [wWhichPokemon], a
+	call ClearBattleMenuBall
+	jp UseBattleMenuBall
+
+.cycleQuickBallFromItems
+	; ITEM is the bottom entry of the left column, not the right-column PKMN.
+	ld a, [wCurrentMenuItem]
+	cp 1
+	jp nz, .leftColumn
+	ld [wBattleAndStartSavedMenuItem], a
+	call FindBattleMenuBall
+	jp nc, .leftColumn
+	ld e, c
+	farcall CycleBattleMenuBall
+	ld a, [wBattleMenuBall]
+	call UpdateBattleMenuBall
+	jp .handleBattleMenuInput
+
+; Carry: selected ball, or first available fallback. A: item, C: slot, HL: quantity.
+FindBattleMenuBall:
+	ld a, [wBattleType]
+	and a
+	ret nz
+	ld a, [wIsInBattle]
+	cp 1
+	jr nz, .notFound
+	ld a, [wLinkState]
+	cp LINK_STATE_BATTLING
+	jr z, .notFound
+.scan
+	ld a, [wNumBagItems]
+	ld b, a
+	ld c, 0
+	ld hl, wBagItems
+.loop
+	ld a, b
+	and a
+	jr z, .fallback
+	ld a, [hli]
+	cp MASTER_BALL
+	jr c, .next
+	cp POKE_BALL + 1
+	jr nc, .next
+	ld d, a
+	ld a, [hl]
+	and a
+	jr z, .next
+	ld a, [wBattleMenuBall]
+	and a
+	jr z, .found
+	cp d
+	jr nz, .next
+.found
+	ld a, d
+	ld [wBattleMenuBall], a
+	scf
+	ret
+.next
+	inc hl
+	inc c
+	dec b
+	jr .loop
+.fallback
+	; The remembered type was depleted or removed; retry in bag order.
+	ld a, [wBattleMenuBall]
+	and a
+	ret z
+	xor a
+	ld [wBattleMenuBall], a
+	jr .scan
+.notFound
+	and a
+	ret
+
+WatchBattleMenuBallKey:
+	push af
+	call FindBattleMenuBall
+	pop bc
+	ld a, b
+	ret nc
+	or PAD_SELECT | PAD_LEFT
+	ret
+
+DrawBattleMenuBall:
+	call FindBattleMenuBall
+	ret nc
+	push hl
+	push af
+	; Borrow font tiles $d5-$da until ClearBattleMenuBall restores them.
+	ld de, BattleMenuBallGraphics
+	ld hl, vChars1 tile $55
+	lb bc, BANK(BattleMenuBallGraphics), 6
+	call CopyVideoData
+	pop af
+	pop hl
+UpdateBattleMenuBall:
+	; Cycling reuses the loaded tiles; only the palette and tilemap change.
+	push hl
+	push af
+	ld e, a
+	farcall SetBattleMenuBallPalette
+	pop af
+	; Item IDs run in the reverse order of the four ball graphics.
+	cpl
+	add POKE_BALL + 1 + $d5
+	ldcoord_a 4, 16
+	ld a, "×"
+	ldcoord_a 5, 16
+	hlcoord 1, 16
+	ld de, .selectText
+	call PlaceString
+	pop de
+	hlcoord 6, 16
+	lb bc, 1 | LEADING_ZEROES, 2
+	jp PrintNumber
+.selectText
+	db $d9, $da, "@"
+
+ClearBattleMenuBall:
+	ld a, [wBattleType]
+	and a
+	ret nz
+	hlcoord 1, 16
+	ld a, [hl]
+	cp $d9 ; first SELECT tile; absent when the shortcut was not drawn
+	ret nz
+	hlcoord 1, 13
+	lb bc, 4, 7
+	call ClearScreenArea
+	; Let the blank panel reach VRAM before replacing its visible graphics.
+	call Delay3
+	farcall ClearBattleMenuBallPalette
+	ld de, FontGraphics + $55 * 8
+	ld hl, vChars1 tile $55
+	lb bc, BANK(FontGraphics), 6
+	jp CopyVideoDataDouble
 
 BagWasSelected:
 	call LoadScreenTilesFromBuffer1
@@ -2312,7 +2473,15 @@ DisplayBagMenu:
 	;;;;;;;;;;
 	jp c, DisplayBattleMenu ; go back to battle menu if an item was not selected
 
+UseBattleMenuBall:
+	ld a, 1
+	jr UseBattleItem
+
 UseBagItem:
+	xor a
+UseBattleItem:
+	; Keep the failure destination on the stack while the item effect runs.
+	push af
 	; either use an item from the bag or use a safari zone item
 	ld a, [wCurItem]
 	ld [wNamedObjectIndex], a
@@ -2325,13 +2494,18 @@ UseBagItem:
 	call ClearSprites
 	xor a
 	ld [wCurrentMenuItem], a
+	pop bc
 	ld a, [wBattleType]
 	cp BATTLE_TYPE_SAFARI
 	jr z, .checkIfMonCaptured
 
 	ld a, [wActionResultOrTookBattleTurn]
 	and a ; was the item used successfully?
-	jp z, BagWasSelected ; if not, go back to the bag menu
+	jr nz, .itemUsed
+	bit 0, b
+	jp nz, DisplayBattleMenu
+	jp BagWasSelected
+.itemUsed
 
 	ld a, [wPlayerBattleStatus1]
 	bit USING_TRAPPING_MOVE, a ; is the player using a multi-turn move like wrap?

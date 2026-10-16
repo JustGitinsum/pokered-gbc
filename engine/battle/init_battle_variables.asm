@@ -5,6 +5,7 @@ InitBattleVariables:
 	ld [wWasTrainerBattle], a
 	ld [wActionResultOrTookBattleTurn], a
 	ld [wBattleResult], a
+	ld [wBattleMenuBall], a
 	ld hl, wPartyAndBillsPCSavedMenuItem
 	ld [hli], a
 	ld [hli], a

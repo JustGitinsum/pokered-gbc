@@ -232,6 +232,13 @@ SECTION "Battle Core", ROMX
 INCLUDE "engine/battle/core.asm"
 ;INCLUDE "engine/battle/effects.asm"
 
+SECTION "Battle Menu Ball Graphics", ROMX
+
+BattleMenuBallGraphics:
+	INCBIN "gfx/battle/battleballs.2bpp"
+BattleMenuBallGraphicsEnd:
+	ASSERT BattleMenuBallGraphicsEnd - BattleMenuBallGraphics == 6 tiles
+
 
 SECTION "bank10", ROMX
 

@@ -77,6 +77,143 @@ SetPal_Battle:
 .doneDelay
 	ret
 
+; Quick-ball helpers share this bank because Battle Core is nearly full.
+HandleBattleMenuInput:
+	; Observe vertical cursor changes without treating them as menu selections.
+	ld a, [wMenuWatchedKeys]
+	push af
+	or PAD_UP | PAD_DOWN
+	ld [wMenuWatchedKeys], a
+.loop
+	call UpdateBattleMenuBallHint
+	call HandleMenuInput
+	pop bc
+	push bc
+	ldh a, [hJoy5]
+	and b
+	jr z, .loop
+	pop af
+	ld [wMenuWatchedKeys], a
+	ret
+
+UpdateBattleMenuBallHint:
+	; The blank between SELECT and the ball is reserved for the cycling hint.
+	hlcoord 1, 16
+	ld a, [hl]
+	cp $d9
+	ret nz
+	ld a, " "
+	ldcoord_a 3, 16
+	ld a, [wTopMenuItemX]
+	cp 9
+	ret nz
+	ld a, [wCurrentMenuItem]
+	cp 1
+	ret nz
+	ld a, [wNumBagItems]
+	ld b, a
+	ld d, 0
+	ld hl, wBagItems
+.loop
+	ld a, b
+	and a
+	ret z
+	ld a, [hli]
+	cp MASTER_BALL
+	jr c, .next
+	cp POKE_BALL + 1
+	jr nc, .next
+	ld e, a
+	ld a, [hl]
+	and a
+	jr z, .next
+	ld a, d
+	and a
+	jr z, .firstBall
+	cp e
+	jr nz, .showHint
+.firstBall
+	ld d, e
+.next
+	inc hl
+	dec b
+	jr .loop
+.showHint
+	ld a, "◀"
+	ldcoord_a 3, 16
+	ret
+
+; E = current bag slot. A ball is guaranteed, so wrapping always terminates.
+; Returns HL pointing to the new quantity, ready for UpdateBattleMenuBall.
+CycleBattleMenuBall:
+	ld a, [wNumBagItems]
+	ld b, a
+	ld c, e
+.next
+	inc c
+	ld a, c
+	cp b
+	jr c, .slot
+	ld c, 0
+.slot
+	ld hl, wBagItems
+	ld a, c
+	add a
+	ld e, a
+	ld d, 0
+	add hl, de
+	ld a, [hli]
+	cp MASTER_BALL
+	jr c, .next
+	cp POKE_BALL + 1
+	jr nc, .next
+	ld d, a
+	ld a, [hl]
+	and a
+	jr z, .next
+	ld a, d
+	ld [wBattleMenuBall], a
+	ret
+
+; E = ball item ID. Slot 7 is unused by battle HUDs and picture accents.
+SetBattleMenuBallPalette:
+	ld a, e
+	dec a
+	ld e, a
+	ld d, 0
+	ld hl, .palettes
+	add hl, de
+	ld d, [hl]
+	ld e, 7
+	farcall LoadSGBPalette
+	ldh a, [rWBK]
+	ld b, a
+	ld a, 2
+	ldh [rWBK], a
+	push bc
+	ld a, 1
+	ld [W2_ForceBGPUpdate], a
+	ld a, 7
+	jr UpdateBattleMenuBallPalette
+.palettes
+	; Item ID order: Master, Ultra, Great, Poke Ball.
+	db PAL_MUK, PAL_TENTACOOL, PAL_TENTACRUEL, PAL_FLAREON
+
+ClearBattleMenuBallPalette:
+	ldh a, [rWBK]
+	ld b, a
+	ld a, 2
+	ldh [rWBK], a
+	push bc
+	xor a
+UpdateBattleMenuBallPalette:
+	ld [W2_TilesetPaletteMap + 16 * SCREEN_WIDTH + 4], a
+	ld a, 3
+	ld [W2_StaticPaletteMapChanged], a
+	pop af
+	ldh [rWBK], a
+	ret
+
 SetPal_Battle_Common:
 	ld a, [wPlayerBattleStatus3]
 	bit TRANSFORMED, a

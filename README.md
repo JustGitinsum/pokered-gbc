@@ -8,6 +8,22 @@ nicknames are preserved and reappear when the option is switched back to **SHOW*
 **HIDE** also skips nickname prompts for newly received or caught Pokemon, using
 their species names instead. The Name Rater remains available for renaming.
 
+In ordinary wild battles, **SELECT** on the **FIGHT / ITEM / PKMN / RUN** menu
+throws the first Poke Ball, Great Ball, Ultra Ball, or Master Ball in Items-pocket
+order. **LEFT** while **ITEM** is highlighted cycles through available balls in
+that order, wrapping around. Cycling is disabled on all other menu entries.
+A left arrow beside the ball appears while ITEM is highlighted if at least two
+different ball types are available.
+The choice is remembered for the rest of the battle, including submenu returns;
+if that ball runs out, the first available ball is selected instead.
+The lower-left panel shows a SELECT graphic beside the ball's icon and
+two-digit quantity (preceded by **×**). It stays blank when no balls are available
+and disappears while using a submenu. Trainer battles, link battles, Safari battles,
+and the old man's tutorial do not have this shortcut. Normal capture restrictions
+still apply.
+Each ball icon has its own palette; the SELECT graphic and quantity retain their
+usual colors.
+
 Original README follows...
 
 # Pokémon Red and Blue [![Build Status][ci-badge]][ci]
