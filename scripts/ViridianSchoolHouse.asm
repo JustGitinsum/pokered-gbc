@@ -12,7 +12,7 @@ ViridianSchoolHouseBrunetteGirlText:
 
 ViridianSchoolHouseSwiftTutor:
 	text_asm
-	ld a, 1
+	ld a, TUTOR_SWIFT
 	ld [wWhichTrade], a
 	farcall MoveTutorScript
 	jp TextScriptEnd

@@ -138,7 +138,7 @@ FightingDojoKarateMasterText:
 	call PrintText
 	jr .end
 .master_tutor
-	ld a, 5
+	ld a, TUTOR_ZEN_HEADBUTT
 	ld [wWhichTrade], a
 	farcall MoveTutorScript
 .end

@@ -1385,6 +1385,11 @@ _PartyMenuUseTMText::
 	line "#MON?"
 	done
 
+_PartyMenuMoveTutorText::
+	text "Teach which"
+	line "#MON?"
+	done
+
 _PartyMenuSwapMonText::
 	text "Move #MON"
 	line "where?"

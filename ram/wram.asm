@@ -1711,7 +1711,11 @@ wSavedSpriteScreenX:: db
 wSavedSpriteMapY:: db
 wSavedSpriteMapX:: db
 
-	ds 3 ; unused 3 bytes
+	; map where a move tutor intro was last shown, or -1 if none since entering the current map
+	; (assumes at most one move tutor per map)
+wMoveTutorIntroMap:: db
+
+	ds 2 ; unused 2 bytes
 
 ;;; PureRGBnote: ADDED: new properties in this previously empty space
 wTownMapAreaState:: ; view which state is which in map_pokemon_areas.asm

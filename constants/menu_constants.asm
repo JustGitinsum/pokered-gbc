@@ -77,6 +77,7 @@ DEF CHOSE_SECOND_ITEM EQU 2
 	const TMHM_PARTY_MENU      ; $03
 	const SWAP_MONS_PARTY_MENU ; $04
 	const EVO_STONE_PARTY_MENU ; $05
+	const MOVE_TUTOR_PARTY_MENU ; $06
 ; party menu message IDs
 ; PartyMenuItemUseMessagePointers indexes (see engine/menus/party_menu.asm)
 	const_next $F0

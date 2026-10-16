@@ -62,7 +62,7 @@ RedrawPartyMenu_::
 	jr z, .teachMoveMenu
 	cp EVO_STONE_PARTY_MENU
 	jr z, .evolutionStoneMenu
-	cp a,$06
+	cp MOVE_TUTOR_PARTY_MENU
 	jr z, .moveTutorMenu
 	push hl
 	ld bc, 14 ; 14 columns to the right
@@ -84,8 +84,13 @@ RedrawPartyMenu_::
 	pop hl
 	jr .printLevel
 .moveTutorMenu
+	push hl
+	callfar CanLearnTutorMove
+	pop hl
 	ld de, .ableToLearnMoveText
-	jp .placeMoveLearnabilityString	
+	jr c, .placeMoveLearnabilityString
+	ld de, .notAbleToLearnMoveText
+	jr .placeMoveLearnabilityString
 .teachMoveMenu
 	push hl
 	predef CanLearnTM ; check if the pokemon can learn the move
@@ -242,6 +247,7 @@ PartyMenuMessagePointers:
 	dw PartyMenuUseTMText
 	dw PartyMenuSwapMonText
 	dw PartyMenuItemUseText
+	dw PartyMenuMoveTutorText
 
 PartyMenuNormalText:
 	text_far _PartyMenuNormalText
@@ -257,6 +263,10 @@ PartyMenuBattleText:
 
 PartyMenuUseTMText:
 	text_far _PartyMenuUseTMText
+	text_end
+
+PartyMenuMoveTutorText:
+	text_far _PartyMenuMoveTutorText
 	text_end
 
 PartyMenuSwapMonText:

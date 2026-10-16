@@ -234,7 +234,7 @@ VermilionCityGambler2Text:
 	; text_far _VermilionCityGambler2Text
 	; text_end
 	text_asm
-	ld a, 3
+	ld a, TUTOR_BRICK_BREAK
 	ld [wWhichTrade], a
 	farcall MoveTutorScript
 	jp TextScriptEnd

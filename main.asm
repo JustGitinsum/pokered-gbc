@@ -104,7 +104,6 @@ INCLUDE "engine/items/tms.asm"
 ; INCLUDE "engine/battle/move_effects/recoil.asm" ; moved to battle engine 9 
 ; INCLUDE "engine/battle/move_effects/conversion.asm"
 INCLUDE "engine/battle/move_effects/haze.asm"
-INCLUDE "engine/battle/get_trainer_name.asm"
 INCLUDE "engine/math/random.asm"
 INCLUDE "engine/pokemon/read_tm_learnsets.asm"
 
@@ -124,6 +123,12 @@ SECTION "Battle Engine 2", ROMX
 INCLUDE "engine/gfx/load_pokedex_tiles.asm"
 INCLUDE "engine/overworld/emotion_bubbles.asm"
 INCLUDE "engine/events/evolve_trade.asm"
+
+SECTION "Get Trainer Name", ROMX ; moved out of Battle Engine 1 to make room for move tutor party menu code
+INCLUDE "engine/battle/get_trainer_name.asm"
+
+SECTION "Move Tutor", ROMX ; only reached via farcall/callfar
+INCLUDE "engine/events/move_tutor.asm"
 
 SECTION "PC Menu", ROMX ;Moved pc.asm to this section because Battle Engine 2 got too big
 INCLUDE "engine/menus/pc.asm"

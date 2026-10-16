@@ -1,4 +1,5 @@
 MarkTownVisitedAndLoadMissableObjects::
+	callfar ResetMoveTutorIntrosOnMapChange
 	ld a, [wCurMap]
 	cp FIRST_ROUTE_MAP
 	jr nc, .notInTown

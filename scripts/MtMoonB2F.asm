@@ -640,7 +640,7 @@ MtMoonB2FRocket4AfterBattleText:
 	; text_far _MtMoonB2FRocket4AfterBattleText
 	; text_end
 	text_asm
-	ld a, 2
+	ld a, TUTOR_THIEF
 	ld [wWhichTrade], a
 	farcall MoveTutorScript
 	jp TextScriptEnd

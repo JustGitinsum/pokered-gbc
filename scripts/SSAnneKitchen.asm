@@ -32,7 +32,7 @@ SSAnneKitchenCook5Text:
 	; text_far _SSAnneKitchenCook5Text
 	; text_end
 	text_asm
-	ld a, 7
+	ld a, TUTOR_BELCH
 	ld [wWhichTrade], a
 	farcall MoveTutorScript
 	jp TextScriptEnd

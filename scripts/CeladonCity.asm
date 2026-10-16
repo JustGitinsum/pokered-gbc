@@ -43,7 +43,7 @@ CeladonCityGramps2Text:
 
 CeladonCityGramps3Text:
 	text_asm
-	ld a, 10
+	ld a, TUTOR_SUBSTITUTE
 	ld [wWhichTrade], a
 	farcall MoveTutorScript
 	jp TextScriptEnd

@@ -233,7 +233,7 @@ ViridianCityOldManSleepyText:
 
 ViridianCityFisherText:
 	text_asm
-	ld a, 11
+	ld a, TUTOR_HYPER_VOICE
 	ld [wWhichTrade], a
 	farcall MoveTutorScript
 	jp TextScriptEnd
