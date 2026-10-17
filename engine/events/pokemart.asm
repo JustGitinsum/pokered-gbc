@@ -22,13 +22,6 @@ DisplayPokemartDialogue_::
 	ld [wTextBoxID], a
 	call DisplayTextBoxID
 
-; This code is useless. It copies the address of the pokemart's inventory to hl,
-; but the address is never used.
-	ld hl, wItemListPointer
-	ld a, [hli]
-	ld l, [hl]
-	ld h, a
-
 	ld a, [wMenuExitMethod]
 	cp CANCELLED_MENU
 	jp z, .done
@@ -40,10 +33,6 @@ DisplayPokemartDialogue_::
 	dec a ; quitting?
 	jp z, .done
 .sellMenu
-
-; the same variables are set again below, so this code has no effect
-	;xor a
-	;ld [wPrintItemPrices], a
 	ld a, INIT_BAG_ITEM_LIST
 	ld [wInitListType], a
 	callfar InitList
@@ -60,6 +49,7 @@ DisplayPokemartDialogue_::
 	call PrintText
 	call SaveScreenTilesToBuffer1 ; save screen
 .sellMenuLoop
+	farcall RestoreItemMenuPalettes
 	call LoadScreenTilesFromBuffer1 ; restore saved screen
 	ld a, MONEY_BOX
 	ld [wTextBoxID], a
@@ -92,6 +82,7 @@ DisplayPokemartDialogue_::
 	call DisplayChooseQuantityMenu
 	inc a
 	jr z, .sellMenuLoop ; if the player closed the choose quantity menu with the B button
+	farcall RestoreItemMenuPalettes
 	ld hl, PokemartTellSellPriceText
 	lb bc, 14, 1 ; location that PrintText always prints to, this is useless
 	call PrintText
@@ -102,13 +93,7 @@ DisplayPokemartDialogue_::
 	call DisplayTextBoxID ; yes/no menu
 	ld a, [wMenuExitMethod]
 	cp CHOSE_SECOND_ITEM
-	jr z, .sellMenuLoop ; if the player chose No or pressed the B button
-
-; The following code is supposed to check if the player chose No, but the above
-; check already catches it.
-	ld a, [wChosenMenuItem]
-	dec a
-	jr z, .sellMenuLoop
+	jp z, .sellMenuLoop ; if the player chose No or pressed the B button
 
 .sellItem
 	ld a, [wBoughtOrSoldItemInMart]
@@ -132,10 +117,6 @@ DisplayPokemartDialogue_::
 	call SaveScreenTilesToBuffer1
 	jp .returnToMainPokemartMenu
 .buyMenu
-
-; the same variables are set again below, so this code has no effect
-	ld a, 1
-	ld [wPrintItemPrices], a
 	ld a, INIT_OTHER_ITEM_LIST
 	ld [wInitListType], a
 	callfar InitList
@@ -145,8 +126,14 @@ DisplayPokemartDialogue_::
 	call SaveScreenTilesToBuffer1
 	xor a
 	ld [wCurrentMenuItem], a
+	ld [wUpdateSpritesEnabled], a
 .buyMenuLoop
-	call LoadScreenTilesFromBuffer1
+	call HideSprites
+	xor a
+	ldh [hAutoBGTransferEnabled], a
+	hlcoord 0, 0
+	lb bc, SCREEN_HEIGHT, SCREEN_WIDTH
+	call ClearScreenArea
 	ld a, MONEY_BOX
 	ld [wTextBoxID], a
 	call DisplayTextBoxID
@@ -155,14 +142,13 @@ DisplayPokemartDialogue_::
 	ld [wListPointer], a
 	ld a, h
 	ld [wListPointer + 1], a
-	xor a
-	inc a
+	ld a, 1
 	ld [wPrintItemPrices], a
-	inc a ; a = 2 (PRICEDITEMLISTMENU)
+	ld a, PRICEDITEMLISTMENU
 	ld [wListMenuID], a
 	call DisplayListMenuID
-	jr c, .returnToMainPokemartMenu ; if the player closed the menu
-	farcall DisplayItemDescription
+	jp c, .returnToMainPokemartMenu ; if the player closed the menu
+	; The live cursor preview remains visible underneath the quantity menu.
 	ld a, 99
 	ld [wMaxItemQuantity], a
 	xor a
@@ -170,6 +156,8 @@ DisplayPokemartDialogue_::
 	call DisplayChooseQuantityMenu
 	inc a
 	jr z, .buyMenuLoop ; if the player closed the choose quantity menu with the B button
+	farcall RestoreItemMenuPalettes
+	farcall DrawBuyItemIcon
 	ld a, [wCurItem]
 	ld [wNamedObjectIndex], a
 	call GetItemName
@@ -184,12 +172,6 @@ DisplayPokemartDialogue_::
 	ld a, [wMenuExitMethod]
 	cp CHOSE_SECOND_ITEM
 	jp z, .buyMenuLoop ; if the player chose No or pressed the B button
-
-; The following code is supposed to check if the player chose No, but the above
-; check already catches it.
-	; ld a, [wChosenMenuItem]
-	; dec a
-	; jr z, .buyMenuLoop
 
 .buyItem
 	call .isThereEnoughMoney
@@ -212,7 +194,13 @@ DisplayPokemartDialogue_::
 	call PrintText
 	jp .buyMenuLoop
 .returnToMainPokemartMenu
+	; Remove the Buy tiles before reusing their graphics and palette slots.
 	call LoadScreenTilesFromBuffer1
+	call Delay3
+	farcall RestoreItemMenuPalettes
+	call LoadTextBoxTilePatterns
+	ld a, 1
+	ld [wUpdateSpritesEnabled], a
 	ld a, MONEY_BOX
 	ld [wTextBoxID], a
 	call DisplayTextBoxID
@@ -233,6 +221,7 @@ DisplayPokemartDialogue_::
 	call PrintText
 	jr .returnToMainPokemartMenu
 .done
+	farcall RestoreItemMenuPalettes
 	ld hl, PokemartThankYouText
 	call PrintText
 	ld a, 1

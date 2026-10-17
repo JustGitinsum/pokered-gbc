@@ -412,6 +412,9 @@ StartMenu_Item::  ; marcelnote - BICYCLE does not have special handling anymore
 	ld [hl], a ; old menu item id
 	call HandleMenuInput
 	call PlaceUnfilledArrowMenuCursor
+	push af
+	farcall RestoreItemMenuPalettes
+	pop af
 	bit B_PAD_B, a
 	jp nz, ItemMenuLoop
 ; if the player made the choice to use or toss the item

@@ -7,17 +7,26 @@ _DisplayChooseQuantityMenu::
 	ld a, [wListMenuID]
 	cp PRICEDITEMLISTMENU
 	jr nz, .drawTextBox
-    ; text box dimensions/coordinates for quantity and price
+	; Sell keeps its owned-count row; Buy already has the live Bag box.
 	hlcoord 7, 7
 	lb bc, 3, 11 ; height, width
+	ldh a, [hHalveItemPrices]
+	and a
+	jr nz, .drawTextBox
+	hlcoord 7, 9
+	lb bc, 1, 11
 .drawTextBox
 	call TextBoxBorder
 	hlcoord 16, 10 ; coordinates TOSS item quantity text
 	ld a, [wListMenuID]
 	cp PRICEDITEMLISTMENU
 	jr nz, .printInitialQuantity
-	call PrintHowManyOfThisItemAreOwned ; How many of this item are owned
-	hlcoord 8, 10 ; coordinates SELL item quantity text
+	ldh a, [hHalveItemPrices]
+	and a
+	jr z, .shopQuantity
+	call PrintHowManyOfThisItemAreOwned
+.shopQuantity
+	hlcoord 8, 10 ; shop quantity text
 .printInitialQuantity
 	ld de, InitialQuantityText
 	call PlaceString
@@ -154,39 +163,144 @@ _DisplayChooseQuantityMenu::
 	ret
 
 PrintHowManyOfThisItemAreOwned::
-	; hlcoord 8, 7
-	; lb bc, 1, 10  ; height and width
-	; call TextBoxBorder
-; print "Owned" text
 	hlcoord 12, 8
 	ld de, OwnedText
 	call PlaceString
-; determins how many we have and print accordingly
-	hlcoord 17, 8
-	ld de, zeroText
-	call PlaceString
 	ld a, [wCurItem]
+	call GetOwnedItemQuantity
+	ld [wTempByteValue], a
+	hlcoord 17, 8
+	ld de, wTempByteValue
+	lb bc, 1, 2 ; 1 byte, 2 digits
+	jp PrintNumber
+
+OwnedText:
+	db "Bag ×@"
+
+; a = item ID; returns the owned count in a, capped to the two-digit display.
+GetOwnedItemQuantity:
 	ld b, a
 	predef GetQuantityOfItemInBag
 	ld a, b
-	cp 99
-	jr nc, .bigNumber
-; 0-98 of the item
-	ld [wArrayForTemporaryStorage], a
-	hlcoord 17, 8
-	ld de, wArrayForTemporaryStorage ; current quantity
-	lb bc, 1, 2 ; 1 byte, 2 digits
-	jp PrintNumber
-.bigNumber
-	hlcoord 17, 8
-	ld de, ManyItemsText
+	cp 100
+	ret c
+	ld a, 99
+	ret
+
+UpdateBuyMenuCursorInfo:
+	hlcoord 0, 0
+	lb bc, 1, 8
+	call TextBoxBorder
+	hlcoord 1, 1
+	ld de, OwnedText
+	call PlaceString
+	ld a, [wCurrentMenuItem]
+	ld b, a
+	ld a, [wListScrollOffset]
+	add b
+	ld b, a
+	ld a, [wListCount]
+	cp b
+	jr z, .cancel
+	jr c, .cancel
+	ld a, [wListPointer]
+	ld l, a
+	ld a, [wListPointer + 1]
+	ld h, a
+	inc hl
+	ld c, b
+	ld b, 0
+	add hl, bc
+	ld a, [hl]
+	push af
+	call GetOwnedItemQuantity
+	ld [wTempByteValue], a
+	hlcoord 6, 1
+	ld de, wTempByteValue
+	lb bc, LEADING_ZEROES | 1, 2
+	call PrintNumber
+	pop af
+	ld [wCurItem], a
+	farcall DisplayBuyItemDescription
+	farcall DrawBuyItemIcon
+	ret
+.cancel
+	farcall ClearBuyItemIcon
+	farcall RestoreItemMenuPalettes
+	hlcoord 1, 1
+	lb bc, 1, 8
+	call ClearScreenArea
+	hlcoord 0, 12
+	lb bc, 4, 18
+	call TextBoxBorder
+	hlcoord 1, 14
+	ld de, BuyMenuExitDescription
 	jp PlaceString
 
-OwnedText::
-	db "Bag ×@"
+BuyMenuExitDescription:
+	db "Exit?@"
 
-zeroText::
-	db "0@"
+BlinkListMenuScrollArrow::
+	hlcoord 18, 11
+	ld a, [wListMenuID]
+	cp PRICEDITEMLISTMENU
+	jr nz, .blink
+	ldh a, [hJoy7]
+	and a
+	jr z, .blink
+	inc hl
+.blink
+	jp HandleDownArrowBlinkTiming
 
-ManyItemsText::
-	db "99@"
+DrawListMenuWithBuyInfo::
+	ld a, [wListMenuID]
+	cp PRICEDITEMLISTMENU
+	jr z, .buy
+	farcall RestoreItemMenuPalettes
+	jr .printLists
+.buy
+	; Buy reaches column 19, one tile beyond the shared item-list clear.
+	hlcoord 19, 3
+	lb bc, 9, 1
+	call ClearScreenArea
+	xor a
+	ldh [hDownArrowBlinkCount1], a
+	ld a, 6
+	ldh [hDownArrowBlinkCount2], a
+.printLists
+	callfar PCDrawBothLists
+	ld a, [wListMenuID]
+	cp PRICEDITEMLISTMENU
+	ret nz
+	; Complete the Buy screen before its tilemap is transferred to the display.
+	jp PlaceMenuCursorAndBuyInfo
+
+PlaceMenuCursorAndBuyInfo::
+	call PlaceMenuCursor
+	ldh a, [hJoy7]
+	and a ; quantity/confirmation menus must not change the highlighted item
+	ret z
+	ld a, [wListMenuID]
+	cp PRICEDITEMLISTMENU
+	ret nz
+	; Graphics loaders wait for VBlank; keep partial redraws off the display.
+	push hl
+	ld a, [wCurItem]
+	push af
+	ld a, [wStatusFlags5]
+	push af
+	set BIT_NO_TEXT_DELAY, a
+	ld [wStatusFlags5], a
+	ldh a, [hAutoBGTransferEnabled]
+	push af
+	xor a
+	ldh [hAutoBGTransferEnabled], a
+	call UpdateBuyMenuCursorInfo
+	pop af
+	ldh [hAutoBGTransferEnabled], a
+	pop af
+	ld [wStatusFlags5], a
+	pop af
+	ld [wCurItem], a
+	pop hl
+	ret

@@ -277,24 +277,38 @@ ShowNextMoveData:
 	ld a, b ; buttons to watch while displaying the below text
 	ld [wMenuWatchedKeys], a
 
-	ld hl, MovedexEntryPointers
 	ld a, [wMovedexMoveID]
-	dec a
-	ld e, a
-	ld d, 0
-	add hl, de
-	add hl, de
-	ld a, [hli]
-	ld e, a
-	ld d, [hl] ; de = address of movedex entry
-
-	ld h, d
-	ld l, e
+	call GetMoveDescriptionPointer
 	bccoord 1, 11
 	ld a, %10
 	ldh [hClearLetterPrintingDelayFlags], a
 
 	call TextCommandProcessor ; print movedex description text
+	ret
+
+PrintItemMoveDescription:
+	ldh a, [hUILayoutFlags]
+	push af
+	set BIT_SINGLE_SPACED_LINES, a
+	ldh [hUILayoutFlags], a
+	ld a, [wPlayerMoveNum]
+	call GetMoveDescriptionPointer
+	bccoord 1, 14
+	call TextCommandProcessor
+	pop af
+	ldh [hUILayoutFlags], a
+	ret
+
+GetMoveDescriptionPointer:
+	dec a
+	ld hl, MovedexEntryPointers
+	ld e, a
+	ld d, 0
+	add hl, de
+	add hl, de
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
 	ret
 
 

@@ -5,12 +5,9 @@ DisplayItemDescription::
 	dec a
 	cp a, HM01 - 1
 	jp c, .NonTMHMs
-	; TM/HM move description
-	; move name box
 	hlcoord 0, 12
 	lb bc, 4, 18  ; height, width
 	call TextBoxBorder
-	; Get move name from TM/HM and add it to wStringBuffer
 	ld a, [wCurListMenuItem]
 	sub TM01
 	jr nc, .tm
@@ -28,44 +25,29 @@ DisplayItemDescription::
 	ld de, wPlayerMoveNum
 	ld a, BANK(Moves)
 	call FarCopyData
-	ld a, [wTempTMHM]
-	ld [wNamedObjectIndex], a
-	call GetMoveName
-	call CopyToStringBuffer
-	ld a, ITEM_NAME
-	ld [wNameListType], a
-
-	; Print Move Name
-	hlcoord 2, 14
-	ld de, wStringBuffer
-	call PlaceString
-	; Move stats box
-	hlcoord 14, 12  
-	ld b, 4  
-	ld c, 4 
-	call TextBoxBorder
-	; place Power, Accuracy, and PP iconography
+	ld a, [wPlayerMoveType]
+	ld d, a
+	ld e, $c9
+	farcall LoadTypeIcon4TileAt
 	hlcoord 1, 13
-	ld de, ContainsText3
-	call PlaceString
-	hlcoord 18, 14
+	ld a, $c9
+	REPT 4
+		ld [hli], a
+		inc a
+	ENDR
+	hlcoord 10, 13
 	ld de, SwordText3
 	call PlaceString
-	hlcoord 1, 15
-	ld de, TypeText3
-	call PlaceString
-	hlcoord 18, 15
+	hlcoord 14, 13
 	ld de, PercentText3
 	call PlaceString
-	hlcoord 18, 16
+	hlcoord 18, 13
 	ld de, PPText3
 	call PlaceString
-	; place Power, Accuracy, and PP values	
-	hlcoord 15, 14
+	hlcoord 7, 13
 	ld de, wPlayerMovePower
 	lb bc, 1, 3
 	call PrintNumber ; prints the c-digit, b-byte value at de
-	; Check move catagory
 	farcall DetermineMoveCategory
 	ld a, [wPlayerMoveCategory]
 	cp MOVE_PHYSICAL
@@ -74,26 +56,27 @@ DisplayItemDescription::
     jr z, .specialAttack
 	jr .noPower
 .physicalAttack
-	hlcoord 16, 13
+	hlcoord 5, 13
 	ld de, PhysicalCatText3
 	call PlaceString
-	; farcall LoadPhysicalMoveIcon
+	farcall LoadPhysicalMoveIcon
 	jr .accuracy
 .specialAttack
-	hlcoord 16, 13
+	hlcoord 5, 13
 	ld de, SpecialCatText3
 	call PlaceString
-	; farcall LoadSpecialMoveIcon
+	farcall LoadSpecialMoveIcon
 	jr .accuracy
 .noPower
-	hlcoord 15, 14
+	hlcoord 7, 13
 	ld de, NoPowerText3
 	call PlaceString
-	hlcoord 16, 13
+	hlcoord 5, 13
 	ld de, StatusCatText3
 	call PlaceString
-	; farcall LoadStatusMoveIcon
+	farcall LoadStatusMoveIcon
 .accuracy
+	farcall SetPal_ItemMenu
 	ld a, [wPlayerMoveAccuracy] ; this is a 0-255 value, need to get 0-100
 	ld hl, 0
 	ld b, 0
@@ -104,26 +87,46 @@ DisplayItemDescription::
 	add hl, bc     ; add 255 for rounding correctly
 	ld a, h        ; effectively divides hl by 256
 	ld [wStringBuffer], a
-	hlcoord 15, 15
+	hlcoord 11, 13
 	ld de, wStringBuffer
 	lb bc, 1, 3
 	call PrintNumber
 	; place Max PP value
-	hlcoord 16, 16
+	hlcoord 16, 13
 	ld de, wPlayerMoveMaxPP ; wMaxPP
 	lb bc, 1, 2
 	call PrintNumber
-	; move type
-	hlcoord 2, 16
-	predef PrintMoveType
+	farcall PrintItemMoveDescription
 	ld hl, wStatusFlags5
     res BIT_NO_TEXT_DELAY, [hl]
 	ret
 .NonTMHMs
+	push af
+	farcall RestoreItemMenuPalettes
+	pop af
+	call GetItemDescriptionPointer
+	jp PrintText
+
+DisplayBuyItemDescription::
+	ld a, [wCurListMenuItem]
+	dec a
+	cp HM01 - 1
+	jp nc, DisplayItemDescription
+	push af
+	farcall RestoreItemMenuPalettes
+	pop af
+	call GetItemDescriptionPointer
+	push hl
+	hlcoord 0, 12
+	lb bc, 4, 18
+	call TextBoxBorder
+	pop hl
+	jp PrintText_NoCreatingTextBox
+
+GetItemDescriptionPointer:
 	ld hl, ItemDescriptionPointers
 	ld bc, 5
-	call AddNTimes
-	jp PrintText
+	jp AddNTimes
 
 SwordText3:
 	db "ら@"
@@ -133,10 +136,6 @@ PPText3:
 	db "りる@"
 NoPowerText3:
 	db "---@"
-ContainsText3:
-	db "MOVE:@"
-TypeText3:
-	db "TYPE:@"
 PhysicalCatText3:
 	db "れろ@"
 SpecialCatText3:

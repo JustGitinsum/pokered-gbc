@@ -74,7 +74,15 @@ GetBagItemList::
 	ld hl, wNumBagTMHMs
 	ret
 
-; Input: [wNamedObjectIndex] = TM/HM item ID, de = text position below item name
+PrintItemListTMHMMoveName::
+	ld a, [wListMenuID]
+	cp PRICEDITEMLISTMENU
+	jr z, PrintTMHMMoveName
+	ld a, [wBagPocketsFlags]
+	bit BIT_TM_HM_POCKET, a
+	ret z
+
+; Input: [wNamedObjectIndex] = TM/HM item ID, de = item name position
 PrintTMHMMoveName::
 	ld a, [wNamedObjectIndex]
 	cp TM01

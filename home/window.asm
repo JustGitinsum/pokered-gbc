@@ -14,7 +14,7 @@ HandleMenuInput_::
 .loop1
 	xor a
 	ld [wAnimCounter], a ; counter for pokemon shaking animation
-	call PlaceMenuCursor
+	CALL_INDIRECT PlaceMenuCursorAndBuyInfo
 	call Delay3
 .loop2
 	push hl
@@ -29,8 +29,7 @@ HandleMenuInput_::
 	and a ; was a key pressed?
 	jr nz, .keyPressed
 	push hl
-	hlcoord 18, 11 ; coordinates of blinking down arrow in some menus
-	call HandleDownArrowBlinkTiming ; blink down arrow (if any)
+	CALL_INDIRECT BlinkListMenuScrollArrow
 	pop hl
 	ld a, [wMenuJoypadPollCount]
 	dec a

@@ -405,6 +405,18 @@ ENDC
 
     ; Palette for the physical/special/status category icon.
     ld a, [wPlayerMoveCategory]
+    call LoadMoveCategoryPalette
+
+    ; Apply these palette changes during the menu's existing final delay.
+    ld a, 2
+    ldh [rWBK], a
+    ld a, 1
+    ld [W2_ForceBGPUpdate], a
+    ldh [rWBK], a
+    ret
+
+; a = move category; palette slot 5
+LoadMoveCategoryPalette:
     cp MOVE_PHYSICAL
     jr z, .physical
     cp MOVE_SPECIAL
@@ -419,14 +431,179 @@ ENDC
 .loadCategoryPalette
     ld e, 5
     farcall LoadSGBPalette
-
-    ; Apply these palette changes during the menu's existing final delay.
-    ld a, 2
-    ldh [rWBK], a
-    ld a, 1
-    ld [W2_ForceBGPUpdate], a
-    ldh [rWBK], a
     ret
+
+SetPal_ItemMenu::
+	; Category lives in bank 1; capture it before selecting palette WRAM.
+	ld a, [wPlayerMoveCategory]
+	ld b, a
+	ldh a, [rWBK]
+	ld c, a
+	ld a, 2
+	ldh [rWBK], a
+	push bc
+	call SaveItemMenuPalettes
+	ld a, [W2_TileBasedPalettes]
+	and a
+	jr z, .staticMap
+	ld hl, W2_TilesetPaletteMap + $c9
+	ld bc, 4
+	ld a, 4
+	call FillMemory
+	ld hl, W2_TilesetPaletteMap + $da
+	ld bc, 6
+	ld a, 5
+	call FillMemory
+	jr .loadPalettes
+.staticMap
+	ld hl, W2_TilesetPaletteMap + 13 * SCREEN_WIDTH + 1
+	ld bc, 4
+	ld a, 4
+	call FillMemory
+	ld hl, W2_TilesetPaletteMap + 13 * SCREEN_WIDTH + 5
+	ld bc, 2
+	ld a, 5
+	call FillMemory
+	ld a, 3
+	ld [W2_StaticPaletteMapChanged], a
+.loadPalettes
+	ld a, [wPlayerMoveType]
+	ld c, a
+	ld b, 0
+	ld hl, MoveTypeExpBarPalette
+	add hl, bc
+	ld d, [hl]
+	ld e, 4
+	farcall LoadSGBPalette
+	pop bc
+	push bc
+	ld a, b
+	call LoadMoveCategoryPalette
+	ld a, 1
+	ld [W2_ForceBGPUpdate], a
+	pop bc
+	ld a, c
+	ldh [rWBK], a
+	ret
+
+; WRAM bank 2 must be selected before calling (including before pushing).
+; Save once so switching items or opening quantity menus preserves the original.
+SaveItemMenuPalettes:
+	ld a, [W2_ItemMenuPalettesActive]
+	and a
+	ret nz
+	ld a, 1
+	ld [W2_ItemMenuPalettesActive], a
+	ld a, [W2_TileBasedPalettes]
+	ld [W2_ItemMenuTileBasedPalettes], a
+	ld hl, W2_BgPaletteData + 4 * 8
+	ld de, W2_ItemMenuSavedPalettes
+	ld bc, 2 * 8
+	call CopyData
+	ld hl, W2_BgPaletteData + 6 * 8
+	ld de, W2_ItemMenuSavedIconPalette
+	ld bc, 8
+	call CopyData
+	ld hl, W2_TilesetPaletteMap
+	ld de, W2_ItemMenuSavedPaletteMap
+	ld bc, $180
+	jp CopyData
+
+SetPal_TMHMDisc::
+	ld a, [wCurItem]
+	sub TM01
+	jr nc, .tm
+	add NUM_TM_HM
+.tm
+	inc a
+	ld [wTempTMHM], a
+	predef TMToMove
+	ld a, [wTempTMHM]
+	dec a
+	ld hl, Moves + MOVE_TYPE
+	ld bc, MOVE_LENGTH
+	call AddNTimes
+	ld de, wTempByteValue
+	ld bc, 1
+	ld a, BANK(Moves)
+	call FarCopyData
+	ld a, [wTempByteValue]
+	ld c, a
+	ld b, 0
+	ld hl, MoveTypeExpBarPalette
+	add hl, bc
+	ld d, [hl]
+	jr SetPal_BuyItemIcon
+
+; d = existing palette ID; only the Buy icon uses palette slot 6.
+SetPal_BuyItemIcon::
+	ldh a, [rWBK]
+	ld b, a
+	ld a, 2
+	ldh [rWBK], a
+	push bc
+	push de
+	call SaveItemMenuPalettes
+	ld a, [W2_TileBasedPalettes]
+	and a
+	jr z, .staticMap
+	ld hl, W2_TilesetPaletteMap + BUY_ITEM_ICON_TILE
+	ld bc, ITEM_ICON_TILES
+	ld a, 6
+	call FillMemory
+	jr .loadPalette
+.staticMap
+	ld hl, W2_TilesetPaletteMap + 4 * SCREEN_WIDTH + 1
+	lb bc, 3, 3
+	ld a, 6
+	call FillBox
+	ld a, 3
+	ld [W2_StaticPaletteMapChanged], a
+.loadPalette
+	pop de
+	ld e, 6
+	farcall LoadSGBPalette
+	ld a, 1
+	ld [W2_ForceBGPUpdate], a
+	pop bc
+	ld a, b
+	ldh [rWBK], a
+	ret
+
+RestoreItemMenuPalettes::
+	ldh a, [rWBK]
+	ld b, a
+	ld a, 2
+	ldh [rWBK], a
+	push bc
+	ld a, [W2_ItemMenuPalettesActive]
+	and a
+	jr z, .done
+	xor a
+	ld [W2_ItemMenuPalettesActive], a
+	ld a, [W2_ItemMenuTileBasedPalettes]
+	ld [W2_TileBasedPalettes], a
+	ld hl, W2_ItemMenuSavedPalettes
+	ld de, W2_BgPaletteData + 4 * 8
+	ld bc, 2 * 8
+	call CopyData
+	ld hl, W2_ItemMenuSavedIconPalette
+	ld de, W2_BgPaletteData + 6 * 8
+	ld bc, 8
+	call CopyData
+	ld hl, W2_ItemMenuSavedPaletteMap
+	ld de, W2_TilesetPaletteMap
+	ld bc, $180
+	call CopyData
+	ld a, 3
+	ld [W2_StaticPaletteMapChanged], a
+	ld a, 1
+	ld [W2_ForceBGPUpdate], a
+.done
+	pop bc
+	ld a, b
+	ldh [rWBK], a
+	ret
 
 ; hl: starting address
 ; a: pal number
@@ -1443,18 +1620,18 @@ MoveTypeExpBarPalette:
     db PAL_BROWNMON   ; $04 GROUND
     db PAL_KAKUNA     ; $05 ROCK
     db PAL_EXP        ; $06 BIRD
-    db PAL_VICTREEBEL ; $07 BUG
+    db PAL_SCYTHER    ; $07 BUG
     db PAL_GENGAR     ; $08 GHOST
-    db PAL_VILEPLUME  ; $09 STEEL
+    db PAL_RHYHORN    ; $09 STEEL
 
     REPT UNUSED_TYPES_END - UNUSED_TYPES
         db PAL_EXP
     ENDR
 
-    db PAL_YELLOWMON ; $14 FIRE
+    db PAL_CHARMANDER ; $14 FIRE
     db PAL_BLUEMON   ; $15 WATER
     db PAL_GREENMON  ; $16 GRASS
-    db PAL_PSYDUCK ; $17 ELECTRIC
+    db PAL_PSYDUCK   ; $17 ELECTRIC
     db PAL_GASTLY    ; $18 PSYCHIC
     db PAL_EXP       ; $19 ICE
     db PAL_POLIWAG   ; $1A DRAGON

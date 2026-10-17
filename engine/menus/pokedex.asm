@@ -714,7 +714,7 @@ PrintDexTypeIcon:
 	push bc
 	ld d, a
 	ld e, c
-	call LoadTypeIconSmAt
+	call LoadTypeIcon8TileAt
 	pop bc
 	pop hl
 	REPT 8

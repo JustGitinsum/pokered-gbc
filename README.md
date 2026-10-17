@@ -24,6 +24,48 @@ still apply.
 Each ball icon has its own palette; the SELECT graphic and quantity retain their
 usual colors.
 
+The Mart's Buy screen uses a white background and a borderless item/price list.
+A top-left **Bag ×##** box tracks the highlighted item's owned quantity and
+clears its text on CANCEL while keeping its border. The purchase quantity box shows only quantity and total price;
+the Sell screen retains its existing layout. Item descriptions update as the Buy
+cursor moves, with **Exit?** displayed when CANCEL is highlighted.
+TMs also show their move names directly below their list entries.
+Returning from the purchase quantity menu redraws without a blank-screen flash.
+TM/HM descriptions in Buy, Sell, and Bag use a single stats row with a complete
+TypeIcon4Tile badge, category, power, accuracy, and PP. Category icons use their
+corresponding colors; the PP icon extends into the right border.
+The move/type labels and separate stats box are omitted.
+The existing Movedex description appears beneath the stats, using single-spaced
+text to fit up to three lines without changing the description wording.
+The Buy screen shows the highlighted item's 24x24 graphic to the left of the
+list, clearing it on CANCEL or when no matching graphic exists. The
+Buy list starts one tile farther right to leave space between the icon and cursor.
+The indexed
+mapping is in `data/items/icons.asm` and uses only graphics from `gfx/items`.
+Vitamins share `vitamin.png`, X items share `battle_item.png`, and all TMs/HMs
+share `tm_hm.png`. Link Cable, EXP.ALL, and SILPH SCOPE use the linking cord,
+EXP Share, and Silph Scope graphics respectively. Super/Hyper Potions share the
+Potion icon, Full Restore shares Max Potion, all Ether/Elixer variants share
+Ether, and all Repels share Repel. Dawn Stone uses the Shiny Stone graphic.
+Other missing item variants are not substituted.
+Gold Teeth, Oak's Parcel, Poke Flute, Jaw Fossil, and Sail Fossil use their
+matching graphics.
+Each matched Buy icon uses an existing palette (for example, red Poke
+Balls, purple Potions, green Leaf Stones, and gold Nuggets). Icon palette
+assignments are in `ItemIconPalettes` alongside the graphic pointers; no palette
+definitions are added or changed. The original menu palettes are restored when
+leaving the panel.
+TM/HM discs use their move's type-icon palette rather than a fixed disc color.
+The four-tile badges come from `gfx/battle/types4tile.png`; the existing
+eight-tile graphics and their loaders are named TypeIcon8Tile and remain in use
+on the other type-icon screens.
+The four-tile sheet is used without modifying its source colors; existing type
+palettes color both the badges and TM/HM discs.
+Leaving Buy replaces the displayed screen before restoring the borrowed icon
+graphics and palettes, so the outgoing icon and TM stats do not glitch or recolor.
+The live Buy preview is reused by the quantity menu rather than redrawn on
+selection.
+
 Original README follows...
 
 # Pokémon Red and Blue [![Build Status][ci-badge]][ci]

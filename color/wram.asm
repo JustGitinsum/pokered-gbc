@@ -52,5 +52,11 @@ DEF W2_BattleMonPalette            EQU $d78c
 ; Used by "WindowTransferBgRowsAndColors" function. Analagous to H_VBCOPYBGNUMROWS.
 DEF W2_VBCOPYBGNUMROWS             EQU $d78d
 
+DEF W2_ItemMenuPalettesActive      EQU $d78e
+DEF W2_ItemMenuTileBasedPalettes   EQU $d78f
+DEF W2_ItemMenuSavedPalettes       EQU $d800 ; palette slots 4 and 5
+DEF W2_ItemMenuSavedPaletteMap     EQU $d810 ; $180 bytes, through $d98f
+DEF W2_ItemMenuSavedIconPalette    EQU $d990 ; palette slot 6
+
 ; In bank 1, the stack starts at $dfff. So, that's also the stack here when bank 2 is
 ; loaded. Don't use anything too close to there.

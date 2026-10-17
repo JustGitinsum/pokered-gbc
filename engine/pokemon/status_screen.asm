@@ -229,7 +229,7 @@ PrintStatusTypeIcon:
 	push bc
 	ld d, a
 	ld e, c
-	farcall LoadTypeIconSmAt
+	farcall LoadTypeIcon8TileAt
 	pop bc
 	pop hl
 	ld b, 8

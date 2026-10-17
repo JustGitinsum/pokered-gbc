@@ -3287,7 +3287,7 @@ PrintMenuItem:: ; edited, double colon
 	; predef PrintMoveType
 	ld a, [wPlayerMoveType]
 	ld d, a
-	farcall LoadTypeIconSm
+	farcall LoadTypeIcon8Tile
 
 	hlcoord 11, 11
 	ld a, $c9

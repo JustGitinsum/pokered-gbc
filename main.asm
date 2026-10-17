@@ -381,6 +381,11 @@ INCLUDE "engine/movie/hall_of_fame.asm"
 INCLUDE "engine/menus/item_descriptions.asm"
 INCLUDE "engine/events/pokecenter.asm"
 
+SECTION "Item Icons", ROMX
+
+INCLUDE "engine/gfx/item_icons.asm"
+INCLUDE "data/items/icons.asm"
+
 SECTION "Engine Save", ROMX
 
 INCLUDE "engine/menus/save.asm"

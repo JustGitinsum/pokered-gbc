@@ -35,13 +35,14 @@ DisplayListMenuID::
 	ld a, WITHDRAW_LIST_MENU_BOX
 	jr .drawListMenuBox
 .notWithdrawBox
-	sub PRICEDITEMLISTMENU
-	cp SPECIALLISTMENU - PRICEDITEMLISTMENU
-	jr c, .itemListBox ; priced and regular item menus have consecutive IDs
+	cp PRICEDITEMLISTMENU
+	jr z, .skipMovingSprites ; the Buy list has no surrounding box
+	cp ITEMLISTMENU
+	jr z, .itemListBox
 	ld a, LIST_MENU_BOX
 	jr .drawListMenuBox
 .itemListBox
-	; Bag and shop item lists need one more column for their labels.
+	; Bag item lists need one more column for their labels.
 	ld a, ITEM_LIST_MENU_BOX
 .drawListMenuBox
 	ld [wTextBoxID], a
@@ -117,8 +118,10 @@ DisplayListMenuID::
 	jr .storeTopMenuItemX
 .notWithdrawCursor
 	sub PRICEDITEMLISTMENU
+	jr z, .rightShiftBuyCursor
 	cp SPECIALLISTMENU - PRICEDITEMLISTMENU
 	jr c, .leftShiftItemContents
+.rightShiftBuyCursor
 	ld a, 5
 	jr .storeTopMenuItemX
 .leftShiftItemContents
@@ -138,7 +141,7 @@ DisplayListMenuID::
 DisplayListMenuIDLoop::
 	xor a
 	ldh [hAutoBGTransferEnabled], a ; disable transfer
-	callfar PCDrawBothLists
+	callfar DrawListMenuWithBuyInfo
 	ld a, 1
 	ldh [hAutoBGTransferEnabled], a ; enable transfer
 	call Delay3
@@ -256,7 +259,7 @@ DisplayListMenuIDLoop::
 	ld a, [wCurrentMenuItem]
 	ld [wChosenMenuItem], a
 	xor a
-	ld [hJoy7], a ; joypad state update flag
+	ldh [hJoy7], a ; joypad state update flag
 	ld hl, wStatusFlags5
 	res BIT_NO_TEXT_DELAY, [hl]
 	jp BankswitchBack
@@ -428,8 +431,10 @@ PrintListMenuEntries::
 	jr .loop
 .notWithdrawNames
 	sub PRICEDITEMLISTMENU
+	jr z, .rightShiftBuyNames
 	cp SPECIALLISTMENU - PRICEDITEMLISTMENU
 	jr c, .leftShiftItemNames
+.rightShiftBuyNames
 	hlcoord 6, 4 ; coordinates of first list entry name
 	jr .loop
 .leftShiftItemNames
@@ -456,13 +461,9 @@ PrintListMenuEntries::
 .itemMenu
 	call GetItemName
 	call PlaceString
-	ld a, [wBagPocketsFlags]
-	bit BIT_TM_HM_POCKET, a
-	jr z, .nameWasPrinted
-	; Print the corresponding move on the second row only in the TM/HM pocket.
 	ld d, h
 	ld e, l
-	callfar PrintTMHMMoveName
+	callfar PrintItemListTMHMMoveName
 	jr .nameWasPrinted
 .pokemonPCMenu
 	push hl
