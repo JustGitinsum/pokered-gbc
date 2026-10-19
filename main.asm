@@ -244,6 +244,20 @@ BattleMenuBallGraphics:
 BattleMenuBallGraphicsEnd:
 	ASSERT BattleMenuBallGraphicsEnd - BattleMenuBallGraphics == 6 tiles
 
+BagExpAllStateGraphics:
+	INCBIN "gfx/gs/on_off.2bpp"
+BagExpAllStateGraphicsEnd:
+	ASSERT BagExpAllStateGraphicsEnd - BagExpAllStateGraphics == 4 tiles
+
+BagPocketItemsGraphics:
+	INCBIN "gfx/pack/pack_Items.2bpp"
+	ASSERT @ - BagPocketItemsGraphics == 20 tiles
+BagPocketKeyItemsGraphics:
+	INCBIN "gfx/pack/pack_KeyItems.2bpp"
+	ASSERT @ - BagPocketKeyItemsGraphics == 20 tiles
+BagPocketTMHMsGraphics:
+	INCBIN "gfx/pack/pack_TMHMs.2bpp"
+	ASSERT @ - BagPocketTMHMsGraphics == 20 tiles
 
 SECTION "bank10", ROMX
 

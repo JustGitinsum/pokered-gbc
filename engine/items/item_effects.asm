@@ -2982,6 +2982,12 @@ INCLUDE "data/wild/super_rod.asm"
 ; reloads map view and processes sprite data
 ; for items that cause the overworld to be displayed
 ItemUseReloadOverworldData:
+	; Failed field-item uses stay in the Bag and must keep its preview.
+	ld a, [wBagPocketsFlags]
+	bit BIT_PRINT_INFO_BOX, a
+	jr z, .reload
+	farcall PrepareBagItemUse
+.reload
 	call LoadCurrentMapView
 	jp UpdateSprites
 

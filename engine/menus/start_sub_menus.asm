@@ -332,8 +332,7 @@ ErasePartyMenuCursors::
 	ret
 
 ItemMenuLoop:
-	call LoadScreenTilesFromBuffer2DisableBGTransfer ; restore saved screen
-	call RunDefaultPaletteCommand
+	jp StartMenu_Item.reopenBag
 
 StartMenu_Item::  ; marcelnote - BICYCLE does not have special handling anymore
 	ld a, [wLinkState]
@@ -343,6 +342,9 @@ StartMenu_Item::  ; marcelnote - BICYCLE does not have special handling anymore
 	call PrintText
 	jr .exitMenu
 .notInCableClubRoom
+	; Palette loaders run while the new tilemap is still being built.
+	call GBPalWhiteOutWithDelay3
+.reopenBag
 	; Reopen the bag at the pocket last selected by the player.
 	farcall GetCurrentBagList
 	ld a, h
@@ -351,12 +353,10 @@ StartMenu_Item::  ; marcelnote - BICYCLE does not have special handling anymore
 	ld [wListPointer], a ; store item bag pointer in wListPointer (for DisplayListMenuID)
 	xor a
 	ld [wPrintItemPrices], a
+	ld [wUpdateSpritesEnabled], a
 	;;;;;;;;;; marcelnote - display bag info box, new for bag pockets
 	ld hl, wBagPocketsFlags ; marcelnote - don't display the Info box in the PC, new for bag pockets
 	set BIT_PRINT_INFO_BOX, [hl]
-	ld a, BAG_INFO_BOX
-	ld [wTextBoxID], a
-	call DisplayTextBoxID
 	;;;;;;;;;;
 	ld a, ITEMLISTMENU
 	ld [wListMenuID], a
@@ -371,19 +371,19 @@ StartMenu_Item::  ; marcelnote - BICYCLE does not have special handling anymore
 	ld hl, wBagPocketsFlags ; marcelnote - stop showing the Info box, new for bag pockets
 	res BIT_PRINT_INFO_BOX, [hl]
 	;;;;;;;;;;
-	call LoadScreenTilesFromBuffer2 ; restore saved screen
-	call LoadTextBoxTilePatterns
+	farcall CloseOverworldBagMenu
+	ld a, 1
+	ld [wUpdateSpritesEnabled], a
 	call UpdateSprites
 	jp RedisplayStartMenu
 .choseItem
-	farcall DisplayItemDescription
 ; erase menu cursor (blank each tile in front of an item name)
 	ld a, " "
 	; Clear the cursor column; item names now begin one tile to its right.
-	ldcoord_a 4, 4
-	ldcoord_a 4, 6
-	ldcoord_a 4, 8
-	ldcoord_a 4, 10
+	ldcoord_a 5, 4
+	ldcoord_a 5, 6
+	ldcoord_a 5, 8
+	ldcoord_a 5, 10
 	call PlaceUnfilledArrowMenuCursor
 	xor a
 	ld [wMenuItemToSwap], a
@@ -396,6 +396,7 @@ StartMenu_Item::  ; marcelnote - BICYCLE does not have special handling anymore
 ;;;;;;;;;;;;;;;;;;;;;
 	ld [wTextBoxID], a
 	call DisplayTextBoxID
+	farcall RestoreBagActionMenuPalettes
 	ld hl, wTopMenuItemY
 	ld a, 8
 	ld [hli], a ; top menu item Y
@@ -412,9 +413,6 @@ StartMenu_Item::  ; marcelnote - BICYCLE does not have special handling anymore
 	ld [hl], a ; old menu item id
 	call HandleMenuInput
 	call PlaceUnfilledArrowMenuCursor
-	push af
-	farcall RestoreItemMenuPalettes
-	pop af
 	bit B_PAD_B, a
 	jp nz, ItemMenuLoop
 ; if the player made the choice to use or toss the item
@@ -439,6 +437,8 @@ StartMenu_Item::  ; marcelnote - BICYCLE does not have special handling anymore
 	ld de, 1
 	call IsInArray
 	jr c, .useItem_partyMenu
+	; In-place item messages and tossing do not need to discard the preview.
+	farcall PrepareBagItemUseScreen
 	call UseItem
 	jp ItemMenuLoop
 .useItem_closeMenu
@@ -454,17 +454,17 @@ StartMenu_Item::  ; marcelnote - BICYCLE does not have special handling anymore
 	;;;;;;;;;;
 	jp CloseStartMenu
 .useItem_partyMenu
+	farcall PrepareBagItemUse
 	ld a, [wUpdateSpritesEnabled]
 	push af
 	call UseItem
 	ld a, [wActionResultOrTookBattleTurn]
 	cp $02
 	jp z, .partyMenuNotDisplayed
-	call GBPalWhiteOutWithDelay3
-	call RestoreScreenTilesAndReloadTilePatterns
+	farcall RestoreBagAfterPartyMenu
 	pop af
 	ld [wUpdateSpritesEnabled], a
-	jp StartMenu_Item
+	jp ItemMenuLoop
 .partyMenuNotDisplayed
 	pop af
 	ld [wUpdateSpritesEnabled], a

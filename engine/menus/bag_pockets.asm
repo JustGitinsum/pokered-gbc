@@ -1,3 +1,8 @@
+DEF BAG_SELECT_ICON_TILE EQU $6b
+DEF BAG_EXP_ALL_ICON_TILE EQU $69
+DEF BAG_POCKET_ICON_TILE EQU $40
+DEF BAG_POCKET_ICON_TILES EQU 20
+
 ; Pocket IDs are encoded by bits 1-0: Items=0, Key Items=1, TM/HMs=2.
 ; Returns the count-byte address for the currently selected pocket in HL.
 GetCurrentBagList::
@@ -15,10 +20,19 @@ GetCurrentBagList::
 	ld hl, wNumBagKeyItems
 	ret
 
-PrintBagInfoText::
+DrawBagMenuBackground::
 	ld hl, wBagPocketsFlags
 	bit BIT_PRINT_INFO_BOX, [hl]
 	ret z
+	; Pocket changes re-enter the list, so build the entire Bag off-screen.
+	call HideSprites
+	hlcoord 0, 0
+	lb bc, SCREEN_HEIGHT, SCREEN_WIDTH
+	call ClearScreenArea
+	farcall DrawBagPocketIcon
+	hlcoord 3, 0
+	lb bc, 1, 15
+	call TextBoxBorder
 	hlcoord 4, 1
 	ld de, BagItemsText
 	ld a, [wBagPocketsFlags]
@@ -33,6 +47,21 @@ PrintBagInfoText::
 	ld c, BAG_ITEM_CAPACITY
 	jr .loadText
 .keyItemsPocket
+	; Borrow unused textbox tiles; the normal Bag exit restores them.
+	ld de, BattleMenuBallGraphicsEnd - 2 tiles
+	ld hl, vChars2 tile BAG_SELECT_ICON_TILE
+	lb bc, BANK(BattleMenuBallGraphics), 2
+	call CopyVideoData
+	ld de, BagExpAllStateGraphics
+	ld a, [wStatusFlags1]
+	bit BIT_EXP_ALL_ACTIVE, a
+	jr nz, .loadExpAllState
+	ld de, BagExpAllStateGraphics + 2 tiles
+.loadExpAllState
+	ld hl, vChars2 tile BAG_EXP_ALL_ICON_TILE
+	lb bc, BANK(BagExpAllStateGraphics), 2
+	call CopyVideoData
+	hlcoord 4, 1
 	ld de, BagKeyItemsText
 	jp PlaceString
 .tmHMsPocket
@@ -74,13 +103,53 @@ GetBagItemList::
 	ld hl, wNumBagTMHMs
 	ret
 
-PrintItemListTMHMMoveName::
+PrintItemListExtras::
 	ld a, [wListMenuID]
 	cp PRICEDITEMLISTMENU
 	jr z, PrintTMHMMoveName
 	ld a, [wBagPocketsFlags]
 	bit BIT_TM_HM_POCKET, a
+	jr nz, PrintTMHMMoveName
+	and (1 << BIT_PRINT_INFO_BOX) | (1 << BIT_KEY_ITEMS_POCKET)
+	cp (1 << BIT_PRINT_INFO_BOX) | (1 << BIT_KEY_ITEMS_POCKET)
+	ret nz
+	ld a, [wNamedObjectIndex]
+	cp EXP_ALL
+	jr z, .itemMarker
+	ld a, [wSelectButtonItem]
+	and a
 	ret z
+	ld hl, wNamedObjectIndex
+	cp [hl]
+	ret nz
+.itemMarker
+	; Leave one space after the complete name, including its internal spaces.
+	push de
+	call GetItemName
+	ld c, 1
+.nameLength
+	ld a, [de]
+	cp "@"
+	jr z, .placeMarker
+	inc de
+	inc c
+	jr .nameLength
+.placeMarker
+	pop hl
+	ld b, 0
+	add hl, bc
+	ld a, [wNamedObjectIndex]
+	cp EXP_ALL
+	jr z, .expAllState
+	ld a, BAG_SELECT_ICON_TILE
+.placeIcon
+	ld [hli], a
+	inc a
+	ld [hl], a
+	ret
+.expAllState
+	ld a, BAG_EXP_ALL_ICON_TILE
+	jr .placeIcon
 
 ; Input: [wNamedObjectIndex] = TM/HM item ID, de = item name position
 PrintTMHMMoveName::
@@ -173,3 +242,160 @@ BagKeyItemsText:
 
 BagTMHMsText:
 	db "◀   TMs/HMs   ▶@"
+
+PUSHS
+SECTION "Bag Pocket Icon", ROMX
+
+DrawBagPocketIcon::
+	ldh a, [rWBK]
+	ld b, a
+	ld a, 2
+	ldh [rWBK], a
+	push bc
+	ld a, [W2_BagPocketTilesActive]
+	and a
+	jr nz, .saved
+	call DisableLCD
+	ld hl, vChars2 tile BAG_POCKET_ICON_TILE
+	ld de, W2_BagPocketSavedTiles
+	ld bc, BAG_POCKET_ICON_TILES tiles
+	call CopyData
+	ld a, 1
+	ld [W2_BagPocketTilesActive], a
+.saved
+	pop bc
+	ld a, b
+	ldh [rWBK], a
+	ld de, BagPocketItemsGraphics
+	ld a, [wBagPocketsFlags]
+	bit BIT_KEY_ITEMS_POCKET, a
+	jr nz, .key
+	bit BIT_TM_HM_POCKET, a
+	jr z, .load
+	ld de, BagPocketTMHMsGraphics
+	jr .load
+.key
+	ld de, BagPocketKeyItemsGraphics
+.load
+	ldh a, [rBGP]
+	and a
+	jr z, .hidden
+	ldh a, [rLCDC]
+	bit B_LCDC_ENABLE, a
+	jr z, .hidden
+	ld hl, vChars2 tile BAG_POCKET_ICON_TILE
+	lb bc, BANK(BagPocketItemsGraphics), BAG_POCKET_ICON_TILES
+	jp CopyVideoData
+.hidden
+	; Initial entry and party returns are white: copy at once, not over VBlanks.
+	ldh a, [rLCDC]
+	bit B_LCDC_ENABLE, a
+	jr z, .copyHidden
+	call DisableLCD
+.copyHidden
+	ld h, d
+	ld l, e
+	ld de, vChars2 tile BAG_POCKET_ICON_TILE
+	ld bc, BAG_POCKET_ICON_TILES tiles
+	ld a, BANK(BagPocketItemsGraphics)
+	call FarCopyData2
+	jp EnableLCD
+
+PlaceBagPocketIcon::
+	ld a, [wListMenuID]
+	cp ITEMLISTMENU
+	ret nz
+	ld a, [wBagPocketsFlags]
+	bit BIT_PRINT_INFO_BOX, a
+	ret z
+	hlcoord 0, 8
+	ld a, BAG_POCKET_ICON_TILE
+	ld b, 4
+.row
+	ld c, 5
+.tile
+	ld [hli], a
+	inc a
+	dec c
+	jr nz, .tile
+	ld de, SCREEN_WIDTH - 5
+	add hl, de
+	dec b
+	jr nz, .row
+	ret
+
+RestoreBagPocketTiles::
+	ldh a, [rWBK]
+	ld b, a
+	ld a, 2
+	ldh [rWBK], a
+	push bc
+	ld a, [W2_BagPocketTilesActive]
+	and a
+	jr z, .done
+	call DisableLCD
+	ld hl, W2_BagPocketSavedTiles
+	ld de, vChars2 tile BAG_POCKET_ICON_TILE
+	ld bc, BAG_POCKET_ICON_TILES tiles
+	call CopyData
+	xor a
+	ld [W2_BagPocketTilesActive], a
+	call EnableLCD
+.done
+	pop bc
+	ld a, b
+	ldh [rWBK], a
+	ret
+
+POPS
+
+PrepareBattleBagMenu::
+	ld a, [wBattleType]
+	dec a
+	jr z, .tutorial
+	ld hl, wBagPocketsFlags
+	set BIT_PRINT_INFO_BOX, [hl]
+	; Bag icons and SELECT borrow tiles still used by the outgoing battle HUD.
+	call GBPalWhiteOutWithDelay3
+	ld hl, vBackPic + 47 tiles
+	ld de, W2_BattleBagSavedBackPicTiles
+	jp CopyBattleBagBackPicTiles
+.tutorial
+	; The scripted Old Man list keeps its original battle-screen layout.
+	ld a, BAG_INFO_BOX
+	ld [wTextBoxID], a
+	jp DisplayTextBoxID
+
+CloseBattleBagMenu::
+	ld hl, wBagPocketsFlags
+	res BIT_PRINT_INFO_BOX, [hl]
+	ld a, [wBattleType]
+	dec a
+	ret z
+	; Battle HP/HUD tiles overlap the icon's borrowed character range.
+	; Restore them while blank, before displaying the battle screen again.
+	call GBPalWhiteOutWithDelay3
+	call ClearScreen
+	farcall RestoreBagItemPreview
+	farcall LoadHudAndHpBarAndStatusTilePatterns
+	ld hl, W2_BattleBagSavedBackPicTiles
+	ld de, vBackPic + 47 tiles
+	call CopyBattleBagBackPicTiles
+	call LoadScreenTilesFromBuffer1
+	call Delay3
+	jp LoadGBPal
+
+CopyBattleBagBackPicTiles:
+	; The icon overlaps the last two picture tiles, even with Substitute/Minimize.
+	call DisableLCD
+	ldh a, [rWBK]
+	ld b, a
+	ld a, 2
+	ldh [rWBK], a
+	push bc
+	ld bc, 2 tiles
+	call CopyData
+	pop bc
+	ld a, b
+	ldh [rWBK], a
+	jp EnableLCD

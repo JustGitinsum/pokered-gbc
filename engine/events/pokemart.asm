@@ -124,6 +124,9 @@ DisplayPokemartDialogue_::
 	ld hl, PokemartBuyingGreetingText
 	call PrintText
 	call SaveScreenTilesToBuffer1
+	; Hide the shop before the first item's preview borrows its palette slots.
+	; Quantity/confirmation returns skip this initial transition.
+	call GBPalWhiteOutWithDelay3
 	xor a
 	ld [wCurrentMenuItem], a
 	ld [wUpdateSpritesEnabled], a
@@ -156,14 +159,15 @@ DisplayPokemartDialogue_::
 	call DisplayChooseQuantityMenu
 	inc a
 	jr z, .buyMenuLoop ; if the player closed the choose quantity menu with the B button
-	farcall RestoreItemMenuPalettes
-	farcall DrawBuyItemIcon
+	; Confirmation replaces the description, not the colored list or its icon.
+	farcall RestoreItemDescriptionPalettes
 	ld a, [wCurItem]
 	ld [wNamedObjectIndex], a
 	call GetItemName
 	call CopyToStringBuffer
 	ld hl, PokemartTellBuyPriceText
 	call PrintText
+	farcall RestoreBuyConfirmationMenuPalettes
 	hlcoord 14, 7
 	lb bc, 8, 15
 	ld a, TWO_OPTION_MENU
@@ -194,11 +198,13 @@ DisplayPokemartDialogue_::
 	call PrintText
 	jp .buyMenuLoop
 .returnToMainPokemartMenu
-	; Remove the Buy tiles before reusing their graphics and palette slots.
+	; Buy uses positional colors; hide the map until its tile colors are restored.
+	call GBPalWhiteOutWithDelay3
 	call LoadScreenTilesFromBuffer1
-	call Delay3
 	farcall RestoreItemMenuPalettes
 	call LoadTextBoxTilePatterns
+	call Delay3
+	call LoadGBPal
 	ld a, 1
 	ld [wUpdateSpritesEnabled], a
 	ld a, MONEY_BOX

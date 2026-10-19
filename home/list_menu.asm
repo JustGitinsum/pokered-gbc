@@ -9,7 +9,7 @@ DisplayListMenuID::
 	ld a, [wBattleType]
 	and a ; is it the Old Man battle?
 	jr nz, .specialBattleType
-	callfar PrintBagInfoText ; marcelnote - new for bag pockets
+	callfar DrawBagMenuBackground
 	ld a, $01 ; hardcoded bank
 	jr .bankswitch
 .specialBattleType ; Old Man battle
@@ -42,6 +42,9 @@ DisplayListMenuID::
 	ld a, LIST_MENU_BOX
 	jr .drawListMenuBox
 .itemListBox
+	ld a, [wBagPocketsFlags]
+	bit BIT_PRINT_INFO_BOX, a
+	jr nz, .skipMovingSprites
 	; Bag item lists need one more column for their labels.
 	ld a, ITEM_LIST_MENU_BOX
 .drawListMenuBox
@@ -130,18 +133,12 @@ DisplayListMenuID::
 	ld [wTopMenuItemX], a
 	ld a, PAD_A | PAD_B | PAD_SELECT | PAD_RIGHT | PAD_LEFT | PAD_START ; marcelnote - added PAD_RIGHT for bag pockets
 	ld [wMenuWatchedKeys], a
-	ld a, [wPCDualList]
-	and a
-	ld c, 10
-	jr z, .delay
-	ld c, 2 ; deposit screen redraws often, keep the pause short
-.delay
-	call DelayFrames
+	farcall DelayBeforeListMenu
 
 DisplayListMenuIDLoop::
 	xor a
 	ldh [hAutoBGTransferEnabled], a ; disable transfer
-	callfar DrawListMenuWithBuyInfo
+	callfar DrawListMenuWithItemPreview
 	ld a, 1
 	ldh [hAutoBGTransferEnabled], a ; enable transfer
 	call Delay3
@@ -163,11 +160,8 @@ DisplayListMenuIDLoop::
 	jr .buttonAPressed
 .notOldManBattle
 	call LoadGBPal
-	call HandleMenuInput
-	push af
-	;call PrintBagInfoText ; marcelnote - new for bag pockets, should be placed around here if expect to display TM moves
-	call PlaceMenuCursor
-	pop af
+	CALL_INDIRECT HandleItemListMenuInput
+	ld a, e
 	bit B_PAD_A, a
 	jp z, .checkOtherKeys
 .buttonAPressed::
@@ -371,8 +365,7 @@ PrintListMenuEntries::
 	and a ; PCPOKEMONLISTMENU?
 	jr nz, .notPCClear
 	hlcoord 0, 0
-	ld b, 12
-	ld c, 20
+	lb bc, 12, SCREEN_WIDTH
 	jr .clearListArea
 .notPCClear
 	cp PCWITHDRAWLISTMENU
@@ -430,15 +423,15 @@ PrintListMenuEntries::
 	ld b, 5
 	jr .loop
 .notWithdrawNames
-	sub PRICEDITEMLISTMENU
-	jr z, .rightShiftBuyNames
-	cp SPECIALLISTMENU - PRICEDITEMLISTMENU
-	jr c, .leftShiftItemNames
-.rightShiftBuyNames
-	hlcoord 6, 4 ; coordinates of first list entry name
-	jr .loop
-.leftShiftItemNames
-	hlcoord 5, 4 ; item names and related text shift with the wider list box
+	; Item/move names begin one column after their list cursor.
+	ld a, [wTopMenuItemX]
+	inc a
+	push bc
+	ld c, a
+	ld b, 0
+	hlcoord 0, 4
+	add hl, bc
+	pop bc
 .loop
 	ld a, b
 	ld [wWhichPokemon], a
@@ -463,7 +456,7 @@ PrintListMenuEntries::
 	call PlaceString
 	ld d, h
 	ld e, l
-	callfar PrintItemListTMHMMoveName
+	callfar PrintItemListExtras
 	jr .nameWasPrinted
 .pokemonPCMenu
 	push hl

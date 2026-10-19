@@ -29,7 +29,20 @@ A top-left **Bag ×##** box tracks the highlighted item's owned quantity and
 clears its text on CANCEL while keeping its border. The purchase quantity box shows only quantity and total price;
 the Sell screen retains its existing layout. Item descriptions update as the Buy
 cursor moves, with **Exit?** displayed when CANCEL is highlighted.
+Live preview updates are scoped to item-list input, so other menus such as
+the Pokédex cannot inherit the Buy/Bag overlays from a previous list.
 TMs also show their move names directly below their list entries.
+The secondary TM/HM move-name lines in Buy and both Bags use `PAL_LOGO1`;
+item names, prices, quantities, and descriptions keep their existing colors.
+USE/TOSS and quantity boxes reset colors only within their own borders.
+Buy confirmation text and its YES/NO box preserve the move-name and item-icon
+colors, resetting only the description and the YES/NO box's covered cells.
+The move-name palette remains loaded through cursor and pocket redraws and is
+restored only after hiding the Bag or replacing the Buy screen.
+Returning from Buy to BUY/SELL/QUIT hides the screen until the shop's tiles
+and palette attributes are both restored, preventing colored blocks on the map.
+Initial Buy entry also hides the shop before loading item/TM palettes; quantity
+and confirmation returns keep their existing flash-free redraw.
 Returning from the purchase quantity menu redraws without a blank-screen flash.
 TM/HM descriptions in Buy, Sell, and Bag use a single stats row with a complete
 TypeIcon4Tile badge, category, power, accuracy, and PP. Category icons use their
@@ -65,6 +78,39 @@ Leaving Buy replaces the displayed screen before restoring the borrowed icon
 graphics and palettes, so the outgoing icon and TM stats do not glitch or recolor.
 The live Buy preview is reused by the quantity menu rather than redrawn on
 selection.
+The overworld and in-battle Bags use the same white, borderless item-list
+template with live descriptions and selected-item icons. The pocket heading
+and arrows remain at the top; list quantities replace Buy's prices. CANCEL
+clears the icon and shows `Exit?`. Sell, PC lists, and the scripted Old Man
+tutorial retain their original layouts.
+The 40x32 pocket graphic from `gfx/pack` appears below the selected-item icon,
+uses `PAL_PIKACHU`, and changes with the Items, Key Items, or TM/HM pocket.
+It remains visible on CANCEL and in empty pockets in both player Bags.
+The registered key item displays the two-tile SELECT icon beside its name in
+the Bag; assigning another item moves the marker to that item.
+EXP ALL displays the ON or OFF badge from `gfx/gs/on_off.png` beside its name,
+reflecting its current USE toggle.
+Receiving EXP ALL, depositing it in the PC, or withdrawing it leaves it OFF.
+Talking to the aide again does not change the selected state.
+Battle Bag transitions hide the outgoing screen before borrowing or restoring
+HP-bar tiles for the item and SELECT icons.
+The two player-picture tiles shared with the item icon are saved and restored
+verbatim, preserving the current battle appearance.
+Failed battle Bag item uses return to the Bag rather than the quick-ball
+shortcut's battle-menu destination.
+Overworld Bag entry and exit use a white transition while the tilemap and
+palettes change, preventing the map or Bag from appearing in the other's colors.
+Bag exit waits for all three screen thirds to receive their restored palette
+attributes before revealing the overworld, including exits from the TM pocket.
+Choosing TOSS keeps the icon and description visible throughout quantity
+selection; preview cleanup is reserved for items that open another screen or
+return to the overworld. Confirmation text can replace the description normally.
+Rejected field-item uses, such as trying to ride the Bicycle indoors, retain
+the icon; cleanup waits until the item actually switches to the overworld.
+Screen-changing uses hide the entire Bag together before clearing its preview
+and restoring borrowed graphics and palettes.
+Returning from an item's party menu rebuilds the Bag directly, without restoring
+an intermediate overworld screen or repeating the Bag-entry transition.
 
 Original README follows...
 

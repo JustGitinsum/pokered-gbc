@@ -1,8 +1,8 @@
-; The Buy menu reserves the nine unused bold-letter tiles for a 24x24 icon.
-DEF BUY_ITEM_ICON_TILE EQU $60
+; Buy and Bag borrow nine textbox tiles for a 24x24 icon.
+DEF ITEM_MENU_ICON_TILE EQU $60
 DEF ITEM_ICON_TILES EQU 9
 
-DrawBuyItemIcon::
+DrawItemMenuIcon::
 	ld a, [wCurItem]
 	ld hl, ItemIconPointers
 	ld e, a
@@ -13,7 +13,7 @@ DrawBuyItemIcon::
 	ld d, [hl]
 	ld e, a
 	or d
-	jp z, ClearBuyItemIcon
+	jp z, ClearItemMenuIcon
 	push de
 	ld a, [wCurItem]
 	cp HM01
@@ -28,15 +28,15 @@ DrawBuyItemIcon::
 	ld b, 0
 	add hl, bc
 	ld d, [hl]
-	farcall SetPal_BuyItemIcon
+	farcall SetPal_ItemMenuIcon
 .loadGraphics
 	; A matched icon replaces all nine tiles; only missing items need clearing.
 	pop de
-	ld hl, vChars2 tile BUY_ITEM_ICON_TILE
+	ld hl, vChars2 tile ITEM_MENU_ICON_TILE
 	lb bc, BANK(ItemIconPointers), ITEM_ICON_TILES
 	call CopyVideoData
 	hlcoord 1, 4
-	ld a, BUY_ITEM_ICON_TILE
+	ld a, ITEM_MENU_ICON_TILE
 	ld b, 3
 .row
 	ld c, 3
@@ -51,7 +51,7 @@ DrawBuyItemIcon::
 	jr nz, .row
 	ret
 
-ClearBuyItemIcon::
+ClearItemMenuIcon::
 	hlcoord 1, 4
 	lb bc, 3, 3
 	jp ClearScreenArea

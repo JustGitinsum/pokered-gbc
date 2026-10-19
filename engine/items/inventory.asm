@@ -102,6 +102,13 @@ AddItemToInventory_::
 	ld [hl], a
 	pop hl
 .success
+	; Receiving EXP.ALL or storing it in the PC always leaves sharing disabled.
+	ld a, [wCurItem]
+	cp EXP_ALL
+	jr nz, .addedItem
+	ld hl, wStatusFlags1
+	res BIT_EXP_ALL_ACTIVE, [hl]
+.addedItem
 	scf
 .done
 	pop hl

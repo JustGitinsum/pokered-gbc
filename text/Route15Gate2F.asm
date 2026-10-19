@@ -10,9 +10,9 @@ _Route15Gate2FOaksAideExpAllText::
 	cont "of EXP for each"
 	cont "#MON."
 
-	para "If you don't need"
-	line "it, you can "
-	cont "Switch it off"    ; marcelnote - ExpAll can be 
+	para "Use it in your"
+	line "BAG to switch it"
+	cont "on or off."
 	done
 
 _Route15Gate2FBinocularsText::

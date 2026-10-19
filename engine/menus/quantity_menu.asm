@@ -16,6 +16,11 @@ _DisplayChooseQuantityMenu::
 	hlcoord 7, 9
 	lb bc, 1, 11
 .drawTextBox
+	push hl
+	push bc
+	farcall RestoreItemQuantityMenuPalettes
+	pop bc
+	pop hl
 	call TextBoxBorder
 	hlcoord 16, 10 ; coordinates TOSS item quantity text
 	ld a, [wListMenuID]
@@ -187,13 +192,17 @@ GetOwnedItemQuantity:
 	ld a, 99
 	ret
 
-UpdateBuyMenuCursorInfo:
+UpdateItemMenuCursorInfo:
+	ld a, [wListMenuID]
+	cp PRICEDITEMLISTMENU
+	jr nz, .findItem
 	hlcoord 0, 0
 	lb bc, 1, 8
 	call TextBoxBorder
 	hlcoord 1, 1
 	ld de, OwnedText
 	call PlaceString
+.findItem
 	ld a, [wCurrentMenuItem]
 	ld b, a
 	ld a, [wListScrollOffset]
@@ -210,8 +219,18 @@ UpdateBuyMenuCursorInfo:
 	inc hl
 	ld c, b
 	ld b, 0
+	ld a, [wListMenuID]
+	cp ITEMLISTMENU
+	jr nz, .getItem
+	sla c ; Bag entries contain both item ID and quantity.
+.getItem
 	add hl, bc
 	ld a, [hl]
+	ld [wCurItem], a
+	ld a, [wListMenuID]
+	cp PRICEDITEMLISTMENU
+	jr nz, .description
+	ld a, [wCurItem]
 	push af
 	call GetOwnedItemQuantity
 	ld [wTempByteValue], a
@@ -221,29 +240,35 @@ UpdateBuyMenuCursorInfo:
 	call PrintNumber
 	pop af
 	ld [wCurItem], a
-	farcall DisplayBuyItemDescription
-	farcall DrawBuyItemIcon
+.description
+	farcall DisplayItemMenuDescription
 	ret
 .cancel
-	farcall ClearBuyItemIcon
-	farcall RestoreItemMenuPalettes
+	farcall ClearItemMenuIcon
+	farcall RestoreItemMenuCursorPalettes
+	ld a, [wListMenuID]
+	cp PRICEDITEMLISTMENU
+	jr nz, .exitDescription
 	hlcoord 1, 1
 	lb bc, 1, 8
 	call ClearScreenArea
+.exitDescription
 	hlcoord 0, 12
 	lb bc, 4, 18
 	call TextBoxBorder
 	hlcoord 1, 14
-	ld de, BuyMenuExitDescription
+	ld de, ItemMenuExitDescription
 	jp PlaceString
 
-BuyMenuExitDescription:
+ItemMenuExitDescription:
 	db "Exit?@"
 
 BlinkListMenuScrollArrow::
 	hlcoord 18, 11
-	ld a, [wListMenuID]
-	cp PRICEDITEMLISTMENU
+	ld a, [wItemListMenuInputActive]
+	and a
+	jr z, .blink
+	call IsUnboxedItemMenu
 	jr nz, .blink
 	ldh a, [hJoy7]
 	and a
@@ -252,14 +277,15 @@ BlinkListMenuScrollArrow::
 .blink
 	jp HandleDownArrowBlinkTiming
 
-DrawListMenuWithBuyInfo::
-	ld a, [wListMenuID]
-	cp PRICEDITEMLISTMENU
-	jr z, .buy
+DrawListMenuWithItemPreview::
+	call IsUnboxedItemMenu
+	jr z, .unboxed
 	farcall RestoreItemMenuPalettes
 	jr .printLists
-.buy
-	; Buy reaches column 19, one tile beyond the shared item-list clear.
+.unboxed
+	ld a, 5
+	ld [wTopMenuItemX], a
+	; Borderless lists reach one tile beyond the shared item-list clear.
 	hlcoord 19, 3
 	lb bc, 9, 1
 	call ClearScreenArea
@@ -269,20 +295,24 @@ DrawListMenuWithBuyInfo::
 	ldh [hDownArrowBlinkCount2], a
 .printLists
 	callfar PCDrawBothLists
-	ld a, [wListMenuID]
-	cp PRICEDITEMLISTMENU
+	farcall PlaceBagPocketIcon
+	call IsUnboxedItemMenu
 	ret nz
-	; Complete the Buy screen before its tilemap is transferred to the display.
-	jp PlaceMenuCursorAndBuyInfo
-
-PlaceMenuCursorAndBuyInfo::
+	; Complete the preview before its tilemap is transferred to the display.
 	call PlaceMenuCursor
+	jr UpdateItemMenuPreview
+
+PlaceMenuCursorAndItemPreview::
+	call PlaceMenuCursor
+	ld a, [wItemListMenuInputActive]
+	and a
+	ret z
 	ldh a, [hJoy7]
 	and a ; quantity/confirmation menus must not change the highlighted item
 	ret z
-	ld a, [wListMenuID]
-	cp PRICEDITEMLISTMENU
+	call IsUnboxedItemMenu
 	ret nz
+UpdateItemMenuPreview:
 	; Graphics loaders wait for VBlank; keep partial redraws off the display.
 	push hl
 	ld a, [wCurItem]
@@ -295,7 +325,9 @@ PlaceMenuCursorAndBuyInfo::
 	push af
 	xor a
 	ldh [hAutoBGTransferEnabled], a
-	call UpdateBuyMenuCursorInfo
+	call UpdateItemMenuCursorInfo
+	farcall SetPal_BagPocketIcon
+	farcall SetPal_ItemListMoveNames
 	pop af
 	ldh [hAutoBGTransferEnabled], a
 	pop af
@@ -303,4 +335,84 @@ PlaceMenuCursorAndBuyInfo::
 	pop af
 	ld [wCurItem], a
 	pop hl
+	ret
+
+; Return pressed keys in e because the bank switch overwrites a.
+HandleItemListMenuInput::
+	ld a, 1
+	ld [wItemListMenuInputActive], a
+	call HandleMenuInput
+	push af
+	xor a
+	ld [wItemListMenuInputActive], a
+	call PlaceMenuCursor
+	pop af
+	ld e, a
+	ret
+
+; z = the Buy list or either player Bag, but not Sell/PC item lists.
+IsUnboxedItemMenu:
+	ld a, [wListMenuID]
+	cp PRICEDITEMLISTMENU
+	ret z
+	cp ITEMLISTMENU
+	ret nz
+	ld a, [wBagPocketsFlags]
+	and 1 << BIT_PRINT_INFO_BOX
+	cp 1 << BIT_PRINT_INFO_BOX
+	ret
+
+DelayBeforeListMenu::
+	ld a, [wBagPocketsFlags]
+	and 1 << BIT_PRINT_INFO_BOX
+	ld b, a
+	ld a, [wPCDualList]
+	or b
+	ld c, 10
+	jr z, .delay
+	ld c, 2 ; Bag and deposit redraws already wait for their graphics transfers.
+.delay
+	jp DelayFrames
+
+; Hide the whole Bag before restoring the borrowed font tiles and colors.
+ClearBagItemPreview::
+	call GBPalWhiteOutWithDelay3
+	call ClearScreen
+	call RestoreBagItemPreview
+	jp LoadGBPal
+
+RestoreBagItemPreview::
+	call Delay3
+	farcall RestoreItemMenuPalettes
+	farcall RestoreBagPocketTiles
+	jp LoadTextBoxTilePatterns
+
+CloseOverworldBagMenu::
+	; Hide both screens until the map tiles, font and colors agree again.
+	; RedisplayStartMenu reveals the fully restored screen with LoadGBPal.
+	call GBPalWhiteOutWithDelay3
+	call LoadScreenTilesFromBuffer2
+	call RestoreBagItemPreview
+	; TM move names use a positional map; allow the restored tile-based
+	; attributes to reach all three screen thirds before revealing the map.
+	jp Delay3
+
+RestoreBagAfterPartyMenu::
+	; Rebuild the Bag directly; its saved overworld tilemap is not displayed.
+	call GBPalWhiteOut
+	call ClearSprites
+	call ReloadMapSpriteTilePatterns
+	call LoadTextBoxTilePatterns
+	jp RunDefaultPaletteCommand
+
+PrepareBagItemUseScreen::
+	ld a, [wCurItem]
+	cp TOWN_MAP
+	jr z, PrepareBagItemUse
+	cp POKEDEX
+	ret nz
+PrepareBagItemUse::
+	call ClearBagItemPreview
+	ld a, 1
+	ld [wUpdateSpritesEnabled], a
 	ret

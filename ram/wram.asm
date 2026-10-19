@@ -270,7 +270,8 @@ wMenuWatchMovingOutOfBounds:: db
 
 wTradeCenterPointerTableIndex:: db
 
-	ds 1
+; Only set while DisplayListMenuID is polling its list cursor.
+wItemListMenuInputActive:: db
 
 ; destination pointer for text output
 ; this variable is written to, but is never read from

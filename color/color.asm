@@ -504,6 +504,14 @@ SaveItemMenuPalettes:
 	ld de, W2_ItemMenuSavedIconPalette
 	ld bc, 8
 	call CopyData
+	ld hl, W2_BgPaletteData + 3 * 8
+	ld de, W2_ItemMenuSavedMovePalette
+	ld bc, 8
+	call CopyData
+	ld hl, W2_BgPaletteData + 2 * 8
+	ld de, W2_ItemMenuSavedPocketPalette
+	ld bc, 8
+	call CopyData
 	ld hl, W2_TilesetPaletteMap
 	ld de, W2_ItemMenuSavedPaletteMap
 	ld bc, $180
@@ -533,10 +541,10 @@ SetPal_TMHMDisc::
 	ld hl, MoveTypeExpBarPalette
 	add hl, bc
 	ld d, [hl]
-	jr SetPal_BuyItemIcon
+	jr SetPal_ItemMenuIcon
 
-; d = existing palette ID; only the Buy icon uses palette slot 6.
-SetPal_BuyItemIcon::
+; d = existing palette ID; Buy and Bag item icons use palette slot 6.
+SetPal_ItemMenuIcon::
 	ldh a, [rWBK]
 	ld b, a
 	ld a, 2
@@ -547,7 +555,7 @@ SetPal_BuyItemIcon::
 	ld a, [W2_TileBasedPalettes]
 	and a
 	jr z, .staticMap
-	ld hl, W2_TilesetPaletteMap + BUY_ITEM_ICON_TILE
+	ld hl, W2_TilesetPaletteMap + ITEM_MENU_ICON_TILE
 	ld bc, ITEM_ICON_TILES
 	ld a, 6
 	call FillMemory
@@ -581,6 +589,7 @@ RestoreItemMenuPalettes::
 	jr z, .done
 	xor a
 	ld [W2_ItemMenuPalettesActive], a
+	ld [W2_ItemMenuMoveNamesActive], a
 	ld a, [W2_ItemMenuTileBasedPalettes]
 	ld [W2_TileBasedPalettes], a
 	ld hl, W2_ItemMenuSavedPalettes
@@ -589,6 +598,14 @@ RestoreItemMenuPalettes::
 	call CopyData
 	ld hl, W2_ItemMenuSavedIconPalette
 	ld de, W2_BgPaletteData + 6 * 8
+	ld bc, 8
+	call CopyData
+	ld hl, W2_ItemMenuSavedMovePalette
+	ld de, W2_BgPaletteData + 3 * 8
+	ld bc, 8
+	call CopyData
+	ld hl, W2_ItemMenuSavedPocketPalette
+	ld de, W2_BgPaletteData + 2 * 8
 	ld bc, 8
 	call CopyData
 	ld hl, W2_ItemMenuSavedPaletteMap
@@ -603,6 +620,375 @@ RestoreItemMenuPalettes::
 	pop bc
 	ld a, b
 	ldh [rWBK], a
+	ret
+
+; A normal description replaces the TM row but leaves the icon visible.
+; Restore only the type/category slots and assignments, never icon slot 6.
+RestoreItemDescriptionPalettes::
+	ldh a, [rWBK]
+	ld b, a
+	ld a, 2
+	ldh [rWBK], a
+	push bc
+	ld a, [W2_ItemMenuPalettesActive]
+	and a
+	jr z, .done
+	ld hl, W2_ItemMenuSavedPalettes
+	ld de, W2_BgPaletteData + 4 * 8
+	ld bc, 2 * 8
+	call CopyData
+	ld a, [W2_TileBasedPalettes]
+	and a
+	jr z, .staticMap
+	ld hl, W2_ItemMenuSavedPaletteMap + $c9
+	ld de, W2_TilesetPaletteMap + $c9
+	ld bc, 4
+	call CopyData
+	ld hl, W2_ItemMenuSavedPaletteMap + $da
+	ld de, W2_TilesetPaletteMap + $da
+	ld bc, 6
+	jr .copy
+.staticMap
+	ld hl, W2_ItemMenuSavedPaletteMap + 13 * SCREEN_WIDTH + 1
+	ld de, W2_TilesetPaletteMap + 13 * SCREEN_WIDTH + 1
+	ld bc, 6
+.copy
+	call CopyData
+	ld a, 3
+	ld [W2_StaticPaletteMapChanged], a
+	ld a, 1
+	ld [W2_ForceBGPUpdate], a
+.done
+	pop bc
+	ld a, b
+	ldh [rWBK], a
+	ret
+
+SetPal_BagPocketIcon::
+	ld a, [wListMenuID]
+	cp ITEMLISTMENU
+	ret nz
+	ld a, [wBagPocketsFlags]
+	bit BIT_PRINT_INFO_BOX, a
+	ret z
+	ldh a, [rWBK]
+	ld b, a
+	ld a, 2
+	ldh [rWBK], a
+	push bc
+	call SaveItemMenuPalettes
+	ld a, [W2_TileBasedPalettes]
+	and a
+	jr z, .staticMap
+	ld hl, W2_TilesetPaletteMap + BAG_POCKET_ICON_TILE
+	ld bc, BAG_POCKET_ICON_TILES
+	ld a, 2
+	call FillMemory
+	jr .load
+.staticMap
+	ld hl, W2_TilesetPaletteMap + 8 * SCREEN_WIDTH
+	lb bc, 4, 5
+	ld a, 2
+	call FillBox
+	ld a, 3
+	ld [W2_StaticPaletteMapChanged], a
+.load
+	ld d, PAL_YELLOWMON
+	ld e, 2
+	farcall LoadSGBPalette
+	ld a, 1
+	ld [W2_ForceBGPUpdate], a
+	pop bc
+	ld a, b
+	ldh [rWBK], a
+	ret
+
+; Color only the secondary TM/HM list rows, not other uses of the same font.
+; Called after the preview, which may have restored the original palette map.
+SetPal_ItemListMoveNames::
+	; Inventory is in WRAM bank 1: collect the visible machine rows first.
+	ld a, [wListPointer]
+	ld l, a
+	ld a, [wListPointer + 1]
+	ld h, a
+	inc hl
+	ld a, [wListScrollOffset]
+	ld c, a
+	ld b, 0
+	ld a, [wListMenuID]
+	cp ITEMLISTMENU
+	jr nz, .offset
+	sla c
+	rl b
+.offset
+	add hl, bc
+	ld b, 4
+	ld c, 0
+.findMachines
+	sla c
+	ld a, [hl]
+	cp $ff
+	jr z, .nextItem
+	cp HM01
+	jr c, .advance
+	cp TM01 + NUM_TMS
+	jr nc, .advance
+	inc c
+.advance
+	inc hl
+	ld a, [wListMenuID]
+	cp ITEMLISTMENU
+	jr nz, .nextItem
+	inc hl
+.nextItem
+	dec b
+	jr nz, .findMachines
+	swap c
+	ld e, c
+	ldh a, [rWBK]
+	ld b, a
+	ld a, 2
+	ldh [rWBK], a
+	push bc
+	ld a, e
+	and a
+	jr nz, .prepare
+	ld a, [W2_ItemMenuMoveNamesActive]
+	and a
+	jp z, .done
+.prepare
+	push de
+	call SaveItemMenuPalettes
+	ld a, [W2_TileBasedPalettes]
+	and a
+	jr z, .listRows
+	ld hl, W2_TilesetPaletteMap
+	ld de, W2_ItemMenuPaletteScratch
+	ld bc, $180
+	call CopyData
+	ld hl, wTileMap
+	ld de, W2_TilesetPaletteMap
+	ld bc, SCREEN_WIDTH * SCREEN_HEIGHT
+.convert
+	push bc
+	push hl
+	ld a, [hl]
+	ld c, a
+	ld b, 0
+	ld hl, W2_ItemMenuPaletteScratch
+	add hl, bc
+	ld a, [hl]
+	ld [de], a
+	inc de
+	pop hl
+	inc hl
+	pop bc
+	dec bc
+	ld a, b
+	or c
+	jr nz, .convert
+	xor a
+	ld [W2_TileBasedPalettes], a
+.listRows
+	pop bc
+	ld a, c
+	and a
+	jr z, .keepMovePalette
+	ld a, 1
+	ld [W2_ItemMenuMoveNamesActive], a
+.keepMovePalette
+	ld de, W2_TilesetPaletteMap + 5 * SCREEN_WIDTH + 7
+	ld b, 4
+.row
+	push bc
+	push de
+	ld b, 12
+.column
+	; A scrolled-out move must recover its original text/blank palette.
+	ld h, d
+	ld l, e
+	call GetOriginalItemMenuPalette
+	ld [de], a
+	inc de
+	dec b
+	jr nz, .column
+	pop de
+	pop bc
+	sla c
+	jr nc, .nextRow
+	push bc
+	ld h, d
+	ld l, e
+	ld bc, 12
+	ld a, 3
+	call FillMemory
+	pop bc
+.nextRow
+	ld hl, 2 * SCREEN_WIDTH
+	add hl, de
+	ld d, h
+	ld e, l
+	dec b
+	jr nz, .row
+	; Keep this slot borrowed until the menu is hidden. Restoring it during a
+	; redraw recolors move glyphs still present in the displayed tilemap.
+	ld d, PAL_BLACK
+	ld e, 3
+	farcall LoadSGBPalette
+	ld a, 3
+	ld [W2_StaticPaletteMapChanged], a
+	ld a, 1
+	ld [W2_ForceBGPUpdate], a
+.done
+	pop bc
+	ld a, b
+	ldh [rWBK], a
+	ret
+
+; CANCEL clears the item preview, but the pocket graphic and move names remain.
+RestoreItemMenuCursorPalettes::
+	ldh a, [rWBK]
+	ld b, a
+	ld a, 2
+	ldh [rWBK], a
+	ld a, [W2_ItemMenuMoveNamesActive]
+	ld c, a
+	ld a, [W2_BagPocketTilesActive]
+	or c
+	and a
+	ld a, b
+	ldh [rWBK], a
+	jp z, RestoreItemMenuPalettes
+	call RestoreItemDescriptionPalettes
+	ldh a, [rWBK]
+	ld b, a
+	ld a, 2
+	ldh [rWBK], a
+	push bc
+	ld hl, W2_ItemMenuSavedIconPalette
+	ld de, W2_BgPaletteData + 6 * 8
+	ld bc, 8
+	call CopyData
+	ld a, [W2_TileBasedPalettes]
+	and a
+	jr z, .staticMap
+	ld hl, W2_ItemMenuSavedPaletteMap + ITEM_MENU_ICON_TILE
+	ld de, W2_TilesetPaletteMap + ITEM_MENU_ICON_TILE
+	ld bc, ITEM_ICON_TILES
+	call CopyData
+	jr .refresh
+.staticMap
+	ld hl, W2_TilesetPaletteMap + 4 * SCREEN_WIDTH + 1
+	ld b, 3
+.row
+	push bc
+	push hl
+	ld b, 3
+.column
+	call GetOriginalItemMenuPalette
+	ld [hli], a
+	dec b
+	jr nz, .column
+	pop hl
+	ld de, SCREEN_WIDTH
+	add hl, de
+	pop bc
+	dec b
+	jr nz, .row
+.refresh
+	ld a, 3
+	ld [W2_StaticPaletteMapChanged], a
+	ld a, 1
+	ld [W2_ForceBGPUpdate], a
+	pop bc
+	ld a, b
+	ldh [rWBK], a
+	ret
+
+RestoreBagActionMenuPalettes::
+	ld de, wTileMap + 7 * SCREEN_WIDTH + 13
+	lb bc, 5, 7
+	jr RestoreItemMoveNameBoxPalettes
+
+RestoreBuyConfirmationMenuPalettes::
+	ld de, wTileMap + 7 * SCREEN_WIDTH + 14
+	lb bc, 5, 6
+	jr RestoreItemMoveNameBoxPalettes
+
+RestoreItemQuantityMenuPalettes::
+	ld de, wTileMap + 9 * SCREEN_WIDTH + 15
+	lb bc, 3, 5
+	ld a, [wListMenuID]
+	cp PRICEDITEMLISTMENU
+	jr nz, RestoreItemMoveNameBoxPalettes
+	ld de, wTileMap + 9 * SCREEN_WIDTH + 7
+	ld c, 13
+	ldh a, [hHalveItemPrices]
+	and a
+	jr z, RestoreItemMoveNameBoxPalettes
+	ld de, wTileMap + 7 * SCREEN_WIDTH + 7
+	ld b, 5
+
+; Set dimensions inside this bank: Bankswitch overwrites a/b/c/hl.
+; b = height, c = width, de = tilemap address of an overlapping menu box.
+RestoreItemMoveNameBoxPalettes:
+	ld h, b
+	ldh a, [rWBK]
+	ld b, a
+	ld a, 2
+	ldh [rWBK], a
+	push bc
+	ld a, [W2_ItemMenuMoveNamesActive]
+	and a
+	jr z, .done
+	ld b, h
+	ld hl, W2_TilesetPaletteMap - wTileMap
+	add hl, de
+.row
+	push bc
+	push hl
+.column
+	ld a, [hl]
+	cp 3
+	jr nz, .next
+	call GetOriginalItemMenuPalette
+	ld [hl], a
+.next
+	inc hl
+	dec c
+	jr nz, .column
+	pop hl
+	ld de, SCREEN_WIDTH
+	add hl, de
+	pop bc
+	dec b
+	jr nz, .row
+	ld a, 3
+	ld [W2_StaticPaletteMapChanged], a
+.done
+	pop bc
+	ld a, b
+	ldh [rWBK], a
+	ret
+
+; hl = screen palette-map cell, WRAM bank 2 selected; preserves bc/de/hl.
+GetOriginalItemMenuPalette:
+	push hl
+	push bc
+	ld a, [W2_ItemMenuTileBasedPalettes]
+	and a
+	ld bc, W2_ItemMenuSavedPaletteMap - W2_TilesetPaletteMap
+	jr z, .staticMap
+	ld bc, wTileMap - W2_TilesetPaletteMap
+	add hl, bc
+	ld c, [hl]
+	ld b, 0
+	ld hl, W2_ItemMenuSavedPaletteMap
+.staticMap
+	add hl, bc
+	ld a, [hl]
+	pop bc
+	pop hl
 	ret
 
 ; hl: starting address
@@ -1613,15 +1999,15 @@ PokemonPicPaletteRects:
 MoveTypeExpBarPalette:
     table_width 1
 
-    db PAL_MACHOKE    ; $00 NORMAL
+    db PAL_MACHOP     ; $00 NORMAL
     db PAL_FLAREON    ; $01 FIGHTING
-    db PAL_BLUEMON    ; $02 FLYING
+    db PAL_DRAGONAIR    ; $02 FLYING
     db PAL_PURPLEMON  ; $03 POISON
     db PAL_BROWNMON   ; $04 GROUND
     db PAL_KAKUNA     ; $05 ROCK
     db PAL_EXP        ; $06 BIRD
     db PAL_SCYTHER    ; $07 BUG
-    db PAL_GENGAR     ; $08 GHOST
+    db PAL_NIDOKING     ; $08 GHOST
     db PAL_RHYHORN    ; $09 STEEL
 
     REPT UNUSED_TYPES_END - UNUSED_TYPES
@@ -1636,7 +2022,7 @@ MoveTypeExpBarPalette:
     db PAL_EXP       ; $19 ICE
     db PAL_POLIWAG   ; $1A DRAGON
     db PAL_BLACK     ; $1B DARK
-    db PAL_LICKITUNG ; $1C FAIRY
+    db PAL_CHANSEY   ; $1C FAIRY
 
     assert_table_length NUM_TYPES
 

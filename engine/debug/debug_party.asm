@@ -180,6 +180,8 @@ DebugKeyItemsList:    ; new for Key Items pocket
 	db ITEMFINDER, 1
 	db POKE_FLUTE, 1
 	db SECRET_KEY, 1
+	db GOLD_TEETH, 1
+	db BIKE_VOUCHER, 1
 	db CARD_KEY, 1
 	db S_S_TICKET, 1
 	db LIFT_KEY, 1

@@ -14,7 +14,7 @@ HandleMenuInput_::
 .loop1
 	xor a
 	ld [wAnimCounter], a ; counter for pokemon shaking animation
-	CALL_INDIRECT PlaceMenuCursorAndBuyInfo
+	CALL_INDIRECT PlaceMenuCursorAndItemPreview
 	call Delay3
 .loop2
 	push hl

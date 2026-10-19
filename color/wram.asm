@@ -54,9 +54,16 @@ DEF W2_VBCOPYBGNUMROWS             EQU $d78d
 
 DEF W2_ItemMenuPalettesActive      EQU $d78e
 DEF W2_ItemMenuTileBasedPalettes   EQU $d78f
+DEF W2_ItemMenuMoveNamesActive    EQU $d790 ; palette slot 3 borrowed until menu exit
 DEF W2_ItemMenuSavedPalettes       EQU $d800 ; palette slots 4 and 5
 DEF W2_ItemMenuSavedPaletteMap     EQU $d810 ; $180 bytes, through $d98f
 DEF W2_ItemMenuSavedIconPalette    EQU $d990 ; palette slot 6
+DEF W2_BattleBagSavedBackPicTiles  EQU $d998 ; last two player-picture tiles, $20 bytes
+DEF W2_ItemMenuSavedMovePalette   EQU $d9b8 ; palette slot 3
+DEF W2_ItemMenuPaletteScratch     EQU $d9c0 ; $180 bytes for tile-to-screen conversion
+DEF W2_BagPocketSavedTiles        EQU $db40 ; 20 tiles, through $dc7f
+DEF W2_ItemMenuSavedPocketPalette EQU $dc80 ; palette slot 2
+DEF W2_BagPocketTilesActive       EQU $dc88
 
 ; In bank 1, the stack starts at $dfff. So, that's also the stack here when bank 2 is
 ; loaded. Don't use anything too close to there.

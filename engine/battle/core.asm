@@ -2450,13 +2450,7 @@ DisplayBagMenu:
 	ld [wListPointer + 1], a
 	xor a
 	ld [wPrintItemPrices], a
-	;;;;;;;;;; marcelnote - display bag info box, new for bag pockets
-	ld hl, wBagPocketsFlags
-	set BIT_PRINT_INFO_BOX, [hl] ; set bit before displaying list
-	ld a, BAG_INFO_BOX
-	ld [wTextBoxID], a
-	call DisplayTextBoxID
-	;;;;;;;;;;
+	farcall PrepareBattleBagMenu
 	ld a, ITEMLISTMENU
 	ld [wListMenuID], a
 	ld a, [wBagSavedMenuItem]
@@ -2467,11 +2461,11 @@ DisplayBagMenu:
 	ld a, 0 ; conserve carry flag so no xor a
 	ld [wMenuWatchMovingOutOfBounds], a
 	ld [wMenuItemToSwap], a
-	;;;;;;;;;; marcelnote - display bag info box, new for bag pockets
-	ld hl, wBagPocketsFlags
-	res BIT_PRINT_INFO_BOX, [hl] ; reset bit when using item or exiting menu
-	;;;;;;;;;;
+	push af
+	farcall CloseBattleBagMenu
+	pop af
 	jp c, DisplayBattleMenu ; go back to battle menu if an item was not selected
+	jr UseBagItem
 
 UseBattleMenuBall:
 	ld a, 1

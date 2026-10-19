@@ -107,13 +107,18 @@ DisplayItemDescription::
 	call GetItemDescriptionPointer
 	jp PrintText
 
-DisplayBuyItemDescription::
+DisplayItemMenuDescription::
 	ld a, [wCurListMenuItem]
 	dec a
 	cp HM01 - 1
-	jp nc, DisplayItemDescription
+	jr c, .normalItem
+	call DisplayItemDescription
+	farjp DrawItemMenuIcon
+.normalItem
 	push af
-	farcall RestoreItemMenuPalettes
+	farcall RestoreItemDescriptionPalettes
+	; Reapply the icon's color before text rendering can wait for a frame.
+	farcall DrawItemMenuIcon
 	pop af
 	call GetItemDescriptionPointer
 	push hl
