@@ -2194,7 +2194,8 @@ wLastBlackoutMap:: db
 ; destination map (for certain types of special warps, not ordinary walking)
 wDestinationMap:: db
 
-; $00 = male, $01 = female; stored in a previously unused saved-data byte.
+; PLAYER_* constant (see data/player_characters.asm);
+; stored in a previously unused saved-data byte.
 wPlayerGender:: db
 
 ; used to store the tile in front of the boulder when trying to push a boulder

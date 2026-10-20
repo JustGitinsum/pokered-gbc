@@ -132,11 +132,12 @@ ColorOverworldSprite::
 	ld a, [wPlayerFlying]
 	cp a, $1
 	jr z, .flying
-	ld a, [wPlayerGender]
-	and a
-	ld a, SPR_PAL_ORANGE
-	jr z, .norandomColor
-	ld a, SPR_PAL_GREEN ; Overwork palette for Green (Girl player)
+	push hl
+	push bc
+	farcall GetPlayerPalettes
+	ld a, e ; overworld sprite palette
+	pop bc
+	pop hl
 	jr .norandomColor
 .surfing
 	push hl

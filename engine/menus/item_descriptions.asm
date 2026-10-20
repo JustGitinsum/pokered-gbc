@@ -49,33 +49,30 @@ DisplayItemDescription::
 	lb bc, 1, 3
 	call PrintNumber ; prints the c-digit, b-byte value at de
 	farcall DetermineMoveCategory
+	; Select the category label and its icon loader, then draw them once.
 	ld a, [wPlayerMoveCategory]
 	cp MOVE_PHYSICAL
-    jr z, .physicalAttack
-	cp MOVE_SPECIAL
-    jr z, .specialAttack
-	jr .noPower
-.physicalAttack
-	hlcoord 5, 13
 	ld de, PhysicalCatText3
-	call PlaceString
-	farcall LoadPhysicalMoveIcon
-	jr .accuracy
-.specialAttack
-	hlcoord 5, 13
+	ld bc, LoadPhysicalMoveIcon
+	jr z, .category
+	cp MOVE_SPECIAL
 	ld de, SpecialCatText3
-	call PlaceString
-	farcall LoadSpecialMoveIcon
-	jr .accuracy
-.noPower
+	ld bc, LoadSpecialMoveIcon
+	jr z, .category
 	hlcoord 7, 13
 	ld de, NoPowerText3
 	call PlaceString
-	hlcoord 5, 13
 	ld de, StatusCatText3
+	ld bc, LoadStatusMoveIcon
+.category
+	push bc
+	hlcoord 5, 13
 	call PlaceString
-	farcall LoadStatusMoveIcon
-.accuracy
+	pop hl
+	ASSERT BANK(LoadPhysicalMoveIcon) == BANK(LoadSpecialMoveIcon) \
+		&& BANK(LoadPhysicalMoveIcon) == BANK(LoadStatusMoveIcon)
+	ld b, BANK(LoadPhysicalMoveIcon)
+	call Bankswitch
 	farcall SetPal_ItemMenu
 	ld a, [wPlayerMoveAccuracy] ; this is a 0-255 value, need to get 0-100
 	ld hl, 0

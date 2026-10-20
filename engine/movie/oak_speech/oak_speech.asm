@@ -75,10 +75,14 @@ ENDC
 	;jp nz, .skipSpeech
 	ld hl, BoyGirlText  ; added to the same file as the other oak text
   	call PrintText     ; show this text
-  	call BoyGirlChoice ; added routine at the end of this file
-   	ld a, [wCurrentMenuItem]
-   	ld [wPlayerGender], a ; store player's gender. 00 for boy, 01 for girl
+	farcall BoyGirlChoice ; sets wPlayerGender (see player_select.asm)
    	call ClearScreen ; clear the screen before resuming normal intro
+IF GEN_2_GRAPHICS
+	ld a, PAL_OAK
+ELSE
+	ld a, PAL_BROWNMON
+ENDC
+	call GotPalID ; HAX
 	ld de, ProfOakPic
 	lb bc, BANK(ProfOakPic), $00
 	call IntroDisplayPicCenteredOrUpperRight
@@ -99,15 +103,7 @@ ENDC
 	call PrintText
 	call GBFadeOutToWhite
 	call GetRedPalID ; HAX
-	ld de, RedPicFront
-	lb bc, BANK(RedPicFront), $00
-	ld a, [wPlayerGender] 	; check gender
-	and a      				; check gender
-	jr z, .NotGreen1
-	ld de, GreenPicFront
-	lb bc, BANK(GreenPicFront), $00
-.NotGreen1:
-	call IntroDisplayPicCenteredOrUpperRight
+	call IntroDisplayPlayerPic
 	call MovePicLeft
 	ld hl, IntroducePlayerText
 	call PrintText
@@ -124,15 +120,7 @@ ENDC
 .skipSpeech
 	call GBFadeOutToWhite
 	call GetRedPalID ; HAX
-	ld de, RedPicFront
-	lb bc, BANK(RedPicFront), $00
-	ld a, [wPlayerGender] ; check gender
-  	and a      ; check gender
-  	jr z, .NotGreen2
-  	ld de, GreenPicFront
-   	lb bc, Bank(GreenPicFront), $00
-.NotGreen2:
-	call IntroDisplayPicCenteredOrUpperRight
+	call IntroDisplayPlayerPic
 	call GBFadeInFromWhite
 	ld a, [wStatusFlags3]
 	and a ; ???
@@ -149,15 +137,10 @@ ENDC
 	ld [rROMB], a
 	ld c, 4
 	call DelayFrames
-	ld de, RedSprite
-	ld hl, vSprites
-	lb bc, BANK(RedSprite), $0C
-	ld a, [wPlayerGender] ; check gender
-	and a      ; check gender
-	jr z, .NotGreen3
-	ld de,GreenSprite
-	lb bc, BANK(GreenSprite), $0C
-.NotGreen3:
+	ld e, PLAYER_GFX_WALK
+	farcall GetPlayerGfx
+	ld b, h
+	ld c, $0c
  	ld hl, vSprites
 	call CopyVideoData
 	ld de,ShrinkPic1
@@ -279,21 +262,11 @@ IntroDisplayPicCenteredOrUpperRight:
 	ldh [hStartTileID], a
 	predef_jump CopyUncompressedPicToTilemap
 
-	; displays boy/girl choice
-	BoyGirlChoice::
- 	   call SaveScreenTilesToBuffer1
- 	   call InitBoyGirlTextBoxParameters
- 	   jr DisplayBoyGirlChoice
-    
-	InitBoyGirlTextBoxParameters::
-	   ld a, $1 ; loads the value for the unused North/West choice, that was changed to say Boy/Girl
- 	   ld [wTwoOptionMenuID], a
- 	   coord hl, 13, 7 
- 	   ld bc, $80e
- 	   ret
- 	   
-	DisplayBoyGirlChoice::
-   	   ld a, $14
-   	   ld [wTextBoxID], a
-   	   call DisplayTextBoxID
-   	   jp LoadScreenTilesFromBuffer1
+
+; displays the current player character's front pic, centered
+IntroDisplayPlayerPic:
+	ld e, PLAYER_GFX_FRONT
+	farcall GetPlayerGfx
+	ld b, h
+	ld c, 0
+	jp IntroDisplayPicCenteredOrUpperRight

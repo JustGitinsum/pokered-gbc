@@ -227,22 +227,20 @@ UpdateItemMenuCursorInfo:
 	add hl, bc
 	ld a, [hl]
 	ld [wCurItem], a
+	ld b, a
 	ld a, [wListMenuID]
 	cp PRICEDITEMLISTMENU
 	jr nz, .description
-	ld a, [wCurItem]
-	push af
+	; GetQuantityOfItemInBag restores wCurItem itself.
+	ld a, b
 	call GetOwnedItemQuantity
 	ld [wTempByteValue], a
 	hlcoord 6, 1
 	ld de, wTempByteValue
 	lb bc, LEADING_ZEROES | 1, 2
 	call PrintNumber
-	pop af
-	ld [wCurItem], a
 .description
-	farcall DisplayItemMenuDescription
-	ret
+	farjp DisplayItemMenuDescription
 .cancel
 	farcall ClearItemMenuIcon
 	farcall RestoreItemMenuCursorPalettes
@@ -358,8 +356,8 @@ IsUnboxedItemMenu:
 	cp ITEMLISTMENU
 	ret nz
 	ld a, [wBagPocketsFlags]
+	cpl ; z if the info-box bit was set
 	and 1 << BIT_PRINT_INFO_BOX
-	cp 1 << BIT_PRINT_INFO_BOX
 	ret
 
 DelayBeforeListMenu::

@@ -124,13 +124,10 @@ IF GEN_2_GRAPHICS
 	ld a, PAL_BROCK
 	jr .gotPalette
 .notOldMan
-	ld a, [wPlayerGender] ; Gender check
-	and a
-	jr z, .boyBackPalette
-	ld a, PAL_ERIKA
-	jr .gotPalette
-.boyBackPalette
-	ld a, PAL_HERO
+	push bc
+	farcall GetPlayerPalettes
+	pop bc
+	ld a, d
 .gotPalette
 ELSE
 	ld a, PAL_REDMON

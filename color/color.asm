@@ -430,18 +430,21 @@ LoadMoveCategoryPalette:
     ld d, PAL_BLUEMON
 .loadCategoryPalette
     ld e, 5
-    farcall LoadSGBPalette
-    ret
+    farjp LoadSGBPalette
 
+; TM/HM type (slot 4) and category (slot 5) for the description row.
 SetPal_ItemMenu::
-	; Category lives in bank 1; capture it before selecting palette WRAM.
+	; Type and category live in bank 1; capture them before selecting palette WRAM.
+	ld a, [wPlayerMoveType]
+	ld d, a
 	ld a, [wPlayerMoveCategory]
-	ld b, a
-	ldh a, [rWBK]
 	ld c, a
+	ldh a, [rWBK]
+	ld b, a
 	ld a, 2
 	ldh [rWBK], a
 	push bc
+	push de
 	call SaveItemMenuPalettes
 	ld a, [W2_TileBasedPalettes]
 	and a
@@ -464,27 +467,20 @@ SetPal_ItemMenu::
 	ld bc, 2
 	ld a, 5
 	call FillMemory
-	ld a, 3
-	ld [W2_StaticPaletteMapChanged], a
 .loadPalettes
-	ld a, [wPlayerMoveType]
-	ld c, a
-	ld b, 0
+	pop de
+	ld e, d
+	ld d, 0
 	ld hl, MoveTypeExpBarPalette
-	add hl, bc
+	add hl, de
 	ld d, [hl]
 	ld e, 4
 	farcall LoadSGBPalette
 	pop bc
 	push bc
-	ld a, b
-	call LoadMoveCategoryPalette
-	ld a, 1
-	ld [W2_ForceBGPUpdate], a
-	pop bc
 	ld a, c
-	ldh [rWBK], a
-	ret
+	call LoadMoveCategoryPalette
+	jp ItemMenuPalettesChanged
 
 ; WRAM bank 2 must be selected before calling (including before pushing).
 ; Save once so switching items or opening quantity menus preserves the original.
@@ -492,25 +488,13 @@ SaveItemMenuPalettes:
 	ld a, [W2_ItemMenuPalettesActive]
 	and a
 	ret nz
-	ld a, 1
+	inc a
 	ld [W2_ItemMenuPalettesActive], a
 	ld a, [W2_TileBasedPalettes]
 	ld [W2_ItemMenuTileBasedPalettes], a
-	ld hl, W2_BgPaletteData + 4 * 8
-	ld de, W2_ItemMenuSavedPalettes
-	ld bc, 2 * 8
-	call CopyData
-	ld hl, W2_BgPaletteData + 6 * 8
-	ld de, W2_ItemMenuSavedIconPalette
-	ld bc, 8
-	call CopyData
-	ld hl, W2_BgPaletteData + 3 * 8
-	ld de, W2_ItemMenuSavedMovePalette
-	ld bc, 8
-	call CopyData
-	ld hl, W2_BgPaletteData + 2 * 8
-	ld de, W2_ItemMenuSavedPocketPalette
-	ld bc, 8
+	ld hl, W2_BgPaletteData + ITEM_MENU_FIRST_SAVED_PAL * 8
+	ld de, W2_ItemMenuSavedBgPalettes
+	ld bc, ITEM_MENU_NUM_SAVED_PALS * 8
 	call CopyData
 	ld hl, W2_TilesetPaletteMap
 	ld de, W2_ItemMenuSavedPaletteMap
@@ -565,14 +549,23 @@ SetPal_ItemMenuIcon::
 	lb bc, 3, 3
 	ld a, 6
 	call FillBox
-	ld a, 3
-	ld [W2_StaticPaletteMapChanged], a
 .loadPalette
 	pop de
 	ld e, 6
 	farcall LoadSGBPalette
+	; fallthrough
+
+; Shared exits for item-menu palette routines. They must be reached with jp/jr
+; after the routine selected WRAM bank 2 and pushed bc with b = caller's bank.
+; (The stack is in banked WRAM, so bank 2 can't be selected by a called helper.)
+; StaticPaletteMapChanged is only consumed in static-map mode, so tile-based
+; callers can share this exit harmlessly.
+ItemMenuPalettesChanged:
+	ld a, 3
+	ld [W2_StaticPaletteMapChanged], a
 	ld a, 1
 	ld [W2_ForceBGPUpdate], a
+RestoreItemMenuWRAMBank:
 	pop bc
 	ld a, b
 	ldh [rWBK], a
@@ -584,43 +577,24 @@ RestoreItemMenuPalettes::
 	ld a, 2
 	ldh [rWBK], a
 	push bc
+.inBank2
 	ld a, [W2_ItemMenuPalettesActive]
 	and a
-	jr z, .done
+	jr z, RestoreItemMenuWRAMBank
 	xor a
 	ld [W2_ItemMenuPalettesActive], a
 	ld [W2_ItemMenuMoveNamesActive], a
 	ld a, [W2_ItemMenuTileBasedPalettes]
 	ld [W2_TileBasedPalettes], a
-	ld hl, W2_ItemMenuSavedPalettes
-	ld de, W2_BgPaletteData + 4 * 8
-	ld bc, 2 * 8
-	call CopyData
-	ld hl, W2_ItemMenuSavedIconPalette
-	ld de, W2_BgPaletteData + 6 * 8
-	ld bc, 8
-	call CopyData
-	ld hl, W2_ItemMenuSavedMovePalette
-	ld de, W2_BgPaletteData + 3 * 8
-	ld bc, 8
-	call CopyData
-	ld hl, W2_ItemMenuSavedPocketPalette
-	ld de, W2_BgPaletteData + 2 * 8
-	ld bc, 8
+	ld hl, W2_ItemMenuSavedBgPalettes
+	ld de, W2_BgPaletteData + ITEM_MENU_FIRST_SAVED_PAL * 8
+	ld bc, ITEM_MENU_NUM_SAVED_PALS * 8
 	call CopyData
 	ld hl, W2_ItemMenuSavedPaletteMap
 	ld de, W2_TilesetPaletteMap
 	ld bc, $180
 	call CopyData
-	ld a, 3
-	ld [W2_StaticPaletteMapChanged], a
-	ld a, 1
-	ld [W2_ForceBGPUpdate], a
-.done
-	pop bc
-	ld a, b
-	ldh [rWBK], a
-	ret
+	jr ItemMenuPalettesChanged
 
 ; A normal description replaces the TM row but leaves the icon visible.
 ; Restore only the type/category slots and assignments, never icon slot 6.
@@ -632,8 +606,13 @@ RestoreItemDescriptionPalettes::
 	push bc
 	ld a, [W2_ItemMenuPalettesActive]
 	and a
-	jr z, .done
-	ld hl, W2_ItemMenuSavedPalettes
+	jr z, RestoreItemMenuWRAMBank
+	call RestoreItemMenuTMPalettes
+	jr ItemMenuPalettesChanged
+
+; WRAM bank 2 selected; restore TM type/category slots and their tiles.
+RestoreItemMenuTMPalettes:
+	ld hl, W2_ItemMenuSavedTMPalettes
 	ld de, W2_BgPaletteData + 4 * 8
 	ld bc, 2 * 8
 	call CopyData
@@ -647,22 +626,12 @@ RestoreItemDescriptionPalettes::
 	ld hl, W2_ItemMenuSavedPaletteMap + $da
 	ld de, W2_TilesetPaletteMap + $da
 	ld bc, 6
-	jr .copy
+	jp CopyData
 .staticMap
 	ld hl, W2_ItemMenuSavedPaletteMap + 13 * SCREEN_WIDTH + 1
 	ld de, W2_TilesetPaletteMap + 13 * SCREEN_WIDTH + 1
 	ld bc, 6
-.copy
-	call CopyData
-	ld a, 3
-	ld [W2_StaticPaletteMapChanged], a
-	ld a, 1
-	ld [W2_ForceBGPUpdate], a
-.done
-	pop bc
-	ld a, b
-	ldh [rWBK], a
-	ret
+	jp CopyData
 
 SetPal_BagPocketIcon::
 	ld a, [wListMenuID]
@@ -690,18 +659,11 @@ SetPal_BagPocketIcon::
 	lb bc, 4, 5
 	ld a, 2
 	call FillBox
-	ld a, 3
-	ld [W2_StaticPaletteMapChanged], a
 .load
 	ld d, PAL_YELLOWMON
 	ld e, 2
 	farcall LoadSGBPalette
-	ld a, 1
-	ld [W2_ForceBGPUpdate], a
-	pop bc
-	ld a, b
-	ldh [rWBK], a
-	ret
+	jp ItemMenuPalettesChanged
 
 ; Color only the secondary TM/HM list rows, not other uses of the same font.
 ; Called after the preview, which may have restored the original palette map.
@@ -755,7 +717,7 @@ SetPal_ItemListMoveNames::
 	jr nz, .prepare
 	ld a, [W2_ItemMenuMoveNamesActive]
 	and a
-	jp z, .done
+	jp z, RestoreItemMenuWRAMBank
 .prepare
 	push de
 	call SaveItemMenuPalettes
@@ -835,15 +797,7 @@ SetPal_ItemListMoveNames::
 	ld d, PAL_BLACK
 	ld e, 3
 	farcall LoadSGBPalette
-	ld a, 3
-	ld [W2_StaticPaletteMapChanged], a
-	ld a, 1
-	ld [W2_ForceBGPUpdate], a
-.done
-	pop bc
-	ld a, b
-	ldh [rWBK], a
-	ret
+	jp ItemMenuPalettesChanged
 
 ; CANCEL clears the item preview, but the pocket graphic and move names remain.
 RestoreItemMenuCursorPalettes::
@@ -851,20 +805,16 @@ RestoreItemMenuCursorPalettes::
 	ld b, a
 	ld a, 2
 	ldh [rWBK], a
+	push bc
 	ld a, [W2_ItemMenuMoveNamesActive]
 	ld c, a
 	ld a, [W2_BagPocketTilesActive]
 	or c
+	jp z, RestoreItemMenuPalettes.inBank2
+	ld a, [W2_ItemMenuPalettesActive]
 	and a
-	ld a, b
-	ldh [rWBK], a
-	jp z, RestoreItemMenuPalettes
-	call RestoreItemDescriptionPalettes
-	ldh a, [rWBK]
-	ld b, a
-	ld a, 2
-	ldh [rWBK], a
-	push bc
+	jp z, RestoreItemMenuWRAMBank
+	call RestoreItemMenuTMPalettes
 	ld hl, W2_ItemMenuSavedIconPalette
 	ld de, W2_BgPaletteData + 6 * 8
 	ld bc, 8
@@ -896,14 +846,7 @@ RestoreItemMenuCursorPalettes::
 	dec b
 	jr nz, .row
 .refresh
-	ld a, 3
-	ld [W2_StaticPaletteMapChanged], a
-	ld a, 1
-	ld [W2_ForceBGPUpdate], a
-	pop bc
-	ld a, b
-	ldh [rWBK], a
-	ret
+	jp ItemMenuPalettesChanged
 
 RestoreBagActionMenuPalettes::
 	ld de, wTileMap + 7 * SCREEN_WIDTH + 13
@@ -966,10 +909,7 @@ RestoreItemMoveNameBoxPalettes:
 	ld a, 3
 	ld [W2_StaticPaletteMapChanged], a
 .done
-	pop bc
-	ld a, b
-	ldh [rWBK], a
-	ret
+	jp RestoreItemMenuWRAMBank
 
 ; hl = screen palette-map cell, WRAM bank 2 selected; preserves bc/de/hl.
 GetOriginalItemMenuPalette:
@@ -1020,21 +960,12 @@ SetPal_TownMap:
 	ld a, [wWalkBikeSurfState]
 	cp a, 2
 	jr z, .surfMap
-	ld a, [wPlayerGender]
-	and a
-	jr z, .boyMap
+	farcall GetPlayerPalettes
 	ld a, 2
 	ldh [rSVBK], a
 	ld hl, W2_SpritePaletteMap
 	ld bc, $4
-	ld a, SPR_PAL_GREEN ; Girl Player SPrite palette
-	jr .doneMap
-.boyMap
-	ld a, 2
-	ldh [rSVBK], a
-	ld hl, W2_SpritePaletteMap
-	ld bc, $4
-	ld a, SPR_PAL_ORANGE
+	ld a, e ; overworld sprite palette
 	jr .doneMap
 .surfMap
 	ld a, 2
@@ -1766,39 +1697,14 @@ SetPal_GameFreakIntro:
 
 ; Trainer card
 SetPal_TrainerCard:
-	ld a, [wPlayerGender] ; Gender check
-	and a
-	jr z, .BoyTrainerCard
-
-	; Greens's palette
+	farcall GetPlayerPalettes ; d = pic palette, h = card border palette
 	ld a, 2
 	ldh [rSVBK], a
-	ld d, PAL_ERIKA ; Green palette (Girl player)
+	push hl
 	ld e, 4
 	farcall LoadSGBPalette
-	ld d, PAL_GREENMON ; Border
-	ld e, 5
-	farcall LoadSGBPalette
-	jr .EndTrainerCard
-
-	; Red's palette
-.BoyTrainerCard
-	ld a, 2
-	ldh [rSVBK], a
-IF GEN_2_GRAPHICS
-	ld d, PAL_HERO
-ELSE
-	ld d, PAL_REDMON
-ENDC
-	ld e, 4
-	farcall LoadSGBPalette
-
-	; Palette for border tiles
-IF DEF(_BLUE)
-	ld d, PAL_BLUEMON
-ELSE ; _RED
-	ld d, PAL_REDMON
-ENDC
+	pop hl
+	ld d, h ; Border
 	ld e, 5
 	farcall LoadSGBPalette
 

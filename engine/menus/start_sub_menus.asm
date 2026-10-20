@@ -536,14 +536,10 @@ StartMenu_TrainerInfo::
 
 ; loads tile patterns and draws everything except for gym leader faces / badges
 DrawTrainerInfo:
-	ld de, RedPicFront
-	lb bc, BANK(RedPicFront), $01
-	ld a, [wPlayerGender]
-	and a
-	jr z, .AreBoy
-	ld de, GreenPicFront
-	lb bc, BANK(GreenPicFront), $01
-.AreBoy
+	ld e, PLAYER_GFX_FRONT
+	farcall GetPlayerGfx
+	ld b, h
+	ld c, $01
 	predef DisplayPicCenteredOrUpperRight
 	call DisableLCD
 	hlcoord 0, 2

@@ -42,10 +42,14 @@ DrawBagMenuBackground::
 	jr nz, .tmHMsPocket
 .mainPocket
 	call PlaceString
-	ld a, [wNumBagItems]
-	ld b, a
-	ld c, BAG_ITEM_CAPACITY
-	jr .loadText
+	hlcoord 12, 1
+	ld de, wNumBagItems
+	lb bc, 1 | LEADING_ZEROES, 2
+	call PrintNumber
+	ld [hl], "/"
+	inc hl
+	ld de, BagItemCapacity
+	jp PrintNumber
 .keyItemsPocket
 	; Borrow unused textbox tiles; the normal Bag exit restores them.
 	ld de, BattleMenuBallGraphicsEnd - 2 tiles
@@ -68,23 +72,9 @@ DrawBagMenuBackground::
 	; Keep the pocket label, but omit the item/capacity counter for TM/HMs.
 	ld de, BagTMHMsText
 	jp PlaceString
-.loadText
-	hlcoord 12, 1
-	ld de, w2CharStringBuffer
-	ld a, b
-	ld [de], a
-	inc de
-	ld a, c
-	ld [de], a
-	dec de
-	lb bc, 1 | LEADING_ZEROES, 2
-	call PrintNumber
-	ld [hl], "/"
-	inc hl
-	inc de
-	inc de
-	call PrintNumber
-	ret
+
+BagItemCapacity:
+	db BAG_ITEM_CAPACITY
 
 ; Returns the count-byte address for [wCurItem]'s storage pocket in HL.
 ; TMs and HMs share a pocket; HMs remain protected through IsKeyItem.
@@ -140,16 +130,15 @@ PrintItemListExtras::
 	add hl, bc
 	ld a, [wNamedObjectIndex]
 	cp EXP_ALL
-	jr z, .expAllState
 	ld a, BAG_SELECT_ICON_TILE
+	jr nz, .placeIcon
+	ld a, BAG_EXP_ALL_ICON_TILE
 .placeIcon
+	; Both badges are two consecutive tiles.
 	ld [hli], a
 	inc a
 	ld [hl], a
 	ret
-.expAllState
-	ld a, BAG_EXP_ALL_ICON_TILE
-	jr .placeIcon
 
 ; Input: [wNamedObjectIndex] = TM/HM item ID, de = item name position
 PrintTMHMMoveName::
@@ -157,14 +146,14 @@ PrintTMHMMoveName::
 	cp TM01
 	jr nc, .tm
 	cp HM01
-	jr c, .notMachine
+	ret c
 	push af
 	sub HM01
 	add NUM_TMS + 1
 	jr .getMove
 .tm
 	cp TM01 + NUM_TMS
-	jr nc, .notMachine
+	ret nc
 	push af
 	sub TM01 - 1
 .getMove
@@ -182,47 +171,31 @@ PrintTMHMMoveName::
 	pop af
 	ld [wNamedObjectIndex], a
 	ret
-.notMachine
-	ret
 
 CycleBagPocket::
-	; Forward order is Items -> TM/HMs -> Key Items; left cycles the reverse order.
+	; Pocket IDs: Items=0, Key Items=1, TM/HMs=2.
+	; Forward order is Items -> TM/HMs -> Key Items, i.e. (id - 1) mod 3;
+	; the one-shot previous flag cycles the reverse order, (id + 1) mod 3.
 	ld a, [wBagPocketsFlags]
-	bit BIT_PREVIOUS_POCKET, a
-	jr nz, .previousPocket
-	and (1 << BIT_KEY_ITEMS_POCKET) | (1 << BIT_TM_HM_POCKET)
-	and a
-	jr z, .nextFromItems
-	cp 2
-	jr z, .nextFromTMHMs
-	xor a
-	jr CycleBagPocketStore
-.nextFromItems
-	ld a, 2
-	jr CycleBagPocketStore
-.nextFromTMHMs
-	ld a, 1
-	jr CycleBagPocketStore
-.previousPocket
-	ld a, [wBagPocketsFlags]
-	and (1 << BIT_KEY_ITEMS_POCKET) | (1 << BIT_TM_HM_POCKET)
-	and a
-	jr z, .previousFromItems
-	cp 1
-	jr z, .previousFromKeyItems
-	xor a
-	jr CycleBagPocketStore
-.previousFromItems
-	ld a, 1
-	jr CycleBagPocketStore
-.previousFromKeyItems
-	ld a, 2
-CycleBagPocketStore:
 	ld b, a
-	ld a, [wBagPocketsFlags]
+	and (1 << BIT_KEY_ITEMS_POCKET) | (1 << BIT_TM_HM_POCKET)
+	bit BIT_PREVIOUS_POCKET, b
+	jr nz, .previousPocket
+	sub 1
+	jr nc, .store
+	ld a, 2
+	jr .store
+.previousPocket
+	inc a
+	cp 3
+	jr c, .store
+	xor a
+.store
+	ld c, a
+	ld a, b
 	; Replace the pocket ID and clear the one-shot direction flag.
 	and %11101100
-	or b
+	or c
 	ld [wBagPocketsFlags], a
 	call GetCurrentBagList
 	ld a, h
@@ -288,11 +261,10 @@ DrawBagPocketIcon::
 	jp CopyVideoData
 .hidden
 	; Initial entry and party returns are white: copy at once, not over VBlanks.
+	; DisableLCD hangs if the LCD is already off, so only call it while on.
 	ldh a, [rLCDC]
 	bit B_LCDC_ENABLE, a
-	jr z, .copyHidden
-	call DisableLCD
-.copyHidden
+	call nz, DisableLCD
 	ld h, d
 	ld l, e
 	ld de, vChars2 tile BAG_POCKET_ICON_TILE

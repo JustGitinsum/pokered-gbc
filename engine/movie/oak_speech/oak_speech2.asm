@@ -1,29 +1,15 @@
 ChoosePlayerName:
 	call OakSpeechSlidePicRight
-	ld a, [wPlayerGender] ; load gender
-	and a
-	jr nz, .AreGirl ; Skip to girl names if you are a girl instead
-	ld de, DefaultNamesPlayer
-	call DisplayIntroNameTextBox
+	farcall DrawPlayerDefaultNames ; default names depend on the player character
+	call HandleIntroNameMenu
 	ld a, [wCurrentMenuItem]
 	and a
 	jr z, .customName
-	ld hl, DefaultNamesPlayerList
-	call GetDefaultName
+	ld e, a
+	farcall GetPlayerDefaultName
 	ld de, wPlayerName
 	call OakSpeechSlidePicLeft
 	jr .done
-.AreGirl ; Copy of the boy naming routine, just with girl's names
-	ld de, DefaultNamesGirl
-	call DisplayIntroNameTextBox
-	ld a, [wCurrentMenuItem]
-	and a
-	jr z, .customName
-	ld hl, DefaultNamesGirlList
-	call GetDefaultName
-	ld de, wPlayerName
-	call OakSpeechSlidePicLeft
-	jr .done ; End of new Girl Names routine
 .customName
 	ld hl, wPlayerName
 	xor a ; NAME_PLAYER_SCREEN
@@ -34,15 +20,7 @@ ChoosePlayerName:
 	jr z, .customName
 	call ClearScreen
 	call Delay3
-	ld de, RedPicFront
-	ld b, BANK(RedPicFront)
-	ld a, [wPlayerGender] ; Added gender check
-	and a      ; Added gender check
-	jr z, .AreBoy3
-	ld de, GreenPicFront
-	ld b, BANK(GreenPicFront)
-.AreBoy3
-	call IntroDisplayPicCenteredOrUpperRight
+	call IntroDisplayPlayerPic
 .done
 	ld hl, YourNameIsText
 	jp PrintText
@@ -186,11 +164,12 @@ DisplayIntroNameTextBox:
 	ld c, $9
 	call TextBoxBorder
 	hlcoord 3, 0
-	ld de, .namestring
+	ld de, IntroNameText
 	call PlaceString
 	pop de
 	hlcoord 2, 2
 	call PlaceString
+HandleIntroNameMenu:
 	call UpdateSprites
 	xor a
 	ld [wCurrentMenuItem], a
@@ -204,7 +183,7 @@ DisplayIntroNameTextBox:
 	ld [wMaxMenuItem], a
 	jp HandleMenuInput
 
-.namestring
+IntroNameText:
 	db "NAME@"
 
 INCLUDE "data/player_names.asm"

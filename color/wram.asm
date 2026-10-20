@@ -52,18 +52,27 @@ DEF W2_BattleMonPalette            EQU $d78c
 ; Used by "WindowTransferBgRowsAndColors" function. Analagous to H_VBCOPYBGNUMROWS.
 DEF W2_VBCOPYBGNUMROWS             EQU $d78d
 
+; Item menus borrow BG palette slots 2-6:
+; 2 = Bag pocket graphic, 3 = TM/HM move names, 4 = TM type,
+; 5 = TM category, 6 = item icon.
+DEF ITEM_MENU_FIRST_SAVED_PAL      EQU 2
+DEF ITEM_MENU_NUM_SAVED_PALS       EQU 5
+
 DEF W2_ItemMenuPalettesActive      EQU $d78e
 DEF W2_ItemMenuTileBasedPalettes   EQU $d78f
-DEF W2_ItemMenuMoveNamesActive    EQU $d790 ; palette slot 3 borrowed until menu exit
-DEF W2_ItemMenuSavedPalettes       EQU $d800 ; palette slots 4 and 5
-DEF W2_ItemMenuSavedPaletteMap     EQU $d810 ; $180 bytes, through $d98f
-DEF W2_ItemMenuSavedIconPalette    EQU $d990 ; palette slot 6
-DEF W2_BattleBagSavedBackPicTiles  EQU $d998 ; last two player-picture tiles, $20 bytes
-DEF W2_ItemMenuSavedMovePalette   EQU $d9b8 ; palette slot 3
-DEF W2_ItemMenuPaletteScratch     EQU $d9c0 ; $180 bytes for tile-to-screen conversion
-DEF W2_BagPocketSavedTiles        EQU $db40 ; 20 tiles, through $dc7f
-DEF W2_ItemMenuSavedPocketPalette EQU $dc80 ; palette slot 2
-DEF W2_BagPocketTilesActive       EQU $dc88
+DEF W2_ItemMenuMoveNamesActive     EQU $d790 ; palette slot 3 borrowed until menu exit
+DEF W2_BagPocketTilesActive        EQU $d791
+DEF W2_ItemMenuSavedBgPalettes     EQU $d800 ; slots 2-6, $28 bytes
+DEF W2_ItemMenuSavedPaletteMap     EQU $d830 ; $180 bytes, through $d9af
+DEF W2_BattleBagSavedBackPicTiles  EQU $d9b0 ; last two player-picture tiles, $20 bytes
+DEF W2_ItemMenuPaletteScratch      EQU $d9d0 ; $180 bytes for tile-to-screen conversion
+DEF W2_BagPocketSavedTiles         EQU $db50 ; 20 tiles, through $dc8f
+
+; Saved copy of an individual borrowed slot.
+DEF W2_ItemMenuSavedPocketPalette  EQU W2_ItemMenuSavedBgPalettes + (2 - ITEM_MENU_FIRST_SAVED_PAL) * 8
+DEF W2_ItemMenuSavedMovePalette    EQU W2_ItemMenuSavedBgPalettes + (3 - ITEM_MENU_FIRST_SAVED_PAL) * 8
+DEF W2_ItemMenuSavedTMPalettes     EQU W2_ItemMenuSavedBgPalettes + (4 - ITEM_MENU_FIRST_SAVED_PAL) * 8 ; slots 4-5
+DEF W2_ItemMenuSavedIconPalette    EQU W2_ItemMenuSavedBgPalettes + (6 - ITEM_MENU_FIRST_SAVED_PAL) * 8
 
 ; In bank 1, the stack starts at $dfff. So, that's also the stack here when bank 2 is
 ; loaded. Don't use anything too close to there.

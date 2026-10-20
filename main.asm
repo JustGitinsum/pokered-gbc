@@ -96,7 +96,6 @@ SECTION "Battle Engine 1", ROMX
 INCLUDE "engine/overworld/is_player_just_outside_map.asm"
 INCLUDE "engine/pokemon/status_screen.asm"
 INCLUDE "engine/menus/party_menu.asm"
-INCLUDE "gfx/player.asm"
 INCLUDE "engine/overworld/turn_sprite.asm"
 INCLUDE "engine/menus/start_sub_menus.asm"
 INCLUDE "engine/items/tms.asm"
@@ -469,3 +468,13 @@ INCLUDE "engine/battle/end_of_battle.asm"
 SECTION "Options Helpers", ROMX
 INCLUDE "engine/menus/options_menu_helpers.asm"
 INCLUDE "engine/menus/nickname_display.asm"
+
+SECTION "Player Characters", ROMX
+INCLUDE "engine/player_characters.asm"
+INCLUDE "data/player_characters.asm"
+INCLUDE "engine/movie/oak_speech/player_select.asm"
+INCLUDE "gfx/player_characters.asm"
+
+; Player pictures can grow independently of the nearly full Battle Engine 1 bank.
+SECTION "Player Pictures", ROMX
+INCLUDE "gfx/player.asm"

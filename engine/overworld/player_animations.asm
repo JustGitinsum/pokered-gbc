@@ -386,29 +386,26 @@ FishingAnim:
 	call DelayFrames
 	ld hl, wMovementFlags
 	set BIT_LEDGE_OR_FISHING, [hl]
-	ld a, [wPlayerGender] ; added gender check
-	and a      ; added gender check
-	jr z, .BoySpriteLoad
-	ld de, GreenSprite
+	ld e, PLAYER_GFX_WALK
+	farcall GetPlayerGfx
+	ld b, h
+	ld c, $c
 	ld hl, vNPCSprites
-	ld bc, (BANK(GreenSprite) << 8) + $0c
-	jr .KeepLoadingSpriteStuff
-.BoySpriteLoad
-	ld de, RedSprite
-	ld hl, vNPCSprites
-	lb bc, BANK(RedSprite), $c
-.KeepLoadingSpriteStuff
 	call CopyVideoData
-	ld a, [wPlayerGender] ; added gender check
-	and a      ; added gender check
-	jr z, .BoyTiles ; skip loading Green's stuff if you're Red
+	ld a, [wPlayerGender]
+	cp NUM_PLAYER_CHARACTERS
+	jr c, .validCharacter
+	xor a ; PLAYER_RED
+.validCharacter
+	ld c, a
+	ld b, 0
+	ld hl, PlayerFishingTiles
+	add hl, bc
+	add hl, bc ; double the index in 16 bits so larger character lists cannot wrap
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
 	ld a, $4
-	ld hl, GreenFishingTiles
-	jr .ContinueRoutine ; go back to main routine after loading Green's stuff
-.BoyTiles ; alternately, load Red's stuff
-	ld a, $4
-	ld hl, RedFishingTiles
-.ContinueRoutine
 	call LoadAnimSpriteGfx
 	ld a, [wSpritePlayerStateData1ImageIndex]
 	ld c, a
@@ -516,6 +513,27 @@ GreenFishingTiles:
 	fishing_gfx GreenFishingTilesBack,  2, $06
 	fishing_gfx GreenFishingTilesSide,  2, $0a
 	fishing_gfx RedFishingRodTiles,     3, $fd
+
+GoldFishingTiles:
+	fishing_gfx GoldFishingTilesFront, 2, $02
+	fishing_gfx GoldFishingTilesBack,  2, $06
+	fishing_gfx GoldFishingTilesSide,  2, $0a
+	fishing_gfx RedFishingRodTiles,    3, $fd
+
+KrisFishingTiles:
+	fishing_gfx KrisFishingTilesFront, 2, $02
+	fishing_gfx KrisFishingTilesBack,  2, $06
+	fishing_gfx KrisFishingTilesSide,  2, $0a
+	fishing_gfx RedFishingRodTiles,    3, $fd
+
+PlayerFishingTiles:
+; entries correspond to PLAYER_* constants
+	table_width 2
+	dw RedFishingTiles   ; PLAYER_RED
+	dw GreenFishingTiles ; PLAYER_GREEN
+	dw GoldFishingTiles  ; PLAYER_GOLD
+	dw KrisFishingTiles  ; PLAYER_KRIS
+	assert_table_length NUM_PLAYER_CHARACTERS
 
 _HandleMidJump::
 	ld a, [wPlayerJumpingYScreenCoordsIndex]

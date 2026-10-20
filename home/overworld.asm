@@ -2031,14 +2031,9 @@ RunMapScript::
 	ret
 
 LoadWalkingPlayerSpriteGraphics::
-	ld b, BANK(RedSprite)
-	ld de, RedSprite
-	ld a, [wPlayerGender]
-	and a
-	jr z, .AreGuy1
-	ld b, BANK(GreenSprite)
-	ld de, GreenSprite
-.AreGuy1
+	ld e, PLAYER_GFX_WALK
+	farcall GetPlayerGfx
+	ld b, h
 	jr LoadPlayerSpriteGraphicsCommon
 
 ;;;;;;;;Removes until i can figure out how to make wild encounters not diabled while running
@@ -2060,14 +2055,9 @@ LoadSurfingPlayerSpriteGraphics::
 	jr LoadPlayerSpriteGraphicsCommon
 
 LoadBikePlayerSpriteGraphics::
-	ld b, BANK(RedBikeSprite)
-	ld de, RedBikeSprite
-	ld a, [wPlayerGender]
-	and a
-	jr z, .AreGuy2
-	ld b, BANK(GreenBikeSprite)
-	ld de, GreenBikeSprite
-.AreGuy2
+	ld e, PLAYER_GFX_BIKE
+	farcall GetPlayerGfx
+	ld b, h
 
 LoadPlayerSpriteGraphicsCommon::
 	ld hl, vNPCSprites
