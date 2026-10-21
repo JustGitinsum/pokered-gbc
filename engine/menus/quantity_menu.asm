@@ -276,6 +276,9 @@ BlinkListMenuScrollArrow::
 	jp HandleDownArrowBlinkTiming
 
 DrawListMenuWithItemPreview::
+	ld a, [wListMenuID]
+	cp MOVESLISTMENU
+	jr z, .printLists
 	call IsUnboxedItemMenu
 	jr z, .unboxed
 	farcall RestoreItemMenuPalettes
@@ -294,8 +297,12 @@ DrawListMenuWithItemPreview::
 .printLists
 	callfar PCDrawBothLists
 	farcall PlaceBagPocketIcon
+	ld a, [wListMenuID]
+	cp MOVESLISTMENU
+	jr z, .preview
 	call IsUnboxedItemMenu
 	ret nz
+.preview
 	; Complete the preview before its tilemap is transferred to the display.
 	call PlaceMenuCursor
 	jr UpdateItemMenuPreview
@@ -308,6 +315,9 @@ PlaceMenuCursorAndItemPreview::
 	ldh a, [hJoy7]
 	and a ; quantity/confirmation menus must not change the highlighted item
 	ret z
+	ld a, [wListMenuID]
+	cp MOVESLISTMENU
+	jr z, UpdateItemMenuPreview
 	call IsUnboxedItemMenu
 	ret nz
 UpdateItemMenuPreview:
@@ -323,9 +333,16 @@ UpdateItemMenuPreview:
 	push af
 	xor a
 	ldh [hAutoBGTransferEnabled], a
+	ld a, [wListMenuID]
+	cp MOVESLISTMENU
+	jr nz, .item
+	call UpdateMoveListCursorInfo
+	jr .done
+.item
 	call UpdateItemMenuCursorInfo
 	farcall SetPal_BagPocketIcon
 	farcall SetPal_ItemListMoveNames
+.done
 	pop af
 	ldh [hAutoBGTransferEnabled], a
 	pop af
@@ -334,6 +351,35 @@ UpdateItemMenuPreview:
 	ld [wCurItem], a
 	pop hl
 	ret
+
+UpdateMoveListCursorInfo:
+	ld a, [wCurrentMenuItem]
+	ld c, a
+	ld a, [wListScrollOffset]
+	add c
+	ld c, a
+	ld a, [wListCount]
+	cp c
+	jr z, .cancel
+	jr c, .cancel
+	ld a, [wListPointer]
+	ld l, a
+	ld a, [wListPointer + 1]
+	ld h, a
+	inc hl
+	ld b, 0
+	add hl, bc
+	ld a, [hl]
+	ld [wPlayerMoveNum], a
+	farjp DisplayMoveDescription
+.cancel
+	farcall RestoreItemMenuPalettes
+	hlcoord 0, 12
+	lb bc, 4, 18
+	call TextBoxBorder
+	hlcoord 1, 14
+	ld de, ItemMenuExitDescription
+	jp PlaceString
 
 ; Return pressed keys in e because the bank switch overwrites a.
 HandleItemListMenuInput::

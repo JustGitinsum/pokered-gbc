@@ -112,6 +112,22 @@ and restoring borrowed graphics and palettes.
 Returning from an item's party menu rebuilds the Bag directly, without restoring
 an intermediate overworld screen or repeating the Bag-entry transition.
 
+The learn-move menu starts on the new move in its own box above the four known
+moves. Up/Down browses all five moves, updating a shared TM/HM-style stats and
+description panel. A on the new move displays the forget prompt; A on a known
+move selects it for replacement. HMs remain protected, and B cancels learning.
+The Move Reminder and Move Deleter also show the shared TM/HM-style stats and
+description panel while browsing their move lists. CANCEL clears the move info
+and shows `Exit?`.
+Move-list previews retain their palettes while scrolling and use the house's
+unused palette slots, keeping the surrounding map colors unchanged.
+The Move Reminder's lessons are free, with no money requirement or deduction.
+Declining to replace a move or canceling the forget-move screen returns to the
+Reminder's move list for the same Pokemon. Canceling that list still ends the visit.
+Ether, Max Ether, and PP Max use a dedicated move selector with each move's
+current PP / maximum PP on the row beneath its name, including PP Max bonuses.
+Elixir and Max Elixir continue to restore all moves without a move selector.
+
 Original README follows...
 
 # Pokémon Red and Blue [![Build Status][ci-badge]][ci]

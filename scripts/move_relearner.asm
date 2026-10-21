@@ -1,28 +1,11 @@
 MoveRelearnerText1:
 	text_asm
-; Display the list of moves to the player.
-    ld a, MONEY_BOX
-	ld [wTextBoxID], a
-	call DisplayTextBoxID
 	ld hl, MoveRelearnerGreetingText
 	call PrintText
 	call YesNoChoice
 	ld a, [wCurrentMenuItem]
 	and a
 	jp nz, .exit
-	xor a
-	;charge 1000 money
-	ld [hMoney], a	
-	ld [hMoney + 2], a	
-	ld a, $0A
-	ld [hMoney + 1], a  
-	call HasEnoughMoney
-	jr nc, .enoughMoney
-	; not enough money
-	ld hl, MoveRelearnerNotEnoughMoneyText
-	call PrintText
-	jp TextScriptEnd
-.enoughMoney
 	ld hl, MoveRelearnerSaidYesText
 	call PrintText
 	; Select pokemon from party.
@@ -42,6 +25,7 @@ MoveRelearnerText1:
 	ld a, [wWhichPokemon]
 	ld b, a
 	push bc
+.prepareMoves
 	ld hl, PrepareRelearnableMoveList
 	ld b, Bank(PrepareRelearnableMoveList)
 	call Bankswitch
@@ -68,6 +52,9 @@ MoveRelearnerText1:
 	xor a
 	ld [wPrintItemPrices], a ; don't print prices
 	call DisplayListMenuID
+	push af
+	farcall RestoreItemMenuPalettes
+	pop af
 	pop bc
 	jr c, .exit  ; exit if player chose cancel
 	push bc
@@ -80,6 +67,7 @@ MoveRelearnerText1:
 	pop bc
 	ld a, b
 	ld [wWhichPokemon], a
+	push bc
 	ld a, [wLetterPrintingDelayFlags]
 	push af
 	xor a
@@ -89,26 +77,12 @@ MoveRelearnerText1:
 	ld [wLetterPrintingDelayFlags], a
 	ld a, b
 	and a
-	jr z, .exit
-	; Charge 1000 money
-	xor a
-	ld [wPriceTemp], a
-	ld [wPriceTemp + 2], a	
-	ld a, $0A
-	ld [wPriceTemp + 1], a	
-	ld hl, wPriceTemp + 2
-	ld de, wPlayerMoney + 2
-	ld c, $3
-	predef SubBCDPredef
-    ld a, MONEY_BOX
-	ld [wTextBoxID], a
-	call DisplayTextBoxID
-	ld a, SFX_PURCHASE
-	call PlaySoundWaitForCurrent
-	call WaitForSoundToFinish
-	ld hl, MoveRelearnerByeText
-	call PrintText
-	jp TextScriptEnd
+	pop bc
+	jr nz, .exit
+	ld a, b
+	ld [wWhichPokemon], a
+	push bc
+	jp .prepareMoves
 .exit
 	ld hl, MoveRelearnerByeText
 	call PrintText
@@ -121,10 +95,6 @@ MoveRelearnerGreetingText:
 
 MoveRelearnerSaidYesText:
 	text_far _MoveRelearnerSaidYesText
-	text_end
-
-MoveRelearnerNotEnoughMoneyText:
-	text_far _MoveRelearnerNotEnoughMoneyText
 	text_end
 
 MoveRelearnerWhichMoveText:

@@ -417,6 +417,8 @@ ENDC
 
 ; a = move category; palette slot 5
 LoadMoveCategoryPalette:
+	ld e, 5
+LoadMoveCategoryPaletteAt:
     cp MOVE_PHYSICAL
     jr z, .physical
     cp MOVE_SPECIAL
@@ -429,11 +431,20 @@ LoadMoveCategoryPalette:
 .special
     ld d, PAL_BLUEMON
 .loadCategoryPalette
-    ld e, 5
     farjp LoadSGBPalette
 
-; TM/HM type (slot 4) and category (slot 5) for the description row.
+; Type (slot 4) and category (slot 5, or 6 for the house move lists).
 SetPal_ItemMenu::
+	ld e, 5
+	; The house uses slot 5 for brown map tiles; slot 6 is unused there.
+	ld a, [wListMenuID]
+	cp MOVESLISTMENU
+	jr nz, .categorySlotReady
+	ldh a, [hJoy7]
+	and a
+	jr z, .categorySlotReady
+	inc e
+.categorySlotReady
 	; Type and category live in bank 1; capture them before selecting palette WRAM.
 	ld a, [wPlayerMoveType]
 	ld d, a
@@ -446,6 +457,8 @@ SetPal_ItemMenu::
 	push bc
 	push de
 	call SaveItemMenuPalettes
+	pop de
+	push de
 	ld a, [W2_TileBasedPalettes]
 	and a
 	jr z, .staticMap
@@ -455,7 +468,7 @@ SetPal_ItemMenu::
 	call FillMemory
 	ld hl, W2_TilesetPaletteMap + $da
 	ld bc, 6
-	ld a, 5
+	ld a, e
 	call FillMemory
 	jr .loadPalettes
 .staticMap
@@ -465,10 +478,11 @@ SetPal_ItemMenu::
 	call FillMemory
 	ld hl, W2_TilesetPaletteMap + 13 * SCREEN_WIDTH + 5
 	ld bc, 2
-	ld a, 5
+	ld a, e
 	call FillMemory
 .loadPalettes
 	pop de
+	push de
 	ld e, d
 	ld d, 0
 	ld hl, MoveTypeExpBarPalette
@@ -476,10 +490,11 @@ SetPal_ItemMenu::
 	ld d, [hl]
 	ld e, 4
 	farcall LoadSGBPalette
+	pop de
 	pop bc
 	push bc
 	ld a, c
-	call LoadMoveCategoryPalette
+	call LoadMoveCategoryPaletteAt
 	jp ItemMenuPalettesChanged
 
 ; WRAM bank 2 must be selected before calling (including before pushing).

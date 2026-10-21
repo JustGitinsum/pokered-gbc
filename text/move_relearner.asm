@@ -1,31 +1,19 @@
 _MoveRelearnerGreetingText::
-	text "I tutor children,"
-	line "but I also tutor"
-	cont "#MON."
+	text "Hiya, I'm the"
+	line "Move Relearner."
 	
-	para "I teach them to"
-	line "remember moves"
-	cont "they forgot."
-
-	para "¥1000 per lesson."
-	line "How about it?"
-	done
+	para "Would you like"
+	line "your #MON to"
+	cont "relearn a move?"
 
 _MoveRelearnerSaidYesText::
 	text "Which #MON"
 	line "should I tutor?"
 	prompt
 
-_MoveRelearnerNotEnoughMoneyText::
-	text "Hmmm..."
-
-	para "You don't have"
-	line "enough money!"
-	done
-
 _MoveRelearnerWhichMoveText::
 	text "Which move should"
-	line "it learn?"
+	line "it remember?"
 	done
 
 _MoveRelearnerByeText::

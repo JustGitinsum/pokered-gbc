@@ -54,7 +54,7 @@ DEF W2_VBCOPYBGNUMROWS             EQU $d78d
 
 ; Item menus borrow BG palette slots 2-6:
 ; 2 = Bag pocket graphic, 3 = TM/HM move names, 4 = TM type,
-; 5 = TM category, 6 = item icon.
+; 5 = TM category, 6 = item icon (or category in the house move lists).
 DEF ITEM_MENU_FIRST_SAVED_PAL      EQU 2
 DEF ITEM_MENU_NUM_SAVED_PALS       EQU 5
 

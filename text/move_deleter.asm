@@ -1,7 +1,6 @@
 _MoveDeleterGreetingText::
-	text "Mom says I'm so"
-	line "forgetful that it"
-	cont "is contagious."
+	text "Hey, I'm the"
+	line "Move Deleter."
 
 	para "Want me to make a"
 	line "#MON forget a"

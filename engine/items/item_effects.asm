@@ -2056,8 +2056,6 @@ ItemUsePPRestore:
 	ld a, [wPPRestoreItem]
 	cp ELIXER
 	jp nc, .useElixir ; if Elixir or Max Elixir
-	ld a, $02
-	ld [wMoveMenuType], a
 	ld hl, RaisePPWhichTechniqueText
 	ld a, [wPPRestoreItem]
 	cp ETHER ; is it a PP Up?
@@ -2067,7 +2065,7 @@ ItemUsePPRestore:
 	call PrintText
 	xor a
 	ld [wPlayerMoveListIndex], a
-	callfar MoveSelectionMenu ; move selection menu
+	farcall PPRestoreMoveSelectionMenu
 	ld a, 0
 	ld [wPlayerMoveListIndex], a
 	jr nz, .chooseMon
@@ -2234,6 +2232,109 @@ PPIncreasedText:
 PPRestoredText:
 	text_far _PPRestoredText
 	text_end
+
+PUSHS
+SECTION "PP Item Move Menu", ROMX
+
+PPRestoreMoveSelectionMenu:
+	hlcoord 4, 3
+	lb bc, 8, 14
+	call TextBoxBorder
+	ldh a, [hUILayoutFlags]
+	push af
+	res BIT_DOUBLE_SPACED_MENU, a
+	ldh [hUILayoutFlags], a
+	xor a
+	ld [wCurrentMenuItem], a
+	ld a, [wMonDataLocation]
+	push af
+	xor a ; calculate PP from the selected party Pokemon, even in battle
+	ld [wMonDataLocation], a
+	hlcoord 6, 4
+.printMove
+	push hl
+	call .getMovePointer
+	ld a, [hl]
+	and a
+	jr z, .movesDone
+	ld [wNamedObjectIndex], a
+	call GetMoveName
+	pop hl
+	call PlaceString
+	push hl
+	farcall GetMaxPP
+	call .getMovePointer
+	ld bc, wPartyMon1PP - wPartyMon1Moves
+	add hl, bc
+	ld a, [hl]
+	and PP_MASK
+	ld [wStatusScreenCurrentPP], a
+	pop hl
+	push hl
+	ld bc, SCREEN_WIDTH + 5
+	add hl, bc
+	ld de, .PPText
+	call PlaceString
+	ld bc, 3
+	add hl, bc
+	ld de, wStatusScreenCurrentPP
+	lb bc, 1, 2
+	call PrintNumber
+	ld a, "/"
+	ld [hli], a
+	ld de, wMaxPP
+	lb bc, 1, 2
+	call PrintNumber
+	pop hl
+	ld bc, SCREEN_WIDTH * 2
+	add hl, bc
+	ld a, [wCurrentMenuItem]
+	ld [wMaxMenuItem], a
+	inc a
+	ld [wCurrentMenuItem], a
+	cp NUM_MOVES
+	jr nz, .printMove
+	jr .setMenu
+.movesDone
+	pop hl
+.setMenu
+	pop af
+	ld [wMonDataLocation], a
+	ld a, 4
+	ld [wTopMenuItemY], a
+	ld a, 5
+	ld [wTopMenuItemX], a
+	xor a
+	ld [wCurrentMenuItem], a
+	ld [wLastMenuItem], a
+	ld [wMenuWatchMovingOutOfBounds], a
+	ld [wMenuJoypadPollCount], a
+	ld a, PAD_A | PAD_B
+	ld [wMenuWatchedKeys], a
+	ld a, 1
+	ld [wMenuWrappingEnabled], a
+	call HandleMenuInput
+	ld b, a
+	pop af
+	ldh [hUILayoutFlags], a
+	bit B_PAD_B, b
+	ret ; NZ on cancel, Z on selection; wCurrentMenuItem is the move slot
+
+.getMovePointer
+	ld hl, wPartyMon1Moves
+	ld bc, wPartyMon2 - wPartyMon1
+	ld a, [wWhichPokemon]
+	call AddNTimes
+	ld a, [wCurrentMenuItem]
+	ld c, a
+	ld b, 0
+	add hl, bc
+	ret
+
+.PPText
+	db "PP@"
+
+POPS
 
 ; for items that can't be used from the Item menu
 UnusableItem:

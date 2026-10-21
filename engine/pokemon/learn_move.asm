@@ -124,81 +124,84 @@ TryingToLearn:
 	pop hl
 .loop
 	push hl
-; print dialogue text	
-	ld hl, WhichMoveToForgetText
-	call PrintText
-	; print box with the 4 moves	
-	hlcoord 3, 4
-	ld b, 4 ; number of rows
-	ld c, 15 ; number of columns
+	call ClearScreen
+	hlcoord 3, 0
+	lb bc, 1, 15
 	call TextBoxBorder
-; print the 4 moves	
-	hlcoord 5, 5
-	ld de, wMovesString
-	ldh a, [hUILayoutFlags]
-	set BIT_SINGLE_SPACED_LINES, a
-	ldh [hUILayoutFlags], a
+	ld a, [wMoveNum]
+	ld [wNamedObjectIndex], a
+	call GetMoveName
+	hlcoord 5, 1
 	call PlaceString
-; new, new-move info boxes borders
-	hlcoord 3, 0 ; 0, 3
-	lb bc, 3, 15
-	call TextBoxBorder ; draws a c×b text box at hl
-; new, old-move info boxes borders
-	hlcoord 3, 9 ; 10, 3
-	lb bc, 3, 15
-	call TextBoxBorder ; draws a c×b text box at hl
-; print info for new move
-	call PrintInfoNewMove
-; do things about the arrow?	
-	ldh a, [hUILayoutFlags]
-	res BIT_SINGLE_SPACED_LINES, a
-	ldh [hUILayoutFlags], a
+	hlcoord 3, 3
+	lb bc, 7, 15
+	call TextBoxBorder
+	ld de, wMovesString
+	ld hl, hUILayoutFlags
+	res BIT_SINGLE_SPACED_LINES, [hl]
+	res BIT_DOUBLE_SPACED_MENU, [hl]
+	hlcoord 5, 4
+	call PlaceString
 	ld hl, wTopMenuItemY
-	ld a, 5
+	ld a, 1
 	ld [hli], a ; wTopMenuItemY
-	ld a, 4 ; 5
+	ld a, 4
 	ld [hli], a ; wTopMenuItemX
 	xor a
 	ld [hli], a ; wCurrentMenuItem
 	inc hl
-; do things, including new declaring which buttons to watch (new)
 	ld a, [wNumMovesMinusOne]
+	inc a ; item 0 is the new move; items 1-4 are the known moves
 	ld [hli], a ; wMaxMenuItem
 	ld a, PAD_A | PAD_B | PAD_DOWN | PAD_UP
 	ld [hli], a ; wMenuWatchedKeys
 	ld [hl], 0 ; wLastMenuItem
 
-; printing old move info
 	call PrintInfoCurrentMove
 .inputLoop
-
-	ld hl, hUILayoutFlags
-	set BIT_DOUBLE_SPACED_MENU, [hl]
 	call HandleMenuInput
-	ld hl, hUILayoutFlags
-	res BIT_DOUBLE_SPACED_MENU, [hl]
-
-; checking which button has been pressed
-	bit B_PAD_A, a
-	jr nz, .doTheThings
+	push af
+	call EraseMenuCursor
+	; Known moves start one extra row below the new move.
+	ld a, [wCurrentMenuItem]
+	and a
+	ld a, 1
+	jr z, .placeCursor
+	inc a
+.placeCursor
+	ld [wTopMenuItemY], a
+	call PlaceMenuCursor
+	pop af
 	bit B_PAD_B, a
 	jr nz, .doTheThings
-; not A or B, so is UP or DOWN
-	push af
-	bit B_PAD_DOWN, a
+	bit B_PAD_A, a
+	jr nz, .selectMove
+	and PAD_UP | PAD_DOWN
 	jr nz, .updateBox
-	bit B_PAD_UP, a
-	jr nz, .updateBox
-	pop af
 	jr .inputLoop
 .updateBox
 	call PrintInfoCurrentMove
-	pop af
 	jr .inputLoop
+.selectMove
+	ld a, [wCurrentMenuItem]
+	and a
+	jr nz, .selectOldMove
+	farcall RestoreItemDescriptionPalettes
+	ld a, [wMoveNum]
+	ld [wNamedObjectIndex], a
+	call GetMoveName
+	ld hl, wNameBuffer
+	ld de, wStringBuffer
+	ld bc, NAME_BUFFER_LENGTH
+	call CopyData
+	ld hl, WhichMoveToForgetText
+	call PrintText
+	jr .inputLoop
+.selectOldMove
+	ld a, PAD_A
 .doTheThings
-; vanilla
-
 	push af
+	farcall RestoreItemMenuPalettes
 	call LoadScreenTilesFromBuffer1
 	pop af
 	pop hl
@@ -206,6 +209,7 @@ TryingToLearn:
 	jr nz, .cancel
 	push hl
 	ld a, [wCurrentMenuItem]
+	dec a ; convert the menu item to the party move slot
 	ld c, a
 	ld b, 0
 	add hl, bc
@@ -272,185 +276,21 @@ HMCantDeleteText:
 	text_far _HMCantDeleteText
 	text_end
 
-; ==============================================================================
-
-PrintInfoCurrentMove: ; new
-	hlcoord 3, 9 
-	ld [hl], "└" ; Sword symbol
-	hlcoord 19, 9 
-	ld [hl], "┘" ; Sword symbol
-	push hl
-	push bc
-	push de
-	push af
-	xor a
-	ldh [hAutoBGTransferEnabled], a
-; clear screen area of the old move before printing its info
-	hlcoord 4, 10 ; 10, 3
-	lb bc, 3, 8
-	call ClearScreenArea
+PrintInfoCurrentMove:
+	ld a, [wCurrentMenuItem]
+	and a
+	ld a, [wMoveNum]
+	jr z, .display
 	ld hl, wPartyMon1Moves
 	ld bc, wPartyMon2 - wPartyMon1
 	ld a, [wWhichPokemon]
-	call AddNTimes ; adds bc to hl a times ; hl points to the moves
+	call AddNTimes
 	ld a, [wCurrentMenuItem]
-	ld c, a
-	ld b, $0 ; which move in the menu is the cursor pointing to? (0-3)
-	add hl, bc ; points to the move in memory
-	ld a, [hl] ; a should be holding the move ID
 	dec a
-	ld de, wPlayerMoveNum
-	ld hl, Moves
-	ld bc, MOVE_LENGTH
-	call AddNTimes ; adds bc to hl a times
-	ld a, BANK(Moves)
-	call FarCopyData ; copies bc bytes from a:hl to de
-	hlcoord 18, 11 ; 1, 6
-	ld de, PPText2
-	call PlaceString
-	hlcoord 8, 11 ; 8, 5
-	ld [hl], "ら" ; Sword symbol
-	hlcoord 13, 11 ; 18, 5
-	ld [hl], "%"
-	hlcoord 7, 11 ; 3, 5
-	; ld a, [wPlayerMoveEffect]
-	; cp OHKO_EFFECT
-	; jr z, .OHKOMove
-	ld a, [wPlayerMovePower]
-	cp 1 ; this should cover all the SPECIAL_DAMAGE_EFFECT, AND COUNTER / MIRROR_COAT / GYRO_BALL
-	jr z, .specialDamage
-	hlcoord 5, 11 ; 1, 5
-	ld de, wPlayerMovePower
-	lb bc, 1, 3
-	call PrintNumber ; prints the c-digit, b-byte value at de
-	jr .afterDamagePrinting
-; .OHKOMove
-; 	ld [hl], "◀"
-; 	jr .afterDamagePrinting
-.specialDamage
-	ld [hl], "?"
-.afterDamagePrinting
-	hlcoord 10, 11 ; 5, 5
-	xor a
-	ld b, a
-	ld a, [wPlayerMoveAccuracy]
-.loopAccuracy
-	sub 12
-	jr c, .accuracyFound
 	ld c, a
-	ld a, b
-	add 5
-	ld b, a
-	ld a, c
-	jr .loopAccuracy
-.accuracyFound
-	ld a, b
-	cp 76 ; fine-tuned number because
-	jr c, .noSub5
-	sub 5
-.noSub5
-	ld [wPlayerMoveAccuracyPercent], a
-	ld de, wPlayerMoveAccuracyPercent
-	lb bc, 1, 3
-	call PrintNumber ; prints the c-digit, b-byte value at de
-	hlcoord 16, 11 ; 7, 6
-	ld de, wPlayerMoveMaxPP ; wMaxPP
-	lb bc, 1, 2
-	call PrintNumber
-;	callfar GetCurrentMove
-	hlcoord 5, 10 ; 1, 4
-	predef PrintMoveType
-	ld a, $1
-	ldh [hAutoBGTransferEnabled], a
-	pop af
-	pop de
-	pop bc
-	pop hl
-	jp Delay3
-PPText2:
-	db "りる@"
-; ==============================================================================
-PrintInfoNewMove: ; new
-	hlcoord 3, 4 
-	ld [hl], "┌" 
-	hlcoord 19, 4 
-	ld [hl], "┐" 
-	push hl
-	push bc
-	push de
-	push af
-	xor a
-	ldh [hAutoBGTransferEnabled], a
-	ld de, wPlayerMoveNum
-	ld a, [wMoveNum]
-	dec a
-	ld hl, Moves
-	ld bc, MOVE_LENGTH
-	call AddNTimes ; adds bc to hl a times
-	ld a, BANK(Moves)
-	call FarCopyData ; copies bc bytes from a:hl to de
-	hlcoord 4, 1 ; 11, 6
-	ld de, wStringBuffer
-	call PlaceString
-	hlcoord 18, 3 ; 11, 6
-	ld de, PPText2
-	call PlaceString
-	hlcoord 8, 3 ; 18, 5
-	ld [hl], "ら" ; Sword symbol
-	hlcoord 13, 3 ; 18, 5
-	ld [hl], "%"
-	hlcoord 7, 3 ; 13, 5
-	; ld a, [wPlayerMoveEffect]
-	; cp OHKO_EFFECT
-	; jr z, .OHKOMove
-	ld a, [wPlayerMovePower]
-	cp 1 ; this should cover all the SPECIAL_DAMAGE_EFFECT, AND COUNTER / MIRROR_COAT / GYRO_BALL
-	jr z, .specialDamage
-	hlcoord 5, 3 ; 11, 5
-	ld de, wPlayerMovePower
-	lb bc, 1, 3
-	call PrintNumber ; prints the c-digit, b-byte value at de
-	jr .afterDamagePrinting
-; .OHKOMove
-; 	ld [hl], "◀"
-; 	jr .afterDamagePrinting
-.specialDamage
-	ld [hl], "?"
-.afterDamagePrinting
-	hlcoord 10, 3 ; 15, 5
-	xor a
-	ld b, a
-	ld a, [wPlayerMoveAccuracy]
-.loopAccuracy
-	sub 12
-	jr c, .accuracyFound
-	ld c, a
-	ld a, b
-	add 5
-	ld b, a
-	ld a, c
-	jr .loopAccuracy
-.accuracyFound
-	ld a, b
-	cp 76 ; fine-tuned number because
-	jr c, .noSub5
-	sub 5
-.noSub5
-	ld [wPlayerMoveAccuracyPercent], a
-	ld de, wPlayerMoveAccuracyPercent
-	lb bc, 1, 3
-	call PrintNumber ; prints the c-digit, b-byte value at de
-	hlcoord 16, 3 ; 17, 6
-	ld de, wPlayerMoveMaxPP ; wMaxPP
-	lb bc, 1, 2
-	call PrintNumber
-;	callfar GetCurrentMove
-	hlcoord 5, 2 ; 11, 4
-	predef PrintMoveType
-	ld a, $1
-	ldh [hAutoBGTransferEnabled], a
-	pop af
-	pop de
-	pop bc
-	pop hl
-	jp Delay3
+	ld b, 0
+	add hl, bc
+	ld a, [hl]
+.display
+	ld [wPlayerMoveNum], a
+	farjp DisplayMoveDescription

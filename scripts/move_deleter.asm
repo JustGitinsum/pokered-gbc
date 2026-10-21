@@ -51,6 +51,9 @@ MoveDeleterText1:
 	xor a
 	ld [wPrintItemPrices], a ; don't print prices
 	call DisplayListMenuID
+	push af
+	farcall RestoreItemMenuPalettes
+	pop af
 	pop bc
 	jr c, .exit  ; exit if player chose cancel
 	; Save the selected move id.

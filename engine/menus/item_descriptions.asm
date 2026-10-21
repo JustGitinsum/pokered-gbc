@@ -1,13 +1,8 @@
 DisplayItemDescription::
-	ld hl, wStatusFlags5
-	set BIT_NO_TEXT_DELAY, [hl]
 	ld a, [wCurListMenuItem]
 	dec a
 	cp a, HM01 - 1
 	jp c, .NonTMHMs
-	hlcoord 0, 12
-	lb bc, 4, 18  ; height, width
-	call TextBoxBorder
 	ld a, [wCurListMenuItem]
 	sub TM01
 	jr nc, .tm
@@ -18,6 +13,26 @@ DisplayItemDescription::
 	predef TMToMove
 	ld a, [wTempTMHM]
 	ld [wPlayerMoveNum], a
+	jr DisplayMoveDescription
+.NonTMHMs
+	ld hl, wStatusFlags5
+	set BIT_NO_TEXT_DELAY, [hl]
+	push af
+	farcall RestoreItemMenuPalettes
+	pop af
+	call GetItemDescriptionPointer
+	jp PrintText
+
+; Shared TM/HM-style panel for the move in wPlayerMoveNum.
+DisplayMoveDescription::
+	ld a, [wStatusFlags5]
+	push af
+	set BIT_NO_TEXT_DELAY, a
+	ld [wStatusFlags5], a
+	hlcoord 0, 12
+	lb bc, 4, 18
+	call TextBoxBorder
+	ld a, [wPlayerMoveNum]
 	dec a
 	ld hl, Moves
 	ld bc, MOVE_LENGTH
@@ -83,9 +98,9 @@ DisplayItemDescription::
 	ld bc, 255
 	add hl, bc     ; add 255 for rounding correctly
 	ld a, h        ; effectively divides hl by 256
-	ld [wStringBuffer], a
+	ld [wPlayerMoveAccuracyPercent], a
 	hlcoord 11, 13
-	ld de, wStringBuffer
+	ld de, wPlayerMoveAccuracyPercent
 	lb bc, 1, 3
 	call PrintNumber
 	; place Max PP value
@@ -94,15 +109,9 @@ DisplayItemDescription::
 	lb bc, 1, 2
 	call PrintNumber
 	farcall PrintItemMoveDescription
-	ld hl, wStatusFlags5
-    res BIT_NO_TEXT_DELAY, [hl]
-	ret
-.NonTMHMs
-	push af
-	farcall RestoreItemMenuPalettes
 	pop af
-	call GetItemDescriptionPointer
-	jp PrintText
+	ld [wStatusFlags5], a
+	ret
 
 DisplayItemMenuDescription::
 	ld a, [wCurListMenuItem]
