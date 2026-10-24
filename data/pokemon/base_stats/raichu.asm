@@ -21,7 +21,7 @@ ENDC
 	tmhm AERIAL_ACE,     AIR_SLASH,      CLOSE_COMBAT,   TOXIC,          TRAILBLAZE,     \
 	     HYPER_BEAM,     POISON_JAB,     THUNDERFANG,    AURA_WHEEL,     DIG,            \
 		 ACCELEROCK,     FLASH_CANNON,   THUNDERPUNCH,   THUNDER_WAVE,   THUNDERBOLT,    \
-		 CUT,            SURF,           STRENGTH,       FLASH 
+		 CUT,            FLY,            SURF,           STRENGTH,       FLASH 
 	; end
 
 	db BANK(RaichuPicFront)

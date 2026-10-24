@@ -657,13 +657,6 @@ SpritePaletteAssignments: ; Characters on the overworld
 	db SPR_PAL_ORANGE
 	; SPRITE_BLAINE
 	db SPR_PAL_BLUE
-; Surf/Fly Sprites
-	; SPRITE_GYARADOS
-	db SPR_PAL_BLUE
-	; SPRITE_BLASTOISE_SURF
-	db SPR_PAL_BLUE
-	; SPRITE_CHARIZARD
-	db SPR_PAL_ORANGE
 	; 0x3d: SPRITE_BALL
 	db SPR_PAL_ORANGE
 

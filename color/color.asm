@@ -986,8 +986,6 @@ SetPal_TownMap:
 	ld a, 2
 	ldh [rSVBK], a
 	CALL_INDIRECT LoadOverworldSpritePalettes
-	xor a
-	ld [W2_UseOBP1], a
 	farcall GetSurfingMonSpriteData
 	ld a, l
 	ld hl, W2_SpritePaletteMap
@@ -1000,6 +998,10 @@ SetPal_TownMap:
 	pop hl
 	ld bc, $4
 	call FillMemory
+
+	; The town map fades in OBP0 only, so every sprite palette must use it.
+	xor a
+	ld [W2_UseOBP1], a
 
 	ld d, PAL_TOWNMAP
 	ld e, 0

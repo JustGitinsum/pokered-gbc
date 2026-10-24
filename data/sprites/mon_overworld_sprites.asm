@@ -15,18 +15,54 @@ ENDM
 DEF MON_SPRITE_DEFAULT EQU -1 ; terminates the tables, and is used when no species matches
 
 FlyingMonSprites:
-	mon_sprite CHARIZARD, CharizardSprite, SPR_PAL_ORANGE
-	mon_sprite PIDGEOT,   PidgeotSprite,   SPR_PAL_BROWN
-	mon_sprite ARTICUNO,  ArticunoSprite,  SPR_PAL_BLUE
-	mon_sprite ZAPDOS,    ZapdosSprite,    SPR_PAL_PURPLE
-	mon_sprite MOLTRES,   MoltresSprite,   SPR_PAL_ORANGE
-	mon_sprite MON_SPRITE_DEFAULT, BirdSprite, SPR_PAL_BROWN
+	mon_sprite CHARIZARD, CharizardSprite,      SPR_PAL_ORANGE
+	mon_sprite GYARADOS,  GyaradosFlySprite,    SPR_PAL_BLUE
+	mon_sprite SCYTHER,    ScytherFlySprite,    SPR_PAL_GREEN
+	mon_sprite SCIZOR,     ScizorFlySprite,     SPR_PAL_ORANGE
+	mon_sprite CROBAT,     CrobatFlySprite,     SPR_PAL_PURPLE
+	mon_sprite BEEDRILL,   BeedrillFlySprite,   SPR_PAL_ORANGE
+	mon_sprite BUTTERFREE, ButterfreeFlySprite, SPR_PAL_PURPLE
+	mon_sprite VENOMOTH,   VenomothFlySprite,   SPR_PAL_PURPLE
+	mon_sprite AERODACTYL, AerodactylFlySprite, SPR_PAL_PURPLE
+	mon_sprite DRAGONITE,  DragoniteFlySprite,  SPR_PAL_ORANGE
+	mon_sprite PIKACHU,    PikachuFlySprite,    SPR_PAL_ORANGE
+	mon_sprite RAICHU,     PikachuFlySprite,    SPR_PAL_ORANGE
+	mon_sprite FEAROW,    FearowSprite,        SPR_PAL_BROWN
+	mon_sprite MEW,        MewFlySprite,        SPR_PAL_PURPLE
+	mon_sprite MEWTWO,     MewtwoSprite,        SPR_PAL_PURPLE
+	mon_sprite PIDGEOT,   PidgeotSprite,        SPR_PAL_BROWN
+	mon_sprite ARTICUNO,  ArticunoSprite,       SPR_PAL_BLUE
+	mon_sprite ZAPDOS,    ZapdosSprite,         SPR_PAL_PURPLE
+	mon_sprite MOLTRES,   MoltresSprite,        SPR_PAL_ORANGE
+	mon_sprite MON_SPRITE_DEFAULT, BirdSprite,  SPR_PAL_BROWN
 
 SurfingMonSprites:
-	mon_sprite BLASTOISE, BlastoiseSurfSprite, SPR_PAL_BLUE
-	mon_sprite LAPRAS,    LaprasSprite,        SPR_PAL_BLUE
-	mon_sprite GYARADOS,  GyaradosSurfSprite,  SPR_PAL_BLUE
-	mon_sprite MON_SPRITE_DEFAULT, SeelSprite, SPR_PAL_EMOJI
+	mon_sprite BLASTOISE, BlastoiseSurfSprite,   SPR_PAL_BLUE
+	mon_sprite LAPRAS,    LaprasSprite,          SPR_PAL_BLUE
+	mon_sprite GYARADOS,  GyaradosSurfSprite,    SPR_PAL_BLUE
+	mon_sprite TENTACRUEL, TentacruelSurfSprite, SPR_PAL_BLUE
+	mon_sprite STARMIE,   StarmieSurfSprite,     SPR_PAL_PURPLE
+	mon_sprite MEW,       MewFlySprite,          SPR_PAL_PURPLE
+	mon_sprite PIKACHU,   PikachuSurfSprite,     SPR_PAL_ORANGE
+	mon_sprite RAICHU,    PikachuSurfSprite,     SPR_PAL_ORANGE
+	mon_sprite KINGDRA,   KingdraSurfSprite,     SPR_PAL_BLUE
+	mon_sprite SEADRA,    KingdraSurfSprite,     SPR_PAL_BLUE
+	mon_sprite NIDOKING,  NidoSurfSprite,        SPR_PAL_PURPLE
+	mon_sprite NIDOQUEEN, NidoSurfSprite,        SPR_PAL_BLUE
+	mon_sprite OMASTAR,   OmastarSurfSprite,     SPR_PAL_BLUE
+	mon_sprite KINGLER,   KinglerSurfSprite,     SPR_PAL_ORANGE
+	mon_sprite SNORLAX,   SnorlaxSurfSprite,     SPR_PAL_BLUE
+	mon_sprite GOLDUCK,   GolduckSurfSprite,     SPR_PAL_BLUE
+	mon_sprite VAPOREON,  VaporeonSurfSprite,    SPR_PAL_BLUE
+	mon_sprite RHYDON,    RhydonSurfSprite,      SPR_PAL_BROWN
+	mon_sprite DRAGONAIR, DragonairSurfSprite,   SPR_PAL_BLUE
+	mon_sprite DRATINI,   DragonairSurfSprite,   SPR_PAL_BLUE
+	mon_sprite DRAGONITE, DragoniteSurfSprite,   SPR_PAL_ORANGE
+	mon_sprite SLOWBRO,   SlowbroSurfSprite,     SPR_PAL_ORANGE
+	mon_sprite TAUROS,    TaurosSurfSprite,      SPR_PAL_BROWN
+	mon_sprite SEAKING,   SeakingSurfSprite,     SPR_PAL_ORANGE
+	mon_sprite CLOYSTER,  CloysterSurfSprite,    SPR_PAL_PURPLE
+	mon_sprite MON_SPRITE_DEFAULT, SeelSprite,   SPR_PAL_EMOJI
 
 ; The species IDs are in switchable WRAM, which is hidden while the color code
 ; has WRAM bank 2 selected (e.g. SetPal_TownMap). Each routine selects the

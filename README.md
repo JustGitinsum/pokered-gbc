@@ -1,5 +1,10 @@
 # pokered-gbc
 
+LevelUp and TM/HM learnsets show move names only for Pokemon registered as
+owned in the Pokedex. Seen-but-unowned Pokemon show dashed move names and
+`----` in place of TM/HM labels; learn levels remain visible. Start opens the
+selected move's Movedex entry only for owned Pokemon.
+
 Pokémon Red/Blue overhauled with full GBC support. Made by FroggestSpirit, Drenn, and dannye. Also check out the crysaudio branch.
 
 The Options Menu includes **POKEMON NICKNAMES**, which defaults to **SHOW**.

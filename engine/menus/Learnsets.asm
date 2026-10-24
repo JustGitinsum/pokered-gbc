@@ -115,6 +115,8 @@ ShowMonLearnsetMenu:
 	call PlaySound
 	jr .showLearnsetPage
 .showMovedex
+	call IsLearnsetMonOwned
+	jr z, .reshowLearnsetPage
 	; Keep the species index so it can be restored after the Movedex uses
 	; shared menu state and the Learnset header is redrawn.
 	ld a, [wPokedexNum]
@@ -195,6 +197,55 @@ PrepLearnsetList:
 	ret
 	
 	
+IsLearnsetMonOwned:
+	push bc
+	push de
+	push hl
+	ld a, [wPokedexNum]
+	push af
+	; Learnsets use internal species IDs; owned flags use Pokedex numbers.
+	call IndexToPokedex
+	ld hl, wPokedexOwned
+	call IsPokemonBitSet
+	pop bc
+	ld a, b
+	ld [wPokedexNum], a
+	pop hl
+	pop de
+	pop bc
+	ret
+
+SetLearnsetWatchedKeys:
+	push af
+	call IsLearnsetMonOwned
+	pop bc
+	ld a, b
+	jr nz, .owned
+	and ~PAD_START
+.owned
+	ld [wMenuWatchedKeys], a
+	ret
+
+GetLearnsetMoveName:
+	; A = species index; wNamedObjectIndex = move ID. These share storage.
+	push af
+	ld c, a
+	ld a, [wNamedObjectIndex]
+	push af
+	ld a, c
+	ld [wPokedexNum], a
+	call IsLearnsetMonOwned
+	pop bc
+	ld a, b
+	ld [wNamedObjectIndex], a
+	ld de, MoveDashedLine
+	jr z, .done
+	call GetMoveName
+.done
+	pop af
+	ld [wPokedexNum], a
+	ret
+
 ShowLevelUpLearnset:
 	; ld a, SFX_LEDGE
 	; call PlaySound
@@ -207,7 +258,7 @@ ShowLevelUpLearnset:
 	; Start requests the selected move's Movedex entry; B still exits and
 	; Right still changes pages.
 	ld a, PAD_RIGHT | PAD_B | PAD_START
-	ld [wMenuWatchedKeys], a
+	call SetLearnsetWatchedKeys
 	callfar LoadLevelUpLearnsetIntoWRAM
 	hlcoord 7, 3
 	ld de, LevelUpLearnsetTabTiles
@@ -302,14 +353,8 @@ ShowLevelUpLearnset:
 ;;;; page specific code ends
 	ld a, [hl]
     ld [wMovedexMoveID], a
-	; ld hl, wMovedexSeen
-	; call IsMoveBitSet
-	; ld de, MoveDashedLine
-	; jr z, .skipGettingName 
-	call GetMoveName ; if the player has seen the move
-.skipGettingName
 	pop af
-	ld [wPokedexNum], a
+	call GetLearnsetMoveName
 	pop hl
 	inc hl ; add a space before the move name is printed
 	call PlaceString
@@ -397,6 +442,9 @@ LevelUpText:
 TMPlusHMText:
 	db "TM HM Learnset@"
 
+LearnsetTMDashedLine:
+	db "----@"
+
 TMLearnsetListPrint:
 	push hl
 	; get the item ID into 
@@ -423,7 +471,7 @@ ShowTMLearnset:
 	
 	; Start requests the selected move's Movedex entry on this page too.
 	ld a, PAD_LEFT | PAD_RIGHT | PAD_B | PAD_START
-	ld [wMenuWatchedKeys], a
+	call SetLearnsetWatchedKeys
 	hlcoord 7, 3
 	call DrawNonCurrentLearnsetTab
 	hlcoord 11, 3
@@ -473,10 +521,14 @@ ShowTMLearnset:
 	pop hl
 	ld a, [wPokedexNum]
 	push af
+	call IsLearnsetMonOwned
 	ld a, d
 	ld [wNamedObjectIndex], a
 	push af
+	ld de, LearnsetTMDashedLine
+	jr z, .printTMName
 	call GetItemName
+.printTMName
 	call PlaceString
 	inc hl
 	inc hl
@@ -486,17 +538,11 @@ ShowTMLearnset:
 	push hl
 	call ConvertTMItemIDToMove
 ;;;; page specific code ends
-	; ld hl, wMovedexSeen
-	; call IsMoveBitSet
-	jr .getMoveName ; if the player has seen the pokemon
-	; ld de, MoveDashedLine
-	; jr .skipGettingName
-.getMoveName
-	call GetMoveName
-.skipGettingName
 	pop hl
 	pop af
-	ld [wPokedexNum], a
+	push hl
+	call GetLearnsetMoveName
+	pop hl
 	inc hl ; add a space before the move name is printed
 	call PlaceString
 	pop hl

@@ -526,6 +526,12 @@ KrisFishingTiles:
 	fishing_gfx KrisFishingTilesSide,  2, $0a
 	fishing_gfx RedFishingRodTiles,    3, $fd
 
+HildaFishingTiles:
+	fishing_gfx HildaFishingTilesFront, 2, $02
+	fishing_gfx HildaFishingTilesBack,  2, $06
+	fishing_gfx HildaFishingTilesSide,  2, $0a
+	fishing_gfx RedFishingRodTiles,    3, $fd
+
 PlayerFishingTiles:
 ; entries correspond to PLAYER_* constants
 	table_width 2
@@ -533,6 +539,7 @@ PlayerFishingTiles:
 	dw GreenFishingTiles ; PLAYER_GREEN
 	dw GoldFishingTiles  ; PLAYER_GOLD
 	dw KrisFishingTiles  ; PLAYER_KRIS
+	dw HildaFishingTiles ; PLAYER_HILDA
 	assert_table_length NUM_PLAYER_CHARACTERS
 
 _HandleMidJump::

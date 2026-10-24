@@ -421,5 +421,5 @@ MovedexTitleDividerLine:
 	db $68, $6B, $6B, $6B, $6B, $6B, $6B, $6B, $6B, $6B, $6B, $6B, $6B, $6B, $6B, $6B, $6B, $6B, $6B, $6A
 	db "@"
 
-; MoveDashedLine:
-; 	db "-----------@"
+MoveDashedLine:
+	db "-----------@"
