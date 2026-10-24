@@ -23,6 +23,8 @@ RockTunnelB1F_TextPointers:
 	dw_const RockTunnelB1FCooltrainerF2Text, TEXT_ROCKTUNNELB1F_COOLTRAINER_F2
 	dw_const RockTunnelB1FHiker3Text,        TEXT_ROCKTUNNELB1F_HIKER3
 	dw_const RockTunnelB1FSuperNerd3Text,    TEXT_ROCKTUNNELB1F_SUPER_NERD3
+	dw_const PickUpItemText,                TEXT_ROCKTUNNELB1F_JAW_FOSSIL
+	dw_const PickUpItemText,                TEXT_ROCKTUNNELB1F_SAIL_FOSSIL
 
 RockTunnel2TrainerHeaders:
 	def_trainers

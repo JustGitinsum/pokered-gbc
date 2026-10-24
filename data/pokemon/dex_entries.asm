@@ -120,8 +120,8 @@ PokedexEntryPointers:
 	dw DugtrioDexEntry
 	dw VenomothDexEntry
 	dw DewgongDexEntry
-	dw MissingNoDexEntry
-	dw MissingNoDexEntry
+	dw AmauraDexEntry
+	dw AurorusDexEntry
 	dw CaterpieDexEntry
 	dw MetapodDexEntry
 	dw ButterfreeDexEntry
@@ -965,6 +965,20 @@ DewgongDexEntry:
 	db 5,7
 	dw 2650
 	;text_far _DewgongDexEntry
+	text_end
+
+AmauraDexEntry:
+	db "TUNDRA@"
+	db 4,03
+	dw 556
+	;text_far _AmauraDexEntry
+	text_end
+
+AurorusDexEntry:
+	db "TUNDRA@"
+	db 8,1
+	dw 4960
+	;text_far _AurorusDexEntry
 	text_end
 
 CaterpieDexEntry:

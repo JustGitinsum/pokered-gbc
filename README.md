@@ -13,6 +13,15 @@ nicknames are preserved and reappear when the option is switched back to **SHOW*
 **HIDE** also skips nickname prompts for newly received or caught Pokemon, using
 their species names instead. The Name Rater remains available for renaming.
 
+Both fossil labs revive Dome Fossils, Helix Fossils, Old Amber, Jaw Fossils
+(Tyrunt), and Sail Fossils (Amaura) immediately. Revived Pokemon are level 45
+at Cinnabar and level 25 at Route 10. If the party and current PC box are full,
+the lab keeps the pending Pokemon; speak to either lab again after making room
+to collect it without handing over another fossil. Both labs share one pending
+revival.
+Like move tutors, each fossil scientist gives their introduction only once
+per map visit; changing maps resets it, but reloading the same map does not.
+
 In ordinary wild battles, **SELECT** on the **FIGHT / ITEM / PKMN / RUN** menu
 throws the first Poke Ball, Great Ball, Ultra Ball, or Master Ball in Items-pocket
 order. **LEFT** while **ITEM** is highlighted cycles through available balls in
@@ -44,6 +53,10 @@ Buy confirmation text and its YES/NO box preserve the move-name and item-icon
 colors, resetting only the description and the YES/NO box's covered cells.
 The move-name palette remains loaded through cursor and pocket redraws and is
 restored only after hiding the Bag or replacing the Buy screen.
+Switching away from TM/HMs restores the description's original text colors,
+including on cavern maps with tile-based palettes.
+Pocket changes use a brief white transition while graphics, descriptions, and
+palette attributes are rebuilt, so old TM details cannot appear in the new pocket.
 Returning from Buy to BUY/SELL/QUIT hides the screen until the shop's tiles
 and palette attributes are both restored, preventing colored blocks on the map.
 Initial Buy entry also hides the shop before loading item/TM palettes; quantity
@@ -105,6 +118,10 @@ Failed battle Bag item uses return to the Bag rather than the quick-ball
 shortcut's battle-menu destination.
 Overworld Bag entry and exit use a white transition while the tilemap and
 palettes change, preventing the map or Bag from appearing in the other's colors.
+The full-screen Bag keeps its normal colors in unlit caves; closing it restores
+the cave's darkness without requiring or activating FLASH.
+Using FLASH on either floor of Rock Tunnel permanently lights both floors for
+that save, including after leaving and re-entering the tunnel.
 Bag exit waits for all three screen thirds to receive their restored palette
 attributes before revealing the overworld, including exits from the TM pocket.
 Choosing TOSS keeps the icon and description visible throughout quantity

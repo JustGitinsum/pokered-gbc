@@ -245,6 +245,8 @@ IF GEN_2_GRAPHICS
 	; const PAL_GALLADE               ; $A2
 	; const PAL_TYRUNT
 	; const PAL_TYRANTRUM
+	; const PAL_AMAURA
+	; const PAL_AURORUS
 	; const PAL_ZORUA
 	const PAL_ZOROARK
 	; const PAL_CHARCADET

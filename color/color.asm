@@ -643,10 +643,15 @@ RestoreItemMenuTMPalettes:
 	ld bc, 6
 	jp CopyData
 .staticMap
-	ld hl, W2_ItemMenuSavedPaletteMap + 13 * SCREEN_WIDTH + 1
-	ld de, W2_TilesetPaletteMap + 13 * SCREEN_WIDTH + 1
-	ld bc, 6
-	jp CopyData
+	; The saved map may still be tile-indexed even after move names made it static.
+	ld hl, W2_TilesetPaletteMap + 13 * SCREEN_WIDTH + 1
+	ld b, 6
+.restoreCell
+	call GetOriginalItemMenuPalette
+	ld [hli], a
+	dec b
+	jr nz, .restoreCell
+	ret
 
 SetPal_BagPocketIcon::
 	ld a, [wListMenuID]

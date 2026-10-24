@@ -1,3 +1,6 @@
+; Number of entries in FossilMonTable (engine/events/cinnabar_lab.asm).
+DEF NUM_FOSSIL_TYPES EQU 5
+
 ; item ids
 ; indexes for:
 ; - ItemNames (see data/items/names.asm)

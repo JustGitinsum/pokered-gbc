@@ -132,8 +132,8 @@ EvosMovesPointerTable:
 	dw DugtrioEvosMoves
 	dw VenomothEvosMoves
 	dw DewgongEvosMoves
-	dw MissingNo79EvosMoves
-	dw MissingNo7AEvosMoves
+	dw AmauraEvosMoves
+	dw AurorusEvosMoves
 	dw CaterpieEvosMoves
 	dw MetapodEvosMoves
 	dw ButterfreeEvosMoves
@@ -1844,16 +1844,39 @@ DewgongEvosMoves:
 	db 56, ICE_BEAM
 	db 0
 
-MissingNo79EvosMoves:
+AmauraEvosMoves:
 ; Evolutions
+	db EVOLVE_LEVEL, 39, AURORUS
 	db 0
-; Learnset
+; Learnset ZA
+	db 10, ANCIENTPOWER
+	db 12, AURORA_BEAM
+	db 16, STOMP
+	db 20, MIST
+	db 24, ROCK_TOMB
+	db 28, THUNDER_WAVE
+	db 36, ICE_BEAM
+	db 40, ROCK_SLIDE
+	db 44, LIGHT_SCREEN
+	db 52, BLIZZARD
+	db 56, HYPER_BEAM
 	db 0
 
-MissingNo7AEvosMoves:
+AurorusEvosMoves:
 ; Evolutions
 	db 0
-; Learnset
+; Learnset ZA
+	db 10, ANCIENTPOWER
+	db 12, AURORA_BEAM
+	db 16, STOMP
+	db 20, MIST
+	db 24, ROCK_TOMB
+	db 28, THUNDER_WAVE
+	db 36, ICE_BEAM
+	db 40, ROCK_SLIDE
+	db 44, LIGHT_SCREEN
+	db 52, BLIZZARD
+	db 56, HYPER_BEAM
 	db 0
 
 CaterpieEvosMoves:

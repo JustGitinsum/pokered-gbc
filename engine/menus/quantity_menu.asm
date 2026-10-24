@@ -406,6 +406,13 @@ IsUnboxedItemMenu:
 	and 1 << BIT_PRINT_INFO_BOX
 	ret
 
+LoadItemListMenuPalettes::
+	call LoadGBPal
+	call IsUnboxedItemMenu
+	ret nz
+	; Full-screen item menus must not inherit the cave's dark color mapping.
+	jp GBPalNormal
+
 DelayBeforeListMenu::
 	ld a, [wBagPocketsFlags]
 	and 1 << BIT_PRINT_INFO_BOX

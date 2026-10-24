@@ -163,6 +163,8 @@ MonPartyData:
 	nybble ICON_MON       ; Gallade
 	nybble ICON_MON       ; Tyrunt
 	nybble ICON_MON       ; Tyrantrum
+	nybble ICON_QUADRUPED ; Amaura
+	nybble ICON_QUADRUPED ; Aurorus
 	nybble ICON_QUADRUPED ; Zorua
 	nybble ICON_MON       ; Zoroark
 	nybble ICON_MON       ; Charcadet

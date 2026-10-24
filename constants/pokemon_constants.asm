@@ -127,8 +127,8 @@
 	const DUGTRIO            ; $76
 	const VENOMOTH           ; $77
 	const DEWGONG            ; $78
-	const_skip               ; $79
-	const_skip               ; $7A
+	const AMAURA             ; $5E
+	const AURORUS            ; $5F
 	const CATERPIE           ; $7B
 	const METAPOD            ; $7C
 	const BUTTERFREE         ; $7D

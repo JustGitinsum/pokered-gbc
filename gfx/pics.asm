@@ -153,7 +153,10 @@ TyruntPicFront::     INCBIN "gfx/pokemon/gsfront/tyrunt.pic"
 TyruntPicBack::      INCBIN "gfx/pokemon/gsback/tyruntb.pic"
 TyrantrumPicFront::  INCBIN "gfx/pokemon/gsfront/tyrantrum.pic"
 TyrantrumPicBack::   INCBIN "gfx/pokemon/gsback/tyrantrumb.pic"
-
+AurorusPicFront::    INCBIN "gfx/pokemon/gsfront/aurorus.pic"
+AurorusPicBack::     INCBIN "gfx/pokemon/gsback/aurorusb.pic"
+AmauraPicFront::      INCBIN "gfx/pokemon/gsfront/amaura.pic"
+AmauraPicBack::       INCBIN "gfx/pokemon/gsback/amaurab.pic"
 
 SECTION "Pics 4", ROMX
 

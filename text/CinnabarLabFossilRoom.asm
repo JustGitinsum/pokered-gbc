@@ -4,7 +4,7 @@ _CinnabarLabFossilRoomScientist1Text::
 	para "I am important"
 	line "doctor!"
 
-	para "I study here rare"
+	para "I study rare"
 	line "#MON fossils!"
 
 	para "You! Have you a"
@@ -12,7 +12,12 @@ _CinnabarLabFossilRoomScientist1Text::
 	prompt
 
 _CinnabarLabFossilRoomScientist1NoFossilsText::
-	text "No! Is too bad!"
+	para "You don't have"
+	text "any fossils?"
+	
+	para "Please come back"
+	line "if you find"
+	line "some!"
 	done
 
 _Route10FossilRoomScientist2Text::
@@ -37,33 +42,28 @@ _CinnabarLabFossilRoomScientist1FossilIsBackToLifeText::
 	para "It was @"
 	text_ram wStringBuffer
 	text_start
-	line "like I think!"
+	; line "like I think!"
 	prompt
 
 _CinnabarLabFossilRoomScientist1SeesFossilText::
-	text "Oh! That is"
-	line "@"
-	text_ram wNameBuffer
-	text "!"
+    text "Oh! That is"
+    line "the fossil of"
+    cont "@"
+    text_ram wStringBuffer
+    text ", an"
+    cont "extinct #MON!"
 
-	para "It is fossil of"
-	line "@"
-	text_ram wStringBuffer
-	text ", a"
-	cont "#MON that is"
-	cont "already extinct!"
-
-	para "My Resurrection"
-	line "Machine will make"
-	cont "that #MON live"
-	cont "again!"
-	done
+    para "My Resurrection"
+    line "Machine will make"
+    cont "that #MON live"
+    cont "again!"
+    done
 
 _CinnabarLabFossilRoomScientist1TakesFossilText::
-	text "So! You hurry and"
-	line "give me that!"
+	; text "So! You hurry and"
+	; line "give me that!"
 
-	para "<PLAYER> handed"
+	text "<PLAYER> handed"
 	line "over @"
 	text_ram wNameBuffer
 	text "!"

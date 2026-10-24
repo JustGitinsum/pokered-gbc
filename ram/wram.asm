@@ -371,7 +371,7 @@ wElevatorWarpMaps:: ds 11 * 2
 NEXTU
 ; List of bag items that has been filtered to a certain type of items,
 ; such as drinks or fossils.
-wFilteredBagItems:: ds 4
+wFilteredBagItems:: ds NUM_FOSSIL_TYPES + 1
 
 NEXTU
 ; Saved copy of OAM for the first frame of the animation to make it easy to
@@ -1716,7 +1716,10 @@ wSavedSpriteMapX:: db
 	; (assumes at most one move tutor per map)
 wMoveTutorIntroMap:: db
 
-	ds 2 ; unused 2 bytes
+; Map where the fossil scientist's greeting was shown, or -1.
+wFossilScientistIntroMap:: db
+
+	ds 1 ; unused
 
 ;;; PureRGBnote: ADDED: new properties in this previously empty space
 wTownMapAreaState:: ; view which state is which in map_pokemon_areas.asm

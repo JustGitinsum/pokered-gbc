@@ -126,8 +126,8 @@ CryData::
 	mon_cry SFX_CRY_0B, $2A, $10 ; Dugtrio
 	mon_cry SFX_CRY_1A, $29, $80 ; Venomoth
 	mon_cry SFX_CRY_0C, $23, $FF ; Dewgong
-	mon_cry SFX_CRY_00, $00, $00 ; MissingNo.
-	mon_cry SFX_CRY_00, $00, $00 ; MissingNo.
+	mon_cry SFX_CRY_1B, $00, $80 ; Amaura
+	mon_cry SFX_CRY_1B, $00, $80 ; Aurorus
 	mon_cry SFX_CRY_16, $80, $20 ; Caterpie
 	mon_cry SFX_CRY_1C, $CC, $01 ; Metapod
 	mon_cry SFX_CRY_16, $77, $40 ; Butterfree

@@ -159,7 +159,7 @@ DisplayListMenuIDLoop::
 	ld [wMenuCursorLocation + 1], a
 	jr .buttonAPressed
 .notOldManBattle
-	call LoadGBPal
+	farcall LoadItemListMenuPalettes
 	CALL_INDIRECT HandleItemListMenuInput
 	ld a, e
 	bit B_PAD_A, a

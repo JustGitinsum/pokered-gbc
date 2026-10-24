@@ -1,5 +1,6 @@
 MarkTownVisitedAndLoadMissableObjects::
 	callfar ResetMoveTutorIntrosOnMapChange
+	callfar ResetFossilScientistIntroOnMapChange
 	ld a, [wCurMap]
 	cp FIRST_ROUTE_MAP
 	jr nc, .notInTown

@@ -141,7 +141,9 @@ RemoveItemByID::
 	ld b, a
 	ld [wCurItem], a ; should we save what's in wCurItem before?
 	; Resolve the item's pocket before searching its entries.
+	push bc
 	farcall GetBagItemList
+	pop bc
 	inc hl
 	xor a
 	ldh [hItemToRemoveIndex], a

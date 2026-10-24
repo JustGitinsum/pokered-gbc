@@ -218,6 +218,14 @@ StartMenu_Pokemon::
 .flash
 	bit BIT_BOULDERBADGE, a
 	jp z, .newBadgeRequired
+	ld a, [wCurMap]
+	cp ROCK_TUNNEL_1F
+	jr z, .rememberRockTunnelFlash
+	cp ROCK_TUNNEL_B1F
+	jr nz, .lightArea
+.rememberRockTunnelFlash
+	SetEvent EVENT_ROCK_TUNNEL_LIT
+.lightArea
 	xor a
 	ld [wMapPalOffset], a
 	ld hl, .flashLightsAreaText

@@ -173,6 +173,8 @@ PrintTMHMMoveName::
 	ret
 
 CycleBagPocket::
+	; Palette updates are live even while tilemap transfers are disabled.
+	call GBPalWhiteOutWithDelay3
 	; Pocket IDs: Items=0, Key Items=1, TM/HMs=2.
 	; Forward order is Items -> TM/HMs -> Key Items, i.e. (id - 1) mod 3;
 	; the one-shot previous flag cycles the reverse order, (id + 1) mod 3.
