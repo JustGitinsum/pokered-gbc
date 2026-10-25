@@ -3,6 +3,8 @@ ShowMoveDataFromBattle:
 	callfar LoadPokedexTilePatterns ; load pokedex tiles
 	call HalfVolume
 	call ClearScreen
+	; The battle menu borrows the sword glyph's font tile for its ball shortcut.
+	call LoadFontTilePatterns
 	ldh a, [hTileAnimations]
 	push af
 	xor a
@@ -39,6 +41,7 @@ ShowMoveDataFromPokedex:
 	; Learnset can open this page without Pokedex tiles loaded. Load them only
 	; after clearing the Learnset page so its graphics remain until transition.
 	callfar LoadPokedexTilePatterns
+	call LoadFontTilePatterns
 	ldh a, [hTileAnimations]
 	push af
 	xor a
@@ -71,6 +74,7 @@ ShowMoveDataFromPokedex:
 	ldh [hTileAnimations], a
 	call GBPalWhiteOut
 	call ClearScreen
+	call LoadFontTilePatterns
 	; call RunDefaultPaletteCommand
 	; call GBPalNormal
 	call MaxVolume
@@ -85,6 +89,12 @@ ShowNextMoveData:
 	ld de, MovedexUI
 	lb bc, BANK(MovedexUI), 21
 	ld hl, vChars1 tile $44
+	call CopyVideoDataDouble
+
+	; Reserve the unused tile after MovedexUI for a dedicated sword glyph.
+	ld de, FontGraphics + $57 * 8
+	ld hl, vChars1 tile $59
+	lb bc, BANK(FontGraphics), 1
 	call CopyVideoDataDouble
 
 	call DrawDataBorder
@@ -232,13 +242,19 @@ ShowNextMoveData:
 	dec de
 	lb bc, LEFT_ALIGN | 2, 3
 	call PrintNumber ; print the numeric value for power (999 in this case for OHKO moves)
-	jr .donePrintingPower
+	jr .powerPrinted
 .specialDamage
 	call PlaceString
+	hlcoord 10, 6
+	jr .powerPrinted
+
+.powerPrinted
+	ld [hl], $D9
 	jr .donePrintingPower
 .normalMove
 	lb bc, LEFT_ALIGN | 1, 3
 	call PrintNumber ; print the numeric value for power
+	jr .powerPrinted
 .donePrintingPower
 	
 	ld a, [wPlayerMoveAccuracy] ; accuracy value is in 0-255 format, so we need to convert to a percentage with multiplication+division

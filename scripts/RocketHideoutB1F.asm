@@ -13,6 +13,24 @@ RocketHideoutB1FDoorCallbackScript:
 	bit BIT_CUR_MAP_LOADED_1, [hl]
 	res BIT_CUR_MAP_LOADED_1, [hl]
 	ret z
+	ld a, [wObtainedBadges]
+	bit BIT_EARTHBADGE, a
+	jr z, .hide_jessie_james
+	ld a, HS_ROCKET_HIDEOUT_B1F_JAMES
+	ld [wMissableObjectIndex], a
+	predef ShowObject
+	ld a, HS_ROCKET_HIDEOUT_B1F_JESSIE
+	ld [wMissableObjectIndex], a
+	predef ShowObject
+	jr .check_door
+.hide_jessie_james
+	ld a, HS_ROCKET_HIDEOUT_B1F_JAMES
+	ld [wMissableObjectIndex], a
+	predef HideObject
+	ld a, HS_ROCKET_HIDEOUT_B1F_JESSIE
+	ld [wMissableObjectIndex], a
+	predef HideObject
+.check_door
 	CheckEvent EVENT_677
 	jr nz, .door_open
 	CheckEventReuseA EVENT_BEAT_ROCKET_HIDEOUT_1_TRAINER_4
@@ -45,6 +63,11 @@ RocketHideoutB1F_TextPointers:
 	dw_const RocketHideoutB1FRocket5Text, TEXT_ROCKETHIDEOUTB1F_ROCKET5
 	dw_const PickUpItemText,              TEXT_ROCKETHIDEOUTB1F_ESCAPE_ROPE
 	dw_const PickUpItemText,              TEXT_ROCKETHIDEOUTB1F_HYPER_POTION
+	dw_const RocketHideoutB1FJessieJamesText, TEXT_ROCKETHIDEOUTB1F_JAMES
+	dw_const RocketHideoutB1FJessieJamesText, TEXT_ROCKETHIDEOUTB1F_JESSIE
+
+RocketHideoutB1FJessieJamesText:
+	text_end
 
 RocketHideout1TrainerHeaders:
 	def_trainers

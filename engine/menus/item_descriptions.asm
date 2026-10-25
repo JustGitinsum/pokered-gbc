@@ -144,7 +144,7 @@ SwordText3:
 PercentText3:
 	db "%@"
 PPText3:
-	db "りる@"
+	db "り@"
 NoPowerText3:
 	db "---@"
 PhysicalCatText3:

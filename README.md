@@ -7,6 +7,8 @@ selected move's Movedex entry only for owned Pokemon.
 
 Pokémon Red/Blue overhauled with full GBC support. Made by FroggestSpirit, Drenn, and dannye. Also check out the crysaudio branch.
 
+The Options Menu defaults **MOVE NAME CASE** to **Lower**; **UPPER** remains selectable.
+
 The Options Menu includes **POKEMON NICKNAMES**, which defaults to **SHOW**.
 Use Left/Right to switch it to **HIDE** to display species names instead; saved
 nicknames are preserved and reappear when the option is switched back to **SHOW**.
