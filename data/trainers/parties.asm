@@ -718,7 +718,7 @@ ChannelerData:
 	db 22, GASTLY, 0
 ; Pokémon Tower 4F
 	db 24, GASTLY, 0
-	db 23, GASTLY, GASTLY, 0
+	db 23, GASTLY, MIMIKYU, 0
 ; Unused
 	db 24, GASTLY, 0
 ; Pokémon Tower 4F
@@ -743,7 +743,7 @@ ChannelerData:
 	db 33, GASTLY, GASTLY, HAUNTER, 0
 
 AgathaData:
-	db $FF, 56, GENGAR, 56, ANNIHILAPE, 55, ZOROARK, 58, ARBOK, 60, GENGAR, 0
+	db $FF, 56, MIMIKYU, 56, ANNIHILAPE, 55, ZOROARK, 58, ARBOK, 60, GENGAR, 0
 
 LanceData:
 	db $FF, 58, GYARADOS, 56, KINGDRA, 56, DRAGONAIR, 60, TYRANTRUM, 62, DRAGONITE, 0

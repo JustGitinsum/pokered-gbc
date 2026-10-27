@@ -167,6 +167,7 @@ IF GEN_2_GRAPHICS
 	db PAL_SPEAROW              ;TYRANTRUM
 	db PAL_ARTICUNO             ;AMAURA
 	db PAL_ARTICUNO             ;AURORUS
+	db PAL_PIKACHU              ;MIMIKYU
 	db PAL_ZOROARK              ;ZORUA
 	db PAL_ZOROARK
 	db PAL_RAPIDASH				;CHARCADET

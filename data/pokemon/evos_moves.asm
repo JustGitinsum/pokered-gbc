@@ -157,7 +157,7 @@ EvosMovesPointerTable:
 	dw WeezingEvosMoves
 	dw PersianEvosMoves
 	dw MarowakEvosMoves
-	dw MissingNo92EvosMoves
+	dw MimikyuEvosMoves
 	dw HaunterEvosMoves
 	dw AbraEvosMoves
 	dw AlakazamEvosMoves
@@ -550,7 +550,6 @@ TentacoolEvosMoves:
 
 GastlyEvosMoves:
 ; Evolutions
-	db EVOLVE_TRADE, 1, HAUNTER
 	db EVOLVE_LEVEL, 33, HAUNTER
 	db 0
 ; Learnset ;from gen9
@@ -2174,10 +2173,20 @@ MarowakEvosMoves:
 	db 44, SWORDS_DANCE
 	db 0
 
-MissingNo92EvosMoves:
+MimikyuEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
+	db 3, POUNCE
+	db 6, OMINOUS_WIND
+	db 12, DOUBLE_TEAM
+	db 16, CONFUSE_RAY
+	db 24, DRAIN_KISS
+	db 28, SLASH
+	db 34, SHADOW_CLAW
+	db 42, LEECH_LIFE
+	db 54, PLAY_ROUGH
+	db 60, PHANTOMFORCE
 	db 0
 
 HaunterEvosMoves:

@@ -3325,7 +3325,7 @@ PercentText:
 	db "%@"
 
 PPText:
-	db "りる@"
+	db "り@"
 
 NoPowerText:
 	db "---@"

@@ -145,7 +145,7 @@ PokedexEntryPointers:
 	dw WeezingDexEntry
 	dw PersianDexEntry
 	dw MarowakDexEntry
-	dw MissingNoDexEntry
+	dw MimikyuDexEntry
 	dw HaunterDexEntry
 	dw AbraDexEntry
 	dw AlakazamDexEntry
@@ -1126,6 +1126,13 @@ MarowakDexEntry:
 	db 3,3
 	dw 990
 	;text_far _MarowakDexEntry
+	text_end
+
+MimikyuDexEntry:
+	db "DISGUISE@"
+	db 0,08
+	dw 015
+	;text_far _MimikyuDexEntry
 	text_end
 
 HaunterDexEntry:

@@ -2,8 +2,8 @@ PokemonTower6FWildMons:
 	def_grass_wildmons 15 ; encounter rate
 	db 21, GASTLY
 	db 22, GASTLY
-	db 23, GASTLY
-	db 24, GASTLY
+	db 23, MIMIKYU
+	db 24, MIMIKYU
 	db 20, GASTLY
 	db 19, GASTLY
 	db 26, HAUNTER

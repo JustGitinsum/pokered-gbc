@@ -165,6 +165,7 @@ MonPartyData:
 	nybble ICON_MON       ; Tyrantrum
 	nybble ICON_QUADRUPED ; Amaura
 	nybble ICON_QUADRUPED ; Aurorus
+	nybble ICON_MON       ; Mimikyu
 	nybble ICON_QUADRUPED ; Zorua
 	nybble ICON_MON       ; Zoroark
 	nybble ICON_MON       ; Charcadet
