@@ -137,7 +137,7 @@ MonsterNamesLowercase::
 	db "Riolu@@@@@"
 	db "Lucario@@@"
 	db "Muk@@@@@@@"
-	db "MissingNo."
+	db "Skarmory@@"
 	db "Kingler@@@"
 	db "Cloyster@@"
 	db "MissingNo."

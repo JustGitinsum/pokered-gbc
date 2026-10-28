@@ -143,7 +143,7 @@
 	const RIOLU              ; $86
 	const LUCARIO            ; $87
 	const MUK                ; $88
-	const_skip               ; $89
+	const SKARMORY           ; $89
 	const KINGLER            ; $8A
 	const CLOYSTER           ; $8B
 	const_skip               ; $8C

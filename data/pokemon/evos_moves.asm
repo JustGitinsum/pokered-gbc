@@ -148,7 +148,7 @@ EvosMovesPointerTable:
 	dw RioluEvosMoves
 	dw LucarioEvosMoves
 	dw MukEvosMoves
-	dw MissingNo8AEvosMoves
+	dw SkarmoryEvosMoves
 	dw KinglerEvosMoves
 	dw CloysterEvosMoves
 	dw MissingNo8CEvosMoves
@@ -2093,10 +2093,21 @@ MukEvosMoves:
 	db 43, ACID_ARMOR
 	db 0
 
-MissingNo8AEvosMoves:
+SkarmoryEvosMoves:
 ; Evolutions
 	db 0
-; Learnset
+; Learnset ZA
+	db 12, METAL_CLAW
+	db 16, AGILITY
+	db 20, WING_ATTACK
+	db 24, SLASH
+	db 28, STEEL_WING
+	db 34, SWORDS_DANCE
+	db 38, DRILL_PECK
+	db 42, ROOST
+	db 46, IRON_HEAD
+	db 50, SCREECH
+	db 56, SKY_ATTACK
 	db 0
 
 KinglerEvosMoves:

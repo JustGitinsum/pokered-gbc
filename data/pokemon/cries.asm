@@ -142,7 +142,7 @@ CryData::
 	mon_cry SFX_CRY_0A, $DD, $60 ; Riolu
 	mon_cry SFX_CRY_1F, $48, $60 ; Lucario
 	mon_cry SFX_CRY_07, $EF, $FF ; Muk
-	mon_cry SFX_CRY_0F, $40, $80 ; MissingNo.
+	mon_cry SFX_CRY_18, $40, $A0 ; Skarmory
 	mon_cry SFX_CRY_20, $EE, $E0 ; Kingler
 	mon_cry SFX_CRY_18, $6F, $E0 ; Cloyster
 	mon_cry SFX_CRY_00, $00, $00 ; MissingNo.

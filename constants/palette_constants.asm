@@ -236,6 +236,7 @@ IF GEN_2_GRAPHICS
 	const PAL_CROBAT     ; $BC
 	; const PAL_STEELIX
 	; const PAL_SCIZOR
+	; const PAL_SKARMORY
 	; const PAL_KINGDRA
 	; const PAL_RALTS               ; $9F
 	; const PAL_KIRLIA              ; $A0

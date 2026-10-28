@@ -136,7 +136,7 @@ MonsterNames::
 	db "RIOLU@@@@@"
 	db "LUCARIO@@@"
 	db "MUK@@@@@@@"
-	db "MISSINGNO."
+	db "SKARMORY@@"
 	db "KINGLER@@@"
 	db "CLOYSTER@@"
 	db "MISSINGNO."

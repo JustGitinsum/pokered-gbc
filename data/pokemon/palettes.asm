@@ -156,6 +156,7 @@ IF GEN_2_GRAPHICS
 	db PAL_CROBAT
 	db PAL_ONIX                 ;STEELIX
 	db PAL_VILEPLUME            ;SCIZOR
+	db PAL_ZOROARK              ;SKARMORY
 	db PAL_SEADRA               ;KINGDRA
 	db PAL_BULBASAUR            ;RALTS
 	db PAL_BULBASAUR            ;KIRLIA

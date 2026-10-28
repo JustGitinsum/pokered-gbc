@@ -136,7 +136,7 @@ PokedexEntryPointers:
 	dw RioluDexEntry
 	dw LucarioDexEntry
 	dw MukDexEntry
-	dw MissingNoDexEntry
+	dw SkarmoryDexEntry
 	dw KinglerDexEntry
 	dw CloysterDexEntry
 	dw MissingNoDexEntry
@@ -1098,6 +1098,13 @@ MukDexEntry:
 	db 3,11
 	dw 660
 	;text_far _MukDexEntry
+	text_end
+
+SkarmoryDexEntry:
+	db "Armor Bird@"
+	db 5,07
+	dw 1113
+	;text_far _SkarmoryDexEntry
 	text_end
 
 KinglerDexEntry:

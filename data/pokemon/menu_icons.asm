@@ -154,6 +154,7 @@ MonPartyData:
 	nybble ICON_MON       ; Crobat
 	nybble ICON_SNAKE     ; Steelix
 	nybble ICON_BUG       ; Scizor
+	nybble ICON_BIRD      ; Skarmory
 	nybble ICON_WATER     ; Kingdra
 	nybble ICON_MON       ; Ralts
 	nybble ICON_MON       ; Kirlia

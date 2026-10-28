@@ -136,7 +136,7 @@ PokedexOrder:
 	db DEX_RIOLU
 	db DEX_LUCARIO
 	db DEX_MUK
-	db 0 ; MISSINGNO.
+	db DEX_SKARMORY
 	db DEX_KINGLER
 	db DEX_CLOYSTER
 	db 0 ; MISSINGNO.
