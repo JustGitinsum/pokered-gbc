@@ -162,19 +162,22 @@
 	const DEX_RALTS               ; $9F
 	const DEX_KIRLIA              ; $A0
 	const DEX_GARDEVOIR           ; $A1
-	const DEX_RIOLU			   ; $A2
-	const DEX_LUCARIO
-	const DEX_GALLADE               ; $A2
-	const DEX_TYRUNT
-	const DEX_TYRANTRUM
-	const DEX_AMAURA
-	const DEX_AURORUS
-	const DEX_MIMIKYU    ; $A3
-	const DEX_ZORUA       ; 156
-	const DEX_ZOROARK     ; 157
-	const DEX_CHARCADET
-	const DEX_ARMAROUGE
-	const DEX_CERULEDGE
-	const DEX_ANNIHILAPE  ; 158
+	const DEX_GIBLE               ; $A2
+	const DEX_GABITE              ; $A3
+	const DEX_GARCHOMP            ; $A4
+	const DEX_RIOLU			   ; $A5
+	const DEX_LUCARIO              ; $A6
+	const DEX_GALLADE               ; $A7
+	const DEX_TYRUNT                ; $A8
+	const DEX_TYRANTRUM            ; $A9
+	const DEX_AMAURA               ; $AA
+	const DEX_AURORUS              ; $AB
+	const DEX_MIMIKYU    ; $AC
+	const DEX_ZORUA       ; $AD
+	const DEX_ZOROARK     ; $AE
+	const DEX_CHARCADET              ; $AF
+	const DEX_ARMAROUGE              ; $B0
+	const DEX_CERULEDGE              ; $B1
+	const DEX_ANNIHILAPE             ; $B2
 	
 DEF NUM_POKEMON EQU const_value - 1

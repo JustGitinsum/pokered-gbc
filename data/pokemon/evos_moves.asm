@@ -78,9 +78,9 @@ EvosMovesPointerTable:
 	dw FarfetchdEvosMoves
 	dw VenonatEvosMoves
 	dw DragoniteEvosMoves
-	dw MissingNo43EvosMoves
-	dw MissingNo44EvosMoves
-	dw MissingNo45EvosMoves
+	dw GibleEvosMoves
+	dw GabiteEvosMoves
+	dw GarchompEvosMoves
 	dw DoduoEvosMoves
 	dw PoliwagEvosMoves
 	dw JynxEvosMoves
@@ -1144,22 +1144,49 @@ DragoniteEvosMoves:
 	db EVOLUTION_MOVE, WING_ATTACK
 	db 0
 
-MissingNo43EvosMoves:
+GibleEvosMoves:
 ; Evolutions
+	db EVOLVE_LEVEL, 24, GABITE
 	db 0
-; Learnset
+; Learnset ZA
+	db 12, DRAGONBREATH
+	db 18, BULLDOZE
+	db 25, BITE
+	db 30, SLASH
+	db 36, DRAGON_CLAW
+	db 42, DIG
+	db 54, HEADBUTT
+	db 60, OUTRAGE
 	db 0
 
-MissingNo44EvosMoves:
+GabiteEvosMoves:
 ; Evolutions
+	db EVOLVE_LEVEL, 48, GARCHOMP
 	db 0
-; Learnset
+; Learnset ZA
+	db 12, DRAGONBREATH
+	db 18, BULLDOZE
+	db 25, BITE
+	db 30, SLASH
+	db 36, DRAGON_CLAW
+	db 42, DIG
+	db 54, HEADBUTT
+	db 60, OUTRAGE
 	db 0
 
-MissingNo45EvosMoves:
+GarchompEvosMoves:
 ; Evolutions
 	db 0
-; Learnset
+; Learnset ZA
+	db 12, DRAGONBREATH
+	db 18, BULLDOZE
+	db 25, BITE
+	db 30, SLASH
+	db 36, DRAGON_CLAW
+	db 42, DIG
+	db 54, HEADBUTT
+	db 60, OUTRAGE
+	db EVOLUTION_MOVE, CRUNCH
 	db 0
 
 DoduoEvosMoves:

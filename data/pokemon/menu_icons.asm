@@ -158,6 +158,9 @@ MonPartyData:
 	nybble ICON_MON       ; Ralts
 	nybble ICON_MON       ; Kirlia
 	nybble ICON_MON       ; Gardevoir
+	nybble ICON_MON       ; Gible
+	nybble ICON_MON       ; Gabite
+	nybble ICON_MON       ; Garchomp
 	nybble ICON_MON       ; Riolu
 	nybble ICON_MON       ; Lucario
 	nybble ICON_MON       ; Gallade

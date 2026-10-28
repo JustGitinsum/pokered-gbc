@@ -72,9 +72,9 @@ CryData::
 	mon_cry SFX_CRY_10, $DD, $01 ; Farfetch'd
 	mon_cry SFX_CRY_1A, $44, $40 ; Venonat
 	mon_cry SFX_CRY_0F, $3C, $C0 ; Dragonite
-	mon_cry SFX_CRY_00, $80, $10 ; MissingNo.
-	mon_cry SFX_CRY_00, $00, $00 ; MissingNo.
-	mon_cry SFX_CRY_1D, $E0, $80 ; MissingNo.
+	mon_cry SFX_CRY_0F, $60, $40 ; Gible
+	mon_cry SFX_CRY_0F, $40, $80 ; Gabite
+	mon_cry SFX_CRY_0F, $3C, $C0 ; Garchomp
 	mon_cry SFX_CRY_0B, $BB, $01 ; Doduo
 	mon_cry SFX_CRY_0E, $FF, $FF ; Poliwag
 	mon_cry SFX_CRY_0D, $FF, $FF ; Jynx

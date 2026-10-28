@@ -160,6 +160,9 @@ IF GEN_2_GRAPHICS
 	db PAL_BULBASAUR            ;RALTS
 	db PAL_BULBASAUR            ;KIRLIA
 	db PAL_IVYSAUR              ;GARDEVOIR
+	db PAL_TENTACRUEL           ;GIBLE
+	db PAL_TENTACRUEL           ;GABITE
+	db PAL_POLIWAG              ;GARCHOMP
 	db PAL_TANGELA              ;RIOLU
 	db PAL_TANGELA              ;LUCARIO
 	db PAL_IVYSAUR              ;GALLADE

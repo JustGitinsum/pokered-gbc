@@ -159,6 +159,12 @@ AmauraPicFront::      INCBIN "gfx/pokemon/gsfront/amaura.pic"
 AmauraPicBack::       INCBIN "gfx/pokemon/gsback/amaurab.pic"
 MimikyuPicFront::     INCBIN "gfx/pokemon/gsfront/mimikyu.pic"
 MimikyuPicBack::      INCBIN "gfx/pokemon/gsback/mimikyub.pic"
+GiblePicFront::      INCBIN "gfx/pokemon/gsfront/gible.pic"
+GiblePicBack::       INCBIN "gfx/pokemon/gsback/gibleb.pic"
+GabitePicFront::     INCBIN "gfx/pokemon/gsfront/gabite.pic"
+GabitePicBack::      INCBIN "gfx/pokemon/gsback/gabiteb.pic"
+GarchompPicFront::   INCBIN "gfx/pokemon/gsfront/garchomp.pic"
+GarchompPicBack::    INCBIN "gfx/pokemon/gsback/garchompb.pic"
 
 SECTION "Pics 4", ROMX
 

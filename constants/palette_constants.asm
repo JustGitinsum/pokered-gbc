@@ -47,7 +47,7 @@ DEF PIC_CONTEXT_EVOLUTION EQU $03
 	const PAL_TOWNMAP2  ; $00
 	const PAL_SLOTS5    ; $01
 	const PAL_VIRIDIAN  ; $02
-	const PAL_PEWTER    ; $03
+	const PAL_TMPocketNames    ; $03
 	const PAL_CERULEAN  ; $04
 	const PAL_LAVENDER  ; $05
 	const PAL_VERMILION ; $06
@@ -240,6 +240,9 @@ IF GEN_2_GRAPHICS
 	; const PAL_RALTS               ; $9F
 	; const PAL_KIRLIA              ; $A0
 	; const PAL_GARDEVOIR           ; $A1
+	; const PAL_GIBLE      ; $A2
+	; const PAL_GABITE     ; $A3
+	; const PAL_GARCHOMP   ; $A4
 	; const PAL_RIOLU			   ; $A2
 	; const PAL_LUCARIO
 	; const PAL_GALLADE               ; $A2

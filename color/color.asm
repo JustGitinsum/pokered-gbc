@@ -814,7 +814,7 @@ SetPal_ItemListMoveNames::
 	jr nz, .row
 	; Keep this slot borrowed until the menu is hidden. Restoring it during a
 	; redraw recolors move glyphs still present in the displayed tilemap.
-	ld d, PAL_BLACK
+	ld d, PAL_TMPocketNames
 	ld e, 3
 	farcall LoadSGBPalette
 	jp ItemMenuPalettesChanged

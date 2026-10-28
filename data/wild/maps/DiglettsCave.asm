@@ -5,10 +5,10 @@ DiglettsCaveWildMons:
 	db 17, DIGLETT
 	db 20, DIGLETT
 	db 16, DIGLETT
-	db 15, DIGLETT
-	db 21, DIGLETT
+	db 29, DIGLETT
+	db 15, GIBLE
 	db 22, DIGLETT
-	db 29, DUGTRIO
+	db 21, GIBLE
 	db 31, DUGTRIO
 	end_grass_wildmons
 

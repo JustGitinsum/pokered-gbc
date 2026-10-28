@@ -73,9 +73,9 @@
 	const FARFETCHD          ; $40
 	const VENONAT            ; $41
 	const DRAGONITE          ; $42
-	const_skip               ; $43
-	const_skip               ; $44
-	const_skip               ; $45
+	const GIBLE              ; $43
+	const GABITE             ; $44
+	const GARCHOMP           ; $45
 	const DODUO              ; $46
 	const POLIWAG            ; $47
 	const JYNX               ; $48
