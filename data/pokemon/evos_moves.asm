@@ -183,7 +183,7 @@ EvosMovesPointerTable:
 	dw GeodudeEvosMoves
 	dw PorygonEvosMoves
 	dw AerodactylEvosMoves
-	dw MissingNoACEvosMoves
+	dw MagnezoneEvosMoves
 	dw MagnemiteEvosMoves
 	dw MissingNoAEEvosMoves
 	dw MissingNoAFEvosMoves
@@ -943,8 +943,11 @@ ElectabuzzEvosMoves:
 
 MagnetonEvosMoves:
 ; Evolutions
+	db EVOLVE_ITEM, THUNDER_STONE, 1, MAGNEZONE
 	db 0
 ; Learnset
+	db 07, THUNDERSHOCK
+	db 12, THUNDER_WAVE
 	db 16, SONICBOOM
 	db 20, SHOCK_WAVE
 	db 24, SCREECH
@@ -2583,10 +2586,19 @@ AerodactylEvosMoves:
 	db 54, HYPER_BEAM
 	db 0
 
-MissingNoACEvosMoves:
+MagnezoneEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
+	db 07, THUNDERSHOCK
+	db 12, THUNDER_WAVE
+	db 16, SONICBOOM
+	db 20, SHOCK_WAVE
+	db 24, SCREECH
+	db 32, THUNDERBOLT
+	db 36, FLASH_CANNON
+	db 40, LIGHT_SCREEN
+	db 44, THUNDER
 	db 0
 
 MagnemiteEvosMoves:
@@ -2594,6 +2606,8 @@ MagnemiteEvosMoves:
 	db EVOLVE_LEVEL, 30, MAGNETON
 	db 0
 ; Learnset
+	db 07, THUNDERSHOCK
+	db 12, THUNDER_WAVE
 	db 16, SONICBOOM
 	db 20, SHOCK_WAVE
 	db 24, SCREECH

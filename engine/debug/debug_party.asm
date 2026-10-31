@@ -19,7 +19,7 @@ DebugNewGameParty: ; unreferenced except in _DEBUG
 	; From https://web.archive.org/web/20000607152840/http://pocket.ign.com/news/14973.html
 	db GARCHOMP, 90
 	db MEW, 10
-	db GYARADOS, 56
+	db MAGNEZONE, 56
 	db MOLTRES, 56
 	db SKARMORY, 90
 	db PIKACHU, 5

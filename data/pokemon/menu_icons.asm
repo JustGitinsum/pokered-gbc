@@ -164,6 +164,7 @@ MonPartyData:
 	nybble ICON_MON       ; Garchomp
 	nybble ICON_MON       ; Riolu
 	nybble ICON_MON       ; Lucario
+	nybble ICON_BALL      ; Magnezone
 	nybble ICON_MON       ; Gallade
 	nybble ICON_MON       ; Tyrunt
 	nybble ICON_MON       ; Tyrantrum

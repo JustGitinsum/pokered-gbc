@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw MagnemitePicFront, MagnemitePicBack
 
-	db TACKLE, SUPERSONIC, THUNDERSHOCK, THUNDER_WAVE ; level 1 learnset
+	db TACKLE, SUPERSONIC, NO_MOVE, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset

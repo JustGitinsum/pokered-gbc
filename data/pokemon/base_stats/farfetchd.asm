@@ -1,9 +1,9 @@
 	db DEX_FARFETCHD ; pokedex id
 
-	db  52,  65,  55,  60,  58
+	db  52,  95,  55,  55,  58
 	;   hp  atk  def  spd  spc
 
-	db NORMAL, FLYING ; type
+	db FIGHTING, FIGHTING ; type
 	db 45 ; catch rate
 	db 94 ; base exp
 

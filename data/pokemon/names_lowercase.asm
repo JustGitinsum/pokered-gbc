@@ -172,7 +172,7 @@ MonsterNamesLowercase::
 	db "Geodude@@@"
 	db "Porygon@@@"
 	db "Aerodactyl"
-	db "MissingNo."
+	db "Magnezone@"
 	db "Magnemite@"
 	db "MissingNo."
 	db "MissingNo."

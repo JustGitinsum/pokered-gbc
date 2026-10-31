@@ -168,6 +168,7 @@
 	const DEX_GARCHOMP            ; $A4
 	const DEX_RIOLU			   ; $A5
 	const DEX_LUCARIO              ; $A6
+	const DEX_MAGNEZONE              ; $A6
 	const DEX_GALLADE               ; $A7
 	const DEX_TYRUNT                ; $A8
 	const DEX_TYRANTRUM            ; $A9

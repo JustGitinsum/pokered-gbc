@@ -171,7 +171,7 @@ PokedexEntryPointers:
 	dw GeodudeDexEntry
 	dw PorygonDexEntry
 	dw AerodactylDexEntry
-	dw MissingNoDexEntry
+	dw MagnezoneDexEntry
 	dw MagnemiteDexEntry
 	dw MissingNoDexEntry
 	dw MissingNoDexEntry
@@ -1329,6 +1329,13 @@ AerodactylDexEntry:
 	db 5,11
 	dw 1300
 	;text_far _AerodactylDexEntry
+	text_end
+
+MagnezoneDexEntry:
+	db "MagnetArea@"
+	db 3,11
+	dw 3968
+	;text_far _MagnezoneDexEntry
 	text_end
 
 MagnemiteDexEntry:

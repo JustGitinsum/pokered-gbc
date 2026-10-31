@@ -171,7 +171,7 @@ MonsterNames::
 	db "GEODUDE@@@"
 	db "PORYGON@@@"
 	db "AERODACTYL"
-	db "MISSINGNO."
+	db "MAGNEZONE@"
 	db "MAGNEMITE@"
 	db "MISSINGNO."
 	db "MISSINGNO."

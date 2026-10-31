@@ -178,7 +178,7 @@
 	const GEODUDE            ; $A9
 	const PORYGON            ; $AA
 	const AERODACTYL         ; $AB
-	const_skip               ; $AC
+	const MAGNEZONE               ; $AC
 	const MAGNEMITE          ; $AD
 	const_skip               ; $AE
 	const_skip               ; $AF
