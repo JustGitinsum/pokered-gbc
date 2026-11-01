@@ -13,6 +13,7 @@
 	const TUTOR_COUNTER      ; $09 Celadon Mart 3F
 	const TUTOR_SUBSTITUTE   ; $0A Celadon City
 	const TUTOR_HYPER_VOICE  ; $0B Viridian City
+	const TUTOR_PLAY_ROUGH   ; $0C Rocket Hideout B1F (James)
 DEF NUM_MOVE_TUTORS EQU const_value - 1
 
 ; move tutor compatibility modes

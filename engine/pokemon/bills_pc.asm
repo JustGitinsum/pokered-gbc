@@ -103,7 +103,6 @@ BillsPC_::
 	ld [wParentMenuItem], a
 	inc a               ; MONSTER_NAME
 	ld [wNameListType], a
-	call LoadHpBarAndStatusTilePatterns
 	ld a, [wListScrollOffset]
 	push af
 	ld a, [wUpdateSpritesEnabled]
@@ -119,6 +118,11 @@ BillsPC_::
 	ld hl, SwitchOnText
 	call PrintText
 .start
+	call ClearSprites
+	ld a, 1
+	ldh [hAutoBGTransferEnabled], a
+	call ClearScreen
+	call LoadHpBarAndStatusTilePatterns
 	callfar LoadBillsPCExtraTiles
 	jp BillsPCMain
 
@@ -126,6 +130,8 @@ BillsPC_::
 ; pops the values pushed by BillsPC_. Returns to the caller of BillsPC_.
 ExitBillsPC:
 	callfar FlushBoxChange
+	call ClearSprites
+	farcall RestoreOverworldSpritePalettes
 	ld a, [wMiscFlags]
 	bit BIT_USING_GENERIC_PC, a
 	jr nz, .generic
@@ -199,6 +205,7 @@ BillsPCMain:
 	cp 5 ; SEE YA?
 	jp z, ExitBillsPC
 	farcall ChangeBox
+	call ClearScreen
 	ld b, SET_PAL_OVERWORLD ; undo the generic palette used by the change box menu
 	call RunPaletteCommand
 	callfar LoadBillsPCExtraTiles
@@ -423,7 +430,13 @@ DisplayMonListMenu:
 .fullRedraw
 	ld a, $ff
 	ld [wUnusedCreditsByte], a ; no icons loaded yet
-	call ClearScreen ; the list is drawn over a blank screen like the party menu
+	; Keep the previous PC page visible until DisplayListMenuID finishes drawing.
+	xor a
+	ldh [hAutoBGTransferEnabled], a
+	hlcoord 0, 0
+	ld bc, SCREEN_WIDTH * SCREEN_HEIGHT
+	ld a, " "
+	call FillMemory
 	hlcoord 0, 12 ; bottom text box holding CHANGE BOX / SEE YA!
 	ld b, 4
 	ld c, 18

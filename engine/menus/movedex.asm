@@ -38,6 +38,8 @@ ShowMoveDataFromBattle:
 ShowMoveDataFromPokedex:
 	call HalfVolume
 	call ClearScreen
+	ld b, SET_PAL_GENERIC
+	call RunPaletteCommand
 	; Learnset can open this page without Pokedex tiles loaded. Load them only
 	; after clearing the Learnset page so its graphics remain until transition.
 	callfar LoadPokedexTilePatterns

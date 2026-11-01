@@ -121,3 +121,18 @@ _MoveTutorHYPER_VOICEIntroText::
 	line "#MON like to"
 	cont "join me?"
 	prompt
+
+;JESSIE_JAMES Tutor
+
+_MoveTutorJessieJamesIntroText::
+	text "Now that the boss"
+	line "has disbanded Team"
+	line "Rocket, We're"
+	cont "out of a job!"
+
+	para "I know! For a bit"
+	line "of cash, we can"
+	cont "teach your #MON"
+	cont "some of our skills!"
+	prompt
+

@@ -4,45 +4,38 @@ _GenericNoAdditionalEffectText:: ;;; NO_ADDITIONAL_EFFECT
 	dex
 
 _Generic20PercentPoisonText:: ;;; POISON_SIDE_EFFECT1
-	text "An attack that"
-	next "may POISON"
-	next "the target"
+	text "An attack that may"
+	next "poison the foe"
 	dex
   
 _GenericAbsorbMoveText:: ;;; DRAIN_HP_EFFECT
-	text "Absorbs half of"
-	next "inflicted damage"
-	next "to restore HP"
+	text "Steals 1/2 of the"
+	next "damage inflicted"
 	dex
 
 _Generic10PercentBurnText:: ;;; BURN_SIDE_EFFECT1
-	text "An attack that"
-	next "may BURN"
-	next "the target"
+	text "An attack that may"
+	next "inflict a burn"
 	dex
 
 _Generic10PercentFreezeText:: ;;; FREEZE_SIDE_EFFECT1
-	text "An attack that"
-	next "may FREEZE"
-	next "the target"
+	text "An attack that may"
+	next "freeze the foe"
 	dex
 
 _Generic10PercentParalysisText:: ;;; PARALYZE_SIDE_EFFECT1
-	text "An attack that"
-	next "may PARALYZE"
-	next "the target"
+	text "An attack that may"
+	next "cause paralysis"
 	dex
 
 _SelfdestructDexEntry:: ;;; EXPLODE_EFFECT
-	text "Inflicts severe"
-	next "damage but makes"
-	next "the user faint"
+	text "Very powerful but"
+	next "makes user faint"
 	dex
   
 _DreamEaterDexEntry:: ;;; DREAM_EATER_EFFECT
-	text "Eats a sleeping"
-	next "foe's dreams to"
-	next "regain HP"
+	text "Steals HP from a"
+	next "sleeping victim"
 	dex
 
 _MirrorMoveDexEntry:: ;;; MIRROR_MOVE_EFFECT
@@ -52,27 +45,27 @@ _MirrorMoveDexEntry:: ;;; MIRROR_MOVE_EFFECT
 
 _GenericRaisesAttack1StageText:: ;;; ATTACK_UP1_EFFECT
 	text "Raises the user's"
-	next "ATTACK stat"
+	next "Attack"
 	dex
 
 _GenericRaisesDefense1StageText:: ;;; DEFENSE_UP1_EFFECT
 	text "Raises the user's"
-	next "DEFENSE stat"
+	next "Defense"
 	dex
 
 _GenericRaisesSpeed1StageText:: ;;; SPEED_UP1_EFFECT
 	text "Raises the user's"
-	next "SPEED stat"
+	next "Speed"
 	dex
 
 _GenericRaisesSpecial1StageText:: ;;; SPECIAL_UP1_EFFECT
 	text "Raises the user's"
-	next "SPECIAL stat"
+	next "Special"
 	dex
 
 _GenericRaisesEvasion1StageText:: ;;; EVASION_UP1_EFFECT
-	text "Raises user's"
-	next "EVASION"
+	text "Raises the user's"
+	next "evasiveness"
 	dex
 
 _PayDayDexEntry:: ;;; PAY_DAY_EFFECT
@@ -81,38 +74,38 @@ _PayDayDexEntry:: ;;; PAY_DAY_EFFECT
 	dex
 
 _GenericNeverMissDexEntry:: ;;; SWIFT_EFFECT
-	text "This attack" 
+	text "An attack that"
 	next "never misses"
 	dex
 
 _GenericLowersAttack1StageText:: ;;; ATTACK_DOWN1_EFFECT
-	text "Lowers opponent's"
-	next "ATTACK stat"
+	text "A move that lowers"
+	next "the foe's Attack"
 	dex
 
 _GenericLowersDefense1StageText:: ;;; DEFENSE_DOWN1_EFFECT
-	text "Lowers opponent's"
-	next "DEFENSE stat"
+	text "A move that lowers"
+	next "the foe's Defense"
 	dex
 
 _GenericLowersSpeed1StageText:: ;;; SPEED_DOWN1_EFFECT
-	text "Lowers opponent's"
-	next "SPEED stat"
+	text "A move that lowers"
+	next "the foe's Speed"
 	dex
 
 _GenericLowersSpecial1StageText:: ;;; SPECIAL_DOWN1_EFFECT
-	text "Lowers opponent's"
-	next "SPECIAL stat"
+	text "A move that lowers"
+	next "the foe's Special"
 	dex
 
 _GenericLowersAccuracy1StageText:: ;;; ACCURACY_DOWN1_EFFECT
-	text "Lowers opponent's"
-	next "ACCURACY"
+	text "An attack that"
+	next "lowers accuracy"
 	dex
 
 _GenericLowersEvasion1StageText:: ;;; EVASION_DOWN1_EFFECT
-	text "Lowers opponent's"
-	next "EVASION"
+	text "An attack that"
+	next "lowers evasion"
 	dex
 
 _ConversionDexEntry:: ;;; CONVERSION_EFFECT
@@ -132,55 +125,48 @@ _BideDexEntry:: ;;; BIDE_EFFECT
 	dex
 
 _GenericThrashEffectText:: ;;; THRASH_PETAL_DANCE_EFFECT
-	text "Lasts 2-3 turns"
-	next "Causes CONFUSION"
-	next "to user after"
+	text "Works 2-3 turns"
+	next "and confuses user"
 	dex
 
 _GenericFleeingEffectText:: ;;; SWITCH_AND_TELEPORT_EFFECT
-	text "A move for"
-	next "fleeing from any"
-	next "wild #MON"
+	text "A move for fleeing"
+	next "from battle"
 	dex
 
 _Generic2To5HitsText:: ;;; TWO_TO_FIVE_ATTACKS_EFFECT
-	text "Hits 2-5 times in"
-	next "succession"
+	text "Hits 2-5 times"
+	next "in succession"
 	dex
 
 _Generic10PercentFlinchText:: ;;; FLINCH_SIDE_EFFECT1
-	text "An attack that"
-	next "may make the"
-	next "target FLINCH"
+	text "An attack that may"
+	next "cause flinching"
 	dex
   
 _GenericPutsFoeAsleepText:: ;;; SLEEP_EFFECT
-	text "A move that"
-	next "induces SLEEP"
+	text "May cause the foe"
+	next "to fall asleep"
 	dex
 
 _Generic40PercentPoisonText:: ;;; POISON_SIDE_EFFECT2
-	text "An attack that"
-	next "may POISON"
-	next "the target"
+	text "An attack that may"
+	next "poison the foe"
 	dex
 
 _Generic40PercentBurnText:: ;;; BURN_SIDE_EFFECT2
-	text "An attack that"
-	next "may BURN"
-	next "the target"
+	text "An attack that may"
+	next "inflict a burn"
 	dex
 
 _Generic30PercentParalysisText:: ;;; PARALYZE_SIDE_EFFECT2
-	text "An attack that"
-	next "may PARALYZE"
-	next "the target"
+	text "An attack that may"
+	next "cause paralysis"
 	dex
 
 _Generic30PercentFlinchText:: ;;; FLINCH_SIDE_EFFECT2
-	text "An attack that"
-	next "may make the"
-	next "target FLINCH"
+	text "An attack that may"
+	next "cause flinching"
 	dex
 
 _GenericOHKOText:: ;;; OHKO_EFFECT
@@ -204,9 +190,8 @@ _SonicboomDexEntry:: ;;; SPECIAL_DAMAGE_EFFECT
 	dex
 
 _SeismicTossDexEntry:: ;;; SPECIAL_DAMAGE_EFFECT
-	text "Inflicts damage"
-	next "identical to"
-	next "the user's level"
+	text "Damage equals the"
+	next "user's level"
 	dex
 
 _DragonRageDexEntry:: ;;; SPECIAL_DAMAGE_EFFECT
@@ -215,66 +200,58 @@ _DragonRageDexEntry:: ;;; SPECIAL_DAMAGE_EFFECT
 	dex
 
 _GenericTrappingMoveText:: ;;; TRAPPING_EFFECT
-	text "The foe can't"
-	next "move for 2-3"
-	next "turns"
+	text "Traps the foe for"
+	next "2-5 turns"
 	dex
 
 _GenericHitsTwiceText:: ;;; ATTACK_TWICE_EFFECT
-	text "Hits twice"
+	text "An attack that"
+	next "strikes twice"
 	dex
 
 _GenericKeptGoingCrashedText:: ;;; JUMP_KICK_EFFECT
-	text "If it misses,"
-	next "the user is"
-	next "hurt instead"
+	text "May miss and hurt"
+	next "the user"
 	dex
 
 _MistDexEntry:: ;;; MIST_EFFECT
-	text "Creates a mist"
-	next "that prevents"
-	next "stat reduction"
+	text "Prevents all"
+	next "status problems"
+	dex
 
 _FocusEnergyDexEntry:: ;;; FOCUS_ENERGY_EFFECT
-	text "Raises the user's"
-	next "Critical-Hit"
-	next "ratio"
+	text "Raises the criti-"
+	next "cal hit ratio"
 	dex
 
 _Generic25PercentRecoilText:: ;;; RECOIL_EFFECT
-	text "User takes 25%"
-	next "of damage done"
-	next "to foe as recoil"
+	text "A move that also"
+	next "hurts the user"
 	dex
 
 _GenericConfuseText:: ;;; CONFUSION_EFFECT
-	text "A move that will"
-	next "inflict CONFUSION"
-	next "on the target"
+	text "A move that may"
+	next "confuse the foe"
 	dex	
 
 _SwordsDanceDexEntry:: ;;; ATTACK_UP2_EFFECT
-	text "Greatly raises"
-	next "the user's"
-	next "ATTACK stat"
+	text "Sharply raises the"
+	next "user's Attack"
 	dex
 
 _GenericRaisesDefense2StageText:: ;;; DEFENSE_UP2_EFFECT
-	text "Greatly raises"
-	next "the user's"
-	next "DEFENSE stat"
+	text "Sharply raises the"
+	next "user's Defense"
 	dex
 
 _AgilityDexEntry:: ;;; SPEED_UP2_EFFECT
-	text "Greatly raises"
-	next "the user's"
-	next "SPEED stat"
+	text "Sharply raises the"
+	next "user's Speed"
 	dex
 
 _AmnesiaDexEntry:: ;;; SPECIAL_UP2_EFFECT
-	text "Greatly raises"
-	next "the user's"
-	next "SPECIAL stat"
+	text "Sharply raises the"
+	next "user's Special"
 	dex
 
 _GenericHealsHalfText:: ;;; HEAL_EFFECT
@@ -283,39 +260,33 @@ _GenericHealsHalfText:: ;;; HEAL_EFFECT
 	dex
 
 _RestDexEntry:: ;;; HEAL_EFFECT
-	text "The user falls"
-	next "asleep, healing"
-	next "all damage"
+	text "Sleep for 2 turns"
+	next "to fully recover"
 	dex
 
 _TransformDexEntry:: ;;; TRANSFORM_EFFECT
-	text "Transforms into"
-	next "the opponent"
-	next "#MON"
+	text "The user assumes"
+	next "the foe's guise"
 	dex
 
 _ScreechDexEntry:: ;;; DEFENSE_DOWN2_EFFECT
-	text "Greatly lowers"
-	next "the target's"
-	next "DEFENSE stat"
+	text "Sharply lowers the"
+	next "foe's Defense"
 	dex
 
 _LightScreenDexEntry:: ;;; LIGHT_SCREEN_EFFECT
-	text "Cuts SPECIAL"
-	next "attack damage"
-	next "in half"
+	text "Raises Sp.Def with"
+	next "a wall of light"
 	dex
 
 _ReflectDexEntry:: ;;; REFLECT_EFFECT
-	text "Creates a wall of"
-	next "light that weakens"
-	next "physical attacks"
+	text "Raises Defense"
+	next "with a barrier"
 	dex
 
 _GenericPoisonEffectText:: ;;; POISON_EFFECT
-	text "A move that"
-	next "inflicts POISON"
-	next "to the target"
+	text "A move that may"
+	next "poison the foe"
 	dex
 
 _ToxicDexEntry:: ;;; POISON_EFFECT
@@ -325,55 +296,47 @@ _ToxicDexEntry:: ;;; POISON_EFFECT
 
 _GenericParalyzeEffectText:: ;;; PARALYZE_EFFECT
 	text "A move that"
-	next "inflicts PARALYZE"
-	next "to the target"
+	next "paralyzes the foe"
 	dex
 
 _Generic33PercentLowerAttackText:: ;;; ATTACK_DOWN_SIDE_EFFECT
-	text "An attack that"
-	next "may lower the"
-	next "foe's ATTACK stat"
+	text "An attack that may"
+	next "lower Attack"
 	dex
 
 _Generic33PercentLowerDefenseText:: ;;; DEFENSE_DOWN_SIDE_EFFECT
-	text "An attack that"
-	next "may lower the"
-	next "foe's DEFENSE stat"
+	text "An attack that may"
+	next "lower Defense"
 	dex
 
 _Generic33PercentLowerSpeedText:: ;;; SPEED_DOWN_SIDE_EFFECT
-	text "An attack that"
-	next "may lower that"
-	next "foe's SPEED stat"
+	text "An attack that may"
+	next "lower Speed"
 	dex
 
 _Generic33PercentLowerSpecialText:: ;;; SPECIAL_DOWN_SIDE_EFFECT
-	text "An attack that"
-	next "may lower that"
-	next "foe's SPECIAL stat"
+	text "An attack that may"
+	next "lower Special"
 	dex
 
 _TriAttackDexEntry:: ;;; TRI_ATTACK_EFFECT
-	text "An attack that may"
-	next "BURN, PARALYZE or"
-	next "FREEZE the target"
+	text "May burn, paralyze"
+	next "or freeze the foe"
 	dex
 
 _Generic10PercentConfusionText:: ;;; CONFUSION_SIDE_EFFECT
-	text "An attack that"
-	next "may cause"
-	next "CONFUSION"
+	text "An attack that may"
+	next "confuse the foe"
 	dex
 
 _TwineedleDexEntry:: ;;; TWINEEDLE_EFFECT
-	text "Hits Twice"
-	next "May Inflict POISON"
+	text "Strikes twice"
+	next "May Inflict Poison"
 	dex
 
 _SubstituteDexEntry:: ;;; SUBSTITUTE_EFFECT
-	text "Sacrifices 25%"
-	next "of user's HP to"
-	next "make a decoy doll"
+	text "Makes a decoy with"
+	next "1/4 user's max HP"
 	dex
 
 _HyperBeamDexEntry:: ;;; HYPER_BEAM_EFFECT
@@ -409,9 +372,8 @@ _DisableDexEntry:: ;;; DISABLE_EFFECT
 	dex
 
 _GenericOftenLandsCriticalHitsText:: ;;; CRIT
-	text "An attack with a"
-	next "high Critical-Hit"
-	next "ratio"
+	text "Has a high criti-"
+	next "cal hit ratio"
 	dex
 
 _GenericAlwaysGoesFirstText:: ;;;
@@ -420,9 +382,8 @@ _GenericAlwaysGoesFirstText:: ;;;
 	dex
 
 _CounterDexEntry::
-	text "Retaliates any"
-	next "physical hit with"
-	next "double the power"
+	text "Returns a physical"
+	next "attack double"
 	dex
 
 ; ; PureRGBnote: ADDED: text pointers for the descriptions that show up in the movedex.

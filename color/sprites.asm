@@ -22,6 +22,26 @@ DEF SPR_PAL_TREE    EQU 6
 DEF SPR_PAL_ROCK    EQU 7
 DEF SPR_PAL_RANDOM  EQU 8
 
+; Menu icons borrow slots 1-6 and OBP0; restore map sprites and emotion bubbles.
+RestoreOverworldSpritePalettes:
+	call ClearSpritePaletteMap
+	ldh a, [rWBK]
+	ld b, a
+	ld a, 2
+	ldh [rWBK], a
+	push bc
+	ld hl, W2_SpritePaletteMap + $f8
+	ld a, SPR_PAL_EMOJI
+	ld [hli], a
+	ld [hli], a
+	ld [hli], a
+	ld [hl], a
+	ld a, 1
+	ld [W2_UseOBP1], a
+	pop af
+	ldh [rWBK], a
+	jp LoadOverworldSpritePalettes
+
 LoadOverworldSpritePalettes:
 	ldh a, [rWBK]
 	ld b, a

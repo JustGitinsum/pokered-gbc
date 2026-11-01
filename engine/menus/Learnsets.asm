@@ -14,19 +14,16 @@ LoadLearnsetTiles:
 	; wPokedexNum carries the internal species index here; use it for both
 	; the header lookup and the name lookup performed by GetMonName.
 	ld a, [wPokedexNum]
+	push af
+	call DisableLCD
+	farcall LoadLearnsetMonIcon
+	call EnableLCD
+	pop af
+	; The icon loader converts wPokedexNum to a display number.
+	ld [wPokedexNum], a
 	ld [wCurSpecies], a
 	ld [wNamedObjectIndex], a
 	call GetMonHeader
-	; call DisableLCD
-	; ; ld de, vChars1 tile $57
-	; ; ld a, [wPokedexNum]
-	; ; ld c, a
-	; ; ; callfar FarLoadPartyMonSpriteIntoVRAM
-	; ; ; ld hl, LearnsetMonIconsOAM
-	; ; ld de, wShadowOAM
-	; ; ld bc, 32
-	; ; call CopyData
-	; call EnableLCD
 	; load menu graphics
 	ld de, LearnsetMenuUI2BPP
 	ld hl, vChars1 tile $40
@@ -47,15 +44,26 @@ LoadLearnsetTiles:
 	lb bc, $D3, 13
 	ld de, SCREEN_WIDTH
 	call DrawTileLine
+	; Use the first icon frame as background tiles, without borrowing OAM.
+	hlcoord 1, 0
+	ld a, $D7
+	ld [hli], a
+	inc a
+	ld [hl], a
+	hlcoord 1, 1
+	ld a, $DB
+	ld [hli], a
+	inc a
+	ld [hl], a
 	; draw "(POKEMON)'s"
 	call GetMonName
-	hlcoord 1, 1
+	hlcoord 4, 1
 	ld de, wNameBuffer
 	call PlaceString
 	call FindFirstBlankTile
 	; put 's in this blank tile next to the pokemon's name
 	ld [hl], "'s"
-	ret
+	farjp SetPal_LearnsetMonIcon
 
 ShowMonLearnsetMenu:
 	; The learnset can be opened from screens with different sprite-update
@@ -88,8 +96,8 @@ ShowMonLearnsetMenu:
 	; clear the page text description tiles
 	hlcoord 11, 2
 	ld [hl], " "
-	hlcoord 12, 1
-	lb bc, 2, 8
+	hlcoord 12, 2
+	lb bc, 1, 8
 	call ClearScreenArea
 	xor a
 	ld [wListScrollOffset], a

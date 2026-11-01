@@ -2375,7 +2375,7 @@ ENDC
 SECTION "Stack", WRAM0
 
 ; the stack grows downward
-	ds $fe - 1
+	ds $fc - 1
 wStack:: db
 ASSERT wStack == $dfff
 

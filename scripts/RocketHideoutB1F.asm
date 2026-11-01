@@ -63,11 +63,24 @@ RocketHideoutB1F_TextPointers:
 	dw_const RocketHideoutB1FRocket5Text, TEXT_ROCKETHIDEOUTB1F_ROCKET5
 	dw_const PickUpItemText,              TEXT_ROCKETHIDEOUTB1F_ESCAPE_ROPE
 	dw_const PickUpItemText,              TEXT_ROCKETHIDEOUTB1F_HYPER_POTION
-	dw_const RocketHideoutB1FJessieJamesText, TEXT_ROCKETHIDEOUTB1F_JAMES
-	dw_const RocketHideoutB1FJessieJamesText, TEXT_ROCKETHIDEOUTB1F_JESSIE
+	dw_const RocketHideoutB1FJamesText, TEXT_ROCKETHIDEOUTB1F_JAMES
+	dw_const RocketHideoutB1FJessieText, TEXT_ROCKETHIDEOUTB1F_JESSIE
 
-RocketHideoutB1FJessieJamesText:
-	text_end
+RocketHideoutB1FJessieText:
+	text_asm
+	ld a, TUTOR_THIEF
+	ld [wWhichTrade], a
+	farcall MoveTutorScript
+	jp TextScriptEnd
+
+
+RocketHideoutB1FJamesText:
+	text_asm
+	ld a, TUTOR_PLAY_ROUGH
+	ld [wWhichTrade], a
+	farcall MoveTutorScript
+	jp TextScriptEnd
+
 
 RocketHideout1TrainerHeaders:
 	def_trainers

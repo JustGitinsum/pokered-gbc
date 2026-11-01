@@ -977,6 +977,7 @@ FillBox:
 
 ; Load town map
 SetPal_TownMap:
+	CALL_INDIRECT RestoreOverworldSpritePalettes
 	ld a, [wWalkBikeSurfState]
 	cp a, 2
 	jr z, .surfMap
@@ -990,7 +991,6 @@ SetPal_TownMap:
 .surfMap
 	ld a, 2
 	ldh [rSVBK], a
-	CALL_INDIRECT LoadOverworldSpritePalettes
 	farcall GetSurfingMonSpriteData
 	ld a, l
 	ld hl, W2_SpritePaletteMap
@@ -1485,6 +1485,183 @@ SetPal_Generic:
 	ldh [rWBK], a
 	ret
 
+SetPal_LearnsetMonIcon:
+	ld a, [wOnSGB]
+	and a
+	ret z
+	ld a, [wPokedexNum]
+	push af
+	call DeterminePaletteID
+	ld d, a
+	pop af
+	ld [wPokedexNum], a
+	ld e, 1
+	farcall LoadSGBPalette
+
+	ldh a, [rWBK]
+	ld b, a
+	ld a, 2
+	ldh [rWBK], a
+	push bc
+	ld hl, W2_TilesetPaletteMap + 1
+	lb bc, 2, 2
+	ld a, 1
+	call FillBox
+	ld a, 3
+	ld [W2_StaticPaletteMapChanged], a
+	ld a, 1
+	ld [W2_ForceBGPUpdate], a
+	pop af
+	ldh [rWBK], a
+	ret
+
+; a = party index, wPokedexNum = dex number, de = first icon tile.
+; Fainting takes priority over status; sleep retains the species palette.
+SetPal_PartyMonIconSprite:
+	push de
+	ld hl, wPartyMon1HP
+	ld bc, PARTYMON_STRUCT_LENGTH
+	call AddNTimes
+	ld a, [hli]
+	or [hl]
+	pop de
+	ld a, PAL_BLACK
+	jr z, SetMonIconSpritePalette
+	ASSERT MON_STATUS - MON_HP == 3
+	inc hl
+	inc hl
+	ld b, [hl]
+	ld a, PAL_PURPLEMON
+	bit PSN, b
+	jr nz, SetMonIconSpritePalette
+	ld a, PAL_CHARMANDER
+	bit BRN, b
+	jr nz, SetMonIconSpritePalette
+	ld a, PAL_EXP
+	bit FRZ, b
+	jr nz, SetMonIconSpritePalette
+	ld a, PAL_PSYDUCK
+	bit PAR, b
+	jr nz, SetMonIconSpritePalette
+
+; wPokedexNum = dex number, de = first of the icon's eight sprite tiles.
+; Each visible row has its own palette; slot 0 remains available to other sprites.
+SetPal_MonIconSprite:
+	ld a, [wPokedexNum]
+	ld hl, MonsterPalettes
+	ld c, a
+	ld b, 0
+	add hl, bc
+	ld a, [hl]
+
+; a = palette ID, de = 128-byte-aligned icon destination in vSprites.
+SetMonIconSpritePalette:
+	push af
+	ld a, [wOnSGB]
+	and a
+	jr z, .skip
+	ld a, d
+	sub HIGH(vSprites)
+	cp PARTY_LENGTH / 2
+	jr nc, .skip ; Learnset icons use background tiles.
+	; Two icons fit in each VRAM page; palette slots are row + 1.
+	ASSERT LOW(vSprites) == 0 && 8 tiles == $80
+	add a
+	ld c, a
+	ld a, e
+	rlca
+	and 1
+	or c
+	inc a
+	ld e, a
+	dec a
+	add a
+	add a
+	add a
+	ld c, a ; first of the row's eight tile-to-palette assignments
+	pop af
+	ld d, a
+	push bc
+	push de
+	farcall LoadSGBPalette_Sprite
+	pop de
+	pop bc
+
+	ldh a, [rWBK]
+	ld b, a
+	ld a, 2
+	ldh [rWBK], a
+	push bc
+	ld hl, W2_SpritePaletteMap
+	ld b, 0
+	add hl, bc
+	ld a, e
+	ld bc, 8
+	call FillMemory
+	ld a, 1
+	ld [W2_ForceOBPUpdate], a
+	ld a, e
+	cp 4
+	jr c, .restoreBank
+	xor a
+	ld [W2_UseOBP1], a ; Rows using palettes 4-6 must follow OBP0.
+.restoreBank
+	pop af
+	ldh [rWBK], a
+	ret
+.skip
+	pop af
+	ret
+
+ReloadPCMonIconPalettes:
+	ld a, [wListScrollOffset]
+	jr ReloadMonIconPalettes
+
+ReloadPartyMonIconPalettes:
+	xor a
+; Both PC sides draw party icons; only their starting party index differs.
+ReloadMonIconPalettes:
+	ld c, a
+	ld b, 0
+	ld hl, wPartySpecies
+	add hl, bc
+	ld a, [wPokedexNum]
+	push af
+	ld de, vSprites
+	ASSERT PC_LIST_VISIBLE_ROWS == PARTY_LENGTH
+	ld b, PARTY_LENGTH
+.loop
+	ld a, [hli]
+	cp -1
+	jr z, .done
+	push hl
+	push bc
+	push de
+	ld [wPokedexNum], a
+	predef IndexToPokedex
+	pop de
+	pop bc
+	push bc
+	push de
+	ld a, c
+	call SetPal_PartyMonIconSprite
+	pop de
+	pop bc
+	pop hl
+	inc c
+	ld a, e
+	add 8 tiles
+	ld e, a
+	jr nc, .next
+	inc d
+.next
+	dec b
+	jr nz, .loop
+.done
+	pop af
+	ld [wPokedexNum], a
+	ret
+
 ; Loading a map. Called when first loading, and when transitioning between maps.
 SetPal_Overworld:
 	ld a, 2
@@ -1492,22 +1669,7 @@ SetPal_Overworld:
 	dec a ; ld a, 1
 	ld [W2_TileBasedPalettes], a
 
-	; Clear sprite palette map, except for exclamation marks above people's heads
-	CALL_INDIRECT ClearSpritePaletteMap
-	; Make exclamation mark bubble black & white. (Note: it's possible that other
-	; sprites may use these tiles for different purposes...)
-	ld a, 5
-	ld hl, W2_SpritePaletteMap + $f8
-	ld [hli], a
-	ld [hli], a
-	ld [hli], a
-	ld [hli], a
-
-	; Pokecenter uses OBP1 when healing pokemons; also cut animation
-	ld a, 1
-	ld [W2_UseOBP1], a
-
-	CALL_INDIRECT LoadOverworldSpritePalettes
+	CALL_INDIRECT RestoreOverworldSpritePalettes
 
 	xor a
 	ldh [rWBK], a
@@ -1541,8 +1703,6 @@ SetPal_Overworld:
 SetPal_PartyMenu:
 	ld a, 2
 	ldh [rWBK], a
-
-	CALL_INDIRECT LoadOverworldSpritePalettes
 
 	ld d, PAL_GREENBAR ; Filler for palette 0 (technically, green)
 	ld e, 0
@@ -1581,8 +1741,9 @@ SetPal_PartyMenu:
 	ld [W2_StaticPaletteMapChanged], a
 	xor a
 	ld [W2_TileBasedPalettes], a
+	ld [W2_UseOBP1], a
 	ldh [rWBK], a
-	ret
+	jp ReloadPartyMonIconPalettes
 
 
 ; used when a Pokemon is the only thing on the screen

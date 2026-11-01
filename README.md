@@ -4,6 +4,28 @@ LevelUp and TM/HM learnsets show move names only for Pokemon registered as
 owned in the Pokedex. Seen-but-unowned Pokemon show dashed move names and
 `----` in place of TM/HM labels; learn levels remain visible. Start opens the
 selected move's Movedex entry only for owned Pokemon.
+All three Learnset pages display the Pokemon's menu icon to the left of its
+species name. On Game Boy Color, the icon uses its species palette from
+`MonsterPalettes`; the rest of the menu retains its usual colors.
+Opening Movedex clears the icon's palette assignments; returning restores them.
+The same species palettes color menu icons in the party list, nickname/Name
+Rater screen, Bill's PC lists, and the link-trade animation. Each visible
+Pokemon has its own palette, including both animation frames; scrolling,
+swapping party positions, and returning from other screens restore the colors.
+Leaving Bill's PC restores the overworld sprite palettes and clears the icon
+assignments. Town/Fly maps also reload their normal sprite palettes on entry.
+Party redraws keep the species sprite palettes loaded, and party/PC icons are
+placed with their correct palette attributes immediately to avoid color flicker.
+Bill's PC rebuilds its lists off-screen after deposits and withdrawals without
+blanking the menu. Only party icons hide briefly while their graphics and
+palettes reload; they reappear together once the new colors are ready.
+Entering Bill's PC or returning from Change Box clears the previous screen
+before loading the list graphics and icons.
+Fainted party Pokemon (HP = 0) use `PAL_BLACK` for their icons in party and
+Bill's PC lists. Reviving them restores their species colors on the next redraw.
+Non-fainted party/PC icons use `PAL_PURPLEMON` when poisoned, `PAL_PSYDUCK`
+when paralyzed, `PAL_CHARMANDER` when burned, and `PAL_EXP` when frozen.
+Curing the status restores the species palette; sleep keeps the species colors.
 
 Pokémon Red/Blue overhauled with full GBC support. Made by FroggestSpirit, Drenn, and dannye. Also check out the crysaudio branch.
 

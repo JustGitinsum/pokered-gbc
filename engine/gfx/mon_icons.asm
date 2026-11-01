@@ -165,122 +165,6 @@ LoadMonPartySpriteGfxWithLCDDisabled:
 
 INCLUDE "data/icon_pointers.asm"
 
-WriteMonPartySpriteOAMByPartyIndex:
-; Write OAM blocks for the party mon in [hPartyMonIndex].
-	push hl
-	push de
-	push bc
-	ldh a, [hPartyMonIndex]
-	ld hl, wPartySpecies
-	ld e, a
-	ld d, 0
-	add hl, de
-	ld a, [hl]
-	call GetPartyMonSpriteID
-	ld [wOAMBaseTile], a
-	call WriteMonPartySpriteOAM
-	pop bc
-	pop de
-	pop hl
-	ret
-
-WriteMonPartySpriteOAMBySpecies:
-; Write OAM blocks for the party sprite of the species in
-; [wMonPartySpriteSpecies].
-	xor a
-	ldh [hPartyMonIndex], a
-	ld a, [wMonPartySpriteSpecies]
-	call GetPartyMonSpriteID
-	ld [wOAMBaseTile], a
-	jr WriteMonPartySpriteOAM
-
-UnusedPartyMonSpriteFunction:
-; This function is unused and doesn't appear to do anything useful. It looks
-; like it may have been intended to load the tile patterns and OAM data for
-; the mon party sprite associated with the species in [wCurPartySpecies].
-; However, its calculations are off and it loads garbage data.
-	ld a, [wCurPartySpecies]
-	call GetPartyMonSpriteID
-	push af
-	ld hl, vSprites tile $00
-	call .LoadTilePatterns
-	pop af
-	add $54
-	ld hl, vSprites tile $04
-	call .LoadTilePatterns
-	xor a
-	ld [wMonPartySpriteSpecies], a
-	jr WriteMonPartySpriteOAMBySpecies
-
-.LoadTilePatterns
-	push hl
-	add a
-	ld c, a
-	ld b, 0
-	ld hl, MonPartySpritePointers
-	add hl, bc
-	add hl, bc
-	add hl, bc
-	ld a, [hli]
-	ld e, a
-	ld a, [hli]
-	ld d, a
-	ld a, [hli]
-	ld c, a
-	ld a, [hli]
-	ld b, a
-	pop hl
-	jp CopyVideoData
-
-WriteMonPartySpriteOAM:
-; Write the OAM blocks for the first animation frame into the OAM buffer and
-; make a copy at wMonPartySpritesSavedOAM.
-	push af
-	ld c, $10
-	ld h, HIGH(wShadowOAM)
-	ldh a, [hPartyMonIndex]
-	swap a
-	ld l, a
-	add $10
-	ld b, a
-	pop af
-	cp ICON_HELIX << 2
-	jr z, .helix
-	call WriteSymmetricMonPartySpriteOAM
-	jr .makeCopy
-.helix
-	call WriteAsymmetricMonPartySpriteOAM
-; Make a copy of the OAM buffer with the first animation frame written so that
-; we can flip back to it from the second frame by copying it back.
-.makeCopy
-	ld hl, wShadowOAM
-	ld de, wMonPartySpritesSavedOAM
-	ld bc, $60
-	jp CopyData
-
-GetPartyMonSpriteID:
-	ld [wPokedexNum], a
-	predef IndexToPokedex
-	ld a, [wPokedexNum]
-	ld c, a
-	dec a
-	srl a
-	ld hl, MonPartyData
-	ld e, a
-	ld d, 0
-	add hl, de
-	ld a, [hl]
-	bit 0, c ; even or odd?
-	jr nz, .skipSwap
-	swap a ; use lower nybble if pokedex num is even
-.skipSwap
-	and $f0
-	srl a ; value == ICON constant << 2
-	srl a
-	ret
-
-INCLUDE "data/pokemon/menu_icons.asm"
-
 DEF INC_FRAME_1 EQUS "0, $20"
 DEF INC_FRAME_2 EQUS "$20, $20"
 
@@ -309,13 +193,13 @@ LoadSinglePartyMonSprite:
 	call EnableLCD
 
 	; place into the start of OAM
-	ld a, [hPartyMonIndex]
+	ldh a, [hPartyMonIndex]
 	push af
 	xor a
-	ld [hPartyMonIndex], a
+	ldh [hPartyMonIndex], a
 	call PlacePartyMonSprite
 	pop af
-	ld [hPartyMonIndex], a
+	ldh [hPartyMonIndex], a
 	ret
 
 ; load the party mon icon for all mon in the party
@@ -334,41 +218,29 @@ LoadPartyMonSprites:
 .done
 	jp EnableLCD
 
+LoadLearnsetMonIcon:
+	; farcall clobbers a, so read the species after switching banks.
+	ld a, [wPokedexNum]
+	ld de, vChars1 tile $57
+	; fall through
+
 ; copy the 8-tile icon for the mon in register a to de
 LoadPartyMonSprite:
 	push de
 
 	ld [wPokedexNum], a
 	predef IndexToPokedex
+	pop de
+	push de
+	farcall SetPal_MonIconSprite
 
-	; hMultiplicand = pokedex number - 1
-	; xor a
-	; ld [hMultiplicand], a
-	; ld [hMultiplicand + 1], a
+	; Each icon occupies 128 bytes: bit 0 becomes L's high bit.
 	ld a, [wPokedexNum]
 	dec a
-	; ld [hMultiplicand + 2], a
-
-	; ; hMultiplier = icon size, in bytes
-	; ld a, 8 tiles
-	; ld [hMultiplier], a
-
-	; call Multiply
-
-	; ; hl = icon offset
-	; ld a, [hProduct + 2]
-	; ld h, a
-	; ld a, [hProduct + 3]
-	; ld l, a
-	ld l, a
-	ld h, 0
-	add hl, hl
-	add hl, hl
-	add hl, hl
-	add hl, hl
-	add hl, hl
-	add hl, hl
-	add hl, hl ; * 8 tiles (1 tile = 16 bytes)
+	ld l, 0
+	srl a
+	rr l
+	ld h, a
 
 	; if offset < $4000, use first icon bank
 	bit 6, h
@@ -731,6 +603,8 @@ PCListMonIcons::
 	cp b
 	jr z, .placeOAM
 	ld [wUnusedCreditsByte], a
+	call ClearSprites
+	call DelayFrame ; Hide the old icons before replacing their graphics.
 	CALL_INDIRECT ClearSpritePaletteMap
 	ld hl, wListPointer
 	ld a, [hli]
@@ -745,7 +619,7 @@ PCListMonIcons::
 .loadLoop
 	ld a, [hli]
 	cp $ff
-	jr z, .placeOAM
+	jr z, .loadedIcons
 	push hl
 	push bc
 	call .loadIcon
@@ -755,7 +629,14 @@ PCListMonIcons::
 	ld a, b
 	cp PC_LIST_VISIBLE_ROWS
 	jr nz, .loadLoop
+.loadedIcons
+	farcall ReloadPCMonIconPalettes
+	call DelayFrame ; Commit the new colors before revealing the new icons.
+	jr .drawOAM
 .placeOAM
+	; Cached graphics still need status/HP colors refreshed (e.g. after STATS).
+	farcall ReloadPCMonIconPalettes
+.drawOAM
 	call ClearSprites
 	ld a, [wListCount]
 	ld hl, wListScrollOffset
@@ -770,6 +651,7 @@ PCListMonIcons::
 	ld hl, wShadowOAM
 	ld d, 16 ; y of the first row's name line
 	ld e, 0
+	ld b, 1 ; sprite palette for the first visible row
 .oamLoop
 	ld a, d
 	ld [hli], a
@@ -777,7 +659,7 @@ PCListMonIcons::
 	ld [hli], a
 	ld a, e
 	ld [hli], a
-	xor a
+	ld a, b
 	ld [hli], a
 	ld a, d
 	ld [hli], a
@@ -786,7 +668,7 @@ PCListMonIcons::
 	ld a, e
 	inc a
 	ld [hli], a
-	xor a
+	ld a, b
 	ld [hli], a
 	ld a, d
 	add 8
@@ -796,7 +678,7 @@ PCListMonIcons::
 	ld a, e
 	add 4
 	ld [hli], a
-	xor a
+	ld a, b
 	ld [hli], a
 	ld a, d
 	add 8
@@ -806,7 +688,7 @@ PCListMonIcons::
 	ld a, e
 	add 5
 	ld [hli], a
-	xor a
+	ld a, b
 	ld [hli], a
 	ld a, d
 	add 16
@@ -814,11 +696,12 @@ PCListMonIcons::
 	ld a, e
 	add 8
 	ld e, a
+	inc b
 	dec c
 	jr nz, .oamLoop
 	ret
 
-; a = species, b = slot
+	; a = species, b = slot
 .loadIcon
 	push bc
 	ld [wPokedexNum], a
@@ -826,15 +709,11 @@ PCListMonIcons::
 	pop bc
 	ld a, [wPokedexNum]
 	dec a
-	ld l, a
-	ld h, 0
-	add hl, hl
-	add hl, hl
-	add hl, hl
-	add hl, hl
-	add hl, hl
-	add hl, hl
-	add hl, hl
+	; Same 128-byte layout as LoadPartyMonSprite, copied with the LCD on.
+	ld l, 0
+	srl a
+	rr l
+	ld h, a
 	bit 6, h
 	set 6, h
 	ld a, BANK(PartyMonSprites)
@@ -860,35 +739,35 @@ PCListMonIcons::
 POPS
 
 PartyMonOAM:
-	db $10, $10, $00, $00
-	db $10, $18, $01, $00
-	db $18, $10, $04, $00
-	db $18, $18, $05, $00
+	db $10, $10, $00, $01
+	db $10, $18, $01, $01
+	db $18, $10, $04, $01
+	db $18, $18, $05, $01
 
-	db $20, $10, $08, $00
-	db $20, $18, $09, $00
-	db $28, $10, $0c, $00
-	db $28, $18, $0d, $00
+	db $20, $10, $08, $02
+	db $20, $18, $09, $02
+	db $28, $10, $0c, $02
+	db $28, $18, $0d, $02
 
-	db $30, $10, $10, $00
-	db $30, $18, $11, $00
-	db $38, $10, $14, $00
-	db $38, $18, $15, $00
+	db $30, $10, $10, $03
+	db $30, $18, $11, $03
+	db $38, $10, $14, $03
+	db $38, $18, $15, $03
 
-	db $40, $10, $18, $00
-	db $40, $18, $19, $00
-	db $48, $10, $1c, $00
-	db $48, $18, $1d, $00
+	db $40, $10, $18, $04
+	db $40, $18, $19, $04
+	db $48, $10, $1c, $04
+	db $48, $18, $1d, $04
 
-	db $50, $10, $20, $00
-	db $50, $18, $21, $00
-	db $58, $10, $24, $00
-	db $58, $18, $25, $00
+	db $50, $10, $20, $05
+	db $50, $18, $21, $05
+	db $58, $10, $24, $05
+	db $58, $18, $25, $05
 
-	db $60, $10, $28, $00
-	db $60, $18, $29, $00
-	db $68, $10, $2c, $00
-	db $68, $18, $2d, $00
+	db $60, $10, $28, $06
+	db $60, $18, $29, $06
+	db $68, $10, $2c, $06
+	db $68, $18, $2d, $06
 
 
 SECTION "Party Mon Sprites Gfx 1", ROMX
