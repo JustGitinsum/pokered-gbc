@@ -1,7 +1,5 @@
 TryPushingBoulder::
-	ld a, [wStatusFlags1]
-	bit BIT_STRENGTH_ACTIVE, a
-	ret z
+	farcall TryFieldMoveOnBump ; auto Surf/Cut when walking into water or a tree
 	ld a, [wMiscFlags]
 	bit BIT_BOULDER_DUST, a
 	ret nz
@@ -23,6 +21,16 @@ TryPushingBoulder::
 	ld a, [hl]
 	cp BOULDER_MOVEMENT_BYTE_2
 	jp nz, ResetBoulderPushFlags
+	; auto-activate Strength if Text Speed is FAST, the player has the badge,
+	; and a party mon knows it
+	ld a, [wStatusFlags1]
+	bit BIT_STRENGTH_ACTIVE, a
+	jr nz, .strengthActive
+	farcall CanAutoUseStrength
+	ret nz
+	ld hl, wStatusFlags1
+	set BIT_STRENGTH_ACTIVE, [hl]
+.strengthActive
 	ld hl, wMiscFlags
 	bit BIT_TRIED_PUSH_BOULDER, [hl]
 	set BIT_TRIED_PUSH_BOULDER, [hl]

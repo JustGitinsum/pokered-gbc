@@ -102,7 +102,6 @@ OverworldLoopLessDelay::
 	call IsSpriteOrSignInFrontOfPlayer
 	ldh a, [hTextID]
 	and a
-	;jp z, OverworldLoop (Smart HMs)
 	jr nz, .displayDialogue
 	predef TryFieldMove
 	jp OverworldLoop

@@ -26,10 +26,24 @@ Bill's PC lists. Reviving them restores their species colors on the next redraw.
 Non-fainted party/PC icons use `PAL_PURPLEMON` when poisoned, `PAL_PSYDUCK`
 when paralyzed, `PAL_CHARMANDER` when burned, and `PAL_EXP` when frozen.
 Curing the status restores the species palette; sleep keeps the species colors.
+TM/HM and move-tutor selection menus instead color party icons by the move:
+normal species colors for eligible Pokemon, `PAL_BLACK` for incompatible
+Pokemon, and blue for Pokemon that already know it. These colors override
+HP/status colors only in move-teaching menus; the ABLE/NOT ABLE labels and
+existing selected-icon animation are unchanged.
 
 Pokémon Red/Blue overhauled with full GBC support. Made by FroggestSpirit, Drenn, and dannye. Also check out the crysaudio branch.
 
 The Options Menu defaults **MOVE NAME CASE** to **Lower**; **UPPER** remains selectable.
+
+With **TEXT SPEED** set to **FAST**, walking into a Cut tree or water
+automatically uses Cut or Surf, and pushing a boulder automatically activates
+Strength. The required badge and a party Pokemon knowing the move are still
+required. Automatic attempts are silent, including where Surf is forbidden.
+At other text speeds, use the party menu or the A-button Smart HM shortcuts.
+The A-button Cut and Surf shortcuts ask for YES/NO confirmation at MEDIUM
+and SLOW text speeds; FAST skips these prompts.
+Strength already activated on the current map remains active at any text speed.
 
 The Options Menu includes **POKEMON NICKNAMES**, which defaults to **SHOW**.
 Use Left/Right to switch it to **HIDE** to display species names instead; saved
@@ -93,7 +107,15 @@ The move/type labels and separate stats box are omitted.
 The existing Movedex description appears beneath the stats, using single-spaced
 text to fit up to three lines without changing the description wording.
 The Buy screen shows the highlighted item's 24x24 graphic to the left of the
-list, clearing it on CANCEL or when no matching graphic exists. The
+list, clearing it on CANCEL or when no matching graphic exists. For TM/HM
+entries, this is replaced by the current party's icons in a two-column,
+three-row grid, ordered left-to-right. Normal species colors mean the Pokemon
+can learn the highlighted move, `PAL_BLACK` means it cannot, and blue means
+it already knows the move. Compatibility updates as the cursor moves; the
+icons remain visible during quantity selection and purchase confirmation.
+Normal-colored icons animate between their two party-icon frames every
+10 frames; incompatible and already-known icons stay still.
+Bag and Sell icons are unchanged. The
 Buy list starts one tile farther right to leave space between the icon and cursor.
 The indexed
 mapping is in `data/items/icons.asm` and uses only graphics from `gfx/items`.

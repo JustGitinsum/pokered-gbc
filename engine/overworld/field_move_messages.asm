@@ -2,9 +2,7 @@ PrintStrengthText:
 	ld hl, wStatusFlags1
 	set BIT_STRENGTH_ACTIVE, [hl]
 	ld hl, UsedStrengthText
-	call PrintText
-	; ld hl, CanMoveBouldersText
-	; jp PrintText
+	jp PrintText
 
 UsedStrengthText:
 	text_far _UsedStrengthText
@@ -24,26 +22,33 @@ IsSurfingAllowed:
 ; Seafoam Islands before the current has been slowed with boulders.
 	ld hl, wStatusFlags1
 	set BIT_SURF_ALLOWED, [hl]
+	call IsSurfBlocked
+	ret nc
+	push hl
+	ld hl, wStatusFlags1
+	res BIT_SURF_ALLOWED, [hl]
+	pop hl
+	jp PrintText
+
+IsSurfBlocked::
+; Returns carry and the rejection text in hl when Surf is forbidden.
+	ld hl, CyclingIsFunText
 	ld a, [wStatusFlags6]
 	bit BIT_ALWAYS_ON_BIKE, a
-	jr nz, .forcedToRideBike
+	jr nz, .blocked
 	ld a, [wCurMap]
-	cp SEAFOAM_ISLANDS_B4F
+	xor SEAFOAM_ISLANDS_B4F ; clear carry on other maps
 	ret nz
+	ASSERT EVENT_SEAFOAM4_BOULDER1_DOWN_HOLE / 8 == EVENT_SEAFOAM4_BOULDER2_DOWN_HOLE / 8
 	CheckBothEventsSet EVENT_SEAFOAM4_BOULDER1_DOWN_HOLE, EVENT_SEAFOAM4_BOULDER2_DOWN_HOLE
-	ret z
+	ret z ; equal event masks also clear carry
 	ld hl, SeafoamIslandsB4FStairsCoords
 	call ArePlayerCoordsInArray
 	ret nc
-	ld hl, wStatusFlags1
-	res BIT_SURF_ALLOWED, [hl]
 	ld hl, CurrentTooFastText
-	jp PrintText
-.forcedToRideBike
-	ld hl, wStatusFlags1
-	res BIT_SURF_ALLOWED, [hl]
-	ld hl, CyclingIsFunText
-	jp PrintText
+.blocked
+	scf
+	ret
 
 SeafoamIslandsB4FStairsCoords:
 	dbmapcoord  7, 11

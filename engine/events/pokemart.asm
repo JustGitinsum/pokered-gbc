@@ -130,6 +130,7 @@ DisplayPokemartDialogue_::
 	xor a
 	ld [wCurrentMenuItem], a
 	ld [wUpdateSpritesEnabled], a
+	farcall LoadPartyMonSprites
 .buyMenuLoop
 	call HideSprites
 	xor a
@@ -150,7 +151,7 @@ DisplayPokemartDialogue_::
 	ld a, PRICEDITEMLISTMENU
 	ld [wListMenuID], a
 	call DisplayListMenuID
-	jp c, .returnToMainPokemartMenu ; if the player closed the menu
+	jp c, .returnFromBuyMenu ; if the player closed the menu
 	; The live cursor preview remains visible underneath the quantity menu.
 	ld a, 99
 	ld [wMaxItemQuantity], a
@@ -197,9 +198,17 @@ DisplayPokemartDialogue_::
 	ld hl, PokemartBoughtItemText
 	call PrintText
 	jp .buyMenuLoop
+.returnFromBuyMenu
+	call GBPalWhiteOutWithDelay3
+	farcall ClearItemMenuIcon
+	call HideSprites
+	call ReloadMapSpriteTilePatterns
+	farcall RestoreOverworldSpritePalettes
+	jr .restoreMainPokemartMenu
 .returnToMainPokemartMenu
 	; Buy uses positional colors; hide the map until its tile colors are restored.
 	call GBPalWhiteOutWithDelay3
+.restoreMainPokemartMenu
 	call LoadScreenTilesFromBuffer1
 	farcall RestoreItemMenuPalettes
 	call LoadTextBoxTilePatterns
@@ -221,11 +230,11 @@ DisplayPokemartDialogue_::
 .notEnoughMoney
 	ld hl, PokemartNotEnoughMoneyText
 	call PrintText
-	jr .returnToMainPokemartMenu
+	jr .returnFromBuyMenu
 .bagFull
 	ld hl, PokemartItemBagFullText
 	call PrintText
-	jr .returnToMainPokemartMenu
+	jr .returnFromBuyMenu
 .done
 	farcall RestoreItemMenuPalettes
 	ld hl, PokemartThankYouText

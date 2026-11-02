@@ -182,6 +182,7 @@ RedrawPartyMenu_::
 .afterDrawingMonEntries
 	ld b, SET_PAL_PARTY_MENU
 	call RunPaletteCommand
+	farcall ReloadMoveTeachingIconPalettes
 .printMessage
 	ld hl, wStatusFlags5
 	ld a, [hl]

@@ -29,6 +29,8 @@ FlyingMonSprites:
 	mon_sprite RAICHU,     PikachuFlySprite,    SPR_PAL_ORANGE
 	mon_sprite FEAROW,    FearowSprite,        SPR_PAL_BROWN
 	mon_sprite MEW,        MewFlySprite,        SPR_PAL_PURPLE
+	mon_sprite SKARMORY,   SkarmoryFlySprite,   SPR_PAL_EMOJI
+	mon_sprite MAGNEZONE,  MagnezoneFlySprite,  SPR_PAL_BLUE
 	mon_sprite MEWTWO,     MewtwoSprite,        SPR_PAL_PURPLE
 	mon_sprite PIDGEOT,   PidgeotSprite,        SPR_PAL_BROWN
 	mon_sprite ARTICUNO,  ArticunoSprite,       SPR_PAL_BLUE
@@ -42,7 +44,9 @@ SurfingMonSprites:
 	mon_sprite GYARADOS,  GyaradosSurfSprite,    SPR_PAL_BLUE
 	mon_sprite TENTACRUEL, TentacruelSurfSprite, SPR_PAL_BLUE
 	mon_sprite STARMIE,   StarmieSurfSprite,     SPR_PAL_PURPLE
-	mon_sprite MEW,       MewFlySprite,          SPR_PAL_PURPLE
+	mon_sprite MEW,       MewSurfSprite,         SPR_PAL_PURPLE
+	mon_sprite POLIWRATH, PoliwrathSurfSprite,   SPR_PAL_BLUE
+	mon_sprite KANGASKHAN, KangaskhanSurfSprite, SPR_PAL_BROWN
 	mon_sprite PIKACHU,   PikachuSurfSprite,     SPR_PAL_ORANGE
 	mon_sprite RAICHU,    PikachuSurfSprite,     SPR_PAL_ORANGE
 	mon_sprite KINGDRA,   KingdraSurfSprite,     SPR_PAL_BLUE

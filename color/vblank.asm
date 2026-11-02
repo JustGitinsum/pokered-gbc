@@ -304,7 +304,10 @@ GbcVBlankHook::
 	xor a
 	ld [W2_DrewRowOrColumn], a
 	ldh [rWBK], a
-	ret
+	ld a, [wBuyMenuPartyIconAnimationMask]
+	bit 7, a
+	ret z
+	farjp AnimateBuyMenuPartyIcons
 
 ; If necessary, copy palettes which were generated in the pre-vblank routines.
 ; It takes ~1024 cycles (1.1 scanlines) to write 8 palettes.

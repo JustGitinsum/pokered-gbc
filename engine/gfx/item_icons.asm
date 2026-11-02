@@ -3,6 +3,19 @@ DEF ITEM_MENU_ICON_TILE EQU $60
 DEF ITEM_ICON_TILES EQU 9
 
 DrawItemMenuIcon::
+	xor a
+	ld [wBuyMenuPartyIconAnimationMask], a
+	ld [wBuyMenuPartyIconAnimationCounter], a
+	ld a, [wListMenuID]
+	cp PRICEDITEMLISTMENU
+	jr nz, .itemIcon
+	call HideSprites
+	ld a, [wCurItem]
+	cp HM01
+	jr c, .itemIcon
+	cp TM01 + NUM_TMS
+	jr c, .partyIcons
+.itemIcon
 	ld a, [wCurItem]
 	ld hl, ItemIconPointers
 	ld e, a
@@ -50,8 +63,16 @@ DrawItemMenuIcon::
 	dec b
 	jr nz, .row
 	ret
+.partyIcons
+	farjp DrawBuyMenuPartyIcons
 
 ClearItemMenuIcon::
+	xor a
+	ld [wBuyMenuPartyIconAnimationMask], a
+	ld [wBuyMenuPartyIconAnimationCounter], a
+	ld a, [wListMenuID]
+	cp PRICEDITEMLISTMENU
+	call z, HideSprites
 	hlcoord 1, 4
 	lb bc, 3, 3
 	jp ClearScreenArea

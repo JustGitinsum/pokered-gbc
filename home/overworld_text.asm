@@ -15,10 +15,9 @@ GroundRoseText::
 
 BoulderText::
 	text_far _BoulderText
-	;text_end (Smart HMs)
 	text_asm
 	ld a, [wObtainedBadges]
-	bit 3, a ; RAINBOW BADGE
+	bit BIT_RAINBOWBADGE, a
 	jr z, .done
 	ld d, STRENGTH
 	farcall HasPartyMove

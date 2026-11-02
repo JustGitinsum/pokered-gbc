@@ -2,48 +2,26 @@ TryFieldMove:: ; predef
 	call GetPredefRegisters
 	call TrySurf
 	ret z
-	call TryCut
-	ret
+	jp TryCut
 
 TrySurf:
-	ld a, [wWalkBikeSurfState]
-	cp 2 ; is the player already surfing?
-	jr z, .no
-	farcall IsNextTileShoreOrWater
-	jr nc, .no
-	ld hl, TilePairCollisionsWater
-	call CheckForTilePairCollisions2
-	jr c, .no
-	ld d, SURF
-	call HasPartyMove
+	call CheckSurfRequirements
 	jr nz, .no
-	;;; Added for Unique Surf Sprites
-	push hl
-	push bc
+	farcall IsSurfBlocked
+	jr nc, .surfAllowed
+	call InitializeFieldMoveTextBox
+	farcall IsSurfingAllowed
+	jr .no2
+.surfAllowed
+	ld hl, PromptToSurfText
+	call ConfirmFieldMove
+	jr nz, .no2
 	ld a, [wWhichPokemon]
 	ld hl, wPartyMon1Species
 	ld bc, PARTYMON_STRUCT_LENGTH
 	call AddNTimes
 	ld a, [hl]
 	ld [wSurfingPokemonID], a
-	pop bc
-	pop hl
-	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	ld a, [wObtainedBadges]
-	bit 4, a ; SOUL BADGE
-	jr z, .no
-	farcall IsSurfingAllowed
-	ld hl, wStatusFlags1
-	bit 1, [hl]
-	res 1, [hl]
-	jr z, .no2
-	; call InitializeFieldMoveTextBox
-	; ld hl, PromptToSurfText
-	; call PrintText
-	; call YesNoChoice
-	; ld a, [wCurrentMenuItem]
-	; and a
-	; jr nz, .no2
 	call GetPartyMonName2
 	ld a, SURFBOARD
 	ld [wCurItem], a
@@ -61,29 +39,103 @@ TrySurf:
 	and a
 	ret
 
+CheckSurfRequirements:
+	ld a, [wWalkBikeSurfState]
+	cp 2 ; is the player already surfing?
+	jr z, TrySurf.no
+	farcall IsNextTileShoreOrWater
+	jr nc, TrySurf.no
+	ld hl, TilePairCollisionsWater
+	call CheckForTilePairCollisions2
+	jr c, TrySurf.no
+	lb de, SURF, 1 << BIT_SOULBADGE
+	jp HasPartyFieldMove
+
 TryCut:
 	call IsCutTile
 	jr nc, TrySurf.no
-	; call InitializeFieldMoveTextBox
-	; ld hl, ExplainCutText
-	; call PrintText
-	; call ManualTextScroll
-	ld d, CUT
-	call HasPartyMove
+	call CheckCutRequirements
 	jr nz, TrySurf.no2
-	ld a, [wObtainedBadges]
-	bit 1, a ; CASCADE BADGE
-	jr z, TrySurf.no2
-	; ld hl, PromptToCutText
-	; call PrintText
-	; call YesNoChoice
-	; ld a, [wCurrentMenuItem]
-	; and a
-	; jr nz, TrySurf.no2
+	ld hl, PromptToCutText
+	call ConfirmFieldMove
+	jr nz, TrySurf.no2
+.useCut
 	call GetPartyMonName2
 	farcall Cut2
-	call CloseFieldMoveTextBox
 	jr TrySurf.yes2
+
+TryFieldMoveOnBump::
+; Silent auto-HMs are enabled only at FAST text speed.
+	ld a, [wOptions]
+	and TEXT_DELAY_MASK
+	ret nz
+	ld a, [wChannelSoundIDs + CHAN5]
+	cp SFX_COLLISION ; did the player just bump into something?
+	ret nz
+	ld a, [wSimulatedJoypadStatesIndex]
+	and a
+	ret nz
+	ld a, [wStatusFlags5]
+	bit BIT_SCRIPTED_MOVEMENT_STATE, a
+	ret nz
+	ld a, [wMovementFlags]
+	bit BIT_LEDGE_OR_FISHING, a
+	ret nz
+	ldh a, [hJoyHeld]
+	and PAD_CTRL_PAD
+	ret z
+	xor a
+	ldh [hTextID], a
+	call IsSpriteInFrontOfPlayer
+	ldh a, [hTextID]
+	and a
+	ret nz
+	; Player directions swap up/down relative to the joypad's high nibble.
+	ASSERT PLAYER_DIR_DOWN << 4 == PAD_UP
+	ASSERT PLAYER_DIR_UP << 4 == PAD_DOWN
+	ASSERT PLAYER_DIR_LEFT << 4 == PAD_LEFT
+	ASSERT PLAYER_DIR_RIGHT << 4 == PAD_RIGHT
+	ld a, [wPlayerDirection]
+	cp PLAYER_DIR_DOWN
+	jr c, .gotDirection
+	xor PLAYER_DIR_DOWN | PLAYER_DIR_UP
+.gotDirection
+	swap a
+	ld b, a
+	ldh a, [hJoyHeld]
+	and b
+	ret z
+	call CheckTilePassable ; also updates wTileInFrontOfPlayer
+	ret nc
+	call IsCutTile
+	jr c, .cut
+	call CheckSurfRequirements
+	ret nz
+	farcall IsSurfBlocked
+	ret c
+	jp TrySurf.surfAllowed
+.cut
+	call CheckCutRequirements
+	ret nz
+	jp TryCut.useCut
+
+CanAutoUseStrength::
+	ld a, [wOptions]
+	and TEXT_DELAY_MASK
+	ret nz
+	lb de, STRENGTH, 1 << BIT_RAINBOWBADGE
+	jp HasPartyFieldMove
+
+CheckCutRequirements:
+	lb de, CUT, 1 << BIT_CASCADEBADGE
+	; fall through
+
+HasPartyFieldMove:
+; Returns z if the player has badge mask e and a party Pokemon knows move d.
+	ld a, [wObtainedBadges]
+	and e
+	jp z, TrySurf.no
+	jp HasPartyMove
 
 IsCutTile:
 ; partial copy from UsedCut
@@ -158,27 +210,44 @@ HasPartyMove::
 	pop bc
 	ret
 
-; InitializeFieldMoveTextBox:
-; 	call EnableAutoTextBoxDrawing
-; 	ld a, 1 ; not 0
-; 	ld [hTextID], a
-; 	farcall DisplayTextIDInit
-; 	ret
+ConfirmFieldMove:
+; Returns z for YES or FAST text speed. Preserve the selected party Pokemon.
+	ld a, [wOptions]
+	and TEXT_DELAY_MASK
+	ret z
+	ld a, [wWhichPokemon]
+	push af
+	push hl
+	call InitializeFieldMoveTextBox
+	pop hl
+	call PrintText
+	call YesNoChoice
+	pop af
+	ld [wWhichPokemon], a
+	ld a, [wCurrentMenuItem]
+	and a
+	ret
+
+InitializeFieldMoveTextBox:
+	call EnableAutoTextBoxDrawing
+	ld a, 1 ; not 0
+	ldh [hTextID], a
+	farjp DisplayTextIDInit
 
 CloseFieldMoveTextBox:
 	ld a,[hLoadedROMBank]
 	push af
 	jp CloseTextDisplay
 
-; PromptToSurfText:
-; 	text "The water is calm."
-; 	line "Would you like to"
-; 	cont "SURF?@@"
+PromptToSurfText:
+	text "The water is calm."
+	line "Would you like to"
+	cont "SURF?@@"
 
 ; ExplainCutText:
 ; 	text "This tree can be"
 ; 	line "CUT!@@"
 
-; PromptToCutText:
-; 	text "Would you like to"
-; 	line "use CUT?@@"
+PromptToCutText:
+	text "Would you like to"
+	line "use CUT?@@"

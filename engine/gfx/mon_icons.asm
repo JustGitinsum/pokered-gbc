@@ -218,6 +218,246 @@ LoadPartyMonSprites:
 .done
 	jp EnableLCD
 
+PUSHS
+SECTION "Buy Menu Party Icons", ROMX
+
+ReloadMoveTeachingIconPalettes::
+	ld a, [wPartyMenuTypeOrMessageID]
+	cp TMHM_PARTY_MENU
+	jr z, .teachingMenu
+	cp MOVE_TUTOR_PARTY_MENU
+	ret nz
+.teachingMenu
+	ld a, [wPokedexNum]
+	push af
+	ld a, [wCurPartySpecies]
+	push af
+	ld a, [wCurSpecies]
+	push af
+	ld hl, wPartySpecies
+	ld b, 0
+.loop
+	ld a, [wPartyCount]
+	cp b
+	jr z, .done
+	ld a, [hli]
+	ld [wCurPartySpecies], a
+	ld [wPokedexNum], a
+	push hl
+	push bc
+	predef IndexToPokedex
+	pop bc
+	push bc
+	ld a, [wPartyMenuTypeOrMessageID]
+	call SetMoveTeachingPartyIconPalette
+	pop bc
+	pop hl
+	inc b
+	jr .loop
+.done
+	pop af
+	ld [wCurSpecies], a
+	pop af
+	ld [wCurPartySpecies], a
+	pop af
+	ld [wPokedexNum], a
+	ret
+
+; a = teaching menu type, b = party slot; species and dex number are loaded.
+; Returns a = 1 only for eligible Pokemon that do not already know wMoveNum.
+SetMoveTeachingPartyIconPalette:
+	push bc
+	push af
+	ld a, b
+	ld hl, wPartyMon1Moves
+	ld bc, PARTYMON_STRUCT_LENGTH
+	call AddNTimes
+	ld a, [wMoveNum]
+	ld c, NUM_MOVES
+.knownMove
+	cp [hl]
+	jr z, .known
+	inc hl
+	dec c
+	jr nz, .knownMove
+	pop af
+	cp MOVE_TUTOR_PARTY_MENU
+	jr z, .tutor
+	predef CanLearnTM
+	ld a, c
+	and a
+	jr nz, .eligible
+	jr .ineligible
+.tutor
+	farcall CanLearnTutorMove
+	jr c, .eligible
+.ineligible
+	ld a, PAL_BLACK
+	jr .overridePalette
+.known
+	pop af
+	ld a, PAL_BLUEMON
+.overridePalette
+	ld [wTempByteValue], a
+	pop bc
+	push bc
+	call PartyMonIconDestination
+	farcall SetPal_MoveTeachingMonIcon
+	pop bc
+	xor a
+	ret
+.eligible
+	pop bc
+	push bc
+	call PartyMonIconDestination
+	farcall SetPal_MonIconSprite
+	pop bc
+	ld a, 1
+	ret
+
+DrawBuyMenuPartyIcons::
+	farcall ClearItemMenuIcon
+	ld a, [wPokedexNum]
+	push af
+	ld a, [wMoveNum]
+	push af
+	ld a, [wCurPartySpecies]
+	push af
+	ld a, [wCurSpecies]
+	push af
+	ld a, [wPlayerMoveNum]
+	ld [wMoveNum], a
+	ld hl, wPartySpecies
+	ld b, 0
+.loop
+	ld a, [wPartyCount]
+	cp b
+	jp z, .done
+	ld a, [hli]
+	ld [wCurPartySpecies], a
+	push hl
+	push bc
+	ld [wPokedexNum], a
+	predef IndexToPokedex
+	pop bc
+	push bc
+	ld a, TMHM_PARTY_MENU
+	call SetMoveTeachingPartyIconPalette
+	and a
+	jr z, .place
+	ld a, 1
+	ld c, b
+	inc c
+.animationBit
+	dec c
+	jr z, .setAnimationBit
+	add a
+	jr .animationBit
+.setAnimationBit
+	ld hl, wBuyMenuPartyIconAnimationMask
+	or [hl]
+	ld [hl], a
+.place
+	pop bc
+	push bc
+	ld a, b
+	add a
+	add a
+	add a
+	add a
+	ld c, a
+	ld b, 0
+	ld hl, BuyMenuPartyMonOAM
+	add hl, bc
+	push hl
+	ld hl, wShadowOAM
+	add hl, bc
+	ld d, h
+	ld e, l
+	pop hl
+	ld bc, 4 * 4
+	call CopyData
+	pop bc
+	pop hl
+	inc b
+	jp .loop
+.done
+	ld hl, wBuyMenuPartyIconAnimationMask
+	ld a, [hl]
+	and a
+	jr z, .restoreState
+	set 7, [hl]
+.restoreState
+	pop af
+	ld [wCurSpecies], a
+	pop af
+	ld [wCurPartySpecies], a
+	pop af
+	ld [wMoveNum], a
+	pop af
+	ld [wPokedexNum], a
+	ret
+
+; b = party slot, de = destination of its eight icon tiles.
+PartyMonIconDestination:
+	ld a, b
+	srl a
+	add HIGH(vSprites)
+	ld d, a
+	ld a, b
+	and 1
+	rrca
+	ld e, a
+	ret
+
+AnimateBuyMenuPartyIcons::
+	ld hl, wBuyMenuPartyIconAnimationCounter
+	inc [hl]
+	ld a, [hl]
+	cp 10
+	ret c
+	xor a
+	ld [hl], a
+	ld a, [wBuyMenuPartyIconAnimationMask]
+	ld b, a
+	ld c, PARTY_LENGTH
+	ld hl, wShadowOAMSprite00TileID
+.slot
+	srl b
+	jr nc, .nextSlot
+	push hl
+	ld d, 4
+.tile
+	ld a, [hl]
+	xor 2
+	ld [hl], a
+	ld a, 4
+	add l
+	ld l, a
+	jr nc, .noCarry
+	inc h
+.noCarry
+	dec d
+	jr nz, .tile
+	pop hl
+.nextSlot
+	ld de, 4 * 4
+	add hl, de
+	dec c
+	jr nz, .slot
+	ret
+
+BuyMenuPartyMonOAM:
+	; Party order runs across each row, matching the two-column grid.
+	FOR slot, 0, PARTY_LENGTH
+		db 40 + slot / 2 * 24,  8 + slot % 2 * 24, slot * 8,     slot + 1
+		db 40 + slot / 2 * 24, 16 + slot % 2 * 24, slot * 8 + 1, slot + 1
+		db 48 + slot / 2 * 24,  8 + slot % 2 * 24, slot * 8 + 4, slot + 1
+		db 48 + slot / 2 * 24, 16 + slot % 2 * 24, slot * 8 + 5, slot + 1
+	ENDR
+
+POPS
+
 LoadLearnsetMonIcon:
 	; farcall clobbers a, so read the species after switching banks.
 	ld a, [wPokedexNum]

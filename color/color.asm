@@ -1613,6 +1613,11 @@ SetMonIconSpritePalette:
 	pop af
 	ret
 
+; wTempByteValue = override palette, de = the icon's destination in vSprites.
+SetPal_MoveTeachingMonIcon::
+	ld a, [wTempByteValue]
+	jp SetMonIconSpritePalette
+
 ReloadPCMonIconPalettes:
 	ld a, [wListScrollOffset]
 	jr ReloadMonIconPalettes

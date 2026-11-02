@@ -355,7 +355,8 @@ wNPCMovementScriptPointerTableNum:: db
 ; ROM bank of current NPC movement script
 wNPCMovementScriptBank:: db
 
-	ds 2
+wBuyMenuPartyIconAnimationMask:: db ; bits 0-5 = eligible party slots, bit 7 = ready
+wBuyMenuPartyIconAnimationCounter:: db
 
 ; This union spans 180 bytes.
 UNION

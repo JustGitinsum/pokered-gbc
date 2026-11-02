@@ -5,6 +5,7 @@ _MoveRelearnerGreetingText::
 	para "Would you like"
 	line "your #MON to"
 	cont "relearn a move?"
+	prompt
 
 _MoveRelearnerSaidYesText::
 	text "Which #MON"
