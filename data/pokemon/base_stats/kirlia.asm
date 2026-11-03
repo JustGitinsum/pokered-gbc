@@ -1,7 +1,7 @@
 	db DEX_KIRLIA ; pokedex id
 
-	db  38,  35,  35, 50, 65
-	;   hp  atk  def  spd  spc
+	db  38,  35,  35, 50, 65,  55
+	;   hp  atk  def  spd  sat  sdf
 
 	db PSYCHIC_TYPE, FAIRY ; type
 	db 120 ; catch rate

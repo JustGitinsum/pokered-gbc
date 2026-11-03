@@ -1,7 +1,7 @@
 	db DEX_ARMAROUGE ; pokedex id
 
-	db  85,  60, 100,  75, 125
-	;   hp  atk  def  spd  spc
+	db  85,  60, 100,  75, 125,  80
+	;   hp  atk  def  spd  sat  sdf
 
 	db FIRE, PSYCHIC_TYPE ; type
 	db 90 ; catch rate

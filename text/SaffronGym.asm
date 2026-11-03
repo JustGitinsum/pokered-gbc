@@ -65,8 +65,8 @@ _TM46ExplanationText::
 
 	para "TM29 is PSYCHIC!"
 	line "It can lower the"
-	cont "target's SPECIAL"
-	cont "abilities."
+	cont "target's SP.DEF"
+	cont "ability."
 	done
 
 _SaffronGymSabrinaTM46NoRoomText::

@@ -446,7 +446,7 @@ RazorLeafDexEntry:
 	text_far _GenericOftenLandsCriticalHitsText
 	text_end
 EnergyBallDexEntry:
-	text_far _Generic33PercentLowerSpecialText
+	text_far _Generic33PercentLowerSpDefText
 	text_end
 PoisonPowderDexEntry:
 	text_far _GenericPoisonEffectText
@@ -500,7 +500,7 @@ ConfusionDexEntry:
 	text_far _Generic10PercentConfusionText
 	text_end
 PsychicDexEntry:
-	text_far _Generic33PercentLowerSpecialText
+	text_far _Generic33PercentLowerSpDefText
 	text_end
 HypnosisDexEntry:
 	text_far _GenericPutsFoeAsleepText
@@ -743,7 +743,7 @@ RolloutDexEntry:
 	text_far _GenericNoAdditionalEffectText
 	text_end
 FlashCannonDexEntry:
-	text_far _Generic33PercentLowerSpecialText
+	text_far _Generic33PercentLowerSpDefText
 	text_end
 DragonBreathDexEntry:
 	text_far _Generic10PercentParalysisText
@@ -806,7 +806,7 @@ DarkPulseDexEntry:
 	text_far _Generic10PercentFlinchText
 	text_end
 MoonblastDexEntry:
-	text_far _Generic33PercentLowerSpecialText
+	text_far _Generic33PercentLowerSpAtkText
 	text_end
 DragonPulseDexEntry:
 	text_far _GenericNoAdditionalEffectText
@@ -845,7 +845,7 @@ MoonlightDexEntry:
 	text_far _GenericHealsHalfText
 	text_end
 MysticalFireDexEntry:
-	text_far _Generic33PercentLowerSpecialText
+	text_far _Generic33PercentLowerSpAtkText
 	text_end
 ShadowClawDexEntry:
 	text_far _GenericOftenLandsCriticalHitsText

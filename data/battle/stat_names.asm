@@ -6,5 +6,6 @@ VitaminStats:
 	li "ATTACK"
 	li "DEFENSE"
 	li "SPEED"
-	li "SPECIAL"
-	assert_list_length NUM_STATS
+	li "SP.ATK"
+	assert_list_length NUM_STATS - 1 ; Zinc not added until Gen 3
+	

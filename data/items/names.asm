@@ -67,7 +67,7 @@ ItemNames::
 	li "X ATTACK"
 	li "X DEFEND"
 	li "X SPEED"
-	li "X SPECIAL"
+	li "X SP.ATTACK"
 	li "COIN CASE"
 	li "OAK's PARCEL"
 	li "ITEMFINDER"

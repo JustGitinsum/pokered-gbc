@@ -231,7 +231,7 @@ _AddPartyMon::
 	dec a
 	jr nz, .calcFreshStats
 	ld hl, wEnemyMonMaxHP
-	ld bc, $a
+	ld bc, NUM_STATS * 2
 	call CopyData          ; copy stats of cur enemy mon
 	pop hl
 	jr .done
@@ -379,12 +379,12 @@ _MoveMon::
 	ld a, [wMoveMonType]
 	dec a
 	ld hl, wPartyMons
-	ld bc, wPartyMon2 - wPartyMon1 ; $2c
+	ld bc, wPartyMon2 - wPartyMon1
 	ld a, [wPartyCount]
 	jr nz, .addMonOffset
 	; if it's PARTY_TO_BOX
 	ld hl, wBoxMons
-	ld bc, wBoxMon2 - wBoxMon1 ; $21
+	ld bc, wBoxMon2 - wBoxMon1 ; $23
 	ld a, [wBoxCount]
 .addMonOffset
 	dec a
@@ -396,13 +396,13 @@ _MoveMon::
 	ld a, [wMoveMonType]
 	and a
 	ld hl, wBoxMons
-	ld bc, wBoxMon2 - wBoxMon1 ; $21
+	ld bc, wBoxMon2 - wBoxMon1 ; $23
 	jr z, .addMonOffset2
 	cp DAYCARE_TO_PARTY
 	ld hl, wDayCareMon
 	jr z, .copyMonData
 	ld hl, wPartyMons
-	ld bc, wPartyMon2 - wPartyMon1 ; $2c
+	ld bc, wPartyMon2 - wPartyMon1
 .addMonOffset2
 	ld a, [wWhichPokemon]
 	call AddNTimes
@@ -507,7 +507,7 @@ _MoveMon::
 	ld [hli], a
 	ld d, h
 	ld e, l
-	ld bc, -18
+	ld bc, (MON_HP_EXP - 1) - (MON_LEVEL + 1) ; CalcStats expects one byte before HPExp
 	add hl, bc
 	ld b, $1
 	call CalcStats

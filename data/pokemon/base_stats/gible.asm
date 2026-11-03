@@ -1,7 +1,7 @@
 	db DEX_GIBLE ; pokedex id
 
-	db  58,  70,  45,  42,  45
-	;   hp  atk  def  spd  spc
+	db  58,  70,  45,  42,  40,  45
+	;   hp  atk  def  spd  sat  sdf
 
 	db DRAGON, GROUND ; type
 	db 120 ; catch rate

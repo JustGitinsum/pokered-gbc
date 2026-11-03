@@ -450,7 +450,10 @@ ShowPokedexDataInternal:
 	call PlaceString ; draw horizontal divider line
 
 	hlcoord 9, 6
-	ld de, HeightWeightText
+	ld de, HeightText
+	call PlaceString
+	hlcoord 9, 7
+	ld de, WeightText
 	call PlaceString
 
 	call GetMonName
@@ -517,9 +520,14 @@ ShowPokedexDataInternal:
 	pop bc
 	pop af
 
+	push bc
+	push de
+	call PrintMonTypes
+	pop de
+	pop bc
 	ld a, c
 	and a
-	jp z, .displaySeenBottomInfo ; if the pokemon has not been owned, don't print the height or weight, but show their type
+	jp z, .waitForButtonPress ; unseen ownership data stays hidden; types appear below the name
 	inc de ; de = address of feet (height)
 	ld a, [de] ; reads feet, but a is overwritten without being used
 	hlcoord 12, 6
@@ -551,10 +559,10 @@ ShowPokedexDataInternal:
 	ld a, [de] ; a = lower byte of weight
 	ld [hl], a ; store lower byte of weight in [hDexWeight + 1]
 	ld de, hDexWeight
-	hlcoord 11, 8
+	hlcoord 11, 7
 	lb bc, 2, 5 ; 2 bytes, 5 digits
 	call PrintNumber ; print weight
-	hlcoord 14, 8
+	hlcoord 14, 7
 	ldh a, [hDexWeight + 1]
 	sub 10
 	ldh a, [hDexWeight]
@@ -584,73 +592,71 @@ ShowPokedexDataInternal:
 	hlcoord 1, 10
 	lb bc, 7, 18
 	call ClearScreenArea
-	call PrintMonTypes
 	; print mon base stats
-	hlcoord 9, 10
+	hlcoord 2, 10
 	ld de, BaseStatsText
 	call PlaceString
-	hlcoord 12, 11
-	ld de, HPText
+	ldh a, [hUILayoutFlags]
+	push af
+	res BIT_SINGLE_SPACED_LINES, a
+	ldh [hUILayoutFlags], a
+	hlcoord 2, 12
+	ld de, DexLeftStatsText
 	call PlaceString
-	ld de, wMonHBaseHP
-	hlcoord 15, 11
-	lb bc, 1, 3
-	call PrintNumber 
 	hlcoord 11, 12
-	ld de, AtkText
+	ld de, DexRightStatsText
 	call PlaceString
-	ld de, wMonHBaseAttack
-	hlcoord 15, 12
-	lb bc, 1, 3
-	call PrintNumber 
-	hlcoord 11, 13
-	ld de, DefText
-	call PlaceString
-	ld de, wMonHBaseDefense
-	hlcoord 15, 13
-	lb bc, 1, 3
-	call PrintNumber
-	hlcoord 11, 14
-	ld de, SpdText
-	call PlaceString
-	ld de, wMonHBaseSpeed
-	hlcoord 15, 14
-	lb bc, 1, 3
-	call PrintNumber
-	hlcoord 11, 15
-	ld de, SpcText
-	call PlaceString
-	ld de, wMonHBaseSpecial
-	hlcoord 15, 15
-	lb bc, 1, 3
-	call PrintNumber 
-	hlcoord 9, 16
-	ld de, TotalText
-	call PlaceString
-	; calculate the base stat total to print it
+	pop af
+	ldh [hUILayoutFlags], a
+	ld de, DexBaseStatPositions
+	ld a, NUM_STATS
+.printBaseStat
+	push af
+	push de
+	ld a, [de]
+	ld hl, wMonHBaseStats
 	ld b, 0
-	ld a, [wMonHBaseHP]
-	ld hl, 0
 	ld c, a
 	add hl, bc
-	ld a, [wMonHBaseAttack]
-	ld c, a
-	add hl, bc
-	ld a, [wMonHBaseDefense]
-	ld c, a
-	add hl, bc
-	ld a, [wMonHBaseSpeed]
-	ld c, a
-	add hl, bc
-	ld a, [wMonHBaseSpecial]
-	ld c, a
-	add hl, bc
-	ld a, h
+	ld b, h
+	ld c, l
+	; Each entry pairs a base-stat offset with its number's tile-map position.
+	pop hl
+	push hl
+	inc hl
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	ld d, b
+	ld e, c
+	lb bc, 1, 3
+	call PrintNumber
+	pop de
+	inc de
+	inc de
+	inc de
+	pop af
+	dec a
+	jr nz, .printBaseStat
+	; calculate the base stat total to print it
+	ld hl, wMonHBaseStats
+	ld de, 0
+	ld b, NUM_STATS
+.sumBaseStat
+	ld a, [hli]
+	add e
+	ld e, a
+	jr nc, .noSumCarry
+	inc d
+.noSumCarry
+	dec b
+	jr nz, .sumBaseStat
+	ld a, d
 	ld [wSum], a
-	ld a, l
+	ld a, e
 	ld [wSum+1], a
 	ld de, wSum
-	hlcoord 15, 16
+	hlcoord 15, 10
 	lb bc, 2, 3
 	call PrintNumber
 .clearLetterPrintingFlags
@@ -675,21 +681,8 @@ ShowPokedexDataInternal:
 	ldh [rAUDVOL], a
 	ret
 
-.displaySeenBottomInfo
-	call PrintMonTypes ; PureRGBnote: ADDED: for pokemon you have seen but not caught it displays just their types on the bottom
-	jr .waitForButtonPress
-
 PrintMonTypes:
-	hlcoord 1, 11
-	ld de, DexType1Text
-	call PlaceString
-	hlcoord 2, 12
-	lb bc, 1, 8
-	call ClearScreenArea
-	hlcoord 2, 14
-	lb bc, 1, 8
-	call ClearScreenArea
-	hlcoord 2, 12
+	hlcoord 9, 3
 	ld a, [wMonHType1]
 	ld c, $c9
 	call PrintDexTypeIcon
@@ -697,13 +690,10 @@ PrintMonTypes:
 	ld b, a
 	ld a, [wMonHType2]
 	cp b
-	jr z, .done ; don't print TYPE2/ if the pokemon has 1 type only.
-	hlcoord 1, 13
-	ld de, DexType2Text
-	call PlaceString
-	hlcoord 2, 14
+	jr z, .done
+	hlcoord 13, 3
 	ld a, [wMonHType2]
-	ld c, $d1
+	ld c, $cd
 	call PrintDexTypeIcon
 .done
 	ret
@@ -714,19 +704,21 @@ PrintDexTypeIcon:
 	push bc
 	ld d, a
 	ld e, c
-	call LoadTypeIcon8TileAt
+	call LoadTypeIcon4TileAt
 	pop bc
 	pop hl
-	REPT 8
+	REPT 4
 	ld a, c
 	ld [hli], a
 	inc c
 	ENDR
 	ret
 
-HeightWeightText:
-	db   "HT  ?′??″"
-	next "WT   ???lb@"
+HeightText:
+	db "HT  ?′??″@"
+
+WeightText:
+	db "WT   ???lb@"
 
 ; XXX does anything point to this?
 PokeText:
@@ -799,32 +791,34 @@ PromptText:
 	text_promptbutton
 	text_end
 
-DexType1Text:
-	db "TYPE1/@"
-
-DexType2Text:
-	db "TYPE2/@"
-
 BaseStatsText:
-	db "BASE STATS@"
+	db "Base Stats:@"
 
-HPText:
-	db "HP@"
+DexLeftStatsText:
+	db   " HP"
+	next "Atk"
+	next "Def@"
 
-AtkText:
-	db "ATK@"
+DexRightStatsText:
+	db   " Spd"
+	next "SAtk"
+	next "SDef@"
 
-DefText:
-	db "DEF@"
-
-SpdText:
-	db "SPD@"
-
-SpcText:
-	db "SPC@"
-
-TotalText:
-	db "TOTAL@"
+DexBaseStatPositions:
+	table_width 3
+	db BASE_HP - BASE_HP
+	dwcoord 6, 12
+	db BASE_ATK - BASE_HP
+	dwcoord 6, 14
+	db BASE_DEF - BASE_HP
+	dwcoord 6, 16
+	db BASE_SPD - BASE_HP
+	dwcoord 16, 12
+	db BASE_SAT - BASE_HP
+	dwcoord 16, 14
+	db BASE_SDF - BASE_HP
+	dwcoord 16, 16
+	assert_table_length NUM_STATS
 
 
 INCLUDE "data/pokemon/dex_order.asm"

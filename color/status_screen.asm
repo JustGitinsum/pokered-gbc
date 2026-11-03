@@ -15,8 +15,23 @@ IF GEN_2_GRAPHICS
 ENDC
 	ret
 
-; Only called when GEN_2_GRAPHICS is set
 StatusScreen2Hook:
+IF GEN_2_GRAPHICS
+	ldh a, [rWBK]
+	ld d, a
+	ld a, 2
+	ldh [rWBK], a
+	; The stack is banked too; save and restore in the same WRAM bank.
+	push de
+	ld hl, W2_TilesetPaletteMap + 8 * SCREEN_WIDTH
+	ld bc, 10 * SCREEN_WIDTH
+	ld a, 1
+	call FillMemory
+	ld a, 3
+	ld [W2_StaticPaletteMapChanged], a
+	pop af
+	ldh [rWBK], a
+ENDC
 	hlcoord 19, 1
 	lb bc, 6, 10
-	jp DrawLineBox ; Draws the box around name, HP and status
+	jp DrawLineBox ; Draws the experience panel

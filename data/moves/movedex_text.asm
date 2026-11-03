@@ -58,9 +58,9 @@ _GenericRaisesSpeed1StageText:: ;;; SPEED_UP1_EFFECT
 	next "Speed"
 	dex
 
-_GenericRaisesSpecial1StageText:: ;;; SPECIAL_UP1_EFFECT
+_GenericRaisesSpecial1StageText:: ;;; SPCLATK_UP1_EFFECT
 	text "Raises the user's"
-	next "Special"
+	next "Sp.Atk"
 	dex
 
 _GenericRaisesEvasion1StageText:: ;;; EVASION_UP1_EFFECT
@@ -93,9 +93,9 @@ _GenericLowersSpeed1StageText:: ;;; SPEED_DOWN1_EFFECT
 	next "the foe's Speed"
 	dex
 
-_GenericLowersSpecial1StageText:: ;;; SPECIAL_DOWN1_EFFECT
+_GenericLowersSpecial1StageText:: ;;; SPCLATK_DOWN1_EFFECT
 	text "A move that lowers"
-	next "the foe's Special"
+	next "the foe's Sp.Atk"
 	dex
 
 _GenericLowersAccuracy1StageText:: ;;; ACCURACY_DOWN1_EFFECT
@@ -249,9 +249,9 @@ _AgilityDexEntry:: ;;; SPEED_UP2_EFFECT
 	next "user's Speed"
 	dex
 
-_AmnesiaDexEntry:: ;;; SPECIAL_UP2_EFFECT
+_AmnesiaDexEntry:: ;;; SPCLDEF_UP2_EFFECT
 	text "Sharply raises the"
-	next "user's Special"
+	next "user's Sp.Def"
 	dex
 
 _GenericHealsHalfText:: ;;; HEAL_EFFECT
@@ -314,9 +314,14 @@ _Generic33PercentLowerSpeedText:: ;;; SPEED_DOWN_SIDE_EFFECT
 	next "lower Speed"
 	dex
 
-_Generic33PercentLowerSpecialText:: ;;; SPECIAL_DOWN_SIDE_EFFECT
+_Generic33PercentLowerSpDefText:: ;;; SPCLDEF_DOWN_SIDE_EFFECT
 	text "An attack that may"
-	next "lower Special"
+	next "lower Sp.Def"
+	dex
+
+_Generic33PercentLowerSpAtkText:: ;;; SPCLATK_DOWN_SIDE_EFFECT
+	text "An attack that may"
+	next "lower Sp.Atk"
 	dex
 
 _TriAttackDexEntry:: ;;; TRI_ATTACK_EFFECT

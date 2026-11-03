@@ -68,7 +68,7 @@ ItemNamesLowercase::
 	li "X Attack"
 	li "X Defend"
 	li "X Speed"
-	li "X Special"
+	li "X Sp.Attack"
 	li "Coin Case"
 	li "Oak's Parcel"
 	li "Itemfinder"

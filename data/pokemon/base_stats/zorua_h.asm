@@ -1,7 +1,7 @@
 	db DEX_ZORUA ; pokedex id
 
-	db  40,  65,  40,  65, 80
-	;   hp  atk  def  spd  spc
+	db  35,  60,  40,  70, 85,  40
+	;   hp  atk  def  spd  sat  sdf
 
 	db GHOST, NORMAL ; type
 	db 215 ; catch rate

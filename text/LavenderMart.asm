@@ -7,7 +7,7 @@ _LavenderMartBaldingGuyText::
 
 	para "X ATTACK, X"
 	line "DEFEND, X SPEED"
-	cont "and X SPECIAL are"
+	cont "and X SP.ATK are"
 	cont "what I'm after."
 
 	para "Do you know where"

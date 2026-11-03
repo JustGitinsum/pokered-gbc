@@ -1,7 +1,7 @@
 	db DEX_GABITE ; pokedex id
 
-	db  68, 90,  65,  82,  55
-	;   hp  atk  def  spd  spc
+	db  68, 90,  65,  82,  50,  55
+	;   hp  atk  def  spd  sat  sdf
 
 	db DRAGON, GROUND ; type
 	db 90 ; catch rate

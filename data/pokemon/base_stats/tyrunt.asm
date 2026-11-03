@@ -1,7 +1,7 @@
 	db DEX_TYRUNT ; pokedex id
 
-	db  58,  89,  77,  48,  45
-	;   hp  atk  def  spd  spc
+	db  58,  89,  77,  48,  45,  45
+	;   hp  atk  def  spd  sat  sdf
 
 	db ROCK, DRAGON ; type
 	db 145 ; catch rate

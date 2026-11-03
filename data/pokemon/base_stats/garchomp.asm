@@ -1,7 +1,7 @@
 	db DEX_GARCHOMP ; pokedex id
 
-	db  108, 130,  95, 102, 85
-	;   hp  atk  def  spd  spc
+	db  108, 130,  95, 102, 80,  85
+	;   hp  atk  def  spd  sat  sdf
 
 	db DRAGON, GROUND ; type
 	db 45 ; catch rate

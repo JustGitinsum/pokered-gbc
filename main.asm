@@ -258,6 +258,9 @@ BagPocketTMHMsGraphics:
 	INCBIN "gfx/pack/pack_TMHMs.2bpp"
 	ASSERT @ - BagPocketTMHMsGraphics == 20 tiles
 
+SECTION "Battle Stat Text", ROMX
+INCLUDE "engine/battle/print_stat_text.asm"
+
 SECTION "bank10", ROMX
 
 INCLUDE "engine/menus/pokedex.asm"

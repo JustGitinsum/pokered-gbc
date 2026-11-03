@@ -170,7 +170,7 @@ GainExperience: ; marcelnote - refactored
 	inc hl     ; move to next stat exp (low byte)
 	jr .gainStatExpOuterLoop
 
-.statExpDone   ; hl = wPartyMon<n>SpecialExp + 1
+.statExpDone   ; hl = wPartyMon<n>SpclDefExp + 1
 	ld a, [wStatusFlags1]
 	bit BIT_EXP_ALL_ACTIVE, a
 	jr z, .DivideEXPwithoutEXPALL
@@ -206,8 +206,8 @@ GainExperience: ; marcelnote - refactored
 	adc a
 	ldh [hMultiplicand + 1], a   ; can't overflow the second byte
 
-.checkExpBoosts   ; hl = wPartyMon<n>SpecialExp + 1
-	ld de, wPartyMon1OTID - (wPartyMon1SpecialExp + 1)
+.checkExpBoosts   ; hl = wPartyMon<n>SpclDefExp + 1
+	ld de, wPartyMon1OTID - (wPartyMon1SpclDefExp + 1)
 	add hl, de    ; hl = wPartyMon<n>OTID
 	; upgraded exp all?
 	ld a, [wGainBoostedExp]

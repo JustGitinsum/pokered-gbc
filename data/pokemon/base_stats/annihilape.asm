@@ -1,7 +1,7 @@
 	db DEX_ANNIHILAPE ; pokedex id
 
-	db  110,  115, 80, 90, 90
-	;   hp  atk  def  spd  spc
+	db  110,  115, 80, 90, 50,  90
+	;   hp  atk  def  spd  sat  sdf
 
 	db GHOST, FIGHTING ; type
 	db 45 ; catch rate

@@ -1,7 +1,7 @@
 	db DEX_RALTS ; pokedex id
 
-	db  28,  25,  25,  40, 45
-	;   hp  atk  def  spd  spc
+	db  28,  25,  25,  40, 45,  35
+	;   hp  atk  def  spd  sat  sdf
 
 	db PSYCHIC_TYPE, FAIRY ; type
 	db 235 ; catch rate

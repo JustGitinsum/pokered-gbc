@@ -1,7 +1,7 @@
 	db DEX_MIMIKYU ; pokedex id
 
-	db  55,  90,  80,  96,  105
-	;   hp  atk  def  spd  spc
+	db  55,  90,  80,  96,  50, 105
+	;   hp  atk  def  spd  sat  sdf
 
 	db GHOST, FAIRY ; type
 	db 145 ; catch rate

@@ -4,8 +4,8 @@ _CeladonMart5FGentlemanText::
 	cont "bought only here."
 
 	para "Use CALCIUM to"
-	line "increase SPECIAL"
-	cont "abilities."
+	line "increase SP.ATK"
+	cont "ability."
 
 	para "Use CARBOS to"
 	line "increase SPEED."

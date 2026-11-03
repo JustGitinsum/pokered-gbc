@@ -1,7 +1,7 @@
 	db DEX_CERULEDGE ; pokedex id
 
-	db  75, 125,  80,  85, 100
-	;   hp  atk  def  spd  spc
+	db  75, 125,  80,  85, 60, 100
+	;   hp  atk  def  spd  sat  sdf
 
 	db FIRE, GHOST ; type
 	db 90 ; catch rate

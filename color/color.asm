@@ -1135,7 +1135,7 @@ IF GEN_2_GRAPHICS
 	jr nz, .expLoop
 
 	; Match the status-screen type icon rows to their type palette slots.
-	ld hl, W2_TilesetPaletteMap + 10 * SCREEN_WIDTH + 11
+	ld hl, W2_TilesetPaletteMap + 10 * SCREEN_WIDTH + 2
 	ld b, 8
 	ld a, 5
 .type1IconPaletteLoop
@@ -1148,7 +1148,7 @@ IF GEN_2_GRAPHICS
 	ld a, [wMonHType2]
 	cp b
 	jr z, .noType2IconPalette
-	ld hl, W2_TilesetPaletteMap + 12 * SCREEN_WIDTH + 11
+	ld hl, W2_TilesetPaletteMap + 12 * SCREEN_WIDTH + 2
 	ld b, 8
 	ld a, 6
 .type2IconPaletteLoop
@@ -1240,9 +1240,9 @@ ENDC
 	jr nz, .pokeLoop
 
 IF GEN_2_GRAPHICS
-	; Match the icon rows drawn by PrintMonTypes to their type palette slots.
-	ld hl, W2_TilesetPaletteMap + 12 * SCREEN_WIDTH + 2
-	ld b, 8
+	; Compact type badges sit side by side beneath the Pokemon's name.
+	ld hl, W2_TilesetPaletteMap + 3 * SCREEN_WIDTH + 9
+	ld b, 4
 	ld a, 5
 .type1IconPaletteLoop
 	ld [hli], a
@@ -1254,8 +1254,8 @@ IF GEN_2_GRAPHICS
 	ld a, [wMonHType2]
 	cp b
 	jr z, .noType2IconPalette
-	ld hl, W2_TilesetPaletteMap + 14 * SCREEN_WIDTH + 2
-	ld b, 8
+	ld hl, W2_TilesetPaletteMap + 3 * SCREEN_WIDTH + 13
+	ld b, 4
 	ld a, 6
 .type2IconPaletteLoop
 	ld [hli], a

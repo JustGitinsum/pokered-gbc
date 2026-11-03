@@ -1,7 +1,7 @@
 	db DEX_RIOLU ; pokedex id
 
-	db  40, 70,  40,  60,  40
-	;   hp  atk  def  spd  spc
+	db  40, 70,  40,  60,  35,  40
+	;   hp  atk  def  spd  sat  sdf
 
 	db FIGHTING, FIGHTING ; type
 	db 215 ; catch rate

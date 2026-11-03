@@ -1,7 +1,7 @@
 	db DEX_AURORUS ; pokedex id
 
-	db 123,  77,  72,  58,  99
-	;   hp  atk  def  spd  spc
+	db 123,  77,  72,  58,  99,  92
+	;   hp  atk  def  spd  sat  sdf
 
 	db ROCK, ICE ; type
 	db 145 ; catch rate

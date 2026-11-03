@@ -82,14 +82,14 @@ TransformEffect_:
 	ld a, [hli]
 	ld [de], a
 	inc de
-; Attack, Defense, Speed, and Special stats
+; Attack, Defense, Speed, Special Attack, and Special Defence
 	inc hl
 	inc hl
 	inc hl
 	inc de
 	inc de
 	inc de
-	ld bc, $8
+	ld bc, (NUM_STATS - 1) * 2
 	call CopyData
 	ld bc, wBattleMonMoves - wBattleMonPP
 	add hl, bc ; ld hl, wBattleMonMoves
@@ -120,9 +120,11 @@ TransformEffect_:
 	call GetMonName
 	ld hl, wEnemyMonUnmodifiedAttack
 	ld de, wPlayerMonUnmodifiedAttack
+	ld bc, (NUM_STATS - 1) * 2
 	call .copyBasedOnTurn ; original (unmodified) stats
 	ld hl, wEnemyMonStatMods
 	ld de, wPlayerMonStatMods
+	ld bc, NUM_STAT_MODS
 	call .copyBasedOnTurn ; stat mods
 	ld a, ICE ; this is to ensure the the EXP Bar is blue (Same color as Ice type icon)
 	ld [wPlayerMoveType], a
@@ -149,7 +151,6 @@ TransformEffect_:
 	ld l, e
 	pop de
 .gotStatsOrModsToCopy
-	ld bc, $8
 	jp CopyData
 
 .failed

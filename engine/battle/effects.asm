@@ -432,7 +432,7 @@ StatModifierUpEffect:
 .statModifierUpEffect
 	ld a, [de]
 	sub ATTACK_UP1_EFFECT
-	cp EVASION_UP1_EFFECT + $3 - ATTACK_UP1_EFFECT ; covers all +1 effects
+	cp EVASION_UP1_EFFECT + 1 - ATTACK_UP1_EFFECT ; covers all +1 effects
 	jr c, .incrementStatMod
 	sub ATTACK_UP2_EFFECT - ATTACK_UP1_EFFECT ; map +2 effects to equivalent +1 effect
 .incrementStatMod
@@ -445,7 +445,7 @@ StatModifierUpEffect:
 	cp b ; can't raise stat past +6 ($d or 13)
 	jp c, PrintNothingHappenedText
 	ld a, [de]
-	cp ATTACK_UP1_EFFECT + $8 ; is it a +2 effect?
+	cp ATTACK_UP2_EFFECT ; is it a +2 effect?
 	jr c, .ok
 	inc b ; if so, increment stat mod again
 	ld a, $d
@@ -455,7 +455,7 @@ StatModifierUpEffect:
 .ok
 	ld [hl], b
 	ld a, c
-	cp $4
+	cp NUM_STATS - 1
 	jr nc, UpdateStatDone ; jump if mod affected is evasion/accuracy
 	push hl
 	ld hl, wBattleMonAttack + 1
@@ -642,7 +642,7 @@ StatModifierDownEffect:
 	cp 33 percent + 1 ; chance for side effects
 	jp nc, CantLowerAnymore
 	ld a, [de]
-	sub ATTACK_DOWN_SIDE_EFFECT ; map each stat to 0-3
+	sub ATTACK_DOWN_SIDE_EFFECT ; map each stat to 0-4
 	jr .decrementStatMod
 .nonSideEffect ; non-side effects only
 	push hl
@@ -660,7 +660,7 @@ StatModifierDownEffect:
 	jp nz, MoveMissed
 	ld a, [de]
 	sub ATTACK_DOWN1_EFFECT
-	cp EVASION_DOWN1_EFFECT + $3 - ATTACK_DOWN1_EFFECT ; covers all -1 effects
+	cp EVASION_DOWN1_EFFECT + 1 - ATTACK_DOWN1_EFFECT ; covers all -1 effects
 	jr c, .decrementStatMod
 	sub ATTACK_DOWN2_EFFECT - ATTACK_DOWN1_EFFECT ; map -2 effects to corresponding -1 effect
 .decrementStatMod
@@ -671,9 +671,9 @@ StatModifierDownEffect:
 	dec b ; dec corresponding stat mod
 	jp z, CantLowerAnymore ; if stat mod is 1 (-6), can't lower anymore
 	ld a, [de]
-	cp ATTACK_DOWN2_EFFECT - $16 ; $24
+	cp ATTACK_DOWN2_EFFECT
 	jr c, .ok
-	cp EVASION_DOWN2_EFFECT + $5 ; $44
+	cp EVASION_DOWN2_EFFECT + 1
 	jr nc, .ok
 	dec b ; stat down 2 effects only (dec mod again)
 	jr nz, .ok
@@ -681,7 +681,7 @@ StatModifierDownEffect:
 .ok
 	ld [hl], b ; save modified mod
 	ld a, c
-	cp $4
+	cp NUM_STATS - 1
 	jr nc, UpdateLoweredStatDone ; jump for evasion/accuracy
 	push hl
 	push de
@@ -760,7 +760,7 @@ UpdateLoweredStatDone:
 	call PrintStatText
 	pop de
 	ld a, [de]
-	cp $44
+	cp ATTACK_DOWN_SIDE_EFFECT
 	jr nc, .ApplyBadgeBoostsAndStatusPenalties
 	ldh a, [hWhoseTurn] ; check who is using the move
     and a
@@ -799,7 +799,7 @@ CantLowerAnymore:
 
 MoveMissed:
 	ld a, [de]
-	cp $44
+	cp ATTACK_DOWN_SIDE_EFFECT
 	ret nc
 	jp ConditionalPrintButItFailed
 
@@ -814,9 +814,9 @@ MonsStatsFellText:
 	ld a, [wEnemyMoveEffect]
 .playerTurn
 ; check if the move's effect decreases a stat by 2
-	cp BIDE_EFFECT
+	cp ATTACK_DOWN2_EFFECT
 	ret c
-	cp ATTACK_DOWN_SIDE_EFFECT
+	cp EVASION_DOWN2_EFFECT + 1
 	ret nc
 	ld hl, GreatlyFellText
 	ret
@@ -830,22 +830,8 @@ FellText:
 	text_end
 
 PrintStatText:
-	ld hl, StatModTextStrings
-	ld c, "@"
-.findStatName_outer
-	dec b
-	jr z, .foundStatName
-.findStatName_inner
-	ld a, [hli]
-	cp c
-	jr z, .findStatName_outer
-	jr .findStatName_inner
-.foundStatName
-	ld de, wStringBuffer
-	ld bc, $a
-	jp CopyData
-
-INCLUDE "data/battle/stat_mod_names.asm"
+	ld d, b
+	farjp _PrintStatText
 
 INCLUDE "data/battle/stat_modifiers.asm"
 

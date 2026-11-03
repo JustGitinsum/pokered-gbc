@@ -1,5 +1,32 @@
 # pokered-gbc
 
+The Pokemon status screen displays Attack, Defense, Sp.Atk, Sp.Def, and Speed
+in the right-hand panel, with types and trainer details on the left without
+a vertical divider.
+STATUS/OK is omitted; ailments and fainting appear beside the level.
+SELECT still toggles stat experience in the same layout. The STATS/STAT EXP
+indicator appears in the panel's top border, including when first opened.
+RIGHT (or A) opens the moves page; LEFT returns to stats from the moves page.
+Returning with LEFT redraws the page without fading or replaying the cry.
+The Pokedex shows compact four-tile type badges below the name, with base
+stats in two columns and the six-stat total beside the Base Stats heading.
+Pokemon base data stores HP, Attack, Defense, Speed, Special Attack, and
+Special Defence, in that order. All six base stats use current main-series
+(Gen IX) values, including Hisuian values for Hisuian Zorua and Zoroark.
+Special damage selects the attacker's Special Attack and defender's Special
+Defence. Light Screen doubles Special Defence; critical hits select the
+corresponding unmodified stats.
+Status, stat-experience, Pokedex, and level-up/Rare Candy panels show both stats.
+Growth raises Special Attack, Amnesia sharply raises Special Defence, and
+Psychic, Energy Ball, and Flash Cannon can lower Special Defence. Moonblast
+and Mystical Fire can lower Special Attack. Existing side-effect chances
+are unchanged. Transform and Haze include both stats.
+The Volcano Badge still boosts only Special Attack. Calcium and X Special
+affect Special Attack; Zinc and X Sp. Def are not added.
+Save files and link partners from before the split are incompatible because
+Pokemon records and PC box layouts have changed. Start a new save; do not
+reuse old saves or save states. PC boxes now hold 18 Pokemon.
+
 LevelUp and TM/HM learnsets show move names only for Pokemon registered as
 owned in the Pokedex. Seen-but-unowned Pokemon show dashed move names and
 `----` in place of TM/HM labels; learn levels remain visible. Start opens the

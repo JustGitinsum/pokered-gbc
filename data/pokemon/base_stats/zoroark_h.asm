@@ -1,7 +1,7 @@
 	db DEX_ZOROARK ; pokedex id
 
-	db  60, 105, 60, 105, 120
-	;   hp  atk  def  spd  spc
+	db  55, 100, 60, 110, 125,  60
+	;   hp  atk  def  spd  sat  sdf
 
 	db GHOST, NORMAL ; type
 	db 45 ; catch rate

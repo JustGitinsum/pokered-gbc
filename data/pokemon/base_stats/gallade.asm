@@ -1,7 +1,7 @@
 	db DEX_GALLADE ; pokedex id
 
-	db  68,  125, 65, 80, 65
-	;   hp  atk  def  spd  spc
+	db  68,  125, 65, 80, 65, 115
+	;   hp  atk  def  spd  sat  sdf
 
 	db PSYCHIC_TYPE, FIGHTING ; type
 	db 50 ; catch rate

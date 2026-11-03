@@ -41,8 +41,7 @@ HazeEffect_:
 	call CureVolatileStatuses
 	ld hl, wEnemyBattleStatus1
 	call CureVolatileStatuses
-	ld hl, PlayCurrentMoveAnimation
-	call CallBankF
+	farcall PlayCurrentMoveAnimation
 	ld hl, StatusChangesEliminatedText
 	jp PrintText
 
@@ -59,7 +58,7 @@ CureVolatileStatuses:
 	ret
 
 ResetStatMods:
-	ld b, $8
+	ld b, NUM_STAT_MODS
 .loop
 	ld [hli], a
 	dec b
@@ -67,14 +66,9 @@ ResetStatMods:
 	ret
 
 ResetStats:
-	ld b, $8
-.loop
-	ld a, [hli]
-	ld [de], a
-	inc de
-	dec b
-	jr nz, .loop
-	ret
+; Stats occupy ten bytes; the separate modifier arrays occupy nine.
+	ld bc, (NUM_STATS - 1) * 2
+	jp CopyData
 
 StatusChangesEliminatedText:
 	text_far _StatusChangesEliminatedText

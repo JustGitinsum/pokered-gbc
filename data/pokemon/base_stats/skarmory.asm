@@ -1,7 +1,7 @@
 	db DEX_SKARMORY ; pokedex id
 
-	db 65, 80, 140, 70, 40
-	;   hp  atk  def  spd  spc
+	db 65, 80, 140, 70, 40,  70
+	;   hp  atk  def  spd  sat  sdf
 
 	db STEEL, FLYING ; type
 	db 90 ; catch rate

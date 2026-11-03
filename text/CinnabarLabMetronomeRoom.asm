@@ -20,7 +20,7 @@ _CinnabarLabMetronomeRoomScientist1TM35ExplanationText::
 
 	para "It may reduce your"
 	line "opponent #MON's"
-	cont "SPECIAL stat!"
+	cont "SP.DEF stat!"
 	done
   
 

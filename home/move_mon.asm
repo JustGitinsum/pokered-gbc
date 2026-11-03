@@ -30,13 +30,13 @@ AddPartyMon::
 	pop hl
 	ret
 
-; calculates all 5 stats of current mon and writes them to [de]
+; calculates all 6 stats of current mon and writes them to [de]
 CalcStats::
 	homecall _CalcStats
 	ret
 
 ; calculates stat c of current mon
-; c: stat to calc (HP=1,Atk=2,Def=3,Spd=4,Spc=5)
+; c: stat to calc (HP=1,Atk=2,Def=3,Spd=4,Sat=5,Sdf=6)
 ; b: consider stat exp?
 ; hl: base ptr to stat exp values ([hl + 2*c - 1] and [hl + 2*c])
 CalcStat::

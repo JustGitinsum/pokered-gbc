@@ -126,9 +126,9 @@ ShowNextMoveData:
 	ld a, [wMovedexMoveID] ; move ID
 	push af
 	call LoadMoveDexMoveData
-	; ld a, [wPlayerMoveType]
-	; ld d, a
-	; call LoadTypeIcon
+	ld a, [wPlayerMoveType]
+	ld d, a
+	call LoadTypeIcon
 	; ld a, [wPlayerMoveType]
 	; ld [wCurPartySpecies], a
 	; ld b, SET_PAL_MOVEDEX
@@ -136,16 +136,16 @@ ShowNextMoveData:
 	pop af
 	ld [wMovedexMoveID], a
 
-	; hlcoord 1, 3
-	; ld a, $C0 ; type icon first tile
-	; ld [hli], a
-	; inc a
-	; ld [hl], a
-	; inc a
-	; hlcoord 1, 4
-	; ld [hli], a
-	; inc a
-	; ld [hl], a
+	hlcoord 1, 3
+	ld a, $C0 ; type icon first tile
+	ld [hli], a
+	inc a
+	ld [hl], a
+	inc a
+	hlcoord 1, 4
+	ld [hli], a
+	inc a
+	ld [hl], a
 	farcall DetermineMoveCategory
 	ld a, [wPlayerMoveCategory]
 	cp MOVE_PHYSICAL

@@ -1,7 +1,7 @@
 	db DEX_AMAURA ; pokedex id
 
-	db  77,  59,  50,  46,  67
-	;   hp  atk  def  spd  spc
+	db  77,  59,  50,  46,  67,  63
+	;   hp  atk  def  spd  sat  sdf
 
 	db ROCK, ICE ; type
 	db 145 ; catch rate

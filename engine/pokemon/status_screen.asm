@@ -66,19 +66,8 @@ PlaceHPText:
 
 ; Predef 0x37
 StatusScreen:
-	call LoadMonData
-	ld a, [wMonDataLocation]
-	cp BOX_DATA
-	jr c, .DontRecalculate
-; mon is in a box or daycare
-	ld a, [wLoadedMonBoxLevel]
-	ld [wLoadedMonLevel], a
-	ld [wCurEnemyLevel], a
-	ld hl, wLoadedMonHPExp - 1
-	ld de, wLoadedMonStats
-	ld b, $1
-	call CalcStats ; Recalculate stats
-.DontRecalculate
+	ResetEvent FLAG_STAT_EXP_SHOWING_IN_STATUS_SCREEN
+	call StatusScreenLoadMonData
 	ld hl, wStatusFlags2
 	set BIT_NO_AUDIO_FADE_OUT, [hl]
 	ld a, $33
@@ -113,6 +102,21 @@ StatusScreen:
 	push af
 	xor a
 	ldh [hTileAnimations], a
+	call .drawStatsPage
+	call Delay3
+	call GBPalNormal
+	hlcoord 1, 0
+	call LoadFlippedFrontSpriteByMonIndex ; draw Pokémon picture
+	ld a, [wOptions]
+	and TEXT_DELAY_MASK
+	jr z, .skipCry
+
+	call PlayCry
+.skipCry
+	pop af
+	ret
+
+.drawStatsPage
 IF GEN_2_GRAPHICS
 	hlcoord 19, 3
 	lb bc, 2, 8
@@ -120,16 +124,17 @@ ELSE
 	hlcoord 19, 1
 	lb bc, 6, 10
 ENDC
-	call DrawLineBox ; Draws the box around name, HP and status
+	call DrawLineBox ; Draws the box around name and HP
 	hlcoord 2, 7
-	nop
 	ld [hl], "<DOT>"
 	dec hl
 	ld [hl], "№"
-	hlcoord 19, 9
-	lb bc, 8, 6
-	call DrawLineBox ; Draws the box around types, ID No. and OT
-	hlcoord 10, 9
+	hlcoord 9, 17
+	ld [hl], $76
+	dec hl
+	ld c, 7
+	call DrawLineBox.PrintHorizLine
+	hlcoord 1, 9
 	ld de, Type1Text
 	call PlaceString ; "TYPE1/"
 	hlcoord 11, 3
@@ -138,17 +143,9 @@ ENDC
 	call GetHealthBarColor
 	ld b, SET_PAL_STATUS_SCREEN
 	call StatusScreenHook ; HAX: Draws EXP bar if GEN_2_GRAPHICS is set
-	hlcoord 16, 6
+	hlcoord 10, 2
 	ld de, wLoadedMonStatus
 	call PrintStatusCondition
-	jr nz, .StatusWritten
-	hlcoord 16, 6
-	ld de, OKText
-	call PlaceString ; "OK"
-.StatusWritten
-	hlcoord 9, 6
-	ld de, StatusText
-	call PlaceString ; "STATUS/"
 	hlcoord 14, 2
 	call PrintLevel ; Pokémon level
 	ld a, [wMonHIndex]
@@ -159,9 +156,9 @@ ENDC
 	ld de, wPokedexNum
 	lb bc, LEADING_ZEROES | 1, 3
 	call PrintNumber ; Pokémon no.
-	hlcoord 11, 10
+	hlcoord 2, 10
 	predef PrintMonType
-	hlcoord 11, 10
+	hlcoord 2, 10
 	ld a, [wMonHType1]
 	ld c, $40 ; use unused back-picture tiles; the status screen only loads the front picture
 	call PrintStatusTypeIcon
@@ -170,7 +167,7 @@ ENDC
 	ld a, [wMonHType2]
 	cp b
 	jr z, .statusTypeIconsDone
-	hlcoord 11, 12
+	hlcoord 2, 12
 	ld a, [wMonHType2]
 	ld c, $48
 	call PrintStatusTypeIcon
@@ -184,29 +181,14 @@ ENDC
 	call .GetStringPointer
 	ld d, h
 	ld e, l
-	hlcoord 12, 16
+	hlcoord 2, 16
 	call PlaceString ; OT
-	hlcoord 12, 14
+	hlcoord 2, 14
 	ld de, wLoadedMonOTID
 	lb bc, LEADING_ZEROES | 2, 5
 	call PrintNumber ; ID Number
 	ld d, $0
-	call PrintStatsBox
-	call Delay3
-	call GBPalNormal
-	hlcoord 1, 0
-	call LoadFlippedFrontSpriteByMonIndex ; draw Pokémon picture
-	ld a, [wCurPartySpecies]
-	ld a, [wOptions]
-	and TEXT_DELAY_MASK
-	jr z, .skipCry
-
-	call PlayCry
-.skipCry
-	; call WaitForTextScrollButtonPress
-	pop af
-	; ldh [hTileAnimations], a
-	ret
+	jp PrintStatsBox
 
 .GetStringPointer
 	ld a, [wMonDataLocation]
@@ -222,6 +204,35 @@ ENDC
 	ret z
 	ld a, [wWhichPokemon]
 	jp SkipFixedLengthTextEntries
+
+StatusScreenLoadMonData:
+	call LoadMonData
+	ld a, [wMonDataLocation]
+	cp BOX_DATA
+	ret c
+	ld a, [wLoadedMonBoxLevel]
+	ld [wLoadedMonLevel], a
+	ld [wCurEnemyLevel], a
+	ld hl, wLoadedMonHPExp - 1
+	ld de, wLoadedMonStats
+	ld b, $1
+	jp CalcStats
+
+RestoreStatusScreen:
+	; The moves page replaces loaded experience with the amount to next level.
+	call StatusScreenLoadMonData
+	xor a
+	ldh [hAutoBGTransferEnabled], a
+	hlcoord 0, 8
+	lb bc, 10, 20
+	call ClearScreenArea
+	hlcoord 8, 0
+	lb bc, 8, 12
+	call ClearScreenArea
+	call StatusScreen.drawStatsPage
+	ld a, 1
+	ldh [hAutoBGTransferEnabled], a
+	jp Delay3
 
 ; a = type ID, c = first icon tile ID, hl = tile-map destination
 PrintStatusTypeIcon:
@@ -269,12 +280,6 @@ OTText:
 	db   "OT/"
 	next "@"
 
-StatusText:
-	db "STATUS/@"
-
-OKText:
-	db "OK@"
-
 ; Draws a line starting from hl high b and wide c
 DrawLineBox:
 	ld de, SCREEN_WIDTH ; New line
@@ -299,62 +304,45 @@ PrintStatsBox:
 	ld a, d
 	and a ; a is 0 from the status screen
 	jr nz, .DifferentBox
-	hlcoord 0, 8
-	lb bc, 8, 8
+	hlcoord 10, 6
+	lb bc, 10, 8
 	call TextBoxBorder ; Draws the box
 .default
-	hlcoord 1, 9 ; Start printing stats from here
-	ld bc, $19 ; Number offset
-	jr .PrintStats
-.DifferentBox
-		push de
-	hlcoord 9, 2
-	lb bc, 8, 9
-	call TextBoxBorder
-	hlcoord 11, 3
-	ld bc, $18
-	pop de
-.PrintStats
 	push de
-	push bc
-	push hl
-	ld de, StatsText
+	call .PrintPrompt
+	hlcoord 11, 7
+	ld de, StatusStatsText
 	call PlaceString
-	pop hl
-	pop bc
 	pop de
-	add hl, bc
 	ld a, d
 	cp 2
 	jr z, .statExp
-	push de
-	ld de, wLoadedMonAttack
-	lb bc, 2, 3
-	call PrintStat
-	ld de, wLoadedMonDefense
-	call PrintStat
-	ld de, wLoadedMonSpeed
-	call PrintStat
-	ld de, wLoadedMonSpecial
-	call PrintNumber
-	pop de
-	dec d
-	ret z
-	; if d = 0 we will re-print the hp text
+	hlcoord 16, 8
+	call PrintStatusStatsValues
 	call .clearHPRow
 	hlcoord 12, 4
 	jp PlaceHPText
+.DifferentBox
+	hlcoord 9, 0
+	lb bc, 10, 9
+	call TextBoxBorder
+	hlcoord 11, 1
+	ld de, StatsText
+	call PlaceString
+	hlcoord 15, 2
+	jp PrintStatusStatsValues
 .statExp
-	dec hl
-	dec hl
+	hlcoord 14, 8
 	lb bc, 2, 5
 	ld de, wLoadedMonAttackExp
 	call PrintStat
 	ld de, wLoadedMonDefenseExp
 	call PrintStat
-	ld de, wLoadedMonSpeedExp
+	ld de, wLoadedMonSpclAtkExp
 	call PrintStat
-	ld de, wLoadedMonSpecialExp
+	ld de, wLoadedMonSpclDefExp
+	call PrintStat
+	ld de, wLoadedMonSpeedExp
 	call PrintNumber
 	push bc
 	call .clearHPRow
@@ -366,6 +354,24 @@ PrintStatsBox:
 	hlcoord 11, 4
 	lb bc, 1, 8
 	jp ClearScreenArea
+.PrintPrompt
+	hlcoord 11, 6
+	ld [hl], $CB
+	inc hl
+	ld [hl], $CC
+	inc hl
+	ld a, d
+	cp 2
+	jr z, .expPrompt
+	ld [hl], $CD
+	inc hl
+	ld [hl], $7A
+	ret
+.expPrompt
+	ld [hl], $CE
+	inc hl
+	ld [hl], $CF
+	ret
 
 PrintStat:
 	push hl
@@ -375,11 +381,33 @@ PrintStat:
 	add hl, de
 	ret
 
+PrintStatusStatsValues:
+; Display order differs from the stored order: Speed follows both special stats.
+	lb bc, 2, 3
+	ld de, wLoadedMonAttack
+	call PrintStat
+	ld de, wLoadedMonDefense
+	call PrintStat
+	ld de, wLoadedMonSpclAtk
+	call PrintStat
+	ld de, wLoadedMonSpclDef
+	call PrintStat
+	ld de, wLoadedMonSpeed
+	jp PrintNumber
+
 StatsText:
 	db   "ATTACK"
 	next "DEFENSE"
-	next "SPEED"
-	next "SPECIAL@"
+	next "SP.ATK"
+	next "SP.DEF"
+	next "SPEED@"
+
+StatusStatsText:
+	db   "Attack"
+	next "Defense"
+	next "Sp.Atk"
+	next "Sp.Def"
+	next "Speed@"
 
 StatusScreen2:
 	ldh a, [hTileAnimations]
@@ -396,16 +424,9 @@ StatusScreen2:
 	call CopyData
 	callfar FormatMovesString
 	hlcoord 9, 2
-	lb bc, 5, 10
+	lb bc, 6, 11
 	call ClearScreenArea ; Clear under name
-IF GEN_2_GRAPHICS
 	call StatusScreen2Hook
-	nop
-	nop
-ELSE
-	hlcoord 19, 3
-	ld [hl], $78
-ENDC
 	hlcoord 0, 8
 	ld b, 8
 	ld c, 18
@@ -557,7 +578,7 @@ CalcExpToLevelUp:
 	ret
 
 StatusScreenExpText:
-	db   "Experience"
+	db   "Exp.Points"
 	next "Level Up@"
 
 StatusScreen_ClearName:
@@ -583,7 +604,7 @@ StatusScreenOriginal:
 .displayMon
 	call StatusScreen
 .continue
-	ld b, PAD_A | PAD_B | PAD_SELECT | PAD_START
+	ld b, PAD_A | PAD_B | PAD_SELECT | PAD_START | PAD_RIGHT
 	call PokedexStatusWaitForButtonPressLoop
 	bit B_PAD_START, a
 	jr z, .notStart
@@ -599,8 +620,12 @@ StatusScreenOriginal:
 	bit B_PAD_B, a
 	jr nz, ExitStatusScreen
 	call StatusScreen2
-	ld b, PAD_A | PAD_B
+	ld b, PAD_A | PAD_B | PAD_LEFT
 	call PokedexStatusWaitForButtonPressLoop
+	bit B_PAD_LEFT, a
+	jr z, ExitStatusScreen
+	call RestoreStatusScreen
+	jr .continue
 ExitStatusScreen:
 	pop af
 	ldh [hTileAnimations], a
@@ -622,7 +647,7 @@ StatusScreenLoop:
 .displayNextMon
 	call StatusScreen
 .continue
-	ld a, PAD_A | PAD_B | PAD_SELECT | PAD_START
+	ld a, PAD_A | PAD_B | PAD_SELECT | PAD_START | PAD_RIGHT
 	call PokemonStatusWaitForButtonPress
 	bit B_PAD_SELECT, a
 	jr nz, .changeStatData
@@ -636,14 +661,19 @@ StatusScreenLoop:
 	bit B_PAD_B, a
 	jr nz, .exitStatus
 	call StatusScreen2
-	ld a, PAD_A | PAD_B
+	ld a, PAD_A | PAD_B | PAD_LEFT
 	call PokemonStatusWaitForButtonPress
+	bit B_PAD_LEFT, a
+	jr nz, .statsPage
 	bit B_PAD_UP, a
 	jr nz, .prevMon
 	bit B_PAD_DOWN, a
 	jr nz, .nextMon
 .exitStatus
 	jp ExitStatusScreen
+.statsPage
+	call RestoreStatusScreen
+	jr .continue
 .nextMon
 	ld hl, wWhichPokemon
 	inc [hl]
@@ -666,28 +696,14 @@ StatusScreenLoop:
 	jr .displayNextMon
 
 ToggleStatData:
-	hlcoord 1, 9
-	lb bc, 8, 8
+	hlcoord 11, 7
+	lb bc, 10, 8
 	call ClearScreenArea
 	ToggleEvent FLAG_STAT_EXP_SHOWING_IN_STATUS_SCREEN
 	ld d, 0
-	jr z, .normalStats
+	jr z, .drawStats
 	ld d, 2
-	hlcoord 1, 17
-	ld [hl], $CB
-	inc hl
-	ld [hl], $CC
-	inc hl
-	ld [hl], $CE
-	inc hl
-	ld [hl], $CF
-	jr .donePrompt
-.normalStats
-	hlcoord 3, 17
-	ld [hl], $CD
-	inc hl
-	ld [hl], $7A
-.donePrompt
+.drawStats
 	jp PrintStatsBox.default
 
 PokemonStatusWaitForButtonPress:

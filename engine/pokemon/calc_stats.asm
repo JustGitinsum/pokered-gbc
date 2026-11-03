@@ -57,7 +57,7 @@ _CalcStat::
 	srl c
 	pop hl
 	push bc
-	ld bc, wPartyMon1DVs - (wPartyMon1HPExp - 1) ; also wEnemyMonDVs - wEnemyMonHP
+	ld bc, wPartyMon1DVs - (wPartyMon1HPExp - 1) ; battle callers supply an adjusted base pointer
 	add hl, bc
 	pop bc
 	ld a, c
@@ -67,8 +67,8 @@ _CalcStat::
 	jr z, .getDefenseIV
 	cp $4
 	jr z, .getSpeedIV
-	cp $5
-	jr z, .getSpecialIV
+	cp STAT_SPCLATK
+	jr nc, .getSpecialIV ; both special stats share the same DV
 .getHpIV
 	push bc
 	ld a, [hl]  ; Atk IV

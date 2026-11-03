@@ -35,7 +35,7 @@ _CinnabarGymBlaineVolcanoBadgeInfoText::
 
 	para "The VOLCANOBADGE"
 	line "heightens the"
-	cont "SPECIAL abilities"
+	cont "SP.ATK ability"
 	cont "of your #MON!"
 
 	para "Here, you can"

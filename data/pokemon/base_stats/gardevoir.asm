@@ -1,7 +1,7 @@
 	db DEX_GARDEVOIR ; pokedex id
 
-	db  68,  65,  65, 80, 125
-	;   hp  atk  def  spd  spc
+	db  68,  65,  65, 80, 125, 115
+	;   hp  atk  def  spd  sat  sdf
 
 	db PSYCHIC_TYPE, FAIRY ; type
 	db 50 ; catch rate

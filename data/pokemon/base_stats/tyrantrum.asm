@@ -1,7 +1,7 @@
 	db DEX_TYRANTRUM ; pokedex id
 
-	db  82, 121, 119, 71, 69
-	;   hp  atk  def  spd  spc
+	db  82, 121, 119, 71, 69,  59
+	;   hp  atk  def  spd  sat  sdf
 
 	db ROCK, DRAGON ; type
 	db 45 ; catch rate

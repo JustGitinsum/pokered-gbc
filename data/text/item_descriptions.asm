@@ -89,23 +89,23 @@ _HPUpDescription::
 	done
 
 _ProteinDescription::
-	text "Raises ATTACK of"
+	text "Raises Attack of"
 	next "one #MON."
 	done
 
 _IronDescription::
-	text "Raises DEFENSE of"
+	text "Raises Defense of"
 	next "one #MON."
 	done
 
 _CarbosDescription::
-	text "Raises SPEED of"
+	text "Raises Speed of"
 	next "one #MON."
 	done
 
 _CalciumDescription::
-	text "Raises SPECIAL"
-	next "of one #MON."
+	text "Raises Sp.Atk of"
+	next "one #MON."
 	done
 
 _RareCandyDescription::
@@ -131,8 +131,8 @@ _BikeVoucherDescription::
 	done
 
 _XAccuracyDescription::
-	text "Raises accuracy."
-	next "(1 BTL)"
+	text "Temporarily"
+	next "Raises Accuracy."
 	done
 
 _CardKeyDescription::
@@ -201,23 +201,23 @@ _GoldTeethDescription::
 	done
 
 _XAttackDescription::
-	text "Raises ATTACK."
-	next "(1 BTL)"
+	text "Temporarily"
+	next "Raises Attack."
 	done
 
 _XDefendDescription::
-	text "Raises DEFENSE."
-	next "(1 BTL)"
+	text "Temporarily"
+	next "Raises Defense."
 	done
 
 _XSpeedDescription::
-	text "Raises SPEED."
-	next "(1 BTL)"
+	text "Temporarily"
+	next "Raises Speed."
 	done
 
 _XSpecialDescription::
-	text "Raises SPECIAL."
-	next "(1 BTL)"
+	text "Temporarily"
+	next "Raises Sp.Atk."
 	done
 
 _CoinCaseDescription::
