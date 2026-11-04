@@ -1,11 +1,4 @@
-MoveRelearnerText1:
-	text_asm
-	ld hl, MoveRelearnerGreetingText
-	call PrintText
-	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
-	jp nz, .exit
+MoveRelearner:
 	ld hl, MoveRelearnerSaidYesText
 	call PrintText
 	; Select pokemon from party.
@@ -37,8 +30,6 @@ MoveRelearnerText1:
 	call PrintText
 	jp TextScriptEnd
 .chooseMove
-	ld hl, MoveRelearnerWhichMoveText
-	call PrintText
 	xor a
 	ld [wCurrentMenuItem], a
 	ld [wLastMenuItem], a
@@ -89,16 +80,8 @@ MoveRelearnerText1:
 	jp TextScriptEnd
 
 
-MoveRelearnerGreetingText:
-	text_far _MoveRelearnerGreetingText
-	text_end
-
 MoveRelearnerSaidYesText:
 	text_far _MoveRelearnerSaidYesText
-	text_end
-
-MoveRelearnerWhichMoveText:
-	text_far _MoveRelearnerWhichMoveText
 	text_end
 
 MoveRelearnerByeText:

@@ -1,4 +1,4 @@
-; Same species ID order and fixed-width padding as MonsterNames; not yet included in the ROM.
+; Same species ID order and encoded fixed-width padding as MonsterNames.
 MonsterNamesLowercase::
 	table_width NAME_LENGTH - 1
 	db "Rhydon@@@@"
@@ -64,7 +64,7 @@ MonsterNamesLowercase::
 	db "Charcadet@"
 	db "Armarouge@"
 	db "Ceruledge@"
-	db "Farfetch'd"
+	db "Farfetch'd@" ; "'d" is one encoded tile
 	db "Venonat@@@"
 	db "Dragonite@"
 	db "Gible@@@@@"

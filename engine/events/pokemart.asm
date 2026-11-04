@@ -160,7 +160,7 @@ DisplayPokemartDialogue_::
 	call DisplayChooseQuantityMenu
 	inc a
 	jr z, .buyMenuLoop ; if the player closed the choose quantity menu with the B button
-	; Confirmation replaces the description, not the colored list or its icon.
+	; Confirmation replaces the description, not the list or its icon.
 	farcall RestoreItemDescriptionPalettes
 	ld a, [wCurItem]
 	ld [wNamedObjectIndex], a
@@ -168,7 +168,6 @@ DisplayPokemartDialogue_::
 	call CopyToStringBuffer
 	ld hl, PokemartTellBuyPriceText
 	call PrintText
-	farcall RestoreBuyConfirmationMenuPalettes
 	hlcoord 14, 7
 	lb bc, 8, 15
 	ld a, TWO_OPTION_MENU

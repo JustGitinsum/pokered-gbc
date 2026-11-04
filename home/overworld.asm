@@ -723,7 +723,7 @@ CheckMapConnections::
 .loadNewMap ; load the connected map that was entered
 	call LoadMapHeader
 	call PlayDefaultMusicFadeOutCurrent
-	ld b, SET_PAL_OVERWORLD
+	ld b, SET_PAL_MAP_CONNECTION
 	call RunPaletteCommand
 ; Since the sprite set shouldn't change, this will just update VRAM slots at
 ; x#SPRITESTATEDATA2_IMAGEBASEOFFSET without loading any tile patterns.
@@ -1880,7 +1880,8 @@ JoypadOverworld::
 	ld [wSpritePlayerStateData1YStepVector], a
 	ld [wSpritePlayerStateData1XStepVector], a
 	call RunMapScript
-	call Joypad
+	ld hl, AutoSaveAndReadJoypad
+	call AutoSaveBankswitch
 	ld a, [wStatusFlags7]
 	bit BIT_TRAINER_BATTLE, a
 	jr nz, .notForcedDownwards

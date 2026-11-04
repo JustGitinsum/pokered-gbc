@@ -34,10 +34,8 @@ DEF START_MONEY EQU $3000
 
 	ld [wMonDataLocation], a
 
-	ld hl, wObtainedBadges
-	ld [hli], a
-	ASSERT wObtainedBadges + 1 == wUnusedObtainedBadges
-	ld [hl], a
+	ld [wObtainedBadges], a
+	; The next byte now holds name-case settings; retain the player's choices.
 
 	ld hl, wPlayerCoins
 	ld [hli], a

@@ -598,7 +598,6 @@ RestoreItemMenuPalettes::
 	jr z, RestoreItemMenuWRAMBank
 	xor a
 	ld [W2_ItemMenuPalettesActive], a
-	ld [W2_ItemMenuMoveNamesActive], a
 	ld a, [W2_ItemMenuTileBasedPalettes]
 	ld [W2_TileBasedPalettes], a
 	ld hl, W2_ItemMenuSavedBgPalettes
@@ -643,7 +642,6 @@ RestoreItemMenuTMPalettes:
 	ld bc, 6
 	jp CopyData
 .staticMap
-	; The saved map may still be tile-indexed even after move names made it static.
 	ld hl, W2_TilesetPaletteMap + 13 * SCREEN_WIDTH + 1
 	ld b, 6
 .restoreCell
@@ -685,151 +683,15 @@ SetPal_BagPocketIcon::
 	farcall LoadSGBPalette
 	jp ItemMenuPalettesChanged
 
-; Color only the secondary TM/HM list rows, not other uses of the same font.
-; Called after the preview, which may have restored the original palette map.
-SetPal_ItemListMoveNames::
-	; Inventory is in WRAM bank 1: collect the visible machine rows first.
-	ld a, [wListPointer]
-	ld l, a
-	ld a, [wListPointer + 1]
-	ld h, a
-	inc hl
-	ld a, [wListScrollOffset]
-	ld c, a
-	ld b, 0
-	ld a, [wListMenuID]
-	cp ITEMLISTMENU
-	jr nz, .offset
-	sla c
-	rl b
-.offset
-	add hl, bc
-	ld b, 4
-	ld c, 0
-.findMachines
-	sla c
-	ld a, [hl]
-	cp $ff
-	jr z, .nextItem
-	cp HM01
-	jr c, .advance
-	cp TM01 + NUM_TMS
-	jr nc, .advance
-	inc c
-.advance
-	inc hl
-	ld a, [wListMenuID]
-	cp ITEMLISTMENU
-	jr nz, .nextItem
-	inc hl
-.nextItem
-	dec b
-	jr nz, .findMachines
-	swap c
-	ld e, c
-	ldh a, [rWBK]
-	ld b, a
-	ld a, 2
-	ldh [rWBK], a
-	push bc
-	ld a, e
-	and a
-	jr nz, .prepare
-	ld a, [W2_ItemMenuMoveNamesActive]
-	and a
-	jp z, RestoreItemMenuWRAMBank
-.prepare
-	push de
-	call SaveItemMenuPalettes
-	ld a, [W2_TileBasedPalettes]
-	and a
-	jr z, .listRows
-	ld hl, W2_TilesetPaletteMap
-	ld de, W2_ItemMenuPaletteScratch
-	ld bc, $180
-	call CopyData
-	ld hl, wTileMap
-	ld de, W2_TilesetPaletteMap
-	ld bc, SCREEN_WIDTH * SCREEN_HEIGHT
-.convert
-	push bc
-	push hl
-	ld a, [hl]
-	ld c, a
-	ld b, 0
-	ld hl, W2_ItemMenuPaletteScratch
-	add hl, bc
-	ld a, [hl]
-	ld [de], a
-	inc de
-	pop hl
-	inc hl
-	pop bc
-	dec bc
-	ld a, b
-	or c
-	jr nz, .convert
-	xor a
-	ld [W2_TileBasedPalettes], a
-.listRows
-	pop bc
-	ld a, c
-	and a
-	jr z, .keepMovePalette
-	ld a, 1
-	ld [W2_ItemMenuMoveNamesActive], a
-.keepMovePalette
-	ld de, W2_TilesetPaletteMap + 5 * SCREEN_WIDTH + 7
-	ld b, 4
-.row
-	push bc
-	push de
-	ld b, 12
-.column
-	; A scrolled-out move must recover its original text/blank palette.
-	ld h, d
-	ld l, e
-	call GetOriginalItemMenuPalette
-	ld [de], a
-	inc de
-	dec b
-	jr nz, .column
-	pop de
-	pop bc
-	sla c
-	jr nc, .nextRow
-	push bc
-	ld h, d
-	ld l, e
-	ld bc, 12
-	ld a, 3
-	call FillMemory
-	pop bc
-.nextRow
-	ld hl, 2 * SCREEN_WIDTH
-	add hl, de
-	ld d, h
-	ld e, l
-	dec b
-	jr nz, .row
-	; Keep this slot borrowed until the menu is hidden. Restoring it during a
-	; redraw recolors move glyphs still present in the displayed tilemap.
-	ld d, PAL_TMPocketNames
-	ld e, 3
-	farcall LoadSGBPalette
-	jp ItemMenuPalettesChanged
-
-; CANCEL clears the item preview, but the pocket graphic and move names remain.
+; CANCEL clears the item preview, but the pocket graphic remains.
 RestoreItemMenuCursorPalettes::
 	ldh a, [rWBK]
 	ld b, a
 	ld a, 2
 	ldh [rWBK], a
 	push bc
-	ld a, [W2_ItemMenuMoveNamesActive]
-	ld c, a
 	ld a, [W2_BagPocketTilesActive]
-	or c
+	and a
 	jp z, RestoreItemMenuPalettes.inBank2
 	ld a, [W2_ItemMenuPalettesActive]
 	and a
@@ -867,69 +729,6 @@ RestoreItemMenuCursorPalettes::
 	jr nz, .row
 .refresh
 	jp ItemMenuPalettesChanged
-
-RestoreBagActionMenuPalettes::
-	ld de, wTileMap + 7 * SCREEN_WIDTH + 13
-	lb bc, 5, 7
-	jr RestoreItemMoveNameBoxPalettes
-
-RestoreBuyConfirmationMenuPalettes::
-	ld de, wTileMap + 7 * SCREEN_WIDTH + 14
-	lb bc, 5, 6
-	jr RestoreItemMoveNameBoxPalettes
-
-RestoreItemQuantityMenuPalettes::
-	ld de, wTileMap + 9 * SCREEN_WIDTH + 15
-	lb bc, 3, 5
-	ld a, [wListMenuID]
-	cp PRICEDITEMLISTMENU
-	jr nz, RestoreItemMoveNameBoxPalettes
-	ld de, wTileMap + 9 * SCREEN_WIDTH + 7
-	ld c, 13
-	ldh a, [hHalveItemPrices]
-	and a
-	jr z, RestoreItemMoveNameBoxPalettes
-	ld de, wTileMap + 7 * SCREEN_WIDTH + 7
-	ld b, 5
-
-; Set dimensions inside this bank: Bankswitch overwrites a/b/c/hl.
-; b = height, c = width, de = tilemap address of an overlapping menu box.
-RestoreItemMoveNameBoxPalettes:
-	ld h, b
-	ldh a, [rWBK]
-	ld b, a
-	ld a, 2
-	ldh [rWBK], a
-	push bc
-	ld a, [W2_ItemMenuMoveNamesActive]
-	and a
-	jr z, .done
-	ld b, h
-	ld hl, W2_TilesetPaletteMap - wTileMap
-	add hl, de
-.row
-	push bc
-	push hl
-.column
-	ld a, [hl]
-	cp 3
-	jr nz, .next
-	call GetOriginalItemMenuPalette
-	ld [hl], a
-.next
-	inc hl
-	dec c
-	jr nz, .column
-	pop hl
-	ld de, SCREEN_WIDTH
-	add hl, de
-	pop bc
-	dec b
-	jr nz, .row
-	ld a, 3
-	ld [W2_StaticPaletteMapChanged], a
-.done
-	jp RestoreItemMenuWRAMBank
 
 ; hl = screen palette-map cell, WRAM bank 2 selected; preserves bc/de/hl.
 GetOriginalItemMenuPalette:
@@ -1669,17 +1468,7 @@ ReloadMonIconPalettes:
 
 ; Loading a map. Called when first loading, and when transitioning between maps.
 SetPal_Overworld:
-	ld a, 2
-	ldh [rWBK], a
-	dec a ; ld a, 1
-	ld [W2_TileBasedPalettes], a
-
-	CALL_INDIRECT RestoreOverworldSpritePalettes
-
-	xor a
-	ldh [rWBK], a
-
-	CALL_INDIRECT LoadTilesetPalette
+	call LoadOverworldPalettes
 
 	; Wait 2 frames before updating palettes (if LCD is on)
 	ldh a, [rLCDC]
@@ -1688,7 +1477,13 @@ SetPal_Overworld:
 	ld c, 2
 	call DelayFrames
 .doneDelay:
+	jr FinishOverworldPalettes
 
+; Connected maps keep the existing tilemap visible; no menu redraw needs to settle.
+SetPal_MapConnection:
+	call LoadOverworldPalettes
+
+FinishOverworldPalettes:
 	ld a, 2
 	ldh [rWBK], a
 
@@ -1702,6 +1497,20 @@ SetPal_Overworld:
 
 	ld a, SET_PAL_OVERWORLD
 	ld [wDefaultPaletteCommand], a
+	ret
+
+LoadOverworldPalettes:
+	ld a, 2
+	ldh [rWBK], a
+	dec a ; ld a, 1
+	ld [W2_TileBasedPalettes], a
+
+	CALL_INDIRECT RestoreOverworldSpritePalettes
+
+	xor a
+	ldh [rWBK], a
+
+	CALL_INDIRECT LoadTilesetPalette
 	ret
 
 ; Open pokemon menu

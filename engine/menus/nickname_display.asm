@@ -1,9 +1,14 @@
 ; C = party/box index (zero for day care), HL = nickname-list base.
 ; Return DE = wNameBuffer without changing stored nicknames.
 GetPartyMonDisplayName::
-	ld a, [wOptions]
-	bit BIT_HIDE_NICKNAMES, a
-	jr z, .copyNickname
+	push hl
+	push bc
+	ld a, c
+	call SkipFixedLengthTextEntries
+	pop bc
+	ld d, h
+	ld e, l
+	pop hl
 	; Select the species list corresponding to the nickname-list base.
 	ld a, l
 	cp LOW(wPartyMonNicks)
@@ -39,11 +44,17 @@ GetPartyMonDisplayName::
 	ld a, [wDayCareMonSpecies]
 .display
 	ld c, a
-	; The species lookup already returns wNameBuffer; do not copy it onto itself.
-	jp GetSpeciesDisplayName
+	call GetMonDisplayName_
+	; A species substitution is already in the output buffer.
+	ld a, d
+	cp HIGH(wNameBuffer)
+	jr nz, .copyNickname
+	ld a, e
+	cp LOW(wNameBuffer)
+	ret z
 .copyNickname
-	ld a, c
-	call SkipFixedLengthTextEntries
+	ld h, d
+	ld l, e
 	ld de, wNameBuffer
 	push de
 	ld bc, NAME_LENGTH
@@ -55,7 +66,16 @@ GetPartyMonDisplayName::
 GetMonDisplayName_::
 	ld a, [wOptions]
 	bit BIT_HIDE_NICKNAMES, a
-	ret z
+	jr nz, .hidden
+	ld a, [wNamedObjectIndex]
+	push af
+	ld a, c
+	ld [wNamedObjectIndex], a
+	callfar GetDefaultSpeciesName
+	pop af
+	ld [wNamedObjectIndex], a
+	ret
+.hidden
 	; Non-link enemies already have species names; keep special names such as GHOST.
 	ld a, d
 	cp HIGH(wEnemyMonNick)
@@ -79,9 +99,6 @@ GetSpeciesDisplayName:
 
 ; Text scripts also reference nickname buffers directly, bypassing the normal getters.
 ResolveNicknameTextPointer::
-	ld a, [wOptions]
-	bit BIT_HIDE_NICKNAMES, a
-	ret z
 	ld a, d
 	cp HIGH(wBattleMonNick)
 	jr nz, .enemy

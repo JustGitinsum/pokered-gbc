@@ -53,28 +53,12 @@ GetName::
 	ld d, h
 	jr .gotPtr
 .otherEntries
-	; 2-8 = other names, including the alternate move-name table
+	; Select the table and its bank before switching away from the helper bank.
+	homecall GetNameTablePointer
 	ld a, [wPredefBank]
-	ldh [hLoadedROMBank], a
-	ld [rROMB], a
-	ld a, [wNameListType]
-	dec a
-	add a
-	ld d, 0
-	ld e, a
-	jr nc, .skip
-	inc d
-.skip
-	ld hl, NamePointers
-	add hl, de
-	ld a, [hli]
-	ldh [hSwapTemp + 1], a
-	ld a, [hl]
-	ldh [hSwapTemp], a
-	ldh a, [hSwapTemp]
-	ld h, a
-	ldh a, [hSwapTemp + 1]
-	ld l, a
+	call SetCurBank
+	ld h, d
+	ld l, e
 	ld a, [wNameListIndex]
 	ld b, a ; wanted entry
 	ld c, 0 ; entry counter
@@ -103,6 +87,4 @@ GetName::
 	pop bc
 	pop hl
 	pop af
-	ldh [hLoadedROMBank], a
-	ld [rROMB], a
-	ret
+	jp SetCurBank

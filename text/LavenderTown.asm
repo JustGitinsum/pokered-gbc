@@ -45,11 +45,10 @@ _LavenderTownSignText::
 
 _LavenderTownSilphScopeSignText::
 	text "LAVENDER #MON"
-	line "Specialists"
+	line "Specialist"
 
-	para "The NAME RATER"
-	line "MOVE RELEARNER"
-	cont "and MOVE DELETER!"
+	para "Names and moves,"
+	line "all in one place!"
 	done
   
 _LavenderTownPokemonHouseSignText::

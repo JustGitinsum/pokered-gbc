@@ -1,6 +1,11 @@
+PUSHS
+SECTION "Map Missable Object Loading", ROMX
+
 MarkTownVisitedAndLoadMissableObjects::
+	farcall ResetBagMenuPosition
 	callfar ResetMoveTutorIntrosOnMapChange
 	callfar ResetFossilScientistIntroOnMapChange
+	callfar ResetNameRaterIntroOnMapChange
 	ld a, [wCurMap]
 	cp FIRST_ROUTE_MAP
 	jr nc, .notInTown
@@ -15,6 +20,12 @@ MarkTownVisitedAndLoadMissableObjects::
 	ld c, a
 	add hl, bc
 	add hl, bc
+	; This loader may be linked outside the bank containing the object tables.
+	ld de, wBuffer
+	ld bc, 2
+	ld a, BANK(MapHSPointers)
+	call FarCopyData2
+	ld hl, wBuffer
 	ld a, [hli]                ; load missable objects pointer in hl
 	ld h, [hl]
 	; fall through
@@ -50,13 +61,20 @@ LoadMissableObjects:
 	ld de, wMissableObjectList
 	pop hl
 .writeMissableObjectsListLoop
-	ld a, [hli]
+	push bc
+	push de
+	ld de, wBuffer
+	ld bc, 3
+	ld a, BANK(MissableObjects)
+	call FarCopyData2
+	pop de
+	pop bc
+	ld a, [wBuffer]
 	cp -1
 	jr z, .done     ; end of list
 	cp b
 	jr nz, .done    ; not for current map anymore
-	ld a, [hli]
-	inc hl
+	ld a, [wBuffer + 1]
 	ld [de], a                 ; write (map-local) sprite ID
 	inc de
 	ld a, c
@@ -69,7 +87,10 @@ LoadMissableObjects:
 	ld [de], a                 ; write sentinel
 	ret
 
+POPS
+
 InitializeMissableObjectsFlags:
+	ASSERT BANK(InitializeMissableObjectsFlags) == BANK(MissableObjects)
 	ld hl, wMissableObjectFlags
 	ld bc, wMissableObjectFlagsEnd - wMissableObjectFlags
 	xor a

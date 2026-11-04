@@ -1,12 +1,5 @@
-MoveDeleterText1:
-	text_asm
-	ld hl, MoveDeleterGreetingText
-	call PrintText
-.jumpback
-	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
-	jp nz, .exit
+MoveDeleter:
+.selectPokemon
 	ld hl, MoveDeleterSaidYesText
 	call PrintText
 	; Select pokemon from party.
@@ -33,14 +26,16 @@ MoveDeleterText1:
 	jr nc, .chooseMove
 	ld hl, MoveDeleterOneMoveText
 	call PrintText
-	jr .jumpback
+	call YesNoChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	jp nz, .exit
+	jr .selectPokemon
 .chooseMove
 	push bc
 	xor a
 	ld [wListScrollOffset], a
 	ld [wCurrentMenuItem], a
-	ld hl, MoveDeleterWhichMoveText
-	call PrintText
 	ld a, MOVESLISTMENU
 	ld [wListMenuID], a
 	ld de, wMoveBuffer
@@ -152,16 +147,8 @@ PrepareDeletableMoveList:
 	ld [wMoveBuffer], a
 	ret
 
-MoveDeleterGreetingText:
-	text_far _MoveDeleterGreetingText
-	text_end
-
 MoveDeleterSaidYesText:
 	text_far _MoveDeleterSaidYesText
-	text_end
-
-MoveDeleterWhichMoveText:
-	text_far _MoveDeleterWhichMoveText
 	text_end
 
 MoveDeleterConfirmText:

@@ -1,4 +1,5 @@
 InitBattleVariables:
+	farcall ResetBagMenuPosition
 	ldh a, [hTileAnimations]
 	ld [wSavedTileAnimations], a
 	xor a

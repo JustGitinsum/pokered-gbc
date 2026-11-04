@@ -404,7 +404,6 @@ StartMenu_Item::  ; marcelnote - BICYCLE does not have special handling anymore
 ;;;;;;;;;;;;;;;;;;;;;
 	ld [wTextBoxID], a
 	call DisplayTextBoxID
-	farcall RestoreBagActionMenuPalettes
 	ld hl, wTopMenuItemY
 	ld a, 8
 	ld [hli], a ; top menu item Y

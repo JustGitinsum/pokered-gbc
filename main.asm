@@ -149,7 +149,6 @@ INCLUDE "engine/overworld/ledges.asm"
 
 SECTION "Pokémon Names", ROMX
 
-INCLUDE "data/pokemon/names.asm"
 INCLUDE "engine/movie/oak_speech/clear_save.asm"
 INCLUDE "engine/events/elevator.asm"
 
@@ -470,7 +469,19 @@ INCLUDE "engine/battle/end_of_battle.asm"
 ; Keep added options and move-name helpers out of the full bank1 section.
 SECTION "Options Helpers", ROMX
 INCLUDE "engine/menus/options_menu_helpers.asm"
+INCLUDE "engine/menus/options_help.asm"
+INCLUDE "engine/overworld/auto_save.asm"
 INCLUDE "engine/menus/nickname_display.asm"
+INCLUDE "engine/menus/name_case.asm"
+
+SECTION "Alternate Item Names", ROMX
+INCLUDE "data/items/names_lowercase.asm"
+SECTION "Alternate Pokemon Names", ROMX
+INCLUDE "data/pokemon/names.asm"
+INCLUDE "data/pokemon/names_lowercase.asm"
+INCLUDE "engine/menus/default_species_name.asm"
+SECTION "Alternate Trainer Names", ROMX
+INCLUDE "data/trainers/names_lowercase.asm"
 
 SECTION "Player Characters", ROMX
 INCLUDE "engine/player_characters.asm"

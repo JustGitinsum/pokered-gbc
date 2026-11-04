@@ -2,25 +2,22 @@ GetMonName::
 	push hl
 	ldh a, [hLoadedROMBank]
 	push af
-	ld a, BANK(MonsterNames)
-	ldh [hLoadedROMBank], a
-	ld [rROMB], a
+	homecall GetMonNameTable
+	ld a, b
+	call SetCurBank
 	ld a, [wNamedObjectIndex]
 	dec a
-	ld hl, MonsterNames
-	ld c, NAME_LENGTH - 1
-	ld b, 0
+	ld bc, NAME_LENGTH - 1
 	call AddNTimes
 	ld de, wNameBuffer
 	push de
 	ld bc, NAME_LENGTH - 1
 	call CopyData
-	ld hl, wNameBuffer + NAME_LENGTH - 1
-	ld [hl], "@"
+	ld a, "@"
+	ld [de], a
 	pop de
 	pop af
-	ldh [hLoadedROMBank], a
-	ld [rROMB], a
+	call SetCurBank
 	pop hl
 	ret
 

@@ -1,22 +1,8 @@
-_MoveDeleterGreetingText::
-	text "Hey, I'm the"
-	line "Move Deleter."
-
-	para "Want me to make a"
-	line "#MON forget a"
-	cont "move?"
-	done
-
 _MoveDeleterSaidYesText::
 	text "Which #MON"
 	line "should forget a"
 	cont "move?"
 	prompt
-
-_MoveDeleterWhichMoveText::
-	text "Which move should"
-	line "it forget, then?"
-	done
 
 _MoveDeleterConfirmText::
 	text "Make it forget"

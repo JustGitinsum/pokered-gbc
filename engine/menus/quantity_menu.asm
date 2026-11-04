@@ -16,11 +16,6 @@ _DisplayChooseQuantityMenu::
 	hlcoord 7, 9
 	lb bc, 1, 11
 .drawTextBox
-	push hl
-	push bc
-	farcall RestoreItemQuantityMenuPalettes
-	pop bc
-	pop hl
 	call TextBoxBorder
 	hlcoord 16, 10 ; coordinates TOSS item quantity text
 	ld a, [wListMenuID]
@@ -263,6 +258,12 @@ ItemMenuExitDescription:
 
 BlinkListMenuScrollArrow::
 	hlcoord 18, 11
+	ld a, [wListMenuID]
+	cp MOVESLISTMENU
+	jr nz, .notMovesList
+	hlcoord 18, 10
+	jr .blink
+.notMovesList
 	ld a, [wItemListMenuInputActive]
 	and a
 	jr z, .blink
@@ -274,6 +275,21 @@ BlinkListMenuScrollArrow::
 	inc hl
 .blink
 	jp HandleDownArrowBlinkTiming
+
+GetItemOrMoveListNamePosition::
+	; The HOME caller already saves BC around the bank switch.
+	ld a, [wTopMenuItemX]
+	inc a
+	ld c, a
+	ld b, 0
+	hlcoord 0, 4
+	ld a, [wListMenuID]
+	cp MOVESLISTMENU
+	jr nz, .rowReady
+	hlcoord 0, 3
+.rowReady
+	add hl, bc
+	ret
 
 DrawListMenuWithItemPreview::
 	ld a, [wListMenuID]
@@ -341,7 +357,6 @@ UpdateItemMenuPreview:
 .item
 	call UpdateItemMenuCursorInfo
 	farcall SetPal_BagPocketIcon
-	farcall SetPal_ItemListMoveNames
 .done
 	pop af
 	ldh [hAutoBGTransferEnabled], a
@@ -414,6 +429,16 @@ LoadItemListMenuPalettes::
 	jp GBPalNormal
 
 DelayBeforeListMenu::
+	ld a, [wListMenuID]
+	cp MOVESLISTMENU
+	jr nz, .notMovesList
+	hlcoord 4, 1
+	lb bc, 9, 14
+	call TextBoxBorder
+	call UpdateSprites
+	ld a, 3
+	ld [wTopMenuItemY], a
+.notMovesList
 	ld a, [wBagPocketsFlags]
 	and 1 << BIT_PRINT_INFO_BOX
 	ld b, a

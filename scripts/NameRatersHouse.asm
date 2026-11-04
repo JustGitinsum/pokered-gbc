@@ -1,11 +1,12 @@
 NameRatersHouse_Script:
 	jp EnableAutoTextBoxDrawing
 
-NameRatersHouseYesNoScript:
-	call PrintText
-	call YesNoChoice
-	ld a, [wCurrentMenuItem]
-	and a
+ResetNameRaterIntroOnMapChange::
+	ld a, [wCurMap]
+	ld hl, wNameRaterIntroMap
+	cp [hl]
+	ret z
+	ld [hl], -1
 	ret
 
 ; NameRatersHouseCheckMonOTScript:
@@ -41,14 +42,53 @@ NameRatersHouseYesNoScript:
 NameRatersHouse_TextPointers:
 	def_text_pointers
 	dw_const NameRatersHouseNameRaterText, TEXT_NAMERATERSHOUSE_NAME_RATER
-	dw_const MoveDeleterText1, TEXT_NAMERATERSHOUSE_MOVE_DELETER
-	dw_const MoveRelearnerText1, TEXT_NAMERATERSHOUSE_MOVE_RELEARNER
 
 NameRatersHouseNameRaterText:
 	text_asm
 	call SaveScreenTilesToBuffer2
-	ld hl, .WantMeToRateText
-	call NameRatersHouseYesNoScript
+	ld a, [wCurMap]
+	ld hl, wNameRaterIntroMap
+	cp [hl]
+	jr z, .skipIntro
+	ld [hl], a
+	ld hl, .IntroductionText
+	call PrintText
+	jr .showMenu
+.skipIntro
+	ld hl, .HowCanIHelpText
+	call PrintText
+.showMenu
+	hlcoord 10, 0
+	lb bc, 8, 8
+	call TextBoxBorder
+	hlcoord 12, 2
+	ld de, .MenuText
+	call PlaceString
+	xor a
+	ld [wCurrentMenuItem], a
+	ld [wLastMenuItem], a
+	ld [wMenuWatchMovingOutOfBounds], a
+	ld a, 2
+	ld [wTopMenuItemY], a
+	ld a, 11
+	ld [wTopMenuItemX], a
+	ld a, 3
+	ld [wMaxMenuItem], a
+	ld a, PAD_A | PAD_B
+	ld [wMenuWatchedKeys], a
+	call UpdateSprites
+	call HandleMenuInput
+	push af
+	call LoadScreenTilesFromBuffer2
+	pop af
+	bit B_PAD_B, a
+	jr nz, .did_not_rename
+	ld a, [wCurrentMenuItem]
+	cp 1
+	jp z, MoveRelearner
+	cp 2
+	jp z, MoveDeleter
+	and a
 	jr nz, .did_not_rename
 	ld hl, .WhichPokemonText
 	call PrintText
@@ -64,14 +104,6 @@ NameRatersHouseNameRaterText:
 	pop af
 	jr c, .did_not_rename
 	call GetPartyMonName2
-	; call NameRatersHouseCheckMonOTScript
-	ld hl, .ATrulyImpeccableNameText
-	jr c, .done
-	ld hl, .GiveItANiceNameText
-	call NameRatersHouseYesNoScript
-	jr nz, .did_not_rename
-	ld hl, .WhatShouldWeNameItText
-	call PrintText
 	farcall DisplayNameRaterScreen
 	jr c, .did_not_rename
 	ld hl, .PokemonHasBeenRenamedText
@@ -82,20 +114,22 @@ NameRatersHouseNameRaterText:
 	ld hl, .ComeAnyTimeYouLikeText
 	jr .done
 
-.WantMeToRateText:
-	text_far _NameRatersHouseNameRaterWantMeToRateText
+.MenuText:
+	db "Rename"
+	next "Relearn"
+	next "Unlearn"
+	next "See ya!@"
+
+.IntroductionText:
+	text_far _NameRatersHouseNameRaterIntroductionText
+	text_end
+
+.HowCanIHelpText:
+	text_far _NameRatersHouseNameRaterHowCanIHelpText
 	text_end
 
 .WhichPokemonText:
 	text_far _NameRatersHouseNameRaterWhichPokemonText
-	text_end
-
-.GiveItANiceNameText:
-	text_far _NameRatersHouseNameRaterGiveItANiceNameText
-	text_end
-
-.WhatShouldWeNameItText:
-	text_far _NameRatersHouseNameRaterWhatShouldWeNameItText
 	text_end
 
 .PokemonHasBeenRenamedText:
@@ -104,8 +138,4 @@ NameRatersHouseNameRaterText:
 
 .ComeAnyTimeYouLikeText:
 	text_far _NameRatersHouseNameRaterComeAnyTimeYouLikeText
-	text_end
-
-.ATrulyImpeccableNameText:
-	text_far _NameRatersHouseNameRaterATrulyImpeccableNameText
 	text_end

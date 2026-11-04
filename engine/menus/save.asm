@@ -198,6 +198,10 @@ OlderFileWillBeErasedText:
 	text_end
 
 SaveSAVtoSRAM0:
+	call CopyMainSaveData
+	jr FinalizeSaveData
+
+CopyMainSaveData:
 	ld a, RAMG_SRAM_ENABLE
 	ld [rRAMG], a
 	ld a, $1
@@ -221,6 +225,9 @@ SaveSAVtoSRAM0:
 	call CopyData
 	ldh a, [hTileAnimations]
 	ld [sTileAnimations], a
+	ret
+
+FinalizeSaveData:
 	ld hl, sGameData
 	ld bc, sGameDataEnd - sGameData
 	call SAVCheckSum
@@ -276,20 +283,30 @@ SaveSAVtoSRAM2:
 SaveSAVtoSRAM::
 	ld a, $2
 	ld [wSaveFileStatus], a
-	call SaveSAVtoSRAM0
-	call SaveSAVtoSRAM1
-	jp SaveSAVtoSRAM2
+	; The main copy already includes the current box and Pokedex. Partial-save
+	; entry points remain available, but a full save needs only one checksum.
+	call CopyMainSaveData
+	ld hl, wPartyDataStart
+	ld de, sPartyData
+	ld bc, wPartyDataEnd - wPartyDataStart
+	call CopyData
+	jp FinalizeSaveData
 
 SAVCheckSum:
 ;Check Sum (result[1 byte] is complemented)
 	ld d, 0
+	; Count the low byte each iteration; only touch B at 256-byte boundaries.
+	inc b
+	inc c
+	jr .next
 .loop
 	ld a, [hli]
 	add d
 	ld d, a
-	dec bc
-	ld a, b
-	or c
+.next
+	dec c
+	jr nz, .loop
+	dec b
 	jr nz, .loop
 	ld a, d
 	cpl

@@ -379,7 +379,15 @@ InitOutsideMapSprites:
 	ld a, [de]
 	inc de
 	cp b ; does the picture ID match?
-	jr nz, .getPictureIndexLoop
+	jr z, .foundPictureIndex
+	; Split maps also contain offscreen NPCs from the other sprite set.
+	; They have no loaded VRAM slot; never scan beyond the current set.
+	ld a, c
+	cp SPRITE_SET_LENGTH
+	jr c, .getPictureIndexLoop
+	ld c, 0
+	jr .skipGettingPictureIndex
+.foundPictureIndex
 	inc c
 .skipGettingPictureIndex
 	push hl

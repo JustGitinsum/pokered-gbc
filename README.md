@@ -61,22 +61,61 @@ existing selected-icon animation are unchanged.
 
 Pokémon Red/Blue overhauled with full GBC support. Made by FroggestSpirit, Drenn, and dannye. Also check out the crysaudio branch.
 
-The Options Menu defaults **MOVE NAME CASE** to **Lower**; **UPPER** remains selectable.
+Connected town/route crossings skip the two-frame palette-settling delay used
+when restoring the overworld from menus. Map loading and palette updates still
+run normally; doors, stairs, and menu transitions keep their existing timing.
+Split-map sprite lookup stays within the loaded sprite set, avoiding a long scan
+for offscreen NPCs belonging to the other half of routes such as Route 12.
 
-With **TEXT SPEED** set to **FAST**, walking into a Cut tree or water
+The Options Menu defaults **MOVE NAME CASE** to **Lower**; **UPPER** remains selectable.
+Page 1 contains text speed, Auto Save, battle animation, battle style, and nicknames.
+**AUTO SAVE** defaults to **Off**. **On** silently replaces the current save after
+entering a different map, including connected routes, once movement and scripts
+have settled. Forced movement and NPC escorts defer the save until they finish,
+including Oak's escort into the lab. The initial map load and same-map reloads
+do not trigger a save.
+Full saves copy each data region once and calculate the checksum once to reduce
+the Auto Save hitch. Saving remains synchronous; it does not run in the background.
+Page 2 contains **MOVE NAME CASE**, **ITEM NAME CASE**, **POKEMON NAME CASE**,
+and **TRAINER NAME CASE**, each offering **UPPER** and **Lower** (default).
+Pokemon case changes standard species names without rewriting saved nicknames;
+custom nicknames and player-entered rival/link trainer names retain their spelling.
+Press A on a setting for a normal scrolling dialogue description; press A or B
+to advance or dismiss it. Closing the dialogue restores the same page and row.
+Press Down to reach the footer, use Left/Right to select **Done** or **Next/Prev**,
+then press A. B or START closes the menu from either page. Settings are retained
+when switching pages.
+**Done** is centered, **Prev** is on the left of page 2, and **Next** is on the
+right of page 1.
+
+With **TEXT SPEED** set to **Fast**, walking into a Cut tree or water
 automatically uses Cut or Surf, and pushing a boulder automatically activates
 Strength. The required badge and a party Pokemon knowing the move are still
 required. Automatic attempts are silent, including where Surf is forbidden.
 At other text speeds, use the party menu or the A-button Smart HM shortcuts.
-The A-button Cut and Surf shortcuts ask for YES/NO confirmation at MEDIUM
-and SLOW text speeds; FAST skips these prompts.
+The A-button Cut and Surf shortcuts ask for YES/NO confirmation at Medium
+and Slow text speeds; Fast skips these prompts.
 Strength already activated on the current map remains active at any text speed.
 
-The Options Menu includes **POKEMON NICKNAMES**, which defaults to **SHOW**.
-Use Left/Right to switch it to **HIDE** to display species names instead; saved
-nicknames are preserved and reappear when the option is switched back to **SHOW**.
-**HIDE** also skips nickname prompts for newly received or caught Pokemon, using
+The Options Menu includes **POKEMON NICKNAMES**, which defaults to **Show**.
+Use Left/Right to switch it to **Hide** to display species names instead; saved
+nicknames are preserved and reappear when the option is switched back to **Show**.
+**Hide** also skips nickname prompts for newly received or caught Pokemon, using
 their species names instead. The Name Rater remains available for renaming.
+
+The Name Rater in Lavender Town also handles move relearning and deletion.
+After his introduction, choose **Rename**, **Relearn**, **Unlearn**, or **See ya!**.
+Rename opens the naming screen immediately after selecting a Pokemon, without
+rating dialogue or a confirmation prompt.
+Relearn and Unlearn open their move lists directly after Pokemon selection.
+Their move boxes sit one tile higher, above the unchanged move-description panel.
+Like move tutors, his introduction plays only once per map visit; changing maps
+resets it, but reloading the same map does not.
+The separate Move Relearner and Move Deleter NPCs have been removed.
+Relearn lists unknown Lv0 moves first, then evolution moves regardless of level,
+then Lv1+ moves up to the Pokemon's current level, without duplicate entries.
+The Learnsets LevelUp page uses the same Lv0, evolution, then Lv1+ ordering,
+but retains duplicates and shows the full level-up learnset.
 
 Both fossil labs revive Dome Fossils, Helix Fossils, Old Amber, Jaw Fossils
 (Tyrunt), and Sail Fossils (Amaura) immediately. Revived Pokemon are level 45
@@ -111,17 +150,17 @@ cursor moves, with **Exit?** displayed when CANCEL is highlighted.
 Live preview updates are scoped to item-list input, so other menus such as
 the Pokédex cannot inherit the Buy/Bag overlays from a previous list.
 TMs also show their move names directly below their list entries.
-The secondary TM/HM move-name lines in Buy and both Bags use `PAL_LOGO1`;
-item names, prices, quantities, and descriptions keep their existing colors.
-USE/TOSS and quantity boxes reset colors only within their own borders.
-Buy confirmation text and its YES/NO box preserve the move-name and item-icon
-colors, resetting only the description and the YES/NO box's covered cells.
-The move-name palette remains loaded through cursor and pocket redraws and is
-restored only after hiding the Bag or replacing the Buy screen.
+The secondary TM/HM move-name lines in Buy and both Bags use the normal text
+colors, without a separate palette. Buy confirmation text and its YES/NO box
+preserve the item-icon colors, resetting only the description's palettes.
 Switching away from TM/HMs restores the description's original text colors,
 including on cavern maps with tile-based palettes.
-Pocket changes use a brief white transition while graphics, descriptions, and
-palette attributes are rebuilt, so old TM details cannot appear in the new pocket.
+Pocket changes keep the Bag visible without a white-screen transition while
+graphics, descriptions, and palette attributes are rebuilt. Only the description
+contents briefly clear before their tiles and palettes are reused, preventing the
+outgoing TM stats from changing colors. The selected-item icon stays visible.
+Loading a map, starting a battle, or opening the Player PC resets the Bag to
+the first item in the Items pocket, with no scroll offset.
 Returning from Buy to BUY/SELL/QUIT hides the screen until the shop's tiles
 and palette attributes are both restored, preventing colored blocks on the map.
 Initial Buy entry also hides the shop before loading item/TM palettes; quantity

@@ -1,4 +1,4 @@
-; Same item and floor ID order as ItemNames; not yet included in the ROM.
+; Same item and floor ID order as ItemNames.
 ItemNamesLowercase::
 	list_start
 	li "Master Ball"

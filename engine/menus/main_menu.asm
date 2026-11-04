@@ -125,6 +125,10 @@ MainMenu:
 	jp SpecialEnterMap
 
 InitOptions:
+	ld a, $ff
+	ld [wAutoSaveLastMap], a
+	xor a
+	ld [wNameCaseOptions], a
 	ld a, 1 << BIT_FAST_TEXT_DELAY
 	ld [wLetterPrintingDelayFlags], a
 	ld a, TEXT_DELAY_MEDIUM | (1 << BIT_MOVE_NAMES_LOWERCASE)
@@ -441,39 +445,16 @@ SaveScreenInfoText:
 	next "TIME@"
 
 DisplayOptionMenu:
-	; Enclose all option rows in one border, leaving Cancel below it.
-	hlcoord 0, 0
-	ld b, 15
-	ld c, 18
-	call TextBoxBorder
-	hlcoord 1, 1
-	ld de, TextSpeedOptionText
-	call PlaceString
-	hlcoord 1, 4
-	ld de, BattleAnimationOptionText
-	call PlaceString
-	hlcoord 1, 7
-	ld de, BattleStyleOptionText
-	call PlaceString
-	hlcoord 1, 10
-	ld de, MoveNameCaseOptionText
-	call PlaceString
-	hlcoord 1, 13
-	ld de, ShowNicknamesOptionText
-	call PlaceString
-	hlcoord 2, 17
-	ld de, OptionMenuCancelText
-	call PlaceString
 	xor a
+	ld [wOptionsPage], a
 	ld [wCurrentMenuItem], a
 	ld [wLastMenuItem], a
 	ASSERT BIT_FAST_TEXT_DELAY == 0
 	inc a ; 1 << BIT_FAST_TEXT_DELAY
 	ld [wLetterPrintingDelayFlags], a
-	ld a, 2 ; text speed cursor Y coordinate
-	ld [wTopMenuItemY], a
 	; These helpers live outside bank1 to keep that crowded bank within its size limit.
 	callfar SetCursorPositionsFromOptions
+	callfar DrawOptionsPage
 	ld a, $01
 	ldh [hAutoBGTransferEnabled], a ; enable auto background transfer
 	call Delay3
@@ -494,8 +475,19 @@ DisplayOptionMenu:
 	bit B_PAD_A, b
 	jr z, .checkDirectionKeys
 	ld a, [wTopMenuItemY]
-	cp 17 ; is the cursor on Cancel?
-	jr nz, .loop
+	cp 17 ; footer selected?
+	jr z, .footerSelected
+	callfar ShowOptionDescription
+	jp .loop
+.footerSelected
+	ld a, [wTopMenuItemX]
+	cp 7 ; centered Done cursor
+	jr z, .exitMenu
+	ld a, [wOptionsPage]
+	xor 1
+	ld [wOptionsPage], a
+	callfar DrawOptionsPage
+	jp .loop
 .exitMenu
 	ld a, SFX_PRESS_AB
 	call PlaySound
@@ -512,36 +504,78 @@ DisplayOptionMenu:
 	and PAD_LEFT | PAD_RIGHT
 	jp z, .loop
 	ld a, c
-	cp 5 ; cursor in Battle Animation section?
+	cp 17
+	jr z, .footerDirection
+	ld a, [wOptionsPage]
+	and a
+	jr nz, .nameCasePage
+	ld a, c
+	cp 5 ; Auto Save
+	jp z, .cursorInAutoSave
+	cp 8 ; Battle Animation
 	jp z, .cursorInBattleAnimation
-	cp 8 ; cursor in Battle Style section?
+	cp 11 ; Battle Style
 	jp z, .cursorInBattleStyle
-	cp 11 ; cursor in Move Name Case section?
-	jp z, .cursorInMoveNameCase
-	cp 14 ; cursor in Show Nicknames section?
+	cp 14
 	jp z, .cursorInNicknames
-	cp 17 ; cursor on Cancel?
-	jr z, .loop
 .cursorInTextSpeed
 	bit B_PAD_LEFT, b
 	jp nz, .pressedLeftInTextSpeed
 	jp .pressedRightInTextSpeed
+.nameCasePage
+	ld a, c
+	cp 5
+	jp z, .cursorInItemNameCase
+	cp 8
+	jp z, .cursorInMonNameCase
+	cp 11
+	jp z, .cursorInTrainerNameCase
+	jp .cursorInMoveNameCase
+.footerDirection
+	callfar ToggleOptionsFooter
+	jp .loop
 .downPressed
-	; All five value rows are three tiles apart; Cancel follows the last row.
+	ld c, a
+	call .lastOptionRow
+	ld a, c
 	cp 17
-	ld b, -15
+	ld a, 2
 	jr z, .updateMenuVariables
-	ld b, 3
+	ld a, c
+	cp b
+	ld a, 17
+	jr z, .updateMenuVariables
+	ld a, c
+	add 3
 	jr .updateMenuVariables
 .upPressed
+	ld c, a
+	call .lastOptionRow
+	ld a, c
 	cp 2
-	ld b, 15
+	ld a, 17
 	jr z, .updateMenuVariables
-	ld b, -3
+	ld a, c
+	cp 17
+	ld a, b
+	jr z, .updateMenuVariables
+	ld a, c
+	sub 3
 .updateMenuVariables
-	add b
 	ld [wTopMenuItemY], a
+	ld a, 7
+	ld [wTopMenuItemX], a
 	jp .loop
+.lastOptionRow
+	ld b, 14
+	ld a, [wOptionsPage]
+	and a
+	ret z
+	ld b, 11
+	ret
+.cursorInAutoSave
+	ld hl, wOptionsAutoSaveCursorX
+	jr .toggleChoice
 .cursorInBattleAnimation
 	ld hl, wOptionsBattleAnimCursorX
 	jr .toggleChoice
@@ -553,6 +587,15 @@ DisplayOptionMenu:
 	jr .toggleChoice
 .cursorInNicknames
 	ld hl, wOptionsNicknamesCursorX
+	jr .toggleChoice
+.cursorInItemNameCase
+	ld hl, wOptionsItemNameCaseCursorX
+	jr .toggleChoice
+.cursorInMonNameCase
+	ld hl, wOptionsMonNameCaseCursorX
+	jr .toggleChoice
+.cursorInTrainerNameCase
+	ld hl, wOptionsTrainerNameCaseCursorX
 .toggleChoice
 	; Binary settings retain the original choice encodings, not screen columns.
 	ld a, [hl]
@@ -583,24 +626,6 @@ DisplayOptionMenu:
 .updateTextSpeedXCoord
 	ld [wOptionsTextSpeedCursorX], a ; text speed cursor X coordinate
 	jp .loop
-
-TextSpeedOptionText:
-	db "TEXT SPEED@"
-
-BattleAnimationOptionText:
-	db "BATTLE ANIMATION@"
-
-BattleStyleOptionText:
-	db "BATTLE STYLE@"
-
-MoveNameCaseOptionText:
-	db "MOVE NAME CASE@"
-
-ShowNicknamesOptionText:
-	db "#MON NICKNAMES@"
-
-OptionMenuCancelText:
-	db "DONE@"
 
 CheckForPlayerNameInSRAM:
 ; Check if the player name data in SRAM has a string terminator character

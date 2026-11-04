@@ -1,4 +1,4 @@
-; Same trainer class ID order as TrainerNames; not yet included in the ROM.
+; Same trainer class ID order as TrainerNames.
 TrainerNamesLowercase::
 	list_start
 	li "Youngster"

@@ -173,8 +173,7 @@ PrintTMHMMoveName::
 	ret
 
 CycleBagPocket::
-	; Palette updates are live even while tilemap transfers are disabled.
-	call GBPalWhiteOutWithDelay3
+	farcall ClearBagPocketPreview
 	; Pocket IDs: Items=0, Key Items=1, TM/HMs=2.
 	; Forward order is Items -> TM/HMs -> Key Items, i.e. (id - 1) mod 3;
 	; the one-shot previous flag cycles the reverse order, (id + 1) mod 3.
@@ -220,6 +219,35 @@ BagTMHMsText:
 
 PUSHS
 SECTION "Bag Pocket Icon", ROMX
+
+ResetBagMenuPosition::
+	ld a, [wBagPocketsFlags]
+	and ~((1 << BIT_KEY_ITEMS_POCKET) | (1 << BIT_TM_HM_POCKET) | (1 << BIT_PREVIOUS_POCKET))
+	ld [wBagPocketsFlags], a
+	xor a
+	ld [wBagSavedMenuItem], a
+	ld [wCurrentMenuItem], a
+	ld [wListScrollOffset], a
+	ret
+
+ClearBagPocketPreview:
+	ld a, [wBagPocketsFlags]
+	bit BIT_PRINT_INFO_BOX, a
+	ret z
+	; Remove the outgoing description before reusing its live palettes and tiles.
+	ldh a, [hAutoBGTransferEnabled]
+	push af
+	xor a
+	ldh [hAutoBGTransferEnabled], a
+	hlcoord 1, 13
+	lb bc, 4, 18
+	call ClearScreenArea
+	ld a, 1
+	ldh [hAutoBGTransferEnabled], a
+	call Delay3
+	pop af
+	ldh [hAutoBGTransferEnabled], a
+	ret
 
 DrawBagPocketIcon::
 	ldh a, [rWBK]

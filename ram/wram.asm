@@ -808,6 +808,11 @@ wOptionsBattleAnimCursorX:: db
 wOptionsBattleStyleCursorX:: db
 wOptionsMoveNameCaseCursorX:: db ; cursor X position for UPPER/lower move names
 wOptionsNicknamesCursorX:: db ; SHOW=1, HIDE=10 (choice encodings, not screen columns)
+wOptionsPage:: db ; 0 = general settings, 1 = name-case settings
+wOptionsItemNameCaseCursorX:: db
+wOptionsMonNameCaseCursorX:: db
+wOptionsTrainerNameCaseCursorX:: db
+wOptionsAutoSaveCursorX:: db ; On=1, Off=10
 
 NEXTU
 ; tile ID of the badge number being drawn
@@ -1725,7 +1730,8 @@ wMoveTutorIntroMap:: db
 ; Map where the fossil scientist's greeting was shown, or -1.
 wFossilScientistIntroMap:: db
 
-	ds 1 ; unused
+; Map where the Name Rater's introduction was shown, or -1.
+wNameRaterIntroMap:: db
 
 ;;; PureRGBnote: ADDED: new properties in this previously empty space
 wTownMapAreaState:: ; view which state is which in map_pokemon_areas.asm
@@ -1870,7 +1876,8 @@ wOptions:: db
 
 wObtainedBadges:: flag_array NUM_BADGES
 
-wUnusedObtainedBadges:: db
+; Reuse the previously unused saved byte so existing save offsets do not change.
+wNameCaseOptions:: db
 
 wLetterPrintingDelayFlags:: db
 

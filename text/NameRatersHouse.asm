@@ -1,34 +1,23 @@
-_NameRatersHouseNameRaterWantMeToRateText::
+_NameRatersHouseNameRaterIntroductionText::
 	text "Hello, hello!"
 	line "I am the official"
 	cont "NAME RATER!"
 
-	para "Want me to rate"
-	line "the nicknames of"
-	cont "your #MON?"
-	done
+	para "I can rename your"
+	line "#MON, help em'"
+	cont "remember moves,"
+	cont "or forget moves!"
+
+	para "How can I help?"
+	prompt
+
+_NameRatersHouseNameRaterHowCanIHelpText::
+	text "How can I help?"
+	prompt
 
 _NameRatersHouseNameRaterWhichPokemonText::
 	text "Which #MON"
 	line "should I look at?"
-	prompt
-
-_NameRatersHouseNameRaterGiveItANiceNameText::
-	text_ram wNameBuffer
-	text ", is it?"
-	line "That is a decent"
-	cont "nickname!"
-
-	para "But, would you"
-	line "like me to give"
-	cont "it a nicer name?"
-
-	para "How about it?"
-	done
-
-_NameRatersHouseNameRaterWhatShouldWeNameItText::
-	text "Fine! What should"
-	line "we name it?"
 	prompt
 
 _NameRatersHouseNameRaterPokemonHasBeenRenamedText::
@@ -45,16 +34,4 @@ _NameRatersHouseNameRaterPokemonHasBeenRenamedText::
 _NameRatersHouseNameRaterComeAnyTimeYouLikeText::
 	text "Fine! Come any"
 	line "time you like!"
-	done
-
-_NameRatersHouseNameRaterATrulyImpeccableNameText::
-	text_ram wNameBuffer
-	text ", is it?"
-	line "That is a truly"
-	cont "impeccable name!"
-
-	para "Take good care of"
-	line "@"
-	text_ram wNameBuffer
-	text "!"
 	done

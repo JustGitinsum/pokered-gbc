@@ -271,24 +271,10 @@ Evolution_PartyMonLoop: ; loop over party mons
 RenameEvolvedMon:
 ; Renames the mon to its new, evolved form's standard name unless it had a
 ; nickname, in which case the nickname is kept.
-	ASSERT wCurSpecies == wNameListIndex ; save+restore wCurSpecies while using wNameListIndex
-	ld a, [wCurSpecies]
-	push af
-	ld a, [wMonHIndex]
-	ld [wNameListIndex], a
-	call GetName
-	pop af
-	ld [wCurSpecies], a
-	ld hl, wNameBuffer
-	ld de, wStringBuffer
-.compareNamesLoop
-	ld a, [de]
-	inc de
-	cp [hl]
-	inc hl
+	ASSERT wCurSpecies == wNameListIndex ; new species for the final GetName call
+	; Compare the saved nickname, not display text (which may hide nicknames).
+	callfar IsDefaultMonNickname
 	ret nz
-	cp "@"
-	jr nz, .compareNamesLoop
 	ld a, [wWhichPokemon]
 	ld bc, NAME_LENGTH
 	ld hl, wPartyMonNicks
@@ -563,7 +549,8 @@ Evolution_FlagAction:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; marcelnote - pokered Move Deleter/Relearner tutorial
 PrepareRelearnableMoveList:: ;joenote - custom function by Mateo for move relearner
-; Loads relearnable move list to wRelearnableMoves.
+; Writes count, unique unknown moves, and $ff to wMoveBuffer.
+; Order: base moves, evolution moves, then level-up moves through the mon's level.
 ; Input: party mon index = [wWhichPokemon]
 	; Get mon id.
 	ld a, [wWhichPokemon]
@@ -605,151 +592,90 @@ PrepareRelearnableMoveList:: ;joenote - custom function by Mateo for move relear
 	ld a, [hli]
 	and a
 	jr nz, .skipEvoEntriesLoop
-	; Write list of relearnable moves, while keeping count along the way.
 	; de = pointer to mon's currently-known moves
 	; hl = pointer to moves data for our mon
 	;  b = mon's level
-	ld c, 0 ; c = count of relearnable moves
-.loop
+	xor a
+	ld [wMoveBuffer], a
+	call GetMonHeader
+	push hl
+	ld hl, wMonHMoves
+	REPT NUM_MOVES
+	ld a, [hli]
+	call .addMove
+	ENDR
+	pop hl
+	push hl
+.evolutionMovesLoop
+	ld a, [hli]
+	and a
+	jr z, .levelUpMoves
+	cp EVOLUTION_MOVE
+	ld a, [hli]
+	call z, .addMove
+	jr .evolutionMovesLoop
+.levelUpMoves
+	pop hl
+.levelUpMovesLoop
 	ld a, [hli]
 	and a
 	jr z, .done
+	cp EVOLUTION_MOVE
+	jr z, .skipMove
 	cp b
-	jr c, .addMove
-	jr nz, .done
-.addMove
-	push bc
-	ld a, [hli] ; move id
-	ld b, a
-	; Check if move is already known by our mon.
-	push de
-	ld a, [de]
-	cp b
-	jr z, .knowsMove
-	inc de
-	ld a, [de]
-	cp b
-	jr z, .knowsMove
-	inc de
-	ld a, [de]
-	cp b
-	jr z, .knowsMove
-	inc de
-	ld a, [de]
-	cp b
-	jr z, .knowsMove
-.relearnableMove
-	pop de
-	push hl
-	; Add move to the list, and update the running count.
-	ld a, b
-	ld b, 0
-	ld hl, wMoveBuffer + 1
-	add hl, bc
-	ld [hl], a
-	pop hl
-	pop bc
-	inc c
-	jr .loop
-.knowsMove
-	pop de
-	pop bc
-	jr .loop
+	jr c, .addLevelUpMove
+	jr nz, .skipMove
+.addLevelUpMove
+	ld a, [hli]
+	call .addMove
+	jr .levelUpMovesLoop
+.skipMove
+	inc hl
+	jr .levelUpMovesLoop
 .done
+	ld a, [wMoveBuffer]
+	ld c, a
+	ld b, 0
+	ld hl, wMoveBuffer + 1
+	add hl, bc
+	ld [hl], $ff
+	ret
 
-;joenote - start checking for level-0 moves
-	xor a
-	ld b, a	;b will act as a counter, as there can only be up to 4 level-0 moves
-	call GetMonHeader ;mon id already stored earlier in wCurSpecies
-	ld hl, wMonHMoves
-.loop2
-	ld a, b	;get the current loop counter into a
-	cp $4
-	jr nc, .done2	;if gone through 4 moves already, reached the end of the list. move to done2.
-	ld a, [hl]	;load move
+.addMove
 	and a
-	jr z, .done2	;if move has id 0, list has reached the end early. move to done2.
-
-	;check if the move is already in the learnable move list
-	push bc
+	ret z
 	push hl
-	;c = buffer length
-.buffer_loop
-	ld hl, wMoveBuffer
-	ld b, 0
-	add hl, bc	;move to buffer at current c value
-	ld b, a	;b = move id
-	ld a, [hl] ; move id at buffer point
-	cp b
-	ld a, b	;a = move id
-	jr z, .move_in_buffer
-	inc c
-	dec c
-	jr z, .end_buffer_loop	;jump out if start of buffer is reached
-	dec c	;else decrement c and loop again
-	jr .buffer_loop
-.move_in_buffer
-	pop hl
-	pop bc
-	inc hl	;increment to the next level-0 move
-	inc b	;increment the loop counter
-	jr .loop2
-.end_buffer_loop
-	pop hl
-	pop bc
-
-	;Check if move is already known by our mon.
-	push bc
-	ld a, [hl] ; move id
-	ld b, a
 	push de
+	push bc
+	ld b, a
+	ld c, NUM_MOVES
+.knownMovesLoop
 	ld a, [de]
 	cp b
-	jr z, .knowsMove2
+	jr z, .alreadyListed
 	inc de
-	ld a, [de]
-	cp b
-	jr z, .knowsMove2
-	inc de
-	ld a, [de]
-	cp b
-	jr z, .knowsMove2
-	inc de
-	ld a, [de]
-	cp b
-	jr z, .knowsMove2
-
-	;if the move is not already known, add it to the learnable move list
-	pop de
-	push hl
-	; Add move to the list, and update the running count.
-	ld a, b
-	ld b, 0
+	dec c
+	jr nz, .knownMovesLoop
+	ld a, [wMoveBuffer]
+	ld c, a
 	ld hl, wMoveBuffer + 1
-	add hl, bc
-	ld [hl], a
-	pop hl
-	pop bc
-	inc c
-	inc hl	;increment to the next level-0 move
-	inc b	;increment the loop counter
-	jr .loop2
-
-.knowsMove2
-	pop de
-	pop bc
-	inc hl	;increment to the next level-0 move
-	inc b	;increment the loop counter
-	jr .loop2
-
-.done2
-	ld b, 0
-	ld hl, wMoveBuffer + 1
-	add hl, bc
-	ld a, $ff
-	ld [hl], a
+.bufferLoop
+	ld a, c
+	and a
+	jr z, .appendMove
+	ld a, [hli]
+	cp b
+	jr z, .alreadyListed
+	dec c
+	jr .bufferLoop
+.appendMove
+	ld [hl], b
 	ld hl, wMoveBuffer
-	ld [hl], c
+	inc [hl]
+.alreadyListed
+	pop bc
+	pop de
+	pop hl
 	ret
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

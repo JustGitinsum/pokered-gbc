@@ -30,6 +30,8 @@ DisplayListMenuID::
 	and a ; PCPOKEMONLISTMENU?
 	jr z, .skipMovingSprites
 .notPCList
+	cp MOVESLISTMENU
+	jr z, .skipMovingSprites ; drawn by DelayBeforeListMenu
 	cp PCWITHDRAWLISTMENU
 	jr nz, .notWithdrawBox
 	ld a, WITHDRAW_LIST_MENU_BOX
@@ -371,21 +373,24 @@ PrintListMenuEntries::
 	cp PCWITHDRAWLISTMENU
 	jr nz, .notWithdrawClear
 	hlcoord 8, 1
-	ld b, 11
-	ld c, 11
+	lb bc, 11, 11
 	jr .clearListArea
 .notWithdrawClear
+	cp MOVESLISTMENU
+	jr nz, .notMovesClear
+	hlcoord 5, 2
+	jr .normalListDimensions
+.notMovesClear
 	sub PRICEDITEMLISTMENU
 	cp SPECIALLISTMENU - PRICEDITEMLISTMENU
 	jr c, .clearItemListArea
 	hlcoord 5, 3
-	ld b, 9
-	ld c, 14
+.normalListDimensions
+	ld bc, (9 << 8) | 14
 	jr .clearListArea
 .clearItemListArea
 	hlcoord 4, 3
-	ld b, 9
-	ld c, 15
+	lb bc, 9, 15
 .clearListArea
 	call ClearScreenArea
 	ld a, [wListPointer]
@@ -423,14 +428,8 @@ PrintListMenuEntries::
 	ld b, 5
 	jr .loop
 .notWithdrawNames
-	; Item/move names begin one column after their list cursor.
-	ld a, [wTopMenuItemX]
-	inc a
 	push bc
-	ld c, a
-	ld b, 0
-	hlcoord 0, 4
-	add hl, bc
+	farcall GetItemOrMoveListNamePosition
 	pop bc
 .loop
 	ld a, b

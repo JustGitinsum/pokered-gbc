@@ -59,10 +59,39 @@ LoadLevelUpLearnsetIntoWRAM:
 	cp MAX_LEARNSET_LENGTH + 1
 	ret z ; don't copy anything if the learnset is too long
 	ld [wDexLearnsetListCount], a
-	add a ; 2 bytes per move
-	ld c, a
-	call CopyData
-	; TODO: end byte = 0?
+	; Keep starting moves first, then partition the learnset without deduplicating.
+	push hl
+.evolutionMovesLoop
+	ld a, [hli]
+	and a
+	jr z, .levelUpMoves
+	cp EVOLUTION_MOVE
+	jr nz, .skipNonEvolutionMove
+	call .copyMove
+	jr .evolutionMovesLoop
+.skipNonEvolutionMove
+	inc hl
+	jr .evolutionMovesLoop
+.levelUpMoves
+	pop hl
+.levelUpMovesLoop
+	ld a, [hli]
+	and a
+	ret z
+	cp EVOLUTION_MOVE
+	jr z, .skipEvolutionMove
+	call .copyMove
+	jr .levelUpMovesLoop
+.skipEvolutionMove
+	inc hl
+	jr .levelUpMovesLoop
+
+.copyMove
+	ld [de], a
+	inc de
+	ld a, [hli]
+	ld [de], a
+	inc de
 	ret
 	
 LoadEvosIntoWram:

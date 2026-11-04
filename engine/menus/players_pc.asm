@@ -1,11 +1,11 @@
 PlayerPC::
+	farcall ResetBagMenuPosition
 	ld hl, wStatusFlags5
 	set BIT_NO_TEXT_DELAY, [hl]
 	ld a, ITEM_NAME
 	ld [wNameListType], a
 	call SaveScreenTilesToBuffer1
 	xor a
-	ld [wBagSavedMenuItem], a
 	ld [wParentMenuItem], a
 	ld a, [wMiscFlags]
 	bit BIT_USING_GENERIC_PC, a

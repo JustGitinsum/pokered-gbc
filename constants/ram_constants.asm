@@ -33,6 +33,11 @@ DEF BIT_FONT_LOADED EQU 0
 DEF TEXT_DELAY_MASK EQU %111
 DEF BIT_HIDE_NICKNAMES EQU 4 ; clear by default so saved nicknames are shown
 DEF BIT_MOVE_NAMES_LOWERCASE EQU 5 ; select the lowercase move-name table
+; wNameCaseOptions: clear bits select Lower, including in older zero-filled saves.
+DEF BIT_ITEM_NAMES_UPPERCASE EQU 0
+DEF BIT_MON_NAMES_UPPERCASE EQU 1
+DEF BIT_TRAINER_NAMES_UPPERCASE EQU 2
+DEF BIT_AUTO_SAVE EQU 3 ; wNameCaseOptions; clear = Off
 	const_def 6
 	const BIT_BATTLE_SHIFT     ; 6
 	const BIT_BATTLE_ANIMATION ; 7
