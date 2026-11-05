@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw SlowbroPicFront, SlowbroPicBack
 
-	db TACKLE, GROWL, TAIL_WHIP, ANCIENTPOWER ; level 1 learnset
+	db TACKLE, GROWL, TAIL_WHIP, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset

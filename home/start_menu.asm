@@ -77,6 +77,7 @@ RedisplayStartMenu::
 	jp z, StartMenu_SaveReset
 	cp 5
 	jp z, StartMenu_Option
+	jr CloseStartMenu ; EXIT must not fall through into SELECT handling.
 .selectPressed
 	CheckEvent EVENT_GOT_POKEDEX
 	jp z, .loop
@@ -85,7 +86,6 @@ RedisplayStartMenu::
 	jp nz, .loop
 	jp StartMenu_SelectPressed
 
-; EXIT falls through to here
 CloseStartMenu::
 	call Joypad
 	ldh a, [hJoyPressed]

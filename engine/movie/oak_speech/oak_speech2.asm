@@ -131,6 +131,9 @@ OakSpeechSlidePicCommon:
 	dec hl
 	ld [hl], a
 .next3
+	push de
+	farcall SlideIntroPicPaletteMap
+	pop de
 	ld a, 1
 	ldh [hAutoBGTransferEnabled], a
 	call Delay3

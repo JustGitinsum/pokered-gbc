@@ -1,5 +1,7 @@
 HallOfFamePC:
 	farcall AnimateHallOfFame
+	; Clear trainer accents while the screen is still faded out.
+	farcall SetPal_OakIntro
 	call ClearScreen
 	ld c, 100
 	call DelayFrames

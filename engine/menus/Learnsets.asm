@@ -10,6 +10,8 @@ ChangeUpdateSpritesEnabled:
 	ret
 
 LoadLearnsetTiles:
+	xor a
+	ld [wLearnsetMonIconAnimationCounter], a
 	; call DisableSpriteUpdates
 	; wPokedexNum carries the internal species index here; use it for both
 	; the header lookup and the name lookup performed by GetMonName.
@@ -44,17 +46,9 @@ LoadLearnsetTiles:
 	lb bc, $D3, 13
 	ld de, SCREEN_WIDTH
 	call DrawTileLine
-	; Use the first icon frame as background tiles, without borrowing OAM.
-	hlcoord 1, 0
+	; Both icon frames use background tiles, without borrowing OAM.
 	ld a, $D7
-	ld [hli], a
-	inc a
-	ld [hl], a
-	hlcoord 1, 1
-	ld a, $DB
-	ld [hli], a
-	inc a
-	ld [hl], a
+	call DrawLearnsetMonIconFrame
 	; draw "(POKEMON)'s"
 	call GetMonName
 	hlcoord 4, 1
@@ -63,11 +57,36 @@ LoadLearnsetTiles:
 	call FindFirstBlankTile
 	; put 's in this blank tile next to the pokemon's name
 	ld [hl], "'s"
-	farjp SetPal_LearnsetMonIcon
+	farcall SetPal_LearnsetMonIcon
+	ld a, 1
+	ld [wLearnsetMonIconAnimationCounter], a
+	ret
+
+AnimateLearnsetMonIcon:
+	ld hl, wLearnsetMonIconAnimationCounter
+	inc [hl]
+	ld a, [hl]
+	cp 11
+	ret c
+	ld [hl], 1
+	hlcoord 1, 0
+	ld a, [hl]
+	xor $0E ; Toggle the top-left tile between $D7 and $D9.
+DrawLearnsetMonIconFrame:
+	hlcoord 1, 0
+	ld [hli], a
+	inc a
+	ld [hl], a
+	add 3
+	hlcoord 1, 1
+	ld [hli], a
+	inc a
+	ld [hl], a
+	ret
 
 ShowMonLearnsetMenu:
 	; The learnset can be opened from screens with different sprite-update
-	; states, so preserve the caller's state and use one palette consistently.
+	; states, so preserve the caller's state.
 	ld a, [wUpdateSpritesEnabled]
 	push af
 	ld b, SET_PAL_GENERIC
@@ -104,6 +123,7 @@ ShowMonLearnsetMenu:
 	ld [wCurrentMenuItem], a
 
 .reshowLearnsetPage
+	farcall SetPal_LearnsetPage
 	ld a, [wLearnsetPage]
 	ld hl, LearnsetViewJumpTable
 	call GetAddressFromPointerArray
@@ -113,6 +133,8 @@ ShowMonLearnsetMenu:
 	jr z, .changePage
 	call EnableSpriteUpdates
 .exitLearnset
+	xor a
+	ld [wLearnsetMonIconAnimationCounter], a
 	; Return sprite-update control to the screen that opened the Learnset;
 	; do not assume the caller had updates enabled on entry.
 	pop af
@@ -158,6 +180,8 @@ ShowMonLearnsetMenu:
 	; while it is displayed, then restore the state expected by the caller.
 	ld a, [wUpdateSpritesEnabled]
 	push af
+	xor a
+	ld [wLearnsetMonIconAnimationCounter], a
 	call DisableSpriteUpdates
 	ld hl, wPokedexDataFlags
 	set 3, [hl]
@@ -288,10 +312,6 @@ ShowLevelUpLearnset:
 	; add hl, bc
 	; ld de, LearnsetText
 	; call PlaceString
-	; ld a, PAL_CERULEAN
-	; ld [wGenericPaletteOverride], a
-	; ld b, SET_PAL_GENERIC
-	; call RunPaletteCommand
 	; call Delay3
 .loop
 	call PrepLearnsetList
@@ -500,10 +520,6 @@ ShowTMLearnset:
 	; add hl, bc
 	; ld de, LearnsetText
 	; call PlaceString
-	; ld a, PAL_CINNABAR
-	; ld [wGenericPaletteOverride], a
-	; ld b, SET_PAL_GENERIC
-	; call RunPaletteCommand
 	callfar LoadTMLearnsetIntoWram
 	ld a, [wDexLearnsetListCount]
 	and a
@@ -685,10 +701,6 @@ ShowEvolutions:
 	hlcoord 2, 2
 	call PlaceString
 	; call .printEvolveText
-	; ld a, PAL_LAVENDER
-	; ld [wGenericPaletteOverride], a
-	; ld b, SET_PAL_GENERIC
-	; call RunPaletteCommand
 	callfar LoadEvosIntoWram
 	ld a, [wDexLearnsetListCount]
 	and a

@@ -145,6 +145,7 @@ ShowPlayerSelectPic:
 	call ClearScreenArea
 .drawArrows
 	call DrawPlayerSelectArrows
+	farcall SetPal_OakIntro
 	call GetPlayerPalettes
 	ld e, 0
 	ld a, 2
@@ -155,7 +156,8 @@ ShowPlayerSelectPic:
 	ld [W2_ForceBGPUpdate], a
 	xor a
 	ldh [rWBK], a
-	ret
+	ld e, TRAINER_PIC_SELECTION
+	farjp SetPal_PlayerFrontPic
 
 ; draws ◀ ▶ beside the pic if LEFT/RIGHT can change the shown character
 DrawPlayerSelectArrows:

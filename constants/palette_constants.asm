@@ -41,6 +41,13 @@ DEF PIC_CONTEXT_POKEDEX   EQU $02
 DEF PIC_CONTEXT_EVOLUTION EQU $03
 ; DEF PIC_CONTEXT_HOF       EQU $04
 
+; Trainer front-picture palette-map contexts
+	const_def
+	const TRAINER_PIC_INTRO
+	const TRAINER_PIC_SELECTION
+	const TRAINER_PIC_CARD
+	const TRAINER_PIC_HOF
+	const TRAINER_PIC_LINK_BATTLE
 
 ; sgb palettes
 ; SuperPalettes indexes (see data/sgb/sgb_palettes.asm)

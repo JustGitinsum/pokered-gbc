@@ -25,6 +25,9 @@ ENDC
 	jr GotPalID
 
 GotPalID:
+	push af
+	farcall SetPal_OakIntro
+	pop af
 	ld e, 0
 	ld d, a
 
@@ -34,4 +37,3 @@ GotPalID:
 	xor a
 	ldh [rWBK], a
 	ret
-

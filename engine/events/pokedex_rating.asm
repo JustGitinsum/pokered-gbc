@@ -1,13 +1,9 @@
 DisplayDexRating:
 	ld hl, wPokedexSeen
-	ld b, wPokedexSeenEnd - wPokedexSeen
-	call CountSetBits
-	ld a, [wNumSetBits]
+	call CountDexRatingEntries
 	ldh [hDexRatingNumMonsSeen], a
 	ld hl, wPokedexOwned
-	ld b, wPokedexOwnedEnd - wPokedexOwned
-	call CountSetBits
-	ld a, [wNumSetBits]
+	call CountDexRatingEntries
 	ldh [hDexRatingNumMonsOwned], a
 	ld hl, DexRatingsTable
 .findRating
@@ -49,6 +45,21 @@ DisplayDexRating:
 	jr .copyRatingTextLoop
 .doneCopying
 	ld [de], a
+	ret
+
+; Ignore unused bits in the last byte, including those set by older debug saves.
+CountDexRatingEntries:
+	ld b, NUM_POKEMON / 8
+	call CountSetBits
+IF NUM_POKEMON % 8
+	ld b, NUM_POKEMON % 8
+	ld e, [hl]
+.remainingBits
+	srl e
+	adc 0 ; Count only the valid low bits; A already holds the full-byte count.
+	dec b
+	jr nz, .remainingBits
+ENDC
 	ret
 
 DexCompletionText:

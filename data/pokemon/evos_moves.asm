@@ -342,10 +342,13 @@ ExeggutorEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
+	db 5, REFLECT
+	db 8, BULLET_SEED
+	db 10, LEECH_SEED
 	db 15, MEGA_DRAIN
-	db 19, STUN_SPORE
 	db 20, CONFUSION
-	db 28, STOMP
+	db 25, SYNTHESIS
+	db 30, EGG_BOMB
 	db 35, GIGA_DRAIN
 	db 40, EXTRASENSORY
 	db EVOLUTION_MOVE, STOMP
@@ -370,9 +373,13 @@ ExeggcuteEvosMoves:
 	db EVOLVE_ITEM, LEAF_STONE, 1, EXEGGUTOR
 	db 0
 ; Learnset
+	db 5, REFLECT
+	db 8, BULLET_SEED
+	db 10, LEECH_SEED
 	db 15, MEGA_DRAIN
-	db 19, STUN_SPORE
 	db 20, CONFUSION
+	db 25, SYNTHESIS
+	db 30, EGG_BOMB
 	db 35, GIGA_DRAIN
 	db 40, EXTRASENSORY
 	db 0
@@ -510,14 +517,14 @@ GyaradosEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset ;from SM mix LGPE
-	db 20, DRAGON_RAGE
-	db 24, DRAGONBREATH
-	db 27, ICE_FANG
-	db 31, WATERFALL
-	db 36, CRUNCH
-	db 41, OUTRAGE
-	db 46, HYDRO_PUMP
-	db 51, HYPER_BEAM
+	db 20, DRAGONBREATH
+	db 24, WATERFALL
+	db 30, CRUNCH
+	db 33, IRON_HEAD
+	db 40, BOUNCE
+	db 45, OUTRAGE
+	db 50, HYDRO_PUMP
+	db 55, HYPER_BEAM
 	db EVOLUTION_MOVE, BITE
 	db 0
 

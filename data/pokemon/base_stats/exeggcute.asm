@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw ExeggcutePicFront, ExeggcutePicBack
 
-	db BULLET_SEED, HYPNOSIS, LEECH_SEED, NO_MOVE ; level 1 learnset
+	db TACKLE, HYPNOSIS, NO_MOVE, NO_MOVE ; level 1 learnset
 	db GROWTH_SLOW ; growth rate
 
 	; tm/hm learnset

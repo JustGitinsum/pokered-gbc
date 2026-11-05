@@ -304,6 +304,11 @@ GbcVBlankHook::
 	xor a
 	ld [W2_DrewRowOrColumn], a
 	ldh [rWBK], a
+	ld a, [wLearnsetMonIconAnimationCounter]
+	and a
+	jr z, .skipLearnsetIcon
+	farcall AnimateLearnsetMonIcon
+.skipLearnsetIcon
 	ld a, [wBuyMenuPartyIconAnimationMask]
 	bit 7, a
 	ret z

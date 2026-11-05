@@ -615,11 +615,12 @@ FireTypeIcon::       INCBIN "gfx/movedex/type_icons/fire.2bpp"
 WaterTypeIcon::      INCBIN "gfx/movedex/type_icons/water.2bpp"
 GrassTypeIcon::      INCBIN "gfx/movedex/type_icons/grass.2bpp"
 ElectricTypeIcon::   INCBIN "gfx/movedex/type_icons/electric.2bpp"
-PsychicTypeIcon::    INCBIN "gfx/movedex/type_icons/psychic_sgb.2bpp"
-PsychicTypeGBCIcon:: INCBIN "gfx/movedex/type_icons/psychic_gbc.2bpp"
+PsychicTypeIcon::    INCBIN "gfx/movedex/type_icons/psychic.2bpp"
+DarkTypeIcon::       INCBIN "gfx/movedex/type_icons/dark.2bpp"
 IceTypeIcon::        INCBIN "gfx/movedex/type_icons/ice.2bpp"
 DragonTypeIcon::     INCBIN "gfx/movedex/type_icons/dragon.2bpp"
-TriTypeIcon::        INCBIN "gfx/movedex/type_icons/tri.2bpp"
+SteelTypeIcon::        INCBIN "gfx/movedex/type_icons/steel.2bpp"
+FairyTypeIcon::       INCBIN "gfx/movedex/type_icons/fairy.2bpp"
 
 SECTION "Menu GFX", ROMX
 

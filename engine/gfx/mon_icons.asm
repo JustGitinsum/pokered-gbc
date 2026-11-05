@@ -293,11 +293,6 @@ SetMoveTeachingPartyIconPalette:
 	jr c, .eligible
 .ineligible
 	ld a, PAL_BLACK
-	jr .overridePalette
-.known
-	pop af
-	ld a, PAL_BLUEMON
-.overridePalette
 	ld [wTempByteValue], a
 	pop bc
 	push bc
@@ -306,13 +301,20 @@ SetMoveTeachingPartyIconPalette:
 	pop bc
 	xor a
 	ret
+.known
+	pop af
+	xor a ; Keep species colors, but leave the already-known icon still.
+	jr .speciesPalette
 .eligible
+	ld a, 1
+.speciesPalette
 	pop bc
 	push bc
+	push af
 	call PartyMonIconDestination
 	farcall SetPal_MonIconSprite
+	pop af
 	pop bc
-	ld a, 1
 	ret
 
 DrawBuyMenuPartyIcons::
@@ -562,6 +564,12 @@ ShowLearnsetFromStatus::
 	ld a, [wMonHIndex]
 	ld [wPokedexNum], a
 	callfar ShowMonLearnsetMenu
+	; Learnset graphics reuse font tiles and shared sprite resources.
+	call GBPalWhiteOutWithDelay3
+	call ClearScreen
+	call ClearSprites
+	call LoadFontTilePatterns
+	call LoadTextBoxTilePatterns
 	pop af
 	ld [wMenuWatchMovingOutOfBounds], a
 	pop af

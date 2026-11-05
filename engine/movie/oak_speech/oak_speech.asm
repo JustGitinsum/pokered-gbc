@@ -148,6 +148,7 @@ ENDC
 	ld c, $0c
  	ld hl, vSprites
 	call CopyVideoData
+	farcall SetPal_OakIntro
 	ld de,ShrinkPic1
 	lb bc, BANK(ShrinkPic1), $00
 	call IntroDisplayPicCenteredOrUpperRight
@@ -274,4 +275,6 @@ IntroDisplayPlayerPic:
 	farcall GetPlayerGfx
 	ld b, h
 	ld c, 0
-	jp IntroDisplayPicCenteredOrUpperRight
+	call IntroDisplayPicCenteredOrUpperRight
+	ld e, TRAINER_PIC_INTRO
+	farjp SetPal_PlayerFrontPic

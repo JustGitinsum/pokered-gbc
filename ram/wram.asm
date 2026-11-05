@@ -357,6 +357,7 @@ wNPCMovementScriptBank:: db
 
 wBuyMenuPartyIconAnimationMask:: db ; bits 0-5 = eligible party slots, bit 7 = ready
 wBuyMenuPartyIconAnimationCounter:: db
+wLearnsetMonIconAnimationCounter:: db ; 0 = inactive, 1-10 = frame timer
 
 ; This union spans 180 bytes.
 UNION

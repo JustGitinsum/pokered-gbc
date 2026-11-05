@@ -10,7 +10,7 @@
 	INCBIN "gfx/pokemon/gsfront/garchomp.pic", 0, 1 ; sprite dimensions
 	dw GarchompPicFront, GarchompPicBack
 
-	db TACKLE, SAND_ATTACK, CRUNCH, NO_MOVE ; level 1 learnset
+	db TACKLE, SAND_ATTACK, NO_MOVE, NO_MOVE ; level 1 learnset
 	db GROWTH_SLOW ; growth rate
 
 	; tm/hm learnset

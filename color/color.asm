@@ -375,6 +375,9 @@ ENDC
 	ld hl, PokemonPicPaletteRects
 	call ApplyPokemonPicPaletteRects
 
+	ld e, TRAINER_PIC_LINK_BATTLE
+	call SetPal_PlayerFrontPic
+
 	xor a
 	ld [W2_TileBasedPalettes], a ; Use a direct color map instead of assigning colors to tiles
 	ld a, 3
@@ -1284,6 +1287,34 @@ SetPal_Generic:
 	ldh [rWBK], a
 	ret
 
+SetPal_LearnsetPage:
+	ld a, [wOnSGB]
+	and a
+	ret z
+	ld a, [wLearnsetPage]
+	ld e, a
+	ld d, 0
+	ld hl, .palettes
+	add hl, de
+	ld d, [hl]
+	; Only replace slot 0; the species-colored icon uses slot 1.
+	ld e, 0
+	farcall LoadSGBPalette
+
+	; The stack is in switchable WRAM, so keep the old bank in a register.
+	ldh a, [rWBK]
+	ld b, a
+	ld a, 2
+	ldh [rWBK], a
+	ld a, 1
+	ld [W2_ForceBGPUpdate], a
+	ld a, b
+	ldh [rWBK], a
+	ret
+
+.palettes
+	db PAL_VIRIDIAN, PAL_LAVENDER, PAL_INDIGO
+
 SetPal_LearnsetMonIcon:
 	ld a, [wOnSGB]
 	and a
@@ -1297,14 +1328,37 @@ SetPal_LearnsetMonIcon:
 	ld e, 1
 	farcall LoadSGBPalette
 
+	ld hl, W2_TilesetPaletteMap + 1
+	ld c, 1
+	jr SetPal_MenuIcon
+
+; Color the Movedex's 2x2 type icon at (1,3) with its type palette.
+SetPal_MovedexTypeIcon:
+	ld a, [wOnSGB]
+	and a
+	ret z
+	ld a, [wPlayerMoveType]
+	ld hl, MoveTypeExpBarPalette
+	ld c, a
+	ld b, 0
+	add hl, bc
+	ld d, [hl]
+	ld e, 5 ; Keep the type palette separate from the generic menu slots.
+	farcall LoadSGBPalette
+
+	ld hl, W2_TilesetPaletteMap + 3 * SCREEN_WIDTH + 1
+	ld c, 5
+
+; HL = top-left palette-map address, C = palette slot for a 2x2 BG icon.
+SetPal_MenuIcon:
+	; The stack is in switchable WRAM, so keep the old bank in a register.
 	ldh a, [rWBK]
 	ld b, a
 	ld a, 2
 	ldh [rWBK], a
 	push bc
-	ld hl, W2_TilesetPaletteMap + 1
+	ld a, c
 	lb bc, 2, 2
-	ld a, 1
 	call FillBox
 	ld a, 3
 	ld [W2_StaticPaletteMapChanged], a
@@ -1732,6 +1786,8 @@ SetPal_TrainerCard:
 	ld a, 5
 	call FillMemory
 
+	ld e, TRAINER_PIC_CARD
+	call SetPal_PlayerFrontPic
 
 	; Wait 2 frames before updating palettes
 	ld c, 2
@@ -1743,21 +1799,16 @@ SetPal_TrainerCard:
 	ret
 
 
-; Clear colors after titlescreen
+; Clear BG assignments between intro pictures and before the credits.
+; Call from WRAM bank 0/1: this helper returns to bank 0 (the bank 1 alias).
 SetPal_OakIntro:
 	ld a, 2
 	ldh [rWBK], a
 
 	ld bc, 20 * 18
 	ld hl, W2_TilesetPaletteMap
-	ld d, 0
-.palLoop
-	ld [hl], d
-	inc hl
-	dec bc
-	ld a, b
-	or c
-	jr nz, .palLoop
+	xor a
+	call FillMemory
 
 	xor a
 	ld [W2_TileBasedPalettes], a
@@ -1793,16 +1844,123 @@ LoadTitleMonTilesAndPalettes:
 	farcall TitleScroll ; removed from caller to make space for hook
 	ret
 
-; A = picture context, B = species, HL = PokemonPicPaletteRects table.
+; E = TRAINER_PIC_* context. Preserves the caller's WRAM bank.
+SetPal_PlayerFrontPic:
+	ld a, [wOnSGB]
+	and a
+	ret z
+	ldh a, [rWBK]
+	ld d, a
+	ld a, 1
+	ldh [rWBK], a
+	ld a, [wPlayerGender]
+	ld b, a
+	ld a, e
+	cp TRAINER_PIC_LINK_BATTLE
+	jr nz, .gotCharacter
+	ld a, [wLinkState]
+	cp LINK_STATE_BATTLING
+	jr nz, .restoreBank
+	ld a, [wEnemyMonSpecies2]
+	and a
+	jr nz, .restoreBank
+	; Link opponents always use RedPicFront, regardless of the local character.
+	ld b, PLAYER_RED
+.gotCharacter
+	ld a, 2
+	ldh [rWBK], a
+	push de
+	; Non-card screens share picture-relative rectangles at different origins.
+	ld a, e
+	ld c, a
+	add a
+	ld e, a
+	ld d, 0
+	ld hl, .origins
+	add hl, de
+	ld a, [hli]
+	ld d, [hl]
+	ld e, a
+	ld a, c
+	cp TRAINER_PIC_CARD
+	jr z, .gotContext
+	ld a, TRAINER_PIC_INTRO
+.gotContext
+	ld hl, TrainerPicPaletteRects
+	call ApplyPokemonPicPaletteRectsAtDE
+	ld a, 1
+	ld [W2_ForceBGPUpdate], a
+	pop de
+.restoreBank
+	ld a, d
+	ldh [rWBK], a
+	ret
+
+.origins
+	dw W2_TilesetPaletteMap + 4 * SCREEN_WIDTH + 6 ; intro/name entry
+	dw W2_TilesetPaletteMap + 4 * SCREEN_WIDTH + 4 ; character selection
+	dw W2_TilesetPaletteMap ; Trainer Card offsets are tile IDs
+	dw W2_TilesetPaletteMap + 5 * SCREEN_WIDTH + 12 ; Hall of Fame
+	dw W2_TilesetPaletteMap + 12 ; link opponent
+
+; DE = the tilemap source pointer for one step of OakSpeechSlidePicCommon.
+; Keep the picture's palette assignments attached to its tiles while naming.
+SlideIntroPicPaletteMap:
+	ld a, [wOnSGB]
+	and a
+	ret z
+	ldh a, [rWBK]
+	ld b, a
+	ld a, 2
+	ldh [rWBK], a
+	push bc
+	ld hl, W2_TilesetPaletteMap - wTileMap
+	add hl, de
+	ldh a, [hSlidingRegionSize]
+	ld c, a
+.loop
+	ldh a, [hSlideDirection]
+	and a
+	jr nz, .slideLeft
+	ld a, [hli]
+	ld [hld], a
+	dec hl
+	jr .next
+.slideLeft
+	ld a, [hld]
+	ld [hli], a
+	inc hl
+.next
+	dec c
+	jr nz, .loop
+	ldh a, [hSlideDirection]
+	and a
+	jr z, .done
+	xor a
+	dec hl
+	ld [hl], a
+.done
+	ld a, 3
+	ld [W2_StaticPaletteMapChanged], a
+	pop bc
+	ld a, b
+	ldh [rWBK], a
+	ret
+
+; A = picture context, B = species/character, HL = palette rectangle table.
 ; Each entry is: context, species, palette ID, palette slot,
 ; map offset (word), height, width. A context byte of $ff ends the table.
 ApplyPokemonPicPaletteRects:
+	ld de, W2_TilesetPaletteMap
+; DE = palette-map origin; trainer pictures use offsets relative to this address.
+ApplyPokemonPicPaletteRectsAtDE:
+	push de
 	ld c, b ; Preserve species for the table scan.
 	ld b, a ; Preserve context for the table scan.
 .loop
 	ld a, [hli] ; Context
 	cp $ff
-	ret z
+	jr z, .done
 	cp b
 	jr nz, .skipEntry
 
@@ -1834,7 +1992,11 @@ ApplyPokemonPicPaletteRects:
 	ld a, [hli] ; Width
 	ld c, a
 	push hl ; Save the next table entry.
-	ld hl, W2_TilesetPaletteMap
+	; The origin is below the saved table pointer, palette slot, and BC.
+	ld hl, sp + 6
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
 	add hl, de
 	pop de
 	pop af
@@ -1858,6 +2020,64 @@ ApplyPokemonPicPaletteRects:
 	ld de, 6
 	add hl, de
 	jr .loop
+
+.done
+	pop de
+	ret
+
+; Same format as PokemonPicPaletteRects. Non-card offsets are picture-relative;
+; SetPal_PlayerFrontPic normalizes their contexts to TRAINER_PIC_INTRO.
+TrainerPicPaletteRects:
+	db TRAINER_PIC_INTRO, PLAYER_RED, PAL_POLIWRATH, 6
+	dw 4 * SCREEN_WIDTH + 3
+	db 2, 2
+	db TRAINER_PIC_INTRO, PLAYER_RED, PAL_POLIWRATH, 6
+	dw 5 * SCREEN_WIDTH + 2
+	db 1, 1
+
+	db TRAINER_PIC_INTRO, PLAYER_HILDA, PAL_YOUNGSTER, 6
+	dw 3 * SCREEN_WIDTH + 2
+	db 1, 4
+	db TRAINER_PIC_INTRO, PLAYER_HILDA, PAL_YOUNGSTER, 6
+	dw 4 * SCREEN_WIDTH + 2
+	db 1, 3
+
+	db TRAINER_PIC_INTRO, PLAYER_GOLD, PAL_JOLTEON, 6
+	dw 2
+	db 1, 2
+	db TRAINER_PIC_INTRO, PLAYER_GOLD, PAL_JOLTEON, 6
+	dw SCREEN_WIDTH + 2
+	db 1, 1
+
+	; The Trainer Card uses tile-based palettes and removes the first pic column.
+	db TRAINER_PIC_CARD, PLAYER_RED, PAL_POLIWRATH, 6
+	dw 3 * 7 + 4 - 7
+	db 1, 2
+	db TRAINER_PIC_CARD, PLAYER_RED, PAL_POLIWRATH, 6
+	dw 4 * 7 + 4 - 7
+	db 1, 2
+	db TRAINER_PIC_CARD, PLAYER_RED, PAL_POLIWRATH, 6
+	dw 2 * 7 + 5 - 7
+	db 1, 1
+
+	; Only picture columns 1-4 are visible on the Trainer Card.
+	db TRAINER_PIC_CARD, PLAYER_HILDA, PAL_YOUNGSTER, 6
+	dw 2 * 7 + 3 - 7
+	db 1, 2
+	db TRAINER_PIC_CARD, PLAYER_HILDA, PAL_YOUNGSTER, 6
+	dw 3 * 7 + 3 - 7
+	db 1, 2
+	db TRAINER_PIC_CARD, PLAYER_HILDA, PAL_YOUNGSTER, 6
+	dw 4 * 7 + 3 - 7
+	db 1, 2
+
+	db TRAINER_PIC_CARD, PLAYER_GOLD, PAL_JOLTEON, 6
+	dw 2 * 7 - 7
+	db 1, 2
+	db TRAINER_PIC_CARD, PLAYER_GOLD, PAL_JOLTEON, 6
+	dw 3 * 7 - 7
+	db 1, 1
+	db $ff
 
 ; context, species, palette data ID, palette slot, map offset, height, width
 PokemonPicPaletteRects:

@@ -27,14 +27,44 @@ Save files and link partners from before the split are incompatible because
 Pokemon records and PC box layouts have changed. Start a new save; do not
 reuse old saves or save states. PC boxes now hold 18 Pokemon.
 
+Red's front picture uses extra palettes on the pants tiles in character
+selection, Oak's intro and name entry, the Trainer Card, Hall of Fame, and
+link battles (`PAL_CELADON` on the Trainer Card, `PAL_POLIWRATH` elsewhere).
+The rest of the picture keeps its normal palette. Accents are
+defined in `TrainerPicPaletteRects` in `color/color.asm`, using the same
+rectangle format as `PokemonPicPaletteRects`. The Trainer Card entries use
+tile indices rather than screen positions because its palettes are tile-based.
+Other trainer entries share picture-relative rectangles; `SetPal_PlayerFrontPic`
+selects the screen origin and normalizes their context to `TRAINER_PIC_INTRO`.
+The Hall of Fame clears these palette assignments while faded out before
+the credits begin.
+Hilda's front picture uses `PAL_YOUNGSTER` on the selected torso/arm and
+shorts tiles in character selection, the intro/name entry, Hall of Fame,
+and the visible portion of her Trainer Card picture. Link opponents still
+use Red's picture and accents.
+Gold's front picture uses `PAL_JOLTEON` on the three selected cap tiles
+in character selection, the intro/name entry, Hall of Fame, and Trainer Card.
+
+Debug Pokédex completion sets only real species flags. Pokédex ratings ignore
+unused padding bits, including those left in older debug saves, so the Hall of
+Fame rating stays within its text table.
+
 LevelUp and TM/HM learnsets show move names only for Pokemon registered as
 owned in the Pokedex. Seen-but-unowned Pokemon show dashed move names and
 `----` in place of TM/HM labels; learn levels remain visible. Start opens the
 selected move's Movedex entry only for owned Pokemon.
 All three Learnset pages display the Pokemon's menu icon to the left of its
-species name. On Game Boy Color, the icon uses its species palette from
-`MonsterPalettes`; the rest of the menu retains its usual colors.
-Opening Movedex clears the icon's palette assignments; returning restores them.
+species name, alternating its two animation frames every 10 V-blanks.
+Animation pauses in Movedex and stops when leaving the Learnset menu.
+On Game Boy Color, the icon uses its species palette from
+`MonsterPalettes`; the rest of the menu uses `PAL_CELADON` for LevelUp,
+`PAL_LAVENDER` for TM/HM, and `PAL_INDIGO` for Evolution.
+Opening Movedex clears the icon's palette assignments; returning restores them
+and the current tab's palette.
+On Game Boy Color, the Movedex type icon uses the move type's palette from
+`MoveTypeExpBarPalette`.
+Returning to the status screen clears sprites and reloads the font and textbox
+tiles reused by the Learnset menu.
 The same species palettes color menu icons in the party list, nickname/Name
 Rater screen, Bill's PC lists, and the link-trade animation. Each visible
 Pokemon has its own palette, including both animation frames; scrolling,
@@ -54,8 +84,8 @@ Non-fainted party/PC icons use `PAL_PURPLEMON` when poisoned, `PAL_PSYDUCK`
 when paralyzed, `PAL_CHARMANDER` when burned, and `PAL_EXP` when frozen.
 Curing the status restores the species palette; sleep keeps the species colors.
 TM/HM and move-tutor selection menus instead color party icons by the move:
-normal species colors for eligible Pokemon, `PAL_BLACK` for incompatible
-Pokemon, and blue for Pokemon that already know it. These colors override
+normal species colors for eligible Pokemon and Pokemon that already know it,
+and `PAL_BLACK` for incompatible Pokemon. These colors override
 HP/status colors only in move-teaching menus; the ABLE/NOT ABLE labels and
 existing selected-icon animation are unchanged.
 
@@ -176,11 +206,11 @@ The Buy screen shows the highlighted item's 24x24 graphic to the left of the
 list, clearing it on CANCEL or when no matching graphic exists. For TM/HM
 entries, this is replaced by the current party's icons in a two-column,
 three-row grid, ordered left-to-right. Normal species colors mean the Pokemon
-can learn the highlighted move, `PAL_BLACK` means it cannot, and blue means
-it already knows the move. Compatibility updates as the cursor moves; the
+can learn the highlighted move or already knows it; `PAL_BLACK` means it cannot.
+Compatibility updates as the cursor moves; the
 icons remain visible during quantity selection and purchase confirmation.
-Normal-colored icons animate between their two party-icon frames every
-10 frames; incompatible and already-known icons stay still.
+Eligible icons animate between their two party-icon frames every 10 frames;
+incompatible and already-known icons stay still.
 Bag and Sell icons are unchanged. The
 Buy list starts one tile farther right to leave space between the icon and cursor.
 The indexed

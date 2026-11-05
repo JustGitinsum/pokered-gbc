@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw ExeggutorPicFront, ExeggutorPicBack
 
-	db BULLET_SEED, HYPNOSIS, STOMP, LEECH_SEED ; level 1 learnset
+	db TACKLE, HYPNOSIS, NO_MOVE, NO_MOVE ; level 1 learnset
 	db GROWTH_SLOW ; growth rate
 
 	; tm/hm learnset

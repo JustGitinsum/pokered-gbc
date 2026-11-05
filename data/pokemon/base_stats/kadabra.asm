@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw KadabraPicFront, KadabraPicBack
 
-	db TELEPORT, CONFUSION, DISABLE, PSYBEAM ; level 1 learnset
+	db TELEPORT, CONFUSION, DISABLE, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_SLOW ; growth rate
 
 	; tm/hm learnset

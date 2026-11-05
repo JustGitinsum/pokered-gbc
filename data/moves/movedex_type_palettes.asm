@@ -70,7 +70,7 @@ TypeGraphicMapping:
 	dw TypelessIcon;typeless
 	dw BugTypeIcon;bug
 	dw GhostTypeIcon;ghost
-	dw 0 ; crystal (no moves use this type)
+    dw SteelTypeIcon;steel
 	dw GroundTypeIcon ; bonemerang
 	dw 0 ;unused
 	dw 0 ;unused
@@ -78,7 +78,7 @@ TypeGraphicMapping:
 	dw 0 ;unused
 	dw 0 ;unused
 	dw 0 ;unused
-	dw TriTypeIcon ;tri
+	dw 0 ;unused
 	dw 0 ;unused (floating - no moves use this type)
 	dw 0 ;unused (magma - no moves use this type)
 	dw FireTypeIcon;fire
@@ -88,17 +88,8 @@ TypeGraphicMapping:
 	dw PsychicTypeIcon;psychic
 	dw IceTypeIcon;ice
 	dw DragonTypeIcon;dragon
-
-; CheckGBCPsychic:
-; 	ld a, [wOptions2]
-; 	and %11
-; 	cp PALETTES_YELLOW
-; 	ret nz
-; 	ld hl, _PsychicTypeGBCIcon ; need a different icon when in GBC colors mode because it will look weird otherwise
-; 	ret
-
-_PsychicTypeGBCIcon:
-	dw PsychicTypeGBCIcon
+	dw DarkTypeIcon;dark
+    dw FairyTypeIcon;fairy
 
 ; input: d = type ID
 LoadTypeIcon8Tile:

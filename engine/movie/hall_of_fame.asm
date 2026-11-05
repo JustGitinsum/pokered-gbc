@@ -220,7 +220,17 @@ HoFLoadMonPlayerPicTileIDs:
 ; c = base tile ID
 	ld b, TILEMAP_MON_PIC
 	hlcoord 12, 5
-	predef_jump CopyTileIDsFromList
+	push bc
+	predef CopyTileIDsFromList
+	pop bc
+	ld a, c
+	and a
+	ret nz ; Only the front picture gets trainer accents.
+	ld a, [wHoFMonOrPlayer]
+	and a
+	ret z
+	ld e, TRAINER_PIC_HOF
+	farjp SetPal_PlayerFrontPic
 
 HoFDisplayPlayerStats:
 	SetEvent EVENT_HALL_OF_FAME_DEX_RATING

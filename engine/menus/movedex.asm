@@ -129,10 +129,6 @@ ShowNextMoveData:
 	ld a, [wPlayerMoveType]
 	ld d, a
 	call LoadTypeIcon
-	; ld a, [wPlayerMoveType]
-	; ld [wCurPartySpecies], a
-	; ld b, SET_PAL_MOVEDEX
-	; call RunPaletteCommand
 	pop af
 	ld [wMovedexMoveID], a
 
@@ -146,6 +142,7 @@ ShowNextMoveData:
 	ld [hli], a
 	inc a
 	ld [hl], a
+	farcall SetPal_MovedexTypeIcon
 	farcall DetermineMoveCategory
 	ld a, [wPlayerMoveCategory]
 	cp MOVE_PHYSICAL

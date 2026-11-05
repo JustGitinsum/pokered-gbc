@@ -18,9 +18,9 @@ DebugNewGameParty: ; unreferenced except in _DEBUG
 	; always using this character while I was debugging the program."
 	; From https://web.archive.org/web/20000607152840/http://pocket.ign.com/news/14973.html
 	db GARCHOMP, 90
-	db MEW, 10
-	db MAGNEZONE, 56
-	db MOLTRES, 56
+	db MEW, 99
+	db MAGNEZONE, 70
+	db MOLTRES, 70
 	db SKARMORY, 90
 	db PIKACHU, 5
 	db -1 ; end
@@ -157,7 +157,7 @@ DebugSetPokedexEntries:
 	ld [hli], a
 	dec b
 	jr nz, .loop
-	ld [hl], %01111111
+	ld [hl], (1 << ((NUM_POKEMON - 1) % 8 + 1)) - 1
 	ret
 
 DebugNewGameItemsList:
