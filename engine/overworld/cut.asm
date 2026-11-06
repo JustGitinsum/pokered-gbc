@@ -29,9 +29,16 @@ UsedCut:
 	ld [wCutTile], a
 	ld a, 1
 	ld [wActionResultOrTookBattleTurn], a ; used cut
+	ld a, [wFieldMoveFromHM]
+	and a
+	jr z, .partyMonName
+	farcall PrintHMUseMessage
+	jp Cut2 ; the HM message already restored and saved the overworld
+.partyMonName
 	ld a, [wWhichPokemon]
 	ld hl, wPartyMonNicks
 	call GetPartyMonName
+.restoreMap
 	ld hl, wStatusFlags5
 	set BIT_NO_TEXT_DELAY, [hl]
 	call GBPalWhiteOutWithDelay3

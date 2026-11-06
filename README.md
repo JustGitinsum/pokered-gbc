@@ -120,12 +120,34 @@ right of page 1.
 
 With **TEXT SPEED** set to **Fast**, walking into a Cut tree or water
 automatically uses Cut or Surf, and pushing a boulder automatically activates
-Strength. The required badge and a party Pokemon knowing the move are still
-required. Automatic attempts are silent, including where Surf is forbidden.
+Strength. The required badge and either a party Pokemon knowing the move or
+the corresponding HM in the bag are required. Automatic attempts are silent,
+including where Surf is forbidden.
 At other text speeds, use the party menu or the A-button Smart HM shortcuts.
 The A-button Cut and Surf shortcuts ask for YES/NO confirmation at Medium
 and Slow text speeds; Fast skips these prompts.
 Strength already activated on the current map remains active at any text speed.
+Smart Cut, Surf, and Strength first search the party for the move, then check
+the TM/HM pocket for the corresponding HM if no party Pokemon knows it.
+Badges, location restrictions, and confirmation/text-speed behavior still
+apply. The inventory fallback uses the player as the user and Seel for Surf.
+
+In the bag, HMs offer **Learn/Use** instead of **Use/Toss**. **Learn** teaches
+the move as before; **Use** performs Cut, Fly, Surf, Strength, or Flash without
+requiring a party Pokemon to know it. Badge and location restrictions still
+apply. HM Fly and Surf use the default Pidgey and Seel overworld sprites.
+HM Use displays its message in place of the item description, then restores
+the overworld and performs the move. Failed attempts and canceled Fly
+selections reopen the bag.
+HM Cut restores the overworld only once before its animation and does not
+fade or reload the pre-cut screen after removing the tree.
+The fresh map tilemap is transferred before revealing it, hiding the saved
+Start menu during HM-use transitions.
+HM Surf, Strength, and Flash also reuse the restored overworld instead of
+fading out and reloading it again after the move.
+HM Fly restores the overworld graphics and palettes after destination selection.
+Failed HM attempts redraw the description in place without fading the bag.
+TMs offer **Learn/Toss**; teaching and tossing work as before.
 
 The Options Menu includes **POKEMON NICKNAMES**, which defaults to **Show**.
 Use Left/Right to switch it to **Hide** to display species names instead; saved

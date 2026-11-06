@@ -7,6 +7,8 @@ StartMenu_Pokedex::
 	jp RedisplayStartMenu
 
 StartMenu_Pokemon::
+	xor a
+	ld [wFieldMoveFromHM], a
 	ld a, [wPartyCount]
 	and a
 	jp z, RedisplayStartMenu
@@ -118,6 +120,7 @@ StartMenu_Pokemon::
 	pop hl
 	ld a, [hl]
 	dec a
+.dispatchFieldMove
 	add a
 	ld b, 0
 	ld c, a
@@ -153,28 +156,49 @@ StartMenu_Pokemon::
 	cp SS_ANNE_BOW
 	jr z, .canFly
 ; end of new block to make "open-air" maps flyable
+	ld a, [wFieldMoveFromHM]
+	and a
+	jr nz, .cannotFly
 	ld a, [wWhichPokemon]
 	ld hl, wPartyMonNicks
 	call GetPartyMonName
+.cannotFly
 	ld hl, .cannotFlyHereText
 	call PrintText
-	jp .loop
+	jp .fieldMoveFailed
 .canFly
-	;;;Added for Unique fly Sprites
-	ld a, [wWhichPokemon]
-	ld hl, wPartyMon1Species
-	ld bc, PARTYMON_STRUCT_LENGTH
-	call AddNTimes
-	ld a, [hl]
+	ld a, [wFieldMoveFromHM]
+	and a
+	jr z, .partyFlySprite
+	ld a, PIDGEY
 	ld [wFlyingPokemonID], a
-	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	jr .chooseFlyDestination
+.partyFlySprite
+	call GetSelectedFieldMoveSpecies
+	ld [wFlyingPokemonID], a
+.chooseFlyDestination
+	call PrintHMUseMessage
 	call ChooseFlyDestination
+	ld a, [wFieldMoveFromHM]
+	and a
+	jr z, .checkFlyWarp
+	; The destination menu replaced the restored map's graphics and palettes.
+	ld a, 1
+	ld [wFieldMoveFromHM], a
+.checkFlyWarp
 	ld a, [wStatusFlags6]
 	bit BIT_FLY_WARP, a
 	jp nz, .goBackToMap
 	call LoadFontTilePatterns
 	ld hl, wStatusFlags4
 	set BIT_UNKNOWN_4_1, [hl]
+	ld a, [wFieldMoveFromHM]
+	and a
+	jr z, .returnToPartyAfterFly
+	ld a, 2 ; the Fly menu, not the bag, is still on screen
+	ld [wFieldMoveFromHM], a
+	jp .fieldMoveFailed
+.returnToPartyAfterFly
 	jp StartMenu_Pokemon
 .cut
 	bit BIT_CASCADEBADGE, a
@@ -182,8 +206,8 @@ StartMenu_Pokemon::
 	predef UsedCut
 	ld a, [wActionResultOrTookBattleTurn]
 	and a
-	jp z, .loop
-	jp CloseTextDisplay
+	jp z, .fieldMoveFailed
+	jp .overworldRestored ; Cut has already redrawn the map; never restore its old snapshot.
 .surf
 	bit BIT_SOULBADGE, a
 	jp z, .newBadgeRequired
@@ -191,33 +215,56 @@ StartMenu_Pokemon::
 	ld hl, wStatusFlags1
 	bit BIT_SURF_ALLOWED, [hl]
 	res BIT_SURF_ALLOWED, [hl]
-	jp z, .loop
-	;;;Added for Unique Surf Sprites
-	ld a, [wWhichPokemon]
-	ld hl, wPartyMon1Species
-	ld bc, PARTYMON_STRUCT_LENGTH
-	call AddNTimes
-	ld a, [hl]
+	jp z, .fieldMoveFailed
+	ld a, [wFieldMoveFromHM]
+	and a
+	jr z, .partySurfSprite
+	ld a, SEEL
 	ld [wSurfingPokemonID], a
-	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	jr .useSurfboard
+.partySurfSprite
+	call GetSelectedFieldMoveSpecies
+	ld [wSurfingPokemonID], a
+.useSurfboard
+	ld a, [wFieldMoveFromHM]
+	and a
+	jr z, .surfReady
+	ld a, [wWalkBikeSurfState]
+	cp 2
+	jr z, .surfReady
+	farcall IsNextTileShoreOrWater
+	jr nc, .surfReady
+	ld hl, TilePairCollisionsWater
+	call CheckForTilePairCollisions
+	jr c, .surfReady
+	call PrintHMUseMessage
+.surfReady
 	ld a, SURFBOARD
 	ld [wCurItem], a
 	ld [wPseudoItemID], a
 	call UseItem
 	ld a, [wActionResultOrTookBattleTurn]
 	and a
-	jp z, .loop
-	call GBPalWhiteOutWithDelay3
-	jp .goBackToMap
+	jp z, .fieldMoveFailed
+	jp .fadeBackToMap
 .strength
 	bit BIT_RAINBOWBADGE, a
 	jp z, .newBadgeRequired
+	ld a, [wFieldMoveFromHM]
+	and a
+	jr z, .partyStrength
+	call PrintHMUseMessage
+	ld hl, wStatusFlags1
+	set BIT_STRENGTH_ACTIVE, [hl]
+	jr .strengthUsed
+.partyStrength
 	predef PrintStrengthText
-	call GBPalWhiteOutWithDelay3
-	jp .goBackToMap
+.strengthUsed
+	jp .fadeBackToMap
 .flash
 	bit BIT_BOULDERBADGE, a
 	jp z, .newBadgeRequired
+	call PrintHMUseMessage
 	ld a, [wCurMap]
 	cp ROCK_TUNNEL_1F
 	jr z, .rememberRockTunnelFlash
@@ -228,10 +275,13 @@ StartMenu_Pokemon::
 .lightArea
 	xor a
 	ld [wMapPalOffset], a
+	ld a, [wFieldMoveFromHM]
+	and a
+	jr nz, .flashUsed
 	ld hl, .flashLightsAreaText
 	call PrintText
-	call GBPalWhiteOutWithDelay3
-	jp .goBackToMap
+.flashUsed
+	jp .fadeBackToMap
 .flashLightsAreaText
 	text_far _FlashLightsAreaText
 	text_end
@@ -243,8 +293,7 @@ StartMenu_Pokemon::
 	ld a, [wActionResultOrTookBattleTurn]
 	and a
 	jp z, .loop
-	call GBPalWhiteOutWithDelay3
-	jp .goBackToMap
+	jp .fadeBackToMap
 .teleport
 	jr .dig
 	;call CheckIfInOutsideMap
@@ -316,16 +365,63 @@ StartMenu_Pokemon::
 .notHealthyEnoughText
 	text_far _NotHealthyEnoughText
 	text_end
+.fadeBackToMap
+	; HM messages already restored the map; party/item actions still need a fade.
+	ld a, [wFieldMoveFromHM]
+	cp 2
+	call nz, GBPalWhiteOutWithDelay3
 .goBackToMap
+	ld a, [wFieldMoveFromHM]
+	cp 2
+	jr z, .overworldRestored
+	call .finishFieldMove
 	call RestoreScreenTilesAndReloadTilePatterns
 	jp CloseTextDisplay
+.overworldRestored
+	call .finishFieldMove
+	jp CloseTextDisplay
+.finishFieldMove
+	ld a, [wFieldMoveFromHM]
+	and a
+	ret z
+	cp 2
+	jr z, .clearHMState
+	farcall CloseOverworldBagMenu
+.clearHMState
+	xor a
+	ld [wFieldMoveFromHM], a
+	ld hl, wBagPocketsFlags
+	res BIT_PRINT_INFO_BOX, [hl]
+	ret
 .newBadgeRequired
 	ld hl, .newBadgeRequiredText
 	call PrintText
-	jp .loop
+.fieldMoveFailed
+	ld a, [wFieldMoveFromHM]
+	and a
+	jp z, .loop
+	cp 1
+	jr z, .bagStillVisible
+	xor a
+	ld [wFieldMoveFromHM], a
+	farcall RestoreBagAfterPartyMenu
+	jp ItemMenuLoop
+.bagStillVisible
+	xor a
+	ld [wFieldMoveFromHM], a
+	farcall RestoreItemDescriptionPalettes
+	jp ItemMenuLoop
 .newBadgeRequiredText
 	text_far _NewBadgeRequiredText
 	text_end
+
+GetSelectedFieldMoveSpecies:
+	ld a, [wWhichPokemon]
+	ld hl, wPartyMon1Species
+	ld bc, PARTYMON_STRUCT_LENGTH
+	call AddNTimes
+	ld a, [hl]
+	ret
 
 ; writes a blank tile to all possible menu cursor positions on the party menu
 ErasePartyMenuCursors::
@@ -395,6 +491,17 @@ StartMenu_Item::  ; marcelnote - BICYCLE does not have special handling anymore
 	call PlaceUnfilledArrowMenuCursor
 	xor a
 	ld [wMenuItemToSwap], a
+	ld a, [wCurItem]
+	cp HM01
+	jr c, .checkSelectItem
+	cp TM01 + NUM_TMS
+	jr nc, .checkSelectItem
+	cp TM01
+	ld a, LEARN_USE_MENU_TEMPLATE
+	jr c, .cannotAssignToSelect
+	ld a, LEARN_TOSS_MENU_TEMPLATE
+	jr .cannotAssignToSelect
+.checkSelectItem
 	;;;;;;;;;;;;;;;;;;;;; marcelnote - use items with Select
 	callfar CheckIfSelectItem ; sets carry if item can be assigned to Select
 	ld a, USE_TOSS_MENU_TEMPLATE
@@ -403,11 +510,20 @@ StartMenu_Item::  ; marcelnote - BICYCLE does not have special handling anymore
 .cannotAssignToSelect
 ;;;;;;;;;;;;;;;;;;;;;
 	ld [wTextBoxID], a
+	cp LEARN_USE_MENU_TEMPLATE
+	call z, SaveScreenTilesToBuffer1
 	call DisplayTextBoxID
 	ld hl, wTopMenuItemY
 	ld a, 8
 	ld [hli], a ; top menu item Y
+	ld a, [wTextBoxID]
+	; The two adjacent Learn templates share the wider box and cursor column.
+	sub LEARN_USE_MENU_TEMPLATE
+	cp 2
 	ld a, 14
+	jr nc, .storeSubmenuX
+	dec a
+.storeSubmenuX
 	ld [hli], a ; top menu item X
 	xor a
 	ld [hli], a ; current menu item ID
@@ -429,7 +545,7 @@ StartMenu_Item::  ; marcelnote - BICYCLE does not have special handling anymore
 	call CopyToStringBuffer
 	ld a, [wCurrentMenuItem]
 	and a
-	jr nz, .tossOrSelectItem ; marcelnote - added SLCT option
+	jp nz, .tossOrSelectItem ; marcelnote - added SLCT option
 ; use item
 	ld [wPseudoItemID], a ; a must be 0 due to above conditional jump
 	ld a, [wCurItem]
@@ -477,6 +593,9 @@ StartMenu_Item::  ; marcelnote - BICYCLE does not have special handling anymore
 	ld [wUpdateSpritesEnabled], a
 	jp ItemMenuLoop
 .tossOrSelectItem ; marcelnote - added SLCT option
+	ld a, [wCurItem]
+	call IsItemHM
+	jr c, .useHMFieldMove
 ;;;;;;;;;;;;;;;;;;;;; marcelnote - use items with Select
 	callfar CheckIfSelectItem ; uses [wCurItem], sets carry if item can be assigned to Select
 	jr c, .assignItemToSelect
@@ -504,6 +623,56 @@ StartMenu_Item::  ; marcelnote - BICYCLE does not have special handling anymore
 	ld hl, ItemWasAssignedToSelectText
 	call PrintText
 	jp ItemMenuLoop
+.useHMFieldMove
+	ld a, [wCurItem]
+	sub HM01
+	push af
+	call LoadScreenTilesFromBuffer1
+	ld a, 1
+	ld [wFieldMoveFromHM], a
+	call CopyHMUserName
+	pop af
+	jp StartMenu_Pokemon.dispatchFieldMove
+
+PrintHMUseMessage::
+	ld a, [wFieldMoveFromHM]
+	and a
+	ret z
+	ld a, [wCurItem]
+	sub HM01 - NUM_TMS - 1 ; HM items map to teaching indices after the TMs.
+	ld [wTempTMHM], a
+	predef TMToMove
+	ld a, [wTempTMHM]
+	ld [wMoveNum], a
+	call GetMoveName
+	call CopyToStringBuffer
+	call CopyHMUserName
+	farcall RestoreItemDescriptionPalettes
+	ld hl, HMUseMessageText
+	call PrintText
+	farcall CloseOverworldBagMenu
+	call RestoreScreenTilesAndReloadTilePatterns
+	call ReloadMapData
+	call SaveScreenTilesToBuffer2
+	call Delay3 ; transfer the fresh map, not the saved Start menu, before revealing it
+	call UpdateSprites
+	ld a, 2
+	ld [wFieldMoveFromHM], a
+	jp LoadGBPal
+
+CopyHMUserName:
+	ld hl, wPlayerName
+	ld de, wNameBuffer
+	ld bc, NAME_LENGTH
+	jp CopyData
+
+HMUseMessageText:
+	text_ram wNameBuffer
+	text " used"
+	line "@"
+	text_ram wStringBuffer
+	text "!"
+	prompt
 
 CannotUseItemsHereText:
 	text_far _CannotUseItemsHereText

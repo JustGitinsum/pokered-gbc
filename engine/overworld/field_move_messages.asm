@@ -7,6 +7,10 @@ PrintStrengthText:
 UsedStrengthText:
 	text_far _UsedStrengthText
 	text_asm
+	; The inventory fallback uses the player name, so there is no Pokemon cry.
+	ld a, [wWhichPokemon]
+	cp $ff
+	jp z, TextScriptEnd
 	ld a, [wCurPartySpecies]
 	call PlayCry
 	call Delay3

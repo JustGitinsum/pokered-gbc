@@ -250,7 +250,7 @@ wPlayerMonNumber:: db
 wMenuCursorLocation:: dw
 
 wBattleMenuBall:: db ; selected ball item ID, or 0 to choose the first available
-	ds 1
+wFieldMoveFromHM:: db ; 0: party menu, 1: menu needs restoration, 2: overworld already restored
 
 ; how many times should HandleMenuInput poll the joypad state before it returns?
 wMenuJoypadPollCount:: db

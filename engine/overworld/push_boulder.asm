@@ -22,7 +22,7 @@ TryPushingBoulder::
 	cp BOULDER_MOVEMENT_BYTE_2
 	jp nz, ResetBoulderPushFlags
 	; auto-activate Strength if Text Speed is FAST, the player has the badge,
-	; and a party mon knows it
+	; and a party mon knows it or its HM is in the bag
 	ld a, [wStatusFlags1]
 	bit BIT_STRENGTH_ACTIVE, a
 	jr nz, .strengthActive

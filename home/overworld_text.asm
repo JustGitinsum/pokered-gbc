@@ -16,20 +16,15 @@ GroundRoseText::
 BoulderText::
 	text_far _BoulderText
 	text_asm
-	ld a, [wObtainedBadges]
-	bit BIT_RAINBOWBADGE, a
-	jr z, .done
-	ld d, STRENGTH
-	farcall HasPartyMove
-	ld a, [wWhichTrade]
-	and a
+	; Shared Smart HM requirements include the badge and party-first bag fallback.
+	farcall CheckStrengthRequirements
 	jr nz, .done
 	ld a, [wWhichPokemon]
 	push af
 	call ManualTextScroll
 	pop af
 	ld [wWhichPokemon], a
-	call GetPartyMonName2
+	farcall GetSmartHMUserName
 	predef PrintStrengthText
 .done
 	jp TextScriptEnd

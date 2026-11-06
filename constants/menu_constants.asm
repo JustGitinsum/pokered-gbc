@@ -36,6 +36,9 @@ DEF PC_ITEM_CAPACITY  EQU 20
 	const ITEM_LIST_MENU_BOX                ; $1d ; wider, left-shifted item bag and shop list
 	const PC_LIST_MENU_BOX                  ; $1e ; Bills PC pokemon list, one row taller at the top
 	const WITHDRAW_LIST_MENU_BOX            ; $1f ; Bills PC withdraw list, taller and narrower
+	const LEARN_USE_MENU_TEMPLATE           ; $20
+	const LEARN_TOSS_MENU_TEMPLATE          ; $21
+ASSERT LEARN_TOSS_MENU_TEMPLATE == LEARN_USE_MENU_TEMPLATE + 1
 
 ; two option menu constants
 ; TwoOptionMenuStrings indexes (see data/yes_no_menu_strings.asm)

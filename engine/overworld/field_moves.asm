@@ -17,12 +17,18 @@ TrySurf:
 	call ConfirmFieldMove
 	jr nz, .no2
 	ld a, [wWhichPokemon]
+	cp $ff ; inventory fallback has no selected party Pokemon
+	jr nz, .partySurf
+	ld a, SEEL
+	jr .surfSpecies
+.partySurf
 	ld hl, wPartyMon1Species
 	ld bc, PARTYMON_STRUCT_LENGTH
 	call AddNTimes
 	ld a, [hl]
+.surfSpecies
 	ld [wSurfingPokemonID], a
-	call GetPartyMonName2
+	call GetSmartHMUserName
 	ld a, SURFBOARD
 	ld [wCurItem], a
 	ld [wPseudoItemID], a
@@ -60,7 +66,7 @@ TryCut:
 	call ConfirmFieldMove
 	jr nz, TrySurf.no2
 .useCut
-	call GetPartyMonName2
+	call GetSmartHMUserName
 	farcall Cut2
 	jr TrySurf.yes2
 
@@ -123,6 +129,7 @@ CanAutoUseStrength::
 	ld a, [wOptions]
 	and TEXT_DELAY_MASK
 	ret nz
+CheckStrengthRequirements::
 	lb de, STRENGTH, 1 << BIT_RAINBOWBADGE
 	jp HasPartyFieldMove
 
@@ -131,11 +138,40 @@ CheckCutRequirements:
 	; fall through
 
 HasPartyFieldMove:
-; Returns z if the player has badge mask e and a party Pokemon knows move d.
+; Returns z for the badge and a party move, or its HM in the bag.
+; Party users take priority; $ff in wWhichPokemon denotes the HM fallback.
 	ld a, [wObtainedBadges]
 	and e
 	jp z, TrySurf.no
-	jp HasPartyMove
+	call HasPartyMove
+	ret z
+	; HMMoves is in ROM0 and follows the HM item order, so no second table is needed.
+	ld hl, HMMoves
+	ld b, HM01
+.findHM
+	ld a, [hli]
+	cp $ff
+	jp z, TrySurf.no
+	cp d
+	jr z, .foundHM
+	inc b
+	jr .findHM
+.foundHM
+	call IsItemInBag
+	jp z, TrySurf.no
+	ld a, $ff
+	ld [wWhichPokemon], a
+	xor a
+	ld [wWhichTrade], a
+	ret
+GetSmartHMUserName::
+	ld a, [wWhichPokemon]
+	cp $ff
+	jp nz, GetPartyMonName2
+	ld hl, wPlayerName
+	ld de, wNameBuffer
+	ld bc, NAME_LENGTH
+	jp CopyData
 
 IsCutTile:
 ; partial copy from UsedCut
