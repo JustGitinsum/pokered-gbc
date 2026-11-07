@@ -24,7 +24,7 @@ _MoveDeleterByeText::
 	done
 
 _MoveDeleterOneMoveText::
-	text "That #mon"
+	text "That #MON"
 	line "has one move."
 	cont "Pick another?"
 	done

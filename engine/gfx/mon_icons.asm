@@ -610,14 +610,21 @@ PCStartPressed::
 	call ClearSprites
 	call SaveScreenTilesToBuffer1
 	predef StatusScreenOriginal
+	call RestorePCScreenAfterStatus
+	ret
+
+RestorePCScreenAfterStatus::
+	; Keep status attributes hidden until all three PC screen thirds are restored.
+	call GBPalWhiteOutWithDelay3
+	call ClearSprites
 	call LoadScreenTilesFromBuffer1
 	call ReloadTilesetTilePatterns
 	call RunDefaultPaletteCommand
-	call LoadGBPal
 	callfar LoadBillsPCExtraTiles ; the status screen overwrote the Box Info tiles
 	ld a, $ff
 	ld [wUnusedCreditsByte], a ; the icons were cleared, so reload them
-	ret
+	call Delay3
+	jp LoadGBPal
 
 ; Deposit screen: RIGHT moves from the party list to the box list, LEFT moves back.
 ; Returns carry if the list should be exited to switch lists.

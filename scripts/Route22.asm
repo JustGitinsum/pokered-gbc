@@ -147,6 +147,8 @@ Route22Rival1StartBattleScript:
 	db STARTER2, 4
 	db STARTER3, 5
 	db STARTER1, 6
+	db MEW, 6
+	db MEWTWO, 6
 
 Route22Rival1AfterBattleScript:
 	ld a, [wIsInBattle]
@@ -304,6 +306,8 @@ Route22Rival2StartBattleScript:
 	db STARTER2, 10
 	db STARTER3, 11
 	db STARTER1, 12
+	db MEW, 12
+	db MEWTWO, 12
 
 Route22Rival2AfterBattleScript:
 	ld a, [wIsInBattle]

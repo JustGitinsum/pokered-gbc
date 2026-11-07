@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw ZapdosPicFront, ZapdosPicBack
 
-	db THUNDERBOLT, DRILL_PECK, ANCIENTPOWER, AGILITY ; level 1 learnset
+	db GUST, LEER, NO_MOVE, NO_MOVE ; level 1 learnset
 	db GROWTH_SLOW ; growth rate
 
 	; tm/hm learnset

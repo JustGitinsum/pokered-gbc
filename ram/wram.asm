@@ -1734,6 +1734,8 @@ wFossilScientistIntroMap:: db
 ; Map where the Name Rater's introduction was shown, or -1.
 wNameRaterIntroMap:: db
 
+wStarterCheatIntroMap:: db
+
 ;;; PureRGBnote: ADDED: new properties in this previously empty space
 wTownMapAreaState:: ; view which state is which in map_pokemon_areas.asm
 wDexMinSeenMon::

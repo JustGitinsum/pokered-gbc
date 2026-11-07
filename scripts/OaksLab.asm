@@ -30,6 +30,8 @@ OaksLab_ScriptPointers:
 	dw_const OaksLabOakGivesPokedexScript,           SCRIPT_OAKSLAB_OAK_GIVES_POKEDEX
 	dw_const OaksLabRivalLeavesWithPokedexScript,    SCRIPT_OAKSLAB_RIVAL_LEAVES_WITH_POKEDEX
 	dw_const OaksLabNoopScript,                      SCRIPT_OAKSLAB_NOOP
+	dw_const OaksLabRivalUsesPCScript,               SCRIPT_OAKSLAB_RIVAL_USES_PC
+	dw_const OaksLabRivalReturnsFromPCScript,        SCRIPT_OAKSLAB_RIVAL_RETURNS_FROM_PC
 
 OaksLabDefaultScript:
 	CheckEvent EVENT_OAK_APPEARED_IN_PALLET
@@ -192,12 +194,15 @@ OaksLabPlayerForcedToWalkBackScript:
 	ret
 
 OaksLabChoseStarterScript:
+	; Only confirmed starters reach this state; nonstandard choices use the PC.
 	ld a, [wPlayerStarter]
 	cp STARTER1
 	jr z, .Charmander
 	cp STARTER2
 	jr z, .Squirtle
-	jr .Bulbasaur
+	cp STARTER3
+	jr z, .Bulbasaur
+	jp OaksLabRivalCheatsScript
 .Charmander
 	ld de, .MiddleBallMovement1
 	ld a, [wYCoord]
@@ -319,6 +324,20 @@ OaksLabRivalChoosesStarterScript:
 	ld [wMissableObjectIndex], a
 	predef HideObject
 	call Delay3
+
+OaksLabRivalReceivesStarterScript:
+	call OaksLabShowRivalReceivedMon
+
+OaksLabFinishStarterSelectionScript:
+	SetEvent EVENT_GOT_STARTER
+	xor a
+	ld [wJoyIgnore], a
+	ld a, SCRIPT_OAKSLAB_RIVAL_CHALLENGES_PLAYER
+	ld [wOaksLabCurScript], a
+	ret
+
+OaksLabShowRivalReceivedMon:
+	call EnableAutoTextBoxDrawing
 	ld a, [wRivalStarterTemp]
 	ld [wRivalStarter], a
 	ld [wCurPartySpecies], a
@@ -331,14 +350,99 @@ OaksLabRivalChoosesStarterScript:
 	call SetSpriteFacingDirectionAndDelay
 	ld a, TEXT_OAKSLAB_RIVAL_RECEIVED_MON
 	ldh [hTextID], a
-	call DisplayTextID
-	SetEvent EVENT_GOT_STARTER
-	xor a
-	ld [wJoyIgnore], a
+	jp DisplayTextID
 
-	ld a, SCRIPT_OAKSLAB_RIVAL_CHALLENGES_PLAYER
+OaksLabRivalCheatsScript:
+	call EnableAutoTextBoxDrawing
+	ld a, OAKSLAB_RIVAL
+	ldh [hSpriteIndex], a
+	ld a, SPRITE_FACING_LEFT
+	ldh [hSpriteFacingDirection], a
+	call SetSpriteFacingDirectionAndDelay
+	ld a, TEXT_OAKSLAB_RIVAL_NO_FAIR
+	ldh [hTextID], a
+	call DisplayTextID
+	ld a, OAKSLAB_RIVAL
+	ldh [hSpriteIndex], a
+	ld a, SPRITE_FACING_UP
+	ldh [hSpriteFacingDirection], a
+	call SetSpriteFacingDirectionAndDelay
+	ld a, TEXT_OAKSLAB_OAK_CHEATING_IS_FINE
+	ldh [hTextID], a
+	call DisplayTextID
+	ld de, .RightPCMovement
+	ld a, [wXCoord]
+	and a
+	jr z, .move
+	ld de, .LeftPCMovement
+.move
+	ld a, OAKSLAB_RIVAL
+	ldh [hSpriteIndex], a
+	call MoveSprite
+	ld a, SCRIPT_OAKSLAB_RIVAL_USES_PC
 	ld [wOaksLabCurScript], a
 	ret
+
+.LeftPCMovement:
+	db NPC_MOVEMENT_LEFT
+.RightPCMovement:
+	db NPC_MOVEMENT_LEFT
+	db NPC_MOVEMENT_LEFT
+	db NPC_MOVEMENT_LEFT
+	db NPC_MOVEMENT_UP
+	db -1 ; end
+
+OaksLabRivalUsesPCScript:
+	ld a, [wStatusFlags5]
+	bit BIT_SCRIPTED_NPC_MOVEMENT, a
+	ret nz
+	call EnableAutoTextBoxDrawing
+	ld a, PAD_SELECT | PAD_START | PAD_CTRL_PAD
+	ld [wJoyIgnore], a
+	ld a, OAKSLAB_RIVAL
+	ldh [hSpriteIndex], a
+	ld a, SPRITE_FACING_UP
+	ldh [hSpriteFacingDirection], a
+	call SetSpriteFacingDirectionAndDelay
+	ld a, SFX_TURN_ON_PC
+	call PlaySound
+	call WaitForSoundToFinish
+	ld a, TEXT_OAKSLAB_RIVAL_ILL_TAKE_THIS_ONE
+	ldh [hTextID], a
+	call DisplayTextID
+	call OaksLabShowRivalReceivedMon
+	ld de, .RightPCReturnMovement
+	ld a, [wXCoord]
+	and a
+	jr z, .move
+	ld de, .LeftPCReturnMovement
+.move
+	ld a, OAKSLAB_RIVAL
+	ldh [hSpriteIndex], a
+	call MoveSprite
+	ld a, SCRIPT_OAKSLAB_RIVAL_RETURNS_FROM_PC
+	ld [wOaksLabCurScript], a
+	ret
+
+.LeftPCReturnMovement:
+	db NPC_MOVEMENT_DOWN
+	db NPC_MOVEMENT_RIGHT
+	db NPC_MOVEMENT_RIGHT
+	db NPC_MOVEMENT_RIGHT
+	db NPC_MOVEMENT_RIGHT
+	db -1 ; end
+.RightPCReturnMovement:
+	db NPC_MOVEMENT_DOWN
+	db NPC_MOVEMENT_RIGHT
+	db NPC_MOVEMENT_RIGHT
+	db NPC_MOVEMENT_RIGHT
+	db -1 ; end
+
+OaksLabRivalReturnsFromPCScript:
+	ld a, [wStatusFlags5]
+	bit BIT_SCRIPTED_NPC_MOVEMENT, a
+	ret nz
+	jp OaksLabFinishStarterSelectionScript
 
 OaksLabRivalChallengesPlayerScript:
 	ld a, [wYCoord]
@@ -753,6 +857,8 @@ OaksLab_TextPointers:
 	dw_const OaksLabOakGotPokedexText,            TEXT_OAKSLAB_OAK_GOT_POKEDEX
 	dw_const OaksLabOakThatWasMyDreamText,        TEXT_OAKSLAB_OAK_THAT_WAS_MY_DREAM
 	dw_const OaksLabRivalLeaveItAllToMeText,      TEXT_OAKSLAB_RIVAL_LEAVE_IT_ALL_TO_ME
+	dw_const OaksLabRivalNoFairText,              TEXT_OAKSLAB_RIVAL_NO_FAIR
+	dw_const OaksLabOakCheatingIsFineText,        TEXT_OAKSLAB_OAK_CHEATING_IS_FINE
 
 OaksLab_TextPointers2:
 	dw OaksLabRivalText
@@ -857,6 +963,15 @@ OaksLabShowPokeBallPokemonScript:
 	ldh [hSpriteDataOffset], a
 	call GetPointerWithinSpriteStateData1
 	ld [hl], SPRITE_FACING_RIGHT
+	call OaksLabPreviewStarter
+	ld a, [wSpriteIndex]
+	cp OAKSLAB_CHARMANDER_POKE_BALL
+	jr z, OaksLabYouWantCharmanderText
+	cp OAKSLAB_SQUIRTLE_POKE_BALL
+	jr z, OaksLabYouWantSquirtleText
+	jr OaksLabYouWantBulbasaurText
+
+OaksLabPreviewStarter:
 	ld hl, wStatusFlags5
 	set BIT_NO_TEXT_DELAY, [hl]
 	predef StarterDex
@@ -864,13 +979,7 @@ OaksLabShowPokeBallPokemonScript:
 	res BIT_NO_TEXT_DELAY, [hl]
 	call ReloadMapData
 	ld c, 10
-	call DelayFrames
-	ld a, [wSpriteIndex]
-	cp OAKSLAB_CHARMANDER_POKE_BALL
-	jr z, OaksLabYouWantCharmanderText
-	cp OAKSLAB_SQUIRTLE_POKE_BALL
-	jr z, OaksLabYouWantSquirtleText
-	jr OaksLabYouWantBulbasaurText
+	jp DelayFrames
 
 OaksLabYouWantCharmanderText:
 	ld hl, .Text
@@ -901,10 +1010,6 @@ OaksLabMonChoiceMenu:
 	ld a, [wCurrentMenuItem]
 	and a
 	jr nz, OaksLabMonChoiceEnd
-	ld a, [wCurPartySpecies]
-	ld [wPlayerStarter], a
-	ld [wNamedObjectIndex], a
-	call GetMonName
 	ld a, [wSpriteIndex]
 	cp OAKSLAB_CHARMANDER_POKE_BALL
 	jr nz, .not_charmander
@@ -920,6 +1025,14 @@ OaksLabMonChoiceMenu:
 .continue
 	ld [wMissableObjectIndex], a
 	predef HideObject
+	call OaksLabGiveStarter
+	jp OaksLabMonChoiceEnd
+
+OaksLabGiveStarter:
+	ld a, [wCurPartySpecies]
+	ld [wPlayerStarter], a
+	ld [wNamedObjectIndex], a
+	call GetMonName
 	ld a, $1
 	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
 	ld hl, OaksLabMonEnergeticText
@@ -939,8 +1052,154 @@ OaksLabMonChoiceMenu:
 	ld [wJoyIgnore], a
 	ld a, SCRIPT_OAKSLAB_CHOSE_STARTER_SCRIPT
 	ld [wOaksLabCurScript], a
+	ret
+
 OaksLabMonChoiceEnd:
 	jp TextScriptEnd
+
+OaksLabSecretStarter::
+	ld a, [wCurMap]
+	ld hl, wStarterCheatIntroMap
+	cp [hl]
+	jr z, .skipIntro
+	ld [hl], a
+	ld hl, .DiscoveredSecretText
+	call PrintText
+	ld hl, .CheatStarterText
+	call PrintText
+	ld a, 1
+	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
+	call YesNoChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	ret nz
+.skipIntro
+	ld a, 1
+	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
+	call LoadCurrentMapView
+	ld a, SFX_TURN_ON_PC
+	call PlaySound
+	call WaitForSoundToFinish
+	ld hl, .ChooseStarterText
+	call PrintText
+	call SaveScreenTilesToBuffer2
+	ld a, [wUpdateSpritesEnabled]
+	push af
+	xor a
+	ld [wUpdateSpritesEnabled], a
+	call HideSprites
+	call DelayFrame
+	hlcoord 8, 0
+	lb bc, 10, 10
+	call TextBoxBorder
+	ld hl, .StarterList
+	ld bc, 0
+.printStarters
+	ld a, [hli]
+	push hl
+	push bc
+	ld [wNamedObjectIndex], a
+	call GetMonName
+	pop bc
+	hlcoord 10, 2
+	add hl, bc
+	push bc
+	ld de, wNameBuffer
+	call PlaceString
+	pop bc
+	ld hl, SCREEN_WIDTH * 2
+	add hl, bc
+	ld b, h
+	ld c, l
+	pop hl
+	ld a, c
+	cp SCREEN_WIDTH * 2 * 5
+	jr nz, .printStarters
+	xor a
+	ld [wCurrentMenuItem], a
+	ld [wLastMenuItem], a
+	ld [wMenuWatchMovingOutOfBounds], a
+	ld a, 2
+	ld [wTopMenuItemY], a
+	ld a, 9
+	ld [wTopMenuItemX], a
+	ld a, 4
+	ld [wMaxMenuItem], a
+	ld a, PAD_A | PAD_B
+	ld [wMenuWatchedKeys], a
+	pop af
+	ld [wUpdateSpritesEnabled], a
+	call UpdateSprites
+	call HandleMenuInput
+	push af
+	call LoadScreenTilesFromBuffer2
+	pop af
+	bit B_PAD_B, a
+	ret nz
+	ld a, [wCurrentMenuItem]
+	ld e, a
+	ld d, 0
+	ld hl, .StarterList
+	add hl, de
+	ld a, [hl]
+	ld [wCurPartySpecies], a
+	ld [wPokedexNum], a
+	call OaksLabPreviewStarter
+	ld a, [wCurPartySpecies]
+	ld [wNamedObjectIndex], a
+	call GetMonName
+	ld hl, .ConfirmStarterText
+	call PrintText
+	ld a, 1
+	ld [wDoNotWaitForButtonPressAfterDisplayingText], a
+	call YesNoChoice
+	ld a, [wCurrentMenuItem]
+	and a
+	ret nz
+	ld a, [wCurPartySpecies]
+	cp MEWTWO
+	ld a, MEW
+	jr z, .rivalStarter
+	ld a, MEWTWO
+.rivalStarter
+	ld [wRivalStarterTemp], a
+	jp OaksLabGiveStarter
+
+.StarterList:
+	db MEW, MEWTWO, ARTICUNO, ZAPDOS, MOLTRES
+
+.DiscoveredSecretText:
+	text_far _OaksLabDiscoveredSecretText
+	sound_get_item_1
+	text_end
+
+.CheatStarterText:
+	text_far _OaksLabCheatStarterText
+	text_end
+
+.ChooseStarterText:
+	text_far _OaksLabChooseSecretStarterText
+	text_end
+
+.ConfirmStarterText:
+	text_far _OaksLabYouWantSecretStarterText
+	text_end
+
+ResetStarterCheatIntroOnMapChange::
+	ld a, [wCurMap]
+	ld hl, wStarterCheatIntroMap
+	cp [hl]
+	ret z
+	ld [hl], -1
+	ret
+
+OaksLabRivalNoFairText:
+	text_far _OaksLabRivalNoFairText
+	text_end
+
+OaksLabOakCheatingIsFineText:
+	text_far _OaksLabOakCheatingIsFineText
+	text_end
 
 OaksLabMonEnergeticText:
 	text_far _OaksLabMonEnergeticText
@@ -958,9 +1217,24 @@ OaksLabLastMonScript:
 	ldh [hSpriteDataOffset], a
 	call GetPointerWithinSpriteStateData1
 	ld [hl], SPRITE_FACING_DOWN
+	ld a, [wPlayerStarter]
+	cp STARTER1
+	jr z, .normalStarter
+	cp STARTER2
+	jr z, .normalStarter
+	cp STARTER3
+	jr z, .normalStarter
+	ld hl, OaksLabOtherTrainersMonText
+	jr .printText
+.normalStarter
 	ld hl, OaksLabLastMonText
+.printText
 	call PrintText
 	jp TextScriptEnd
+
+OaksLabOtherTrainersMonText:
+	text_far _OaksLabOtherTrainersMonText
+	text_end
 
 OaksLabLastMonText:
 	text_far _OaksLabLastMonText

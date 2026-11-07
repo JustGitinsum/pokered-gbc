@@ -27,6 +27,7 @@ ReadTrainer:
 	ld l, a
 	ld a, [wTrainerNo]
 	ld b, a
+	call SelectRivalSecretParty
 ; At this point b contains the trainer number,
 ; and hl points to the trainer class.
 ; Our next task is to iterate through the trainers,
@@ -53,7 +54,7 @@ ReadTrainer:
 .LoopTrainerData
 	ld a, [hli]
 	and a ; have we reached the end of the trainer data?
-	jr z, .FinishUp
+	jp z, .FinishUp
 	ld [wCurPartySpecies], a
 	ld a, ENEMY_PARTY_DATA
 	ld [wMonDataLocation], a
@@ -131,6 +132,11 @@ ReadTrainer:
 
 ; starter
 	ld a, [wRivalStarter]
+	cp MEW
+	ld b, PSYCHIC_M
+	jr z, .GiveStarterMove
+	cp MEWTWO
+	jr z, .GiveStarterMove
 	cp STARTER3
 	ld b, GIGA_DRAIN
 	jr z, .GiveStarterMove
@@ -164,3 +170,53 @@ ReadTrainer:
 	dec b
 	jr nz, .LastLoop ; repeat wCurEnemyLevel times
 	ret
+
+SelectRivalSecretParty:
+	ld a, [wRivalStarter]
+	ld c, 0
+	cp MEW
+	jr z, .secretStarter
+	cp MEWTWO
+	ret nz
+	ld c, 2
+.secretStarter
+	push hl
+	ld a, [wCurOpponent]
+	cp OPP_RIVAL1
+	jr z, .rival1
+	cp OPP_RIVAL2
+	jr z, .rival2
+	cp OPP_RIVAL3
+	jr z, .rival3
+	pop hl
+	ret
+.rival1
+	ld hl, .Rival1Parties
+	jr .select
+.rival2
+	ld hl, .Rival2Parties
+	jr .select
+.rival3
+	ld hl, .Rival3Parties
+.select
+	pop de
+	ld b, 0
+	add hl, bc
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	; Secret starters use the third variant of each encounter in map scripts.
+	ld a, [wTrainerNo]
+	ld b, 0
+.encounter
+	inc b
+	sub 3
+	jr nz, .encounter
+	ret
+
+.Rival1Parties:
+	dw Rival1MewData, Rival1MewtwoData
+.Rival2Parties:
+	dw Rival2MewData, Rival2MewtwoData
+.Rival3Parties:
+	dw Rival3MewData, Rival3MewtwoData

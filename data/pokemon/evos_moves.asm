@@ -520,10 +520,15 @@ MewEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 10, TRANSFORM
-	db 20, AMNESIA
+	db 6, CONFUSION
+	db 10, AMNESIA
+	db 20, SWIFT
 	db 30, ANCIENTPOWER
+	db 35, REFLECT
+	db 40, LIGHT_SCREEN
+	;db 50, NASTY_PLOT
 	db 60, METRONOME
+	db 80, TRANSFORM
 	db 90, AURA_SPHERE
 	db 99, PSYCHIC_M
 	db 0
@@ -1255,7 +1260,19 @@ JynxEvosMoves:
 MoltresEvosMoves:
 ; Evolutions
 	db 0
-; Learnset
+; Learnset SV
+	db 6, SWIFT
+	db 9, EMBER
+	db 12, SILVER_WIND
+	db 16, FIRE_SPIN
+	db 21, MYSTICAL_FIRE
+	db 24, WING_ATTACK
+	db 29, SMOKESCREEN
+	db 33, ANCIENTPOWER
+	; db 37, FIERY_WRATH
+	db 40, AIR_SLASH
+	db 45, AGILITY
+	db 50, FLAMETHROWER
 	db 55, ROOST
 	db 60, SKY_ATTACK
 	db 65, FIRE_BLAST
@@ -1264,7 +1281,18 @@ MoltresEvosMoves:
 ArticunoEvosMoves:
 ; Evolutions
 	db 0
-; Learnset
+; Learnset SV
+	db 6, SWIFT
+	db 9, REFLECT
+	db 12, SILVER_WIND
+	db 15, AURORA_BEAM
+	db 24, WING_ATTACK
+	db 29, MIST
+	db 33, ANCIENTPOWER
+	; db 37, FROZEN_GLARE
+	db 40, AIR_SLASH
+	db 45, AGILITY
+	db 50, ICE_BEAM
 	db 55, ROOST
 	db 60, HAZE
 	db 65, BLIZZARD
@@ -1273,7 +1301,19 @@ ArticunoEvosMoves:
 ZapdosEvosMoves:
 ; Evolutions
 	db 0
-; Learnset
+; Learnset SV
+	db 6, SWIFT
+	db 9, THUNDERSHOCK
+	db 12, SILVER_WIND
+	db 16, THUNDER_WAVE
+	db 19, SHOCK_WAVE
+	db 24, WING_ATTACK
+	db 29, LIGHT_SCREEN
+	db 33, ANCIENTPOWER
+	; db 37, THUNDER_KICK
+	db 40, AIR_SLASH
+	db 45, AGILITY
+	db 50, THUNDERBOLT
 	db 55, ROOST
 	db 60, LIGHT_SCREEN
 	db 65, THUNDER
@@ -2053,8 +2093,11 @@ MewtwoEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset ;from gen9
-	db 8, ANCIENTPOWER
-	db 16, PSYCHO_CUT
+	db 6, CONFUSION
+	db 9, DISABLE
+	db 15, SWIFT
+	db 20, ANCIENTPOWER
+	db 29, PSYBEAM
 	db 32, AMNESIA
 	db 40, AURA_SPHERE
 	db 48, PSYCHIC_M
@@ -2605,10 +2648,15 @@ PorygonEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 23, PSYBEAM
-	db 28, RECOVER
-	db 35, AGILITY
-	db 42, TRI_ATTACK
+	db 10, THUNDER_WAVE
+	db 15, THUNDERSHOCK
+	db 20, PSYBEAM
+	db 30, AGILITY
+	db 35, RECOVER
+	db 40, THUNDERBOLT
+	db 45, TRI_ATTACK
+	db 50, THUNDER
+	db 60, HYPER_BEAM
 	db 0
 
 AerodactylEvosMoves:

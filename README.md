@@ -1,5 +1,41 @@
 # pokered-gbc
 
+After Oak asks you to choose a starter, interact with his lab PC to access
+a secret starter cheat. Answer Yes to hear the PC power-on sound and choose
+Mew, Mewtwo, Articuno, Zapdos, or Moltres at level 5. No or B cancels without
+choosing a starter. Selecting any opens its Pokedex preview and a Yes/No confirmation,
+just like the starter Poke Balls. Declining leaves your starter unchosen.
+Before the cheat question, "<PLAYER> discovered a Secret!" plays with the
+found-item jingle. The discovery, cheat introduction and Yes/No prompt appear
+only once per lab visit, like
+tutor introductions. Reopening the PC after declining or cancelling goes
+straight to the secret starter menu. Each time, the PC sound plays first, then
+a bottom dialogue box says "Choose your secret starter!" beneath the menu.
+The bottom box is not drawn during the PC sound.
+Overworld sprites are hidden while the secret starter menu is drawn.
+The rival protests, gets Oak's permission, and uses the unoccupied PC space
+to choose Mew if you chose Mewtwo, or Mewtwo for any other secret starter.
+His receipt message appears at the PC,
+before he returns to his original spot.
+He keeps that starter in later battles; his other teammates follow the
+Charmander team lineup. Each encounter has separate, editable Mew and Mewtwo
+parties in `data/trainers/parties.asm`, under `Rival1MewData`/`Rival1MewtwoData`,
+`Rival2MewData`/`Rival2MewtwoData`, and `Rival3MewData`/`Rival3MewtwoData`.
+The PC shows its usual email before Oak's invitation
+and after you choose a starter.
+After choosing a secret starter, the remaining lab Poke Balls say their
+Pokemon are for other trainers. Normal starters retain the original message.
+
+Pokedex entry data is drawn before its cry plays. Cry playback does not block
+input and plays at every text speed. Pokemon status screens also play their
+cries without blocking input at every text speed. PC deposit and withdrawal
+update the lists without waiting for cries to finish. PC deposit, withdrawal,
+and release cries play at every text speed; release still waits for its cry.
+Nonblocking cries replace any previous cry so rapid switching keeps the
+correct sound and pitch. Starter previews restore all temporary owned flags.
+Returning from PC status screens restores tiles and palette attributes while
+hidden before revealing the PC lists.
+
 The Pokemon status screen displays Attack, Defense, Sp.Atk, Sp.Def, and Speed
 in the right-hand panel, with types and trainer details on the left without
 a vertical divider.

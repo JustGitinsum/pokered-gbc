@@ -107,12 +107,8 @@ StatusScreen:
 	call GBPalNormal
 	hlcoord 1, 0
 	call LoadFlippedFrontSpriteByMonIndex ; draw Pokémon picture
-	ld a, [wOptions]
-	and TEXT_DELAY_MASK
-	jr z, .skipCry
-
-	call PlayCry
-.skipCry
+	call Delay3
+	farcall PlayCryNoWait
 	pop af
 	ret
 

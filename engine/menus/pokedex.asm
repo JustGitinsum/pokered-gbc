@@ -508,13 +508,6 @@ ShowPokedexDataInternal:
 	call GetMonHeader ; load pokemon picture location
 	hlcoord 1, 1
 	call LoadFlippedFrontSpriteByMonIndex ; draw pokemon picture
-	ld a, [wCurPartySpecies]
-	ld a, [wOptions]
-	and TEXT_DELAY_MASK
-	jr z, .skipCry
-
-	call PlayCry
-.skipCry
 	pop hl
 	pop de
 	pop bc
@@ -527,7 +520,7 @@ ShowPokedexDataInternal:
 	pop bc
 	ld a, c
 	and a
-	jp z, .waitForButtonPress ; unseen ownership data stays hidden; types appear below the name
+	jp z, .dataReady ; unseen ownership data stays hidden; types appear below the name
 	inc de ; de = address of feet (height)
 	ld a, [de] ; reads feet, but a is overwritten without being used
 	hlcoord 12, 6
@@ -663,6 +656,9 @@ ShowPokedexDataInternal:
 ;;;;;;;;;;
 	xor a
 	ldh [hClearLetterPrintingDelayFlags], a
+.dataReady
+	call Delay3
+	farcall PlayCryNoWait
 .waitForButtonPress
 	call JoypadLowSensitivity
 	ldh a, [hJoy5]

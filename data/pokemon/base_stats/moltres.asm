@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw MoltresPicFront, MoltresPicBack
 
-	db WING_ATTACK, FLAMETHROWER, ANCIENTPOWER, AGILITY ; level 1 learnset
+	db GUST, LEER, NO_MOVE, NO_MOVE ; level 1 learnset
 	db GROWTH_SLOW ; growth rate
 
 	; tm/hm learnset

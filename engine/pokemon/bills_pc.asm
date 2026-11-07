@@ -276,19 +276,13 @@ BillsPCMain:
 	jp nc, .showList
 	jp DoBillsPCWithdraw
 .confirmed
-	call PCSkipCry
-	jr c, .skipDepositCry
-	ld a, [wCurPartySpecies]
-	call GetCryData
-	call PlaySoundWaitForCurrent
-.skipDepositCry
+	farcall PlayCryNoWait
 	ld a, PARTY_TO_BOX
 	ld [wMoveMonType], a
 	call MoveMon
 	xor a
 	ld [wRemoveMonFromBox], a
 	call RemovePokemon
-	call WaitForSoundToFinish
 	ld hl, wBoxNumString
 	ld a, [wCurrentBoxNum]
 	and $7f
@@ -305,14 +299,6 @@ BillsPCMain:
 	ld [hli], a
 	ld [hl], "@"
 	jp BillsPCMain ; stay on the PC screen
-
-; Returns carry if cries are skipped (Fast text speed).
-PCSkipCry:
-	ld a, [wOptions]
-	and TEXT_DELAY_MASK
-	ret nz
-	scf
-	ret
 
 ; Prints hl on the deposit screen, then restores the screen so no redraw is needed.
 PrintTextKeepScreen:
@@ -372,12 +358,9 @@ OpenPCSubMenu:
 	ld a, [wPCListSide]
 	ld [wRemoveMonFromBox], a ; 0 = party, 1 = box
 	call RemovePokemon
-	call PCSkipCry
-	jr c, .skipReleaseCry
 	call WaitForSoundToFinish
 	ld a, [wCurPartySpecies]
 	call PlayCry
-.skipReleaseCry
 	pop hl ; drop this routine's return address and restart the screen, as after a deposit
 	jp BillsPCMain
 
@@ -385,19 +368,13 @@ DoBillsPCWithdraw:
 	ld a, [wWhichPokemon]
 	ld hl, wBoxMonNicks
 	call GetPartyMonName
-	call PCSkipCry
-	jr c, .skipCry
-	ld a, [wCurPartySpecies]
-	call GetCryData
-	call PlaySoundWaitForCurrent
-.skipCry
+	farcall PlayCryNoWait
 	xor a ; BOX_TO_PARTY
 	ld [wMoveMonType], a
 	call MoveMon
 	ld a, 1
 	ld [wRemoveMonFromBox], a
 	call RemovePokemon
-	call WaitForSoundToFinish
 	jp BillsPCMain ; stay on the PC screen, no message
 
 ; Sets up and draws the list for the active side (hl = party or box count).
@@ -550,13 +527,7 @@ DisplayDepositWithdrawMenu:
 .next2
 	ld [wMonDataLocation], a
 	predef StatusScreenOriginal
-	call LoadScreenTilesFromBuffer1
-	ld a, $ff
-	ld [wUnusedCreditsByte], a ; the icons were cleared, so reload them
-	call ReloadTilesetTilePatterns
-	call RunDefaultPaletteCommand
-	call LoadGBPal
-	callfar LoadBillsPCExtraTiles ; the status screen overwrote the Box Info tiles
+	farcall RestorePCScreenAfterStatus
 	jr .loop
 
 DepositPCText:  db "DEPOSIT@"

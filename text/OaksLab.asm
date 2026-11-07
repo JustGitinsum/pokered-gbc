@@ -48,6 +48,42 @@ _OaksLabMonEnergeticText::
 	line "really energetic!"
 	prompt
 
+_OaksLabDiscoveredSecretText::
+	text "<PLAYER> found"
+	line "a Secret!@"
+	text_end
+
+_OaksLabCheatStarterText::
+	text "Would you like to"
+	line "open the Starter"
+	cont "Cheat Menu?"
+	done
+ 
+_OaksLabChooseSecretStarterText::
+	text "Choose your"
+	line "starter #MON!"
+	done
+
+_OaksLabYouWantSecretStarterText::
+	text "So! You want"
+	line "@"
+	text_ram wNameBuffer
+	text " as"
+	cont "your starter?"
+	done
+
+_OaksLabRivalNoFairText::
+	text "<RIVAL>: No fair!"
+	line "I should be"
+	cont "allowed to cheat"
+	cont "too!"
+	done
+
+_OaksLabOakCheatingIsFineText::
+	text "OAK: Very well,"
+	line "that's fine."
+	done
+
 _OaksLabReceivedMonText::
 	text "<PLAYER> received"
 	line "a @"
@@ -58,6 +94,12 @@ _OaksLabReceivedMonText::
 _OaksLabLastMonText::
 	text "That's PROF.OAK's"
 	line "last #MON!"
+	done
+
+_OaksLabOtherTrainersMonText::
+	text "These #MON"
+	line "are for other"
+	cont "trainers!"
 	done
 
 _OaksLabOak1WhichPokemonDoYouWantText::
