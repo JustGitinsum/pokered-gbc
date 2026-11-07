@@ -14,14 +14,14 @@ ELSE
 ENDC
 	dw RapidashPicFront, RapidashPicBack
 
-	db EMBER, TAIL_WHIP, STOMP, GROWL ; level 1 learnset
+	db EMBER, TAIL_WHIP, GROWL, NO_MOVE  ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset
 	tmhm AERIAL_ACE,     CLOSE_COMBAT,   TOXIC,          TRAILBLAZE,     HYPER_BEAM,     \
-	     SPORE,          POISON_JAB,     SIGNAL_BEAM,    ENERGY_BALL,    MIGHTY_CLEAVE,  \
-	     ACCELEROCK,     HEAT_CRASH,     FLAMETHROWER,   MOONBLAST,      CUT,            \
-		 STRENGTH,       FLASH 
+	     POISON_JAB,     SIGNAL_BEAM,    ENERGY_BALL,    MIGHTY_CLEAVE,  ACCELEROCK,     \
+		 HEAT_CRASH,     FLAMETHROWER,   MOONBLAST,      CUT,            STRENGTH,       \
+		 FLASH 
 	; end
 
 	db BANK(RapidashPicFront)

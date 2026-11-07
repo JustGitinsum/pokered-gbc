@@ -10,7 +10,7 @@
 	INCBIN "gfx/pokemon/gsfront/crobat.pic", 0, 1 ; sprite dimensions
 	dw CrobatPicFront, CrobatPicBack
 
-	db MEGA_DRAIN, SCREECH, SUPERSONIC, NO_MOVE ; level 1 learnset
+	db MEGA_DRAIN, SCREECH, SUPERSONIC, CRUNCH ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset

@@ -19,9 +19,9 @@ ENDC
 
 	; tm/hm learnset
 	tmhm AERIAL_ACE,     AIR_SLASH,      CLOSE_COMBAT,   TOXIC,          X_SCISSOR,      \
-	     TRAILBLAZE,     HYPER_BEAM,     SPORE,          POISON_JAB,     MIGHTY_CLEAVE,  \
-		 GLACIAL_LANCE,  ACCELEROCK,     LEAF_BLADE,     STEEL_WING,     AURA_SPHERE,    \
-		 CUT,            FLY,            STRENGTH 
+	     TRAILBLAZE,     HYPER_BEAM,     POISON_JAB,     MIGHTY_CLEAVE,  GLACIAL_LANCE,  \
+		 ACCELEROCK,     LEAF_BLADE,     STEEL_WING,     AURA_SPHERE,    CUT,            \
+		 FLY,            STRENGTH 
 	; end
 
 	db BANK(FarfetchdPicFront)

@@ -18,10 +18,10 @@ ENDC
 	db GROWTH_SLOW ; growth rate
 
 	; tm/hm learnset
-	tmhm TOXIC,          SLUDGE_BOMB,    TRAILBLAZE,     SPORE,          ANCIENTPOWER,   \
-	     SIGNAL_BEAM,    GIGA_DRAIN,     ENERGY_BALL,    EARTHQUAKE,     EARTH_POWER,    \
-		 PSYCHIC_M,      PSYBEAM,        DARK_PULSE,     ACCELEROCK,     MOONBLAST,      \
-		 STRENGTH,       FLASH 
+	tmhm TOXIC,          SLUDGE_BOMB,    TRAILBLAZE,     ANCIENTPOWER,   SIGNAL_BEAM,    \
+		 GIGA_DRAIN,     ENERGY_BALL,    EARTHQUAKE,     EARTH_POWER,    PSYCHIC_M,      \
+		 PSYBEAM,        DARK_PULSE,     ACCELEROCK,     MOONBLAST,      STRENGTH,       \
+		 FLASH 
 	; end
 
 	db BANK(ExeggcutePicFront)

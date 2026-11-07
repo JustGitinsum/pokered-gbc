@@ -207,13 +207,18 @@ EvosMovesPointerTable:
 RhydonEvosMoves:
 ; Evolutions
 	db 0
-; Learnset
-	db 30, STOMP
-	db 35, TAIL_WHIP
-	db 40, FURY_ATTACK
-	db 48, PLAY_ROUGH
-	db 55, LEER
-	db 64, BODY_SLAM
+; Learnset SV
+	db 5, ACCELEROCK
+	db 10, BULLDOZE
+	db 15, HORN_ATTACK
+	db 20, SHARPEN
+	db 25, STOMP
+	db 30, ROCK_SLIDE
+	;db 35, DRILL_RUN
+	db 40, BODY_SLAM
+	db 45, EARTHQUAKE
+	db 50, MIGHTY_CLEAVE
+	;db 55, MEGAHORN
 	db 0
 
 KangaskhanEvosMoves:
@@ -466,13 +471,18 @@ RhyhornEvosMoves:
 ; Evolutions
 	db EVOLVE_LEVEL, 42, RHYDON
 	db 0
-; Learnset
-	db 30, STOMP
-	db 35, TAIL_WHIP
-	db 40, FURY_ATTACK
-	db 45, PLAY_ROUGH
-	db 50, LEER
-	db 55, BODY_SLAM
+; Learnset SV
+	db 5, ACCELEROCK
+	db 10, BULLDOZE
+	db 15, HORN_ATTACK
+	db 20, SHARPEN
+	db 25, STOMP
+	db 30, ROCK_SLIDE
+	;db 35, DRILL_RUN
+	db 40, BODY_SLAM
+	db 45, EARTHQUAKE
+	db 50, MIGHTY_CLEAVE
+	;db 55, MEGAHORN
 	db 0
 
 LaprasEvosMoves:
@@ -762,7 +772,6 @@ GravelerEvosMoves:
 	db EVOLVE_ITEM, LINK_STONE, 1, GOLEM
 	db 0
 ; Learnset ;From BD/SP
-	db 1, DEFENSE_CURL
 	db 10, ROCK_TOMB
 	db 22, BULLDOZE
 	db 24, BODY_SLAM
@@ -900,7 +909,6 @@ GolemEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset ;From BD/SP
-	db 1, DEFENSE_CURL
 	db 10, ROCK_TOMB
 	db 22, BULLDOZE
 	db 24, BODY_SLAM
@@ -1228,7 +1236,7 @@ PoliwagEvosMoves:
 JynxEvosMoves:
 ; Evolutions
 	db 0
-; Learnset
+; Learnset BDSP
 	db 12, CONFUSION
 	db 20, SING
 	db 23, DOUBLESLAP
@@ -1245,7 +1253,7 @@ MoltresEvosMoves:
 ; Learnset
 	db 55, ROOST
 	db 60, SKY_ATTACK
-	db 65, 
+	db 65, FIRE_BLAST
 	db 0
 
 ArticunoEvosMoves:
@@ -1442,23 +1450,35 @@ KabutoEvosMoves:
 ; Evolutions
 	db EVOLVE_LEVEL, 40, KABUTOPS
 	db 0
-; Learnset
+; Learnset BDSP
+	db 10, SAND_ATTACK
+	db 15, METAL_CLAW
+	db 20, LEER
+	db 25, ROLLOUT
 	db 30, ANCIENTPOWER
-	db 34, MEGA_DRAIN
-	db 39, SLASH
-	db 44, LEER
-	db 49, HYDRO_PUMP
+	db 35, RAZOR_SHELL
+	db 41, FURY_SWIPES
+	db 45, LEECH_LIFE
+	db 50, WATERFALL
+	db 55, SCREECH
+	db 60, MIGHTY_CLEAVE
 	db 0
 
 KabutopsEvosMoves:
 ; Evolutions
 	db 0
-; Learnset
+; Learnset BDSP
+	db 10, SAND_ATTACK
+	db 15, METAL_CLAW
+	db 20, LEER
+	db 25, ROLLOUT
 	db 30, ANCIENTPOWER
-	db 34, MEGA_DRAIN
-	db 39, LEECH_LIFE
-	db 46, LEER
-	db 53, HYDRO_PUMP
+	db 35, RAZOR_SHELL
+	db 41, FURY_SWIPES
+	db 45, LEECH_LIFE
+	db 50, WATERFALL
+	db 55, SCREECH
+	db 60, MIGHTY_CLEAVE
 	db EVOLUTION_MOVE, SLASH
 	db 0
 
@@ -1566,25 +1586,33 @@ OmanyteEvosMoves:
 ; Evolutions
 	db EVOLVE_LEVEL, 40, OMASTAR
 	db 0
-; Learnset
+; Learnset BDSP
+	db 10, SAND_ATTACK
+	db 15, WATER_GUN
+	db 20, LEER
 	db 25, ROLLOUT
 	db 30, ANCIENTPOWER
-	db 34, HORN_ATTACK
-	db 39, LEER
-	db 46, SPIKE_CANNON
-	db 53, HYDRO_PUMP
+	db 35, RAZOR_SHELL
+	db 41, SPIKE_CANNON
+	db 46, ROCK_SLIDE
+	;db 50, 
+	db 60, HYDRO_PUMP
 	db 0
 
 OmastarEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
+	db 10, SAND_ATTACK
+	db 15, WATER_GUN
+	db 20, LEER
 	db 25, ROLLOUT
 	db 30, ANCIENTPOWER
-	db 34, HORN_ATTACK
-	db 39, LEER
-	db 44, SPIKE_CANNON
-	db 49, HYDRO_PUMP
+	db 35, RAZOR_SHELL
+	db 41, SPIKE_CANNON
+	db 46, ROCK_SLIDE
+	;db 50, 
+	db 60, HYDRO_PUMP
 	db EVOLUTION_MOVE, CRUNCH
 	db 0
 

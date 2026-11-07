@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw NinetalesPicFront, NinetalesPicBack
 
-	db EMBER, TAIL_WHIP, DISABLE, MYSTICAL_FIRE ; level 1 learnset
+	db EMBER, TAIL_WHIP, DISABLE, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset

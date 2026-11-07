@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw RaichuPicFront, RaichuPicBack
 
-	db THUNDERSHOCK, GROWL, THUNDER_WAVE, QUICK_ATTACK ; level 1 learnset
+	db THUNDERSHOCK, GROWL, QUICK_ATTACK, NO_MOVE  ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset

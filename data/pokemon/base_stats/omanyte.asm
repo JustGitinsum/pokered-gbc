@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw OmanytePicFront, OmanytePicBack
 
-	db WATER_GUN, WITHDRAW, CONSTRICT, ANCIENTPOWER ; level 1 learnset
+	db CONSTRICT, WITHDRAW, NO_MOVE, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset

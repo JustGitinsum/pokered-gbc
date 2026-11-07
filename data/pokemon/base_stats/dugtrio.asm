@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw DugtrioPicFront, DugtrioPicBack
 
-	db SCRATCH, GROWL, TRI_ATTACK, SAND_ATTACK ; level 1 learnset
+	db SCRATCH, GROWL, SAND_ATTACK, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset

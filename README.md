@@ -4,8 +4,9 @@ The Pokemon status screen displays Attack, Defense, Sp.Atk, Sp.Def, and Speed
 in the right-hand panel, with types and trainer details on the left without
 a vertical divider.
 STATUS/OK is omitted; ailments and fainting appear beside the level.
-SELECT still toggles stat experience in the same layout. The STATS/STAT EXP
-indicator appears in the panel's top border, including when first opened.
+SELECT toggles a view with stat experience on the left and DVs on the right,
+including HP; Special Attack and Special Defence share the same DV. The
+panel's top border shows STATS initially and STAT EXP/DVS in the alternate view.
 RIGHT (or A) opens the moves page; LEFT returns to stats from the moves page.
 Returning with LEFT redraws the page without fading or replaying the cry.
 The Pokedex shows compact four-tile type badges below the name, with base
@@ -23,6 +24,9 @@ and Mystical Fire can lower Special Attack. Existing side-effect chances
 are unchanged. Transform and Haze include both stats.
 The Volcano Badge still boosts only Special Attack. Calcium and X Special
 affect Special Attack; Zinc and X Sp. Def are not added.
+Vitamins add 2,560 stat experience and can be used while the relevant stat
+is below 56,320, allowing 22 vitamins from zero. The final vitamin can bring
+the total above that threshold.
 Save files and link partners from before the split are incompatible because
 Pokemon records and PC box layouts have changed. Start a new save; do not
 reuse old saves or save states. PC boxes now hold 18 Pokemon.

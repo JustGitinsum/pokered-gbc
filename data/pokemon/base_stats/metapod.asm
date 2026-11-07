@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw MetapodPicFront, MetapodPicBack
 
-	db TACKLE, STRING_SHOT, POUNCE, HARDEN ; level 1 learnset
+	db TACKLE, STRING_SHOT, POUNCE, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset

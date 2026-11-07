@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw KabutopsPicFront, KabutopsPicBack
 
-	db WATER_GUN, HARDEN, METAL_CLAW, ANCIENTPOWER ; level 1 learnset
+	db SCRATCH, HARDEN, NO_MOVE, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset

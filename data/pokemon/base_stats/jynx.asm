@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw JynxPicFront, JynxPicBack
 
-	db POUND, LICK, LOVELY_KISS, NO_MOVE ; level 1 learnset
+	db POUND, LICK, NO_MOVE, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset

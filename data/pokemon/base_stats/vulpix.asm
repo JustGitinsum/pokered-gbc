@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw VulpixPicFront, VulpixPicBack
 
-	db EMBER, TAIL_WHIP, DISABLE, QUICK_ATTACK ; level 1 learnset
+	db EMBER, TAIL_WHIP, DISABLE, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset

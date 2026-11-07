@@ -10,7 +10,7 @@
 	INCBIN "gfx/pokemon/gsfront/gardevoir.pic", 0, 1 ; sprite dimensions
 	dw GardevoirPicFront, GardevoirPicBack
 
-	db HYPER_VOICE, POUND, LEER, NO_MOVE ; level 1 learnset
+	db POUND, LEER, NO_MOVE, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_SLOW ; growth rate
 
 ; tm/hm learnset

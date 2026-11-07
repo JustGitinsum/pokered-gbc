@@ -95,7 +95,7 @@ StatusScreen:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ld de, StatExpPrompt
 	ld hl, vFont tile 75
-	lb bc, BANK(StatExpPrompt), 5
+	lb bc, BANK(StatExpPrompt), 7
 	call CopyVideoDataDouble
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 	ldh a, [hTileAnimations]
@@ -332,7 +332,7 @@ PrintStatsBox:
 	hlcoord 15, 2
 	jp PrintStatusStatsValues
 .statExp
-	hlcoord 14, 8
+	hlcoord 11, 8
 	lb bc, 2, 5
 	ld de, wLoadedMonAttackExp
 	call PrintStat
@@ -347,31 +347,84 @@ PrintStatsBox:
 	push bc
 	call .clearHPRow
 	pop bc
-	hlcoord 12, 4
+	hlcoord 11, 4
 	ld de, wLoadedMonHPExp
-	jp PrintNumber
+	call PrintNumber
+.printDVs
+	hlcoord 17, 8
+	ld a, [wLoadedMonDVs]
+	swap a
+	and $f
+	call .printDVRow
+	ld a, [wLoadedMonDVs]
+	and $f
+	call .printDVRow
+	ld a, [wLoadedMonDVs + 1]
+	and $f ; both special stats share one DV
+	call .printDVRow
+	call .printDVRow
+	ld a, [wLoadedMonDVs + 1]
+	swap a
+	and $f
+	call .printDV
+	; HP DV consists of the low bits of Attack, Defense, Speed and Special.
+	ld a, [wLoadedMonDVs]
+	ld b, a
+	swap a
+	and 1
+	ld c, a
+	ld a, b
+	rrca
+	rl c
+	ld a, [wLoadedMonDVs + 1]
+	ld b, a
+	swap a
+	rrca
+	rl c
+	ld a, b
+	rrca
+	rl c
+	ld a, c
+	hlcoord 17, 4
+	jr .printDV
+.printDVRow
+	push hl
+	push af
+	call .printDV
+	pop af
+	pop hl
+	ld de, SCREEN_WIDTH * 2
+	add hl, de
+	ret
+.printDV
+	ld [hl], " "
+	cp 10
+	jr c, .printDVOnes
+	sub 10
+	ld [hl], "1"
+.printDVOnes
+	inc hl
+	add "0"
+	ld [hl], a
+	ret
 .clearHPRow
 	hlcoord 11, 4
 	lb bc, 1, 8
 	jp ClearScreenArea
 .PrintPrompt
-	hlcoord 11, 6
-	ld [hl], $CB
-	inc hl
-	ld [hl], $CC
-	inc hl
 	ld a, d
 	cp 2
-	jr z, .expPrompt
-	ld [hl], $CD
-	inc hl
-	ld [hl], $7A
-	ret
+	ld hl, .statsPrompt
+	jr nz, .copyPrompt
+	ld hl, .expPrompt
+.copyPrompt
+	decoord 11, 6
+	ld bc, 8
+	jp CopyData
+.statsPrompt
+	db "─────", $CB, $CC, $CD
 .expPrompt
-	ld [hl], $CE
-	inc hl
-	ld [hl], $CF
-	ret
+	db "─", $CB, $CC, $CE, $CF, "─", $D0, $D1
 
 PrintStat:
 	push hl

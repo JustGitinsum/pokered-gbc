@@ -10,7 +10,7 @@
 	INCBIN "gfx/pokemon/gsfront/gallade.pic", 0, 1 ; sprite dimensions
 	dw GalladePicFront, GalladePicBack
 
-	db SLASH, POUND, LEER, NO_MOVE ; level 1 learnset
+	db POUND, LEER, NO_MOVE, NO_MOVE ; level 1 learnset
 	db GROWTH_SLOW ; growth rate
 
 ; tm/hm learnset

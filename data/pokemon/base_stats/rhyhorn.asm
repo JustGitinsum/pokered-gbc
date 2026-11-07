@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw RhyhornPicFront, RhyhornPicBack
 
-	db HORN_ATTACK, NO_MOVE, NO_MOVE, NO_MOVE ; level 1 learnset
+	db TACKLE, TAIL_WHIP, NO_MOVE, NO_MOVE ; level 1 learnset
 	db GROWTH_SLOW ; growth rate
 
 	; tm/hm learnset

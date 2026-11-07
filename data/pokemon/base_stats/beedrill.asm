@@ -19,10 +19,9 @@ ENDC
 
 	; tm/hm learnset
 	tmhm AERIAL_ACE,     AIR_SLASH,      CLOSE_COMBAT,   TOXIC,          X_SCISSOR,      \
-	     SLUDGE_BOMB,    HYPER_BEAM,     SPORE,          POISON_JAB,     SIGNAL_BEAM,    \
-	     GIGA_DRAIN,     MIGHTY_CLEAVE,  AURA_WHEEL,     GLACIAL_LANCE,  ACCELEROCK,     \
-		 LEAF_BLADE,     STEEL_WING,     PSYCHO_CUT,     CUT,            FLY,            \
-		 FLASH 
+	     SLUDGE_BOMB,    HYPER_BEAM,     POISON_JAB,     SIGNAL_BEAM,    GIGA_DRAIN,     \
+		 MIGHTY_CLEAVE,  AURA_WHEEL,     GLACIAL_LANCE,  ACCELEROCK,     LEAF_BLADE,     \
+		 STEEL_WING,     PSYCHO_CUT,     CUT,            FLY 
 	; end
 
 	db BANK(BeedrillPicFront)
