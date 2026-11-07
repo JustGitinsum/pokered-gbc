@@ -24,6 +24,7 @@ Route8_TextPointers:
 	dw_const Route8CooltrainerF3Text,   TEXT_ROUTE8_COOLTRAINER_F3
 	dw_const Route8Gambler2Text,        TEXT_ROUTE8_GAMBLER2
 	dw_const Route8CooltrainerF4Text,   TEXT_ROUTE8_COOLTRAINER_F4
+	dw_const Route8VoltorbText,         TEXT_ROUTE8_VOLTORB
 	dw_const Route8UndergroundSignText, TEXT_ROUTE8_UNDERGROUND_SIGN
 
 Route8TrainerHeaders:
@@ -46,6 +47,10 @@ Route8TrainerHeader7:
 	trainer EVENT_BEAT_ROUTE_8_TRAINER_7, 2, Route8Gambler2BattleText, Route8Gambler2EndBattleText, Route8Gambler2AfterBattleText
 Route8TrainerHeader8:
 	trainer EVENT_BEAT_ROUTE_8_TRAINER_8, 4, Route8CooltrainerF4BattleText, Route8CooltrainerF4EndBattleText, Route8CooltrainerF4AfterBattleText
+	; Preserve the relocated Voltorb's existing Power Plant event bit.
+	def_trainers 5
+Route8VoltorbTrainerHeader:
+	trainer EVENT_BEAT_POWER_PLANT_VOLTORB_4, 0, Route8VoltorbBattleText, Route8VoltorbBattleText, Route8VoltorbBattleText
 	db -1 ; end
 
 Route8SuperNerd1Text:
@@ -208,6 +213,18 @@ Route8CooltrainerF4EndBattleText:
 
 Route8CooltrainerF4AfterBattleText:
 	text_far _Route8CooltrainerF4AfterBattleText
+	text_end
+
+Route8VoltorbText:
+	text_asm
+	ld hl, Route8VoltorbTrainerHeader
+	call TalkToTrainer
+	ld a, [wCurMapScript]
+	ld [wRoute8CurScript], a
+	jp TextScriptEnd
+
+Route8VoltorbBattleText:
+	text_far _PowerPlantVoltorbBattleText
 	text_end
 
 Route8UndergroundSignText:

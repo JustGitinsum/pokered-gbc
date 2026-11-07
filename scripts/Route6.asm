@@ -21,6 +21,7 @@ Route6_TextPointers:
 	dw_const Route6CooltrainerM2Text,       TEXT_ROUTE6_COOLTRAINER_M2
 	dw_const Route6CooltrainerF2Text,       TEXT_ROUTE6_COOLTRAINER_F2
 	dw_const Route6Youngster2Text,          TEXT_ROUTE6_YOUNGSTER2
+	dw_const Route6VoltorbText,             TEXT_ROUTE6_VOLTORB
 	dw_const Route6UndergroundPathSignText, TEXT_ROUTE6_UNDERGROUND_PATH_SIGN
 
 Route6TrainerHeaders:
@@ -37,6 +38,10 @@ Route6TrainerHeader4:
 	trainer EVENT_BEAT_ROUTE_6_TRAINER_4, 3, Route6CooltrainerF2BattleText, Route6CooltrainerF2EndBattleText, Route6CooltrainerF2AfterBattleText
 Route6TrainerHeader5:
 	trainer EVENT_BEAT_ROUTE_6_TRAINER_5, 3, Route6Youngster2BattleText, Route6Youngster2EndBattleText, Route6Youngster2AfterBattleText
+	; Preserve the relocated Voltorb's existing Power Plant event bit.
+	def_trainers 6
+Route6VoltorbTrainerHeader:
+	trainer EVENT_BEAT_POWER_PLANT_VOLTORB_5, 0, Route6VoltorbBattleText, Route6VoltorbBattleText, Route6VoltorbBattleText
 	db -1 ; end
 
 Route6CooltrainerM1Text:
@@ -141,6 +146,18 @@ Route6Youngster2EndBattleText:
 
 Route6Youngster2AfterBattleText:
 	text_far _Route6Youngster2AfterBattleText
+	text_end
+
+Route6VoltorbText:
+	text_asm
+	ld hl, Route6VoltorbTrainerHeader
+	call TalkToTrainer
+	ld a, [wCurMapScript]
+	ld [wRoute6CurScript], a
+	jp TextScriptEnd
+
+Route6VoltorbBattleText:
+	text_far _PowerPlantVoltorbBattleText
 	text_end
 
 Route6UndergroundPathSignText:

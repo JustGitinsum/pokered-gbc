@@ -792,6 +792,9 @@ DEF INDIGO_PLATEAU_EVENTS_END EQU const_value - 1
 	const_next $9E0
 	const EVENT_BECAME_CHAMPION
 
+; Route 9 Lapras Cave events
+	const EVENT_BEAT_ROUTE_9_LAPRAS
+
 ; End of events
 	const_next $A00
 DEF NUM_EVENTS EQU const_value

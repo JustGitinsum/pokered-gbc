@@ -97,7 +97,7 @@ DEF NUM_BADGES EQU const_value
 
 ; wStatusFlags4
 	const_def
-	const BIT_GOT_LAPRAS              ; 0
+	const BIT_GOT_PORYGON              ; 0
 	const BIT_UNKNOWN_4_1             ; 1
 	const BIT_USED_POKECENTER         ; 2
 	const BIT_GOT_STARTER             ; 3

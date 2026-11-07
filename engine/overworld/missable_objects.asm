@@ -73,14 +73,15 @@ LoadMissableObjects:
 	cp -1
 	jr z, .done     ; end of list
 	cp b
-	jr nz, .done    ; not for current map anymore
+	jr nz, .nextEntry ; relocated objects retain their global flag indices
 	ld a, [wBuffer + 1]
 	ld [de], a                 ; write (map-local) sprite ID
 	inc de
 	ld a, c
-	inc c
 	ld [de], a                 ; write (global) missable object index
 	inc de
+.nextEntry
+	inc c
 	jr .writeMissableObjectsListLoop
 .done
 	ld a, -1

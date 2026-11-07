@@ -248,6 +248,7 @@ WildDataPointers:
 	dw NothingWildMons
 	dw NothingWildMons
 	dw NothingWildMons
+	dw NothingWildMons ; ROUTE_9_LAPRAS_CAVE
 	assert_table_length NUM_MAPS
 	dw -1 ; end
 

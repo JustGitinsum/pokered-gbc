@@ -249,4 +249,5 @@ MapHeaderPointers::
 	dw LoreleisRoom_h
 	dw BrunosRoom_h
 	dw AgathasRoom_h
+	dw Route9LaprasCave_h
 	assert_table_length NUM_MAPS

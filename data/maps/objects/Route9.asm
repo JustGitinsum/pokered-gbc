@@ -14,6 +14,7 @@ Route9_Object:
 	db $2c ; border block
 
 	def_warp_events
+	warp_event 32,  1, ROUTE_9_LAPRAS_CAVE, 1
 
 	def_bg_events
 	bg_event 25,  7, TEXT_ROUTE9_SIGN

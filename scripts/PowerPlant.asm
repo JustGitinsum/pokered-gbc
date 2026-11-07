@@ -19,8 +19,6 @@ PowerPlant_TextPointers:
 	dw_const PowerPlantVoltorb2Text,   TEXT_POWERPLANT_VOLTORB2
 	dw_const PowerPlantVoltorb3Text,   TEXT_POWERPLANT_VOLTORB3
 	dw_const PowerPlantElectrode1Text, TEXT_POWERPLANT_ELECTRODE1
-	dw_const PowerPlantVoltorb4Text,   TEXT_POWERPLANT_VOLTORB4
-	dw_const PowerPlantVoltorb5Text,   TEXT_POWERPLANT_VOLTORB5
 	dw_const PowerPlantElectrode2Text, TEXT_POWERPLANT_ELECTRODE2
 	dw_const PowerPlantVoltorb6Text,   TEXT_POWERPLANT_VOLTORB6
 	dw_const PowerPlantZapdosText,     TEXT_POWERPLANT_ZAPDOS
@@ -40,10 +38,8 @@ Voltorb2TrainerHeader:
 	trainer EVENT_BEAT_POWER_PLANT_VOLTORB_2, 0, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText
 Voltorb3TrainerHeader:
 	trainer EVENT_BEAT_POWER_PLANT_VOLTORB_3, 0, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText
-Voltorb4TrainerHeader:
-	trainer EVENT_BEAT_POWER_PLANT_VOLTORB_4, 0, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText
-Voltorb5TrainerHeader:
-	trainer EVENT_BEAT_POWER_PLANT_VOLTORB_5, 0, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText
+	; Voltorbs 4 and 5 moved to routes; retain the remaining encounters' event bits.
+	def_trainers 7
 Voltorb6TrainerHeader:
 	trainer EVENT_BEAT_POWER_PLANT_VOLTORB_6, 0, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText, PowerPlantVoltorbBattleText
 Voltorb7TrainerHeader:
@@ -76,16 +72,6 @@ PowerPlantVoltorb3Text:
 PowerPlantElectrode1Text:
 	text_asm
 	ld hl, Voltorb3TrainerHeader
-	jr PowerPlantInitBattleScript
-
-PowerPlantVoltorb4Text:
-	text_asm
-	ld hl, Voltorb4TrainerHeader
-	jr PowerPlantInitBattleScript
-
-PowerPlantVoltorb5Text:
-	text_asm
-	ld hl, Voltorb5TrainerHeader
 	jr PowerPlantInitBattleScript
 
 PowerPlantElectrode2Text:
