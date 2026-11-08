@@ -215,6 +215,7 @@ StatusScreenLoadMonData:
 	jp CalcStats
 
 RestoreStatusScreen:
+	call GBPalWhiteOutWithDelay3
 	; The moves page replaces loaded experience with the amount to next level.
 	call StatusScreenLoadMonData
 	xor a
@@ -228,7 +229,8 @@ RestoreStatusScreen:
 	call StatusScreen.drawStatsPage
 	ld a, 1
 	ldh [hAutoBGTransferEnabled], a
-	jp Delay3
+	call Delay3
+	jp GBPalNormal
 
 ; a = type ID, c = first icon tile ID, hl = tile-map destination
 PrintStatusTypeIcon:
@@ -459,6 +461,7 @@ StatusStatsText:
 	next "Speed@"
 
 StatusScreen2:
+	call GBPalWhiteOutWithDelay3
 	ldh a, [hTileAnimations]
 	push af
 	xor a
@@ -528,6 +531,9 @@ StatusScreen2:
 	ld a, [hl]
 	and PP_MASK
 	ld [wStatusScreenCurrentPP], a
+	push de
+	farcall SetStatusScreenPPPalette
+	pop de
 	ld h, d
 	ld l, e
 	push hl
@@ -589,6 +595,7 @@ StatusScreen2:
 	ld a, $1
 	ldh [hAutoBGTransferEnabled], a
 	call Delay3
+	call GBPalNormal
 	; call WaitForTextScrollButtonPress ; wait for button
 	pop af
 	; ldh [hTileAnimations], a

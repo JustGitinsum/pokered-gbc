@@ -352,6 +352,12 @@ Declining to replace a move or canceling the forget-move screen returns to the
 Reminder's move list for the same Pokemon. Canceling that list still ends the visit.
 Ether, Max Ether, and PP Max use a dedicated move selector with each move's
 current PP / maximum PP on the row beneath its name, including PP Max bonuses.
+Current PP is red at 0 or 1 and yellow at or below half the maximum (rounded up),
+matching the battle move preview and status-screen move page; higher values and
+maximum PP keep their usual colors. PP text colors are restored when either move
+selector closes or the status screen returns to the stats page.
+Status-page switches briefly white out while tiles and palettes update, preventing
+type-icon and PP colors from appearing on the outgoing page.
 Elixir and Max Elixir continue to restore all moves without a move selector.
 
 Original README follows...

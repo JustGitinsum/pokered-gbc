@@ -33,12 +33,18 @@ HandlePartyMenuStart::
 	ld a, [wIsInBattle]
 	and a
 	jr nz, .battle
+	; Status cries overwrite the party menu's BankswitchHome return bank.
+	ld a, [wBankswitchHomeSavedROMBank]
+	push af
 	ld a, [wCurrentMenuItem]
 	ld [wWhichPokemon], a
 	call ClearSprites
 	xor a ; PLAYER_PARTY_DATA
 	ld [wMonDataLocation], a
 	predef StatusScreenLoop
+	pop bc
+	ld a, b
+	ld [wBankswitchHomeSavedROMBank], a
 	ld a, 1
 	ld [wPartyMenuStatScreenUsed], a
 	; PartyMenuInit and DrawPartyMenu are run by the Home caller: PartyMenuInit

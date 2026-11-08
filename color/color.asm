@@ -410,11 +410,208 @@ ENDC
     ld a, [wPlayerMoveCategory]
     call LoadMoveCategoryPalette
 
+    ; Use a separate palette for the current PP value when low.
+    ld a, [wMaxPP]
+    ld b, a
+    ld a, [wBattleMenuCurrentPP]
+    call GetPPTextPalette
+    and a
+    jr z, .normalPP
+    ld d, a
+    ld e, 6
+    farcall LoadSGBPalette
+    ld a, 6
+    jr .setPPPaletteMap
+.normalPP
+    xor a
+.setPPPaletteMap
+    call UpdateBattleMenuPPPalette
+
     ; Apply these palette changes during the menu's existing final delay.
     ld a, 2
     ldh [rWBK], a
     ld a, 1
     ld [W2_ForceBGPUpdate], a
+    ldh [rWBK], a
+    ret
+
+ClearBattleMenuPPPalette:
+    xor a
+UpdateBattleMenuPPPalette:
+    ld c, a
+    ldh a, [rWBK]
+    ld b, a ; The stack is banked WRAM; do not use it until the bank is restored.
+    ld a, 2
+    ldh [rWBK], a
+    ld a, c
+    ld hl, W2_TilesetPaletteMap + 16 * SCREEN_WIDTH + 16
+    ld [hli], a
+    ld [hl], a
+    ld a, 3
+    ld [W2_StaticPaletteMapChanged], a
+    ld a, b
+    ldh [rWBK], a
+    ret
+
+; a = current PP, b = maximum PP; returns a = text palette, or 0 for unchanged.
+GetPPTextPalette:
+    cp 2
+    jr c, .red
+    ld c, a
+    ld a, b
+    inc a
+    srl a ; ceiling of half the maximum PP
+    cp c
+    ld a, 0
+    ret c
+    ld a, PAL_YELLOWTEXT
+    ret
+.red
+    ld a, PAL_REDTEXT
+    ret
+
+; The move page replaces type icons, freeing their palette slots 5-6.
+InitStatusScreenPPPalettes:
+    ldh a, [rWBK]
+    ld b, a
+    ld a, 2
+    ldh [rWBK], a
+    push bc
+    ld d, PAL_REDTEXT
+    ld e, 5
+    farcall LoadSGBPalette
+    ld d, PAL_YELLOWTEXT
+    ld e, 6
+    farcall LoadSGBPalette
+    ld a, 1
+    ld [W2_ForceBGPUpdate], a
+    pop af
+    ldh [rWBK], a
+    ret
+
+; de = current PP's tile-map address on the status-screen move page.
+SetStatusScreenPPPalette:
+    push de
+    ld a, [wMaxPP]
+    ld b, a
+    ld a, [wStatusScreenCurrentPP]
+    call GetPPTextPalette
+    pop hl
+    and a
+    ret z
+    cp PAL_REDTEXT
+    ld e, 5
+    jr z, .slotReady
+    inc e
+.slotReady
+    ld bc, W2_TilesetPaletteMap - wTileMap
+    add hl, bc
+    jp SetCurrentPPPaletteTiles
+
+; Party-menu backgrounds use slots 0-3; borrow slots 4-5 for PP text.
+InitPPRestorePPPalettes:
+    ldh a, [rWBK]
+    ld b, a
+    ld a, 2
+    ldh [rWBK], a
+    push bc
+    ld hl, W2_BgPaletteData + 4 * PALETTE_SIZE
+    ld de, W2_PPRestoreSavedPalettes
+    ld bc, 2 * PALETTE_SIZE
+    call CopyData
+    ld hl, W2_TilesetPaletteMap + 5 * SCREEN_WIDTH + 14
+    ld de, W2_PPRestoreSavedPaletteMap
+    ld b, NUM_MOVES
+.saveRow
+    ld a, [hli]
+    ld [de], a
+    inc de
+    ld a, [hl]
+    ld [de], a
+    inc de
+    ld a, l
+    add 2 * SCREEN_WIDTH - 1
+    ld l, a
+    jr nc, .nextRow
+    inc h
+.nextRow
+    dec b
+    jr nz, .saveRow
+    ld d, PAL_REDTEXT
+    ld e, 4
+    farcall LoadSGBPalette
+    ld d, PAL_YELLOWTEXT
+    ld e, 5
+    farcall LoadSGBPalette
+    ld a, 1
+    ld [W2_ForceBGPUpdate], a
+    pop af
+    ldh [rWBK], a
+    ret
+
+SetPPRestorePPPalette:
+    ld a, [wMaxPP]
+    ld b, a
+    ld a, [wStatusScreenCurrentPP]
+    call GetPPTextPalette
+    and a
+    ret z
+    cp PAL_REDTEXT
+    ld e, 4
+    jr z, .slotReady
+    inc e
+.slotReady
+    ld a, [wCurrentMenuItem]
+    ld hl, W2_TilesetPaletteMap + 5 * SCREEN_WIDTH + 14
+    ld bc, 2 * SCREEN_WIDTH
+    call AddNTimes
+SetCurrentPPPaletteTiles:
+    ldh a, [rWBK]
+    ld b, a
+    ld a, 2
+    ldh [rWBK], a
+    ld a, e
+    ld [hli], a
+    ld [hl], a
+    ld a, 3
+    ld [W2_StaticPaletteMapChanged], a
+    ld a, b
+    ldh [rWBK], a
+    ret
+
+RestorePPRestorePPPalettes:
+    ldh a, [rWBK]
+    ld b, a
+    ld a, 2
+    ldh [rWBK], a
+    push bc
+    ld hl, W2_PPRestoreSavedPalettes
+    ld de, W2_BgPaletteData + 4 * PALETTE_SIZE
+    ld bc, 2 * PALETTE_SIZE
+    call CopyData
+    ld hl, W2_TilesetPaletteMap + 5 * SCREEN_WIDTH + 14
+    ld de, W2_PPRestoreSavedPaletteMap
+    ld b, NUM_MOVES
+.restoreRow
+    ld a, [de]
+    ld [hli], a
+    inc de
+    ld a, [de]
+    ld [hl], a
+    inc de
+    ld a, l
+    add 2 * SCREEN_WIDTH - 1
+    ld l, a
+    jr nc, .nextRow
+    inc h
+.nextRow
+    dec b
+    jr nz, .restoreRow
+    ld a, 3
+    ld [W2_StaticPaletteMapChanged], a
+    ld a, 1
+    ld [W2_ForceBGPUpdate], a
+    pop af
     ldh [rWBK], a
     ret
 
@@ -967,6 +1164,9 @@ ENDC
 	ld hl, PokemonPicPaletteRects
 	call ApplyPokemonPicPaletteRects
 
+	; Page changes keep BGP unchanged, so explicitly refresh the restored palettes.
+	ld a, 1
+	ld [W2_ForceBGPUpdate], a
 	xor a
 	ldh [rWBK], a
 	ret

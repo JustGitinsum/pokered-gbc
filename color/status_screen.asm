@@ -16,6 +16,7 @@ ENDC
 	ret
 
 StatusScreen2Hook:
+	farcall InitStatusScreenPPPalettes
 IF GEN_2_GRAPHICS
 	ldh a, [rWBK]
 	ld d, a

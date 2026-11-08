@@ -61,6 +61,8 @@ DEF ITEM_MENU_NUM_SAVED_PALS       EQU 5
 DEF W2_ItemMenuPalettesActive      EQU $d78e
 DEF W2_ItemMenuTileBasedPalettes   EQU $d78f
 DEF W2_BagPocketTilesActive        EQU $d791
+DEF W2_PPRestoreSavedPaletteMap   EQU $d792 ; two current-PP tiles per move, 8 bytes
+DEF W2_PPRestoreSavedPalettes     EQU $d79a ; BG slots 4-5, 16 bytes
 DEF W2_ItemMenuSavedBgPalettes     EQU $d800 ; slots 2-6, $28 bytes
 DEF W2_ItemMenuSavedPaletteMap     EQU $d830 ; $180 bytes, through $d9af
 DEF W2_BattleBagSavedBackPicTiles  EQU $d9b0 ; last two player-picture tiles, $20 bytes

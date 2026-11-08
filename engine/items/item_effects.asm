@@ -2237,6 +2237,7 @@ PUSHS
 SECTION "PP Item Move Menu", ROMX
 
 PPRestoreMoveSelectionMenu:
+	farcall InitPPRestorePPPalettes
 	hlcoord 4, 3
 	lb bc, 8, 14
 	call TextBoxBorder
@@ -2269,6 +2270,7 @@ PPRestoreMoveSelectionMenu:
 	ld a, [hl]
 	and PP_MASK
 	ld [wStatusScreenCurrentPP], a
+	farcall SetPPRestorePPPalette
 	pop hl
 	push hl
 	ld bc, SCREEN_WIDTH + 5
@@ -2314,6 +2316,9 @@ PPRestoreMoveSelectionMenu:
 	ld a, 1
 	ld [wMenuWrappingEnabled], a
 	call HandleMenuInput
+	push af
+	farcall RestorePPRestorePPPalettes
+	pop af
 	ld b, a
 	pop af
 	ldh [hUILayoutFlags], a

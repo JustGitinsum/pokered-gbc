@@ -338,6 +338,7 @@ MainInBattleLoop:
 	ld [wMenuItemToSwap], a
 	call MoveSelectionMenu
 	push af
+	farcall ClearBattleMenuPPPalette
 	call LoadScreenTilesFromBuffer1
 	call DrawHUDsAndHPBars
 

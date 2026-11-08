@@ -304,10 +304,10 @@ HandlePartyMenuInput::
 	ld a, [wBankswitchHomeSavedROMBank]
 	push af
 	call PartyMenuInit
-	pop af
-	ld [wBankswitchHomeSavedROMBank], a
 	; Status/Learnset screens reuse party-icon tiles, so redraw the full menu.
 	call DrawPartyMenu
+	pop af
+	ld [wBankswitchHomeSavedROMBank], a
 	jp HandlePartyMenuInput
 .noPokemonChosen
 	call BankswitchBack
