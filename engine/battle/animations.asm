@@ -1163,6 +1163,7 @@ _AnimationWaterDroplets:
 
 AnimationSlideMonUp:
 ; Slides the mon's sprite upwards.
+	farcall BeginBattlePictureSlideUp
 	ld c, 7
 	ldh a, [hWhoseTurn]
 	and a
@@ -1175,7 +1176,8 @@ AnimationSlideMonUp:
 	ld a, $ff
 .next
 	ld [wSlideMonUpBottomRowLeftTile], a
-	jp _AnimationSlideMonUp
+	call _AnimationSlideMonUp
+	farjp EndBattlePictureSlideUp
 
 AnimationSlideMonDown:
 ; Slides the mon's sprite down out of the screen.
@@ -1859,6 +1861,7 @@ AnimationSlideMonHalfOff:
 	jp Delay3
 
 CopyTempPicToMonPic:
+	farcall MarkBattlePictureReplaced
 	ldh a, [hWhoseTurn]
 	and a
 	ld hl, vBackPic ; player turn

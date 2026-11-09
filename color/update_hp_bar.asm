@@ -47,10 +47,21 @@ DrawHPBarWithColor:
 	ld a, [wLastMenuItem]
 	call AddNTimes
 
-	ld bc, SCREEN_WIDTH * 2
 	pop af ; Get palette #
 	inc a
+	ld d, a
+	ld e, 2
+	; Preserve the party status icon at columns 17-18 on both rows.
+.row
+	ld a, d
+	ld bc, 17
 	call FillMemory
+	inc hl
+	inc hl
+	ld [hl], d
+	inc hl
+	dec e
+	jr nz, .row
 
 	ld a, 3
 	ld [W2_StaticPaletteMapChanged], a

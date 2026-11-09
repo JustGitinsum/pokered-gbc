@@ -76,6 +76,7 @@ StartMenu_Pokemon::
 	call HandleMenuInput
 	push af
 	call LoadScreenTilesFromBuffer1 ; restore saved screen
+	farcall ApplyPartyMenuStatusIconAttributes
 	pop af
 	bit B_PAD_B, a
 	jp nz, .loop

@@ -63,6 +63,17 @@ DEF W2_ItemMenuTileBasedPalettes   EQU $d78f
 DEF W2_BagPocketTilesActive        EQU $d791
 DEF W2_PPRestoreSavedPaletteMap   EQU $d792 ; two current-PP tiles per move, 8 bytes
 DEF W2_PPRestoreSavedPalettes     EQU $d79a ; BG slots 4-5, 16 bytes
+DEF W2_BattlePaletteSplitActive  EQU $d7aa
+DEF W2_BattleLowerPalette        EQU $d7ab ; slot 6 below scanline 110, 8 bytes
+; LCD handlers are serialized: remap and immediately upload before reuse.
+DEF W2_BattleSplitPaletteBuffer EQU $d7b3 ; shared BGP-remapped scratch, 8 bytes
+DEF W2_BattlePictureSplitActive EQU $d7bb
+DEF W2_BattlePicturePalette     EQU $d7bc ; slot 6 after the enemy status row, 8 bytes
+DEF W2_BattlePictureReplaced    EQU $d7c4 ; current graphics are not the original front picture
+DEF W2_BattlePictureSlot5Active EQU $d7c5 ; upward slide temporarily borrows category palette
+DEF W2_BattlePictureTileAttrs   EQU $d7c6 ; 49 front-picture tiles, through $d7f6
+ASSERT HIGH(W2_BattleLowerPalette) == HIGH(W2_BattleLowerPalette + 7)
+ASSERT HIGH(W2_BattlePicturePalette) == HIGH(W2_BattlePicturePalette + 7)
 DEF W2_ItemMenuSavedBgPalettes     EQU $d800 ; slots 2-6, $28 bytes
 DEF W2_ItemMenuSavedPaletteMap     EQU $d830 ; $180 bytes, through $d9af
 DEF W2_BattleBagSavedBackPicTiles  EQU $d9b0 ; last two player-picture tiles, $20 bytes

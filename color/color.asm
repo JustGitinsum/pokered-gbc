@@ -175,7 +175,8 @@ CycleBattleMenuBall:
 	ld [wBattleMenuBall], a
 	ret
 
-; E = ball item ID. Slot 7 is unused by battle HUDs and picture accents.
+; E = ball item ID. Borrows the move category slot, which the main battle menu doesn't
+; display; slots 6-7 belong to the status icons.
 SetBattleMenuBallPalette:
 	ld a, e
 	dec a
@@ -184,7 +185,7 @@ SetBattleMenuBallPalette:
 	ld hl, .palettes
 	add hl, de
 	ld d, [hl]
-	ld e, 7
+	ld e, 5
 	farcall LoadSGBPalette
 	ldh a, [rWBK]
 	ld b, a
@@ -193,7 +194,7 @@ SetBattleMenuBallPalette:
 	push bc
 	ld a, 1
 	ld [W2_ForceBGPUpdate], a
-	ld a, 7
+	ld a, 5
 	jr UpdateBattleMenuBallPalette
 .palettes
 	; Item ID order: Master, Ultra, Great, Poke Ball.
@@ -378,6 +379,9 @@ ENDC
 	ld e, TRAINER_PIC_LINK_BATTLE
 	call SetPal_PlayerFrontPic
 
+	callfar CaptureBattlePicturePalette
+	callfar RefreshBattleStatusIconColors
+
 	xor a
 	ld [W2_TileBasedPalettes], a ; Use a direct color map instead of assigning colors to tiles
 	ld a, 3
@@ -418,11 +422,11 @@ ENDC
     and a
     jr z, .normalPP
     ld d, a
-    ld e, 6
-    farcall LoadSGBPalette
+    farcall SetBattleLowPPPalette
     ld a, 6
     jr .setPPPaletteMap
 .normalPP
+    farcall ClearBattlePaletteSplit
     xor a
 .setPPPaletteMap
     call UpdateBattleMenuPPPalette
@@ -436,6 +440,7 @@ ENDC
     ret
 
 ClearBattleMenuPPPalette:
+    farcall ClearBattlePaletteSplit
     xor a
 UpdateBattleMenuPPPalette:
     ld c, a
@@ -700,6 +705,10 @@ SetPal_ItemMenu::
 ; WRAM bank 2 must be selected before calling (including before pushing).
 ; Save once so switching items or opening quantity menus preserves the original.
 SaveItemMenuPalettes:
+	; Item previews own slot 6; battle raster swaps must not recolor them.
+	xor a
+	ld [W2_BattlePaletteSplitActive], a
+	ld [W2_BattlePictureSplitActive], a
 	ld a, [W2_ItemMenuPalettesActive]
 	and a
 	ret nz
@@ -1587,13 +1596,13 @@ SetPal_PartyMonIconSprite:
 	ld a, PAL_PURPLEMON
 	bit PSN, b
 	jr nz, SetMonIconSpritePalette
-	ld a, PAL_CHARMANDER
+	ld a, PAL_REDBAR
 	bit BRN, b
 	jr nz, SetMonIconSpritePalette
 	ld a, PAL_EXP
 	bit FRZ, b
 	jr nz, SetMonIconSpritePalette
-	ld a, PAL_PSYDUCK
+	ld a, PAL_YELLOWBAR
 	bit PAR, b
 	jr nz, SetMonIconSpritePalette
 
@@ -2279,15 +2288,31 @@ TrainerPicPaletteRects:
 	db 1, 1
 	db $ff
 
+; Slot-6 battle accents: species, palette ID, screen x, screen y, height, width.
+; Use this macro for new slot-6 PIC_CONTEXT_BATTLE entries. Rows 0-1 use the
+; enemy status palette; animation tracking covers the 7x7 picture at (12, 0).
+; Upward slides borrow slot 5 so moving accents can cross the status rows.
+; A species can have multiple rectangles, but only one slot-6 palette.
+MACRO battle_pic_slot6_rect
+	ASSERT _NARG == 6, "battle_pic_slot6_rect needs six arguments"
+	ASSERT (\3) >= 12 && (\5) > 0 && (\6) > 0, "Invalid battle picture rectangle"
+	ASSERT (\3) + (\6) <= 19, "Battle picture rectangle exceeds picture width"
+	ASSERT (\4) >= 2 && (\4) + (\5) <= 7, "Slot-6 battle accents must stay in picture rows 2-6"
+	IF DEF(_battle_pic_slot6_palette_\1)
+		ASSERT _battle_pic_slot6_palette_\1 == (\2), "A species must use one slot-6 battle palette"
+	ELSE
+		DEF _battle_pic_slot6_palette_\1 EQU \2
+	ENDC
+	db PIC_CONTEXT_BATTLE, \1, \2, 6
+	dw (\4) * SCREEN_WIDTH + (\3)
+	db \5, \6
+ENDM
+
 ; context, species, palette data ID, palette slot, map offset, height, width
 PokemonPicPaletteRects:
 ;STARMIE
-	db PIC_CONTEXT_BATTLE, STARMIE, PAL_REDMON, 6
-	dw 3 * SCREEN_WIDTH + 11 + 3 ; enemy image starts at screen x=11
-	db 2, 3
-	db PIC_CONTEXT_BATTLE, STARMIE, PAL_REDMON, 6
-	dw 5 * SCREEN_WIDTH + 11 + 4
-	db 1, 1
+	battle_pic_slot6_rect STARMIE, PAL_REDMON, 14, 3, 2, 3
+	battle_pic_slot6_rect STARMIE, PAL_REDMON, 15, 5, 1, 1
 
 	db PIC_CONTEXT_STATUS, STARMIE, PAL_REDMON, 2
 	dw 3 * SCREEN_WIDTH + 3

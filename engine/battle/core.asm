@@ -17,6 +17,7 @@ SlidePlayerAndEnemySilhouettesOnScreen:
 	call DisableLCD
 	call LoadFontTilePatterns
 	call LoadHudAndHpBarAndStatusTilePatterns
+	callfar LoadStatusIconTiles
 	ld hl, vBGMap0
 	ld bc, TILEMAP_AREA
 .clearBackgroundLoop
@@ -1896,13 +1897,10 @@ ENDC
 	call CopyData
 	hlcoord 14, 8
 	push hl
-	inc hl
 	ld de, wLoadedMonStatus
-	call PrintStatusConditionNotFainted
+	callfar PrintBattleStatusCondition
 	pop hl
-	jr nz, .doNotPrintLevel
 	call PrintLevel
-.doNotPrintLevel
 	ld a, [wLoadedMonSpecies]
 	ld [wCurPartySpecies], a
 	hlcoord 10, 9
@@ -1951,15 +1949,12 @@ ELSE
 	hlcoord 4, 1
 ENDC
 	push hl
-	inc hl
 	ld de, wEnemyMonStatus
-	call PrintStatusConditionNotFainted
+	callfar PrintBattleStatusCondition
 	pop hl
-	jr nz, .skipPrintLevel ; if the mon has a status condition, skip printing the level
 	ld a, [wEnemyMonLevel]
 	ld [wLoadedMonLevel], a
 	call PrintLevel
-.skipPrintLevel
 	ld hl, wEnemyMonHP
 	ld a, [hli]
 	ldh [hMultiplicand + 1], a

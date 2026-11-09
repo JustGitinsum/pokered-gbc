@@ -347,34 +347,6 @@ DrawPartyMenuCommon::
 	ld b, BANK(RedrawPartyMenu_)
 	jp Bankswitch
 
-; prints a pokemon's status condition
-; INPUT:
-; de = address of status condition
-; hl = destination address
-PrintStatusCondition::
-	push de
-	dec de
-	dec de ; de = address of current HP
-	ld a, [de]
-	ld b, a
-	dec de
-	ld a, [de]
-	or b ; is the pokemon's HP zero?
-	pop de
-	jr nz, PrintStatusConditionNotFainted
-; if the pokemon's HP is 0, print "FNT"
-	ld a, "F"
-	ld [hli], a
-	ld a, "N"
-	ld [hli], a
-	ld [hl], "T"
-	and a
-	ret
-
-PrintStatusConditionNotFainted::
-	homecall_sf PrintStatusAilment
-	ret
-
 ; function to print pokemon level, leaving off the ":L" if the level is at least 100
 ; INPUT:
 ; hl = destination address

@@ -1,13 +1,190 @@
 
 ; Prepare stuff to be done during vblank
-; This is called from the lcd interrupt, at line $70
+; The optional line-16 interrupt restores picture accents. Line $6e prepares VBlank.
 GbcPrepareVBlank::
 	ld a, 2
 	ldh [rWBK], a
+	ldh a, [rLYC]
+	cp 16
+	jr nz, .prepare
+	ld a, $6e
+	ldh [rLYC], a
+	ld a, [W2_BattlePictureSplitActive]
+	and a
+	jr z, .done
+	ld de, W2_BattlePicturePalette
+	ld hl, W2_BattleSplitPaletteBuffer
+	call RemapBattleSplitPalette
+	call ApplyBattleSplitPalette
+	jr .done
+.prepare
+	call ApplyBattleLowerPalette
+	call RefreshBattlePictureAttributes
 	call RefreshWindowPalettesPreVBlank
 	call RefreshPalettesPreVBlank
+.done
 	xor a
 	ldh [rWBK], a
+	ret
+
+; Picture-moving animations change tile IDs, not the static palette rectangles.
+; Reassociate attributes with the original front-picture tiles before transfer.
+RefreshBattlePictureAttributes:
+	ld a, [W2_BattlePictureSplitActive]
+	and a
+	ret z
+	ld hl, wTileMap + 12
+	ld de, W2_TilesetPaletteMap + 12
+	ld b, 7
+.row
+	ld c, 8 ; includes the extra column used by horizontal slide animations
+.tile
+	push bc
+	ld a, [hli]
+	ld b, a
+	ld c, 1 ; the enemy picture's primary palette for blanks/non-picture tiles
+	ld a, [W2_BattlePictureReplaced]
+	and a
+	jr nz, .attribute
+	ld a, b
+	cp 49
+	jr nc, .attribute
+	push hl
+	ld hl, W2_BattlePictureTileAttrs
+	ld b, 0
+	ld c, a
+	add hl, bc
+	ld c, [hl]
+	pop hl
+	ld a, c
+	and 7
+	cp 6
+	jr nz, .attribute
+	ld a, [W2_BattlePictureSlot5Active]
+	and a
+	jr z, .attribute
+	; Preserve bank/flip bits while moving picture accents off the HUD slot.
+	dec c
+.attribute
+	ld a, [de]
+	cp c
+	jr z, .unchanged
+	ld a, c
+	ld [de], a
+	ld a, 3
+	ld [W2_StaticPaletteMapChanged], a
+.unchanged
+	inc de
+	pop bc
+	dec c
+	jr nz, .tile
+	push de
+	ld de, SCREEN_WIDTH - 8
+	add hl, de
+	pop de
+	ld a, e
+	add SCREEN_WIDTH - 8
+	ld e, a
+	jr nc, .nextRow
+	inc d
+.nextRow
+	dec b
+	jr nz, .row
+	ret
+
+; The lower menu uses slot 6 for PP text; the upper HUD keeps its original palette.
+; Use the buffered BGP mapping so raster colors fade with the rest of the screen.
+ApplyBattleLowerPalette:
+	ld a, [W2_BattlePaletteSplitActive]
+	and a
+	ret z
+	ld de, W2_BattleLowerPalette
+	ld hl, W2_BattleSplitPaletteBuffer
+	call RemapBattleSplitPalette
+	jr ApplyBattleSplitPalette
+
+; de = raw palette, hl = remapped palette. Both buffers fit within one WRAM page.
+RemapBattleSplitPalette:
+	ld a, [W2_LastBGP]
+	and a
+	jr z, .white
+	cp $ff
+	jr z, .black
+	ld c, a
+	ld b, 4
+.color
+	push de
+	push hl
+	ld a, c
+	and 3
+	add a
+	add e
+	ld e, a
+	ld a, [de]
+	ld h, a
+	inc de
+	ld a, [de]
+	ld e, a
+	ld d, h
+	pop hl
+	ld [hl], d
+	inc hl
+	ld [hl], e
+	inc hl
+	pop de
+	srl c
+	srl c
+	dec b
+	jr nz, .color
+	ld de, -8
+	add hl, de
+	ret
+.white
+	ld de, $7fff
+	jr .solid
+.black
+	ld de, 0
+.solid
+	ld b, 4
+.solidColor
+	ld [hl], e
+	inc hl
+	ld [hl], d
+	inc hl
+	dec b
+	jr nz, .solidColor
+	ld de, -8
+	add hl, de
+	ret
+
+ApplyBattleSplitPalette:
+	ldh a, [rLCDC]
+	bit B_LCDC_ENABLE, a
+	ret z
+	; Synchronize to the start of HBlank, not its potentially short tail.
+.waitDrawing
+	ldh a, [rLY]
+	cp LY_VBLANK
+	ret nc
+	ldh a, [rSTAT]
+	and 3
+	cp 3
+	jr nz, .waitDrawing
+.waitHBlank
+	ldh a, [rSTAT]
+	and 3
+	jr nz, .waitHBlank
+	jr WriteBattleSplitPalette
+
+; Double-speed mode: BGPI setup and the unrolled transfer take 90 dots.
+; This fits HBlank for the sprite-free menu scanlines.
+WriteBattleSplitPalette:
+	ld a, $80 | 6 * 8
+	ldh [rBGPI], a
+REPT 8
+	ld a, [hli]
+	ldh [rBGPD], a
+ENDR
 	ret
 
 ; Refresh palettes based on BGP and OBP registers
@@ -281,7 +458,14 @@ GbcVBlankHook::
 	ldh a, [rIE]
 	or 2
 	ldh [rIE], a
+	ld a, 2
+	ldh [rWBK], a
+	ld a, [W2_BattlePictureSplitActive]
+	and a
 	ld a, $6e
+	jr z, .setCompare
+	ld a, 16
+.setCompare
 	ldh [rLYC], a
 	ldh a, [rSTAT]
 	or $40
@@ -301,6 +485,20 @@ GbcVBlankHook::
 	call RefreshPalettesVBlank
 
 .end
+	; The hardware still holds last frame's lower palette even when no palette
+	; data changed. Restore slot 6 every VBlank while the split is active.
+	ld a, [W2_BattlePaletteSplitActive]
+	ld b, a
+	ld a, [W2_BattlePictureSplitActive]
+	or b
+	jr z, .noBattleSplit
+	ldh a, [rLY]
+	sub LY_VBLANK
+	cp 9
+	jr nc, .noBattleSplit
+	ld hl, W2_BgPaletteDataBuffer + 6 * 8
+	call WriteBattleSplitPalette
+.noBattleSplit
 	xor a
 	ld [W2_DrewRowOrColumn], a
 	ldh [rWBK], a

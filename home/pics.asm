@@ -29,6 +29,7 @@ SECTION "LoadMonFrontSprite", ROM0
 ; de: destination location
 LoadMonFrontSprite::
 	push de
+	farcall MarkBattlePictureOriginal
 	ld hl, wMonHFrontSprite - wMonHeader
 	call UncompressMonSprite
 	ld hl, wMonHSpriteDim

@@ -384,6 +384,9 @@ CloseBattleBagMenu::
 	ld de, vBackPic + 47 tiles
 	call CopyBattleBagBackPicTiles
 	call LoadScreenTilesFromBuffer1
+	; Rebuild picture accents and raster splits disabled by item previews.
+	ld b, SET_PAL_BATTLE
+	call RunPaletteCommand
 	call Delay3
 	jp LoadGBPal
 

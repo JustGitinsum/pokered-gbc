@@ -3,6 +3,9 @@
 ; Value of b is the "command". Jumps to function "XX" of SetPalFunctions where X is the command.
 _RunPaletteCommand:
 	call GetPredefRegisters
+	push bc
+	farcall ClearBattlePaletteSplits
+	pop bc
 	ld a, b
 	cp SET_PAL_DEFAULT
 	jr nz, .not_default

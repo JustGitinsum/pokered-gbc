@@ -235,6 +235,13 @@ SECTION "Battle Core", ROMX
 INCLUDE "engine/battle/core.asm"
 ;INCLUDE "engine/battle/effects.asm"
 
+SECTION "Battle Status Icons", ROMX
+
+BattleStatusIconGraphics: INCBIN "gfx/battle/status.2bpp"
+BattleStatusIconGraphicsEnd:
+
+INCLUDE "engine/battle/status_icons.asm"
+
 SECTION "Battle Menu Ball Graphics", ROMX
 
 BattleMenuBallGraphics:
@@ -418,7 +425,6 @@ INCLUDE "color/color.asm"
 SECTION "Itemfinder 1", ROMX
 
 INCLUDE "engine/movie/credits.asm"
-INCLUDE "engine/pokemon/status_ailments.asm"
 INCLUDE "engine/items/itemfinder.asm"
 
 

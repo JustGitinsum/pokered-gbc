@@ -397,7 +397,7 @@ DisplayFieldMoveMonMenu:
 	hlcoord 11, 11
 	ld b, 5
 	ld c, 7
-	call TextBoxBorder
+	call DrawFieldMoveMonMenuBorder
 	call UpdateSprites
 	ld a, 12
 	ldh [hFieldMoveMonMenuTopMenuItemX], a
@@ -437,7 +437,7 @@ DisplayFieldMoveMonMenu:
 	add hl, de
 	inc b
 
-	call TextBoxBorder
+	call DrawFieldMoveMonMenuBorder
 	call UpdateSprites
 
 ; Calculate the position of the first field move name to print.
@@ -498,6 +498,11 @@ DisplayFieldMoveMonMenu:
 	add hl, de
 	ld de, PokemonMenuEntries
 	jp PlaceString
+
+DrawFieldMoveMonMenuBorder:
+	call TextBoxBorder
+	farcall ApplyPartyMenuStatusIconAttributes
+	ret
 
 INCLUDE "data/moves/field_move_names.asm"
 

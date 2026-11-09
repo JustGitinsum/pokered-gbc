@@ -139,9 +139,7 @@ ENDC
 	call GetHealthBarColor
 	ld b, SET_PAL_STATUS_SCREEN
 	call StatusScreenHook ; HAX: Draws EXP bar if GEN_2_GRAPHICS is set
-	hlcoord 10, 2
-	ld de, wLoadedMonStatus
-	call PrintStatusCondition
+	callfar PrintStatusScreenConditionIcon
 	hlcoord 14, 2
 	call PrintLevel ; Pokémon level
 	ld a, [wMonHIndex]

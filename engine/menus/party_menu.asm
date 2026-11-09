@@ -5,6 +5,7 @@ DrawPartyMenu_::
 	call UpdateSprites
 RedrawPartyMenu_ReloadSprites:
 	farcall LoadPartyMonSprites ; load pokemon icon graphics
+	farcall LoadPartyStatusIconTiles
 
 RedrawPartyMenu_::
 	ld a, [wPartyMenuTypeOrMessageID]
@@ -59,16 +60,13 @@ RedrawPartyMenu_::
 .skipUnfilledRightArrow
 	ld a, [wPartyMenuTypeOrMessageID] ; menu type
 	cp TMHM_PARTY_MENU
-	jr z, .teachMoveMenu
+	jp z, .teachMoveMenu
 	cp EVO_STONE_PARTY_MENU
-	jr z, .evolutionStoneMenu
+	jp z, .evolutionStoneMenu
 	cp MOVE_TUTOR_PARTY_MENU
 	jr z, .moveTutorMenu
 	push hl
-	ld bc, 14 ; 14 columns to the right
-	add hl, bc
-	ld de, wLoadedMonStatus
-	call PrintStatusCondition
+	callfar PrintPartyMenuStatusIcon
 	pop hl
 	push hl
 	ld bc, SCREEN_WIDTH + 1 ; down 1 row and right 1 column
@@ -182,6 +180,15 @@ RedrawPartyMenu_::
 .afterDrawingMonEntries
 	ld b, SET_PAL_PARTY_MENU
 	call RunPaletteCommand
+	ld a, [wPartyMenuTypeOrMessageID]
+	cp TMHM_PARTY_MENU
+	jr z, .skipStatusIconPalettes
+	cp EVO_STONE_PARTY_MENU
+	jr z, .skipStatusIconPalettes
+	cp MOVE_TUTOR_PARTY_MENU
+	jr z, .skipStatusIconPalettes
+	farcall ApplyPartyMenuStatusIconPalettes
+.skipStatusIconPalettes
 	farcall ReloadMoveTeachingIconPalettes
 .printMessage
 	ld hl, wStatusFlags5
