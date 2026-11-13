@@ -169,6 +169,10 @@ SkarmoryPicFront::    INCBIN "gfx/pokemon/gsfront/skarmory.pic"
 SkarmoryPicBack::     INCBIN "gfx/pokemon/gsback/skarmoryb.pic"
 MagnezonePicFront::    INCBIN "gfx/pokemon/gsfront/magnezone.pic"
 MagnezonePicBack::     INCBIN "gfx/pokemon/gsback/magnezoneb.pic"
+GligarPicFront::      INCBIN "gfx/pokemon/gsfront/gligar.pic"
+GligarPicBack::       INCBIN "gfx/pokemon/gsback/gligarb.pic"
+GliscorPicFront::      INCBIN "gfx/pokemon/gsfront/gliscor.pic"
+GliscorPicBack::       INCBIN "gfx/pokemon/gsback/gliscorb.pic"
 
 SECTION "Pics 4", ROMX
 

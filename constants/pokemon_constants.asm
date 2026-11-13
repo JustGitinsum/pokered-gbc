@@ -180,8 +180,8 @@
 	const AERODACTYL         ; $AB
 	const MAGNEZONE               ; $AC
 	const MAGNEMITE          ; $AD
-	const_skip               ; $AE
-	const_skip               ; $AF
+	const GLIGAR               ; $AE
+	const GLISCOR               ; $AF
 	const CHARMANDER         ; $B0
 	const SQUIRTLE           ; $B1
 	const CHARMELEON         ; $B2

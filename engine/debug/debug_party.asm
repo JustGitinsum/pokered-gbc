@@ -21,7 +21,7 @@ DebugNewGameParty: ; unreferenced except in _DEBUG
 	db MEW, 99
 	db MAGNEZONE, 70
 	db MOLTRES, 70
-	db SKARMORY, 90
+	db GLISCOR, 90
 	db PIKACHU, 5
 	db -1 ; end
 

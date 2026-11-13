@@ -31,6 +31,7 @@ FlyingMonSprites:
 	mon_sprite MEW,        MewFlySprite,        SPR_PAL_PURPLE
 	mon_sprite SKARMORY,   SkarmoryFlySprite,   SPR_PAL_EMOJI
 	mon_sprite MAGNEZONE,  MagnezoneFlySprite,  SPR_PAL_BLUE
+	mon_sprite GLISCOR,    GliscorFlySprite,    SPR_PAL_PURPLE
 	mon_sprite MEWTWO,     MewtwoSprite,        SPR_PAL_PURPLE
 	mon_sprite PIDGEOT,   PidgeotSprite,        SPR_PAL_BROWN
 	mon_sprite ARTICUNO,  ArticunoSprite,       SPR_PAL_BLUE

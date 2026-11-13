@@ -3,8 +3,8 @@ DiglettsCaveWildMons:
 	db 18, DIGLETT
 	db 19, DIGLETT
 	db 17, DIGLETT
-	db 20, DIGLETT
-	db 16, DIGLETT
+	db 20, GLIGAR
+	db 16, GLIGAR
 	db 29, DIGLETT
 	db 15, GIBLE
 	db 22, DIGLETT

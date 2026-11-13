@@ -65,7 +65,7 @@ YoungsterData:
 ; Mt. Moon 1F
 	db 10, RATTATA, RATTATA, ZUBAT, 0
 ; Route 24
-	db 14, RATTATA, EKANS, ZUBAT, 0
+	db 14, RATTATA, EKANS, GLIGAR, 0
 ; Route 25
 	db 15, RATTATA, SPEAROW, 0
 	db 17, SLOWPOKE, 0
@@ -74,7 +74,7 @@ YoungsterData:
 	db 21, NIDORAN_M, 0
 ; Route 11
 	db 21, EKANS, 0
-	db 19, SANDSHREW, ZUBAT, 0
+	db 19, SANDSHREW, GLIGAR, 0
 	db 17, RATTATA, RATTATA, RATICATE, 0
 	db 18, NIDORAN_M, NIDORINO, 0
 ; Unused
@@ -438,7 +438,7 @@ TamerData:
 	db 33, ARBOK, SANDSLASH, ARBOK, 0
 ; Viridian Gym
 	db 43, RHYHORN, 0
-	db 39, STEELIX, TAUROS, 0
+	db 39, STEELIX, GLISCOR, 0
 ; Victory Road 2F
 	db 44, PERSIAN, GOLDUCK, 0
 ; Unused
@@ -478,7 +478,7 @@ BlackbeltData:
 	db 36, GALLADE, 0
 	db 31, MACHOP, MANKEY, LUCARIO, 0
 ; Viridian Gym
-	db 40, GABITE, MACHOKE, 0
+	db 40, GABITE, GLISCOR, 0
 	db 43, MACHOKE, 0
 	db 38, MACHOKE, MACHOP, MACHOKE, 0
 ; Victory Road 2F
@@ -561,7 +561,7 @@ RocketData:
 ; Mt. Moon B2F
 	db 13, RATTATA, ZUBAT, 0 ;;;Unused Replaced by Jessie and James
 	db 11, SANDSHREW, RATTATA, ZUBAT, 0
-	db 12, ZUBAT, EKANS, 0
+	db 12, ZUBAT, GLIGAR, 0
 	db 16, RATICATE, 0
 ; Cerulean City
 	db 17, MACHOP, DROWZEE, 0
@@ -572,7 +572,7 @@ RocketData:
 ; Rocket Hideout B1F
 	db 21, DROWZEE, MACHOP, 0
 	db 21, RATICATE, RATICATE, 0
-	db 20, GRIMER, KOFFING, KOFFING, 0
+	db 20, GRIMER, GLIGAR, KOFFING, 0
 	db 19, RATTATA, RATICATE, RATICATE, RATTATA, 0
 	db 22, GRIMER, KOFFING, 0
 ; Rocket Hideout B2F

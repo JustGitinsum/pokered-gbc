@@ -185,8 +185,8 @@ EvosMovesPointerTable:
 	dw AerodactylEvosMoves
 	dw MagnezoneEvosMoves
 	dw MagnemiteEvosMoves
-	dw MissingNoAEEvosMoves
-	dw MissingNoAFEvosMoves
+	dw GligarEvosMoves
+	dw GliscorEvosMoves
 	dw CharmanderEvosMoves
 	dw SquirtleEvosMoves
 	dw CharmeleonEvosMoves
@@ -2721,16 +2721,41 @@ MagnemiteEvosMoves:
 	db 52, THUNDER
 	db 0
 
-MissingNoAEEvosMoves:
+GligarEvosMoves:
 ; Evolutions
+	db EVOLVE_ITEM, RAZOR_FANG, 1, GLISCOR
 	db 0
-; Learnset
+; Learnset SV
+	db 7, HARDEN
+	db 10, BITE
+	db 13, QUICK_ATTACK
+	db 16, POUNCE
+	db 19, POISON_FANG
+	db 22, WING_ATTACK
+	db 27, SLASH
+	db 30, LEECH_LIFE
+	db 35, SCREECH
+	db 40, X_SCISSOR
+	db 45, CRABHAMMER
+	db 50, SWORDS_DANCE
 	db 0
 
-MissingNoAFEvosMoves:
+GliscorEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
+	db 7, HARDEN
+	db 10, BITE
+	db 13, QUICK_ATTACK
+	db 16, POUNCE
+	db 19, POISON_FANG
+	db 22, WING_ATTACK
+	db 27, SLASH
+	db 30, LEECH_LIFE
+	db 35, SCREECH
+	db 40, X_SCISSOR
+	db 45, CRABHAMMER
+	db 50, SWORDS_DANCE
 	db 0
 
 CharmanderEvosMoves:

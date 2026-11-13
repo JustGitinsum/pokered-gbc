@@ -173,8 +173,8 @@ PokedexEntryPointers:
 	dw AerodactylDexEntry
 	dw MagnezoneDexEntry
 	dw MagnemiteDexEntry
-	dw MissingNoDexEntry
-	dw MissingNoDexEntry
+	dw GligarDexEntry
+	dw GliscorDexEntry
 	dw CharmanderDexEntry
 	dw SquirtleDexEntry
 	dw CharmeleonDexEntry
@@ -1343,6 +1343,20 @@ MagnemiteDexEntry:
 	db 1,0
 	dw 130
 	;text_far _MagnemiteDexEntry
+	text_end
+
+GligarDexEntry:
+	db "Fly Scorp@"
+	db 3,07
+	dw 1429
+	;text_far _GligarDexEntry
+	text_end
+
+GliscorDexEntry:
+	db "Fang Scorp@"
+	db 6,07
+	dw 937
+	;text_far _GliscorDexEntry
 	text_end
 
 CharmanderDexEntry:

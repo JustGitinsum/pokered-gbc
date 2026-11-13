@@ -154,6 +154,7 @@ IF GEN_2_GRAPHICS
 	db PAL_MEWTWO
 	db PAL_MEW
 	db PAL_CROBAT
+	db PAL_CROBAT				;GLIGAR
 	db PAL_ONIX                 ;STEELIX
 	db PAL_VILEPLUME            ;SCIZOR
 	db PAL_ZOROARK              ;SKARMORY
@@ -167,6 +168,7 @@ IF GEN_2_GRAPHICS
 	db PAL_TANGELA              ;RIOLU
 	db PAL_TANGELA              ;LUCARIO
 	db PAL_MAGNETON             ;MAGNEZONE
+	db PAL_GENGAR	  			;GLISCOR
 	db PAL_IVYSAUR              ;GALLADE
 	db PAL_KABUTOPS             ;TYRUNT
 	db PAL_SPEAROW              ;TYRANTRUM

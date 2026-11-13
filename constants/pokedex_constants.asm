@@ -155,6 +155,7 @@
 	const DEX_MEWTWO     ; 150
 	const DEX_MEW        ; 151
 	const DEX_CROBAT      ; 152
+	const DEX_GLIGAR     ; 152
 	const DEX_STEELIX     ; 153
 	const DEX_SCIZOR      ; 154
 	const DEX_SKARMORY     ; 154
@@ -168,6 +169,7 @@
 	const DEX_RIOLU			   ; $A5
 	const DEX_LUCARIO              ; $A6
 	const DEX_MAGNEZONE              ; $A6
+	const DEX_GLISCOR     ; $A7
 	const DEX_GALLADE               ; $A7
 	const DEX_TYRUNT                ; $A8
 	const DEX_TYRANTRUM            ; $A9

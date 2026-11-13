@@ -244,6 +244,7 @@ IF GEN_2_GRAPHICS
 	const PAL_MEWTWO     ; $BA
 	const PAL_MEW        ; $BB
 	const PAL_CROBAT     ; $BC
+	;const PAL_GLIGAR
 	; const PAL_STEELIX
 	; const PAL_SCIZOR
 	; const PAL_SKARMORY
@@ -257,6 +258,7 @@ IF GEN_2_GRAPHICS
 	; const PAL_RIOLU			   ; $A2
 	; const PAL_LUCARIO
 	; const PAL_MAGNEZONE
+	; const PAL_GLISCOR
 	; const PAL_GALLADE               ; $A2
 	; const PAL_TYRUNT
 	; const PAL_TYRANTRUM
