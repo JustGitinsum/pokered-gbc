@@ -59,7 +59,7 @@
 	const ATTACK_UP2_EFFECT          ; $34
 	const DEFENSE_UP2_EFFECT         ; $35
 	const SPEED_UP2_EFFECT           ; $36
-	const SPCLATK_UP2_EFFECT         ; $37
+	const NASTY_PLOT_EFFECT          ; $37
 	const SPCLDEF_UP2_EFFECT         ; $38
 	const ACCURACY_UP2_EFFECT        ; $39
 	const EVASION_UP2_EFFECT         ; $3A
@@ -96,4 +96,8 @@
 	const LEECH_SEED_EFFECT          ; $59
 	const SPLASH_EFFECT              ; $5A unused
 	const DISABLE_EFFECT             ; $5B
+	const BULK_UP_EFFECT             ; $5C
+	const CALM_MIND_EFFECT           ; $5D
+	const DRAGON_DANCE_EFFECT        ; $5E
+	const ALL_STATSUP_20P_EFFECT     ; $5F
 DEF NUM_MOVE_EFFECTS EQU const_value - 1

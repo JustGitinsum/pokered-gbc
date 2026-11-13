@@ -101,7 +101,47 @@ ApplyBattleLowerPalette:
 	ld de, W2_BattleLowerPalette
 	ld hl, W2_BattleSplitPaletteBuffer
 	call RemapBattleSplitPalette
-	jr ApplyBattleSplitPalette
+	jp ApplyBattleSplitPalette
+
+; Called only after the middle window third is copied, with WRAM bank 2 selected.
+CommitBattleTypePalette:
+	ld a, [W2_BattleTypePalettePending]
+	and a
+	ret z
+	push af
+	xor a
+	ld [W2_BattleTypePalettePending], a
+	ld de, W2_BattleTypePalette
+	; Remap directly into the upload buffer so a full upload cannot undo this.
+	ld hl, W2_BgPaletteDataBuffer + 4 * 8
+	call RemapBattleSplitPalette
+	ld a, $80 | 4 * 8
+	ldh [rBGPI], a
+	ld b, 8
+.mapped
+	ld a, [hli]
+	ldh [rBGPD], a
+	dec b
+	jr nz, .mapped
+	ld hl, W2_BattleTypePalette
+	ld de, W2_BgPaletteData + 4 * 8
+	ld bc, 8
+	call CopyData
+	pop af
+	bit 1, a
+	ret z
+	; GDMA keeps all eight icon tiles and the palette within this VBlank.
+	ld a, HIGH(W2_BattleTypeIconTiles)
+	ldh [rHDMA1], a
+	ld a, LOW(W2_BattleTypeIconTiles)
+	ldh [rHDMA2], a
+	ld a, HIGH(vFont tile $49) & $1f
+	ldh [rHDMA3], a
+	ld a, LOW(vFont tile $49)
+	ldh [rHDMA4], a
+	ld a, 8 - 1
+	ldh [rHDMA5], a
+	ret
 
 ; de = raw palette, hl = remapped palette. Both buffers fit within one WRAM page.
 RemapBattleSplitPalette:

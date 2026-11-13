@@ -148,6 +148,14 @@ ENDR
 	ld l, c
 	ld bc, -$c0
 	add hl, bc
+	; Row 11 contains either EXP or the type badge. Commit its palette with its tiles.
+	ldh a, [hAutoBGTransferPortion]
+	cp TRANSFERBOTTOM
+	jr nz, .typePaletteDone
+	push hl
+	call CommitBattleTypePalette
+	pop hl
+.typePaletteDone
 
 ; BEGIN loading palette maps
 

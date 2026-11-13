@@ -36,7 +36,7 @@ PlayerCharacters:
 	player_character Green, PLAYER_FEMALE, PAL_ERIKA, SPR_PAL_GREEN,  PAL_GREENMON,     GreenDefaultNames ; PLAYER_GREEN
 	player_character Gold,  PLAYER_MALE,   PAL_HERO,  SPR_PAL_ORANGE, PAL_VERSION_CARD, GoldDefaultNames   ; PLAYER_GOLD
 	player_character Kris,  PLAYER_FEMALE, PAL_BEAUTY, SPR_PAL_BLUE,  PAL_BLUEMON,     KrisDefaultNames ; PLAYER_KRIS
-	player_character Hilda, PLAYER_FEMALE, PAL_SWIMMER, SPR_PAL_BLUE, PAL_BLUEMON, HildaDefaultNames ; PLAYER_HILDA
+	player_character Hilda, PLAYER_FEMALE, PAL_SWIMMER, SPR_PAL_PURPLE, PAL_PURPLEMON, HildaDefaultNames ; PLAYER_HILDA
 	assert_table_length NUM_PLAYER_CHARACTERS
 
 ; Exactly NUM_PLAYER_DEFAULT_NAMES names each, up to 7 characters each

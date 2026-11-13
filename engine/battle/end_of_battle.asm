@@ -1,4 +1,5 @@
 EndOfBattle:
+	farcall ClearTrappingState
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
 	jr nz, .notLinkBattle

@@ -19,7 +19,7 @@ AttackAnimationPointers:
 	dw WingAttackAnim
 	dw SilverWindAnim
 	dw FlyAnim
-	dw BindAnim
+	dw SandTombAnim
 	dw SlamAnim
 	dw VineWhipAnim
 	dw StompAnim
@@ -133,7 +133,7 @@ AttackAnimationPointers:
 	dw SpikeCannonAnim
 	dw ConstrictAnim
 	dw AmnesiaAnim
-	dw KinesisAnim
+	dw CalmMindAnim
 	dw SoftboiledAnim
 	dw HiJumpKickAnim
 	dw GlareAnim
@@ -158,7 +158,7 @@ AttackAnimationPointers:
 	dw RestAnim
 	dw RockSlideAnim
 	dw HyperFangAnim
-	dw SharpenAnim
+	dw BulkUpAnim
 	dw ConversionAnim
 	dw TriAttackAnim
 	dw SuperFangAnim
@@ -214,6 +214,8 @@ AttackAnimationPointers:
 	dw AuraWheelAnim
 	dw GlacialLanceAnim
 	dw BitterBladeAnim
+	dw DragonDanceAnim
+	dw NastyPlotAnim
 	dw StruggleAnim
 	assert_table_length NUM_ATTACKS
 
@@ -454,9 +456,9 @@ FlyAnim:
 	battle_anim NO_MOVE, SE_SHOW_MON_PIC
 	db -1 ; end
 
-BindAnim:
-	battle_anim BIND, SUBANIM_0_BIND, 0, 4
-	battle_anim BIND, SUBANIM_0_BIND, 0, 4
+SandTombAnim:
+	battle_anim SAND_TOMB, SUBANIM_0_SAND_TOMB, 0, 4
+	battle_anim SAND_TOMB, SUBANIM_0_SAND_TOMB, 0, 4
 	db -1 ; end
 
 SlamAnim:
@@ -531,9 +533,9 @@ BodySlamAnim:
 	db -1 ; end
 
 WrapAnim:
-	battle_anim WRAP, SUBANIM_0_BIND, 0, 4
-	battle_anim WRAP, SUBANIM_0_BIND, 0, 4
-	battle_anim WRAP, SUBANIM_0_BIND, 0, 4
+	battle_anim WRAP, SUBANIM_0_SAND_TOMB, 0, 4
+	battle_anim WRAP, SUBANIM_0_SAND_TOMB, 0, 4
+	battle_anim WRAP, SUBANIM_0_SAND_TOMB, 0, 4
 	db -1 ; end
 
 BulldozeAnim:
@@ -881,8 +883,8 @@ ThunderBoltAnim:
 
 ThunderWaveAnim:
 	battle_anim THUNDER_WAVE, SUBANIM_1_LIGHTNING_BALL, 1, 2
-	battle_anim NO_MOVE, SUBANIM_0_BIND, 0, 2
-	battle_anim NO_MOVE, SUBANIM_0_BIND, 0, 4
+	battle_anim NO_MOVE, SUBANIM_0_SAND_TOMB, 0, 2
+	battle_anim NO_MOVE, SUBANIM_0_SAND_TOMB, 0, 4
 	db -1 ; end
 
 ThunderAnim:
@@ -1042,6 +1044,7 @@ WithdrawAnim:
 	battle_anim NO_MOVE, SE_SHOW_MON_PIC
 	db -1 ; end
 
+CalmMindAnim:
 DefenseCurlAnim:
 	battle_anim DEFENSE_CURL, SE_LIGHT_SCREEN_PALETTE
 	battle_anim NO_MOVE, SUBANIM_0_CIRCLE_1_SQUARE_CLOSING, 0, 6
@@ -1087,6 +1090,7 @@ BideAnim:
 	battle_anim BIDE, SUBANIM_1_STAR_BIG_MOVING, 1, 6
 	db -1 ; end
 
+DragonDanceAnim:
 MetronomeAnim:
 	battle_anim AMNESIA, SE_MOVE_MON_HORIZONTALLY
 	battle_anim NO_MOVE, SE_DELAY_ANIMATION_10
@@ -1115,7 +1119,7 @@ LickAnim:
 	db -1 ; end
 
 BelchAnim:
-	battle_anim SHARPEN, SUBANIM_1_CLOUD_TOSS, 1, 6
+	battle_anim BULK_UP, SUBANIM_1_CLOUD_TOSS, 1, 6
 	battle_anim BIDE, SUBANIM_1_STAR_BIG_MOVING, 1, 6
 	db -1 ; end
 
@@ -1153,8 +1157,8 @@ WaterfallAnim:
 
 RazorShellAnim:
 	battle_anim RAZOR_SHELL, SUBANIM_0_SLICE_BOTH_SIDES, 0, 8
-	battle_anim CONSTRICT, SUBANIM_0_BIND, 0, 6
-	battle_anim CONSTRICT, SUBANIM_0_BIND, 0, 6
+	battle_anim CONSTRICT, SUBANIM_0_SAND_TOMB, 0, 6
+	battle_anim CONSTRICT, SUBANIM_0_SAND_TOMB, 0, 6
 	db -1 ; end
 
 SwiftAnim:
@@ -1172,19 +1176,20 @@ SpikeCannonAnim:
 	db -1 ; end
 
 ConstrictAnim:
-	battle_anim CONSTRICT, SUBANIM_0_BIND, 0, 6
-	battle_anim CONSTRICT, SUBANIM_0_BIND, 0, 6
-	battle_anim CONSTRICT, SUBANIM_0_BIND, 0, 6
+	battle_anim CONSTRICT, SUBANIM_0_SAND_TOMB, 0, 6
+	battle_anim CONSTRICT, SUBANIM_0_SAND_TOMB, 0, 6
+	battle_anim CONSTRICT, SUBANIM_0_SAND_TOMB, 0, 6
 	db -1 ; end
 
+NastyPlotAnim:
 AmnesiaAnim:
 	battle_anim AMNESIA, SUBANIM_0_STATUS_CONFUSED, 0, 8
 	battle_anim AMNESIA, SUBANIM_0_STATUS_CONFUSED, 0, 8
 	db -1 ; end
 
-KinesisAnim:
-	battle_anim KINESIS, SUBANIM_0_STAR_TWICE, 0, 8
-	db -1 ; end
+; CalmMindAnim:
+; 	battle_anim CALM_MIND, SUBANIM_0_STAR_TWICE, 0, 8
+; 	db -1 ; end
 
 SoftboiledAnim:
 	battle_anim LEECH_SEED, SE_SLIDE_MON_HALF_OFF
@@ -1327,8 +1332,8 @@ HyperFangAnim:
 	battle_anim HYPER_FANG, SUBANIM_0_STAR_THRICE, 0, 6
 	db -1 ; end
 
-SharpenAnim:
-	battle_anim SHARPEN, SE_LIGHT_SCREEN_PALETTE
+BulkUpAnim:
+	battle_anim BULK_UP, SE_LIGHT_SCREEN_PALETTE
 	battle_anim NO_MOVE, SUBANIM_0_CIRCLE_1_SQUARE_CLOSING, 1, 6
 	battle_anim NO_MOVE, SE_DARK_SCREEN_FLASH
 	battle_anim NO_MOVE, SE_RESET_SCREEN_PALETTE
@@ -1568,13 +1573,13 @@ UnusedAnim:
 	db -1 ; end
 
 ParalyzeAnim:
-	battle_anim BIND, SUBANIM_0_STATUS_PARALYZED, 0, 4
-	battle_anim BIND, SUBANIM_0_STATUS_PARALYZED, 0, 4
+	battle_anim SAND_TOMB, SUBANIM_0_STATUS_PARALYZED, 0, 4
+	battle_anim SAND_TOMB, SUBANIM_0_STATUS_PARALYZED, 0, 4
 	db -1 ; end
 
 PoisonAnim:
-	battle_anim BIND, SUBANIM_0_STATUS_POISONED, 0, 8
-	battle_anim BIND, SUBANIM_0_STATUS_POISONED, 0, 8
+	battle_anim SAND_TOMB, SUBANIM_0_STATUS_POISONED, 0, 8
+	battle_anim SAND_TOMB, SUBANIM_0_STATUS_POISONED, 0, 8
 	db -1 ; end
 
 SleepPlayerAnim:

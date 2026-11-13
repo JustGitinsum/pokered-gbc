@@ -43,6 +43,12 @@ _MirrorMoveDexEntry:: ;;; MIRROR_MOVE_EFFECT
 	next "used by the foe"
 	dex
 
+_GenericRaiseAllStatsText:: ;;; ALL_STATSUP_20P_EFFECT
+	text "An attack that may"
+	next "raise all stats"
+	dex
+
+
 _GenericRaisesAttack1StageText:: ;;; ATTACK_UP1_EFFECT
 	text "Raises the user's"
 	next "Attack"
@@ -200,8 +206,8 @@ _DragonRageDexEntry:: ;;; SPECIAL_DAMAGE_EFFECT
 	dex
 
 _GenericTrappingMoveText:: ;;; TRAPPING_EFFECT
-	text "Traps the foe for"
-	next "2-5 turns"
+	text "Traps and hurts"
+	next "foe for 4-5 turns"
 	dex
 
 _GenericHitsTwiceText:: ;;; ATTACK_TWICE_EFFECT
@@ -215,8 +221,8 @@ _GenericKeptGoingCrashedText:: ;;; JUMP_KICK_EFFECT
 	dex
 
 _MistDexEntry:: ;;; MIST_EFFECT
-	text "Prevents all"
-	next "status problems"
+	text "Protects stats"
+	next "from being lowered"
 	dex
 
 _FocusEnergyDexEntry:: ;;; FOCUS_ENERGY_EFFECT
@@ -247,6 +253,11 @@ _GenericRaisesDefense2StageText:: ;;; DEFENSE_UP2_EFFECT
 _AgilityDexEntry:: ;;; SPEED_UP2_EFFECT
 	text "Sharply raises the"
 	next "user's Speed"
+	dex
+
+_NastyPlotDexEntry:: ;;; NASTY_PLOT_EFFECT
+	text "Sharply raises the"
+	next "user's Sp.Atk"
 	dex
 
 _AmnesiaDexEntry:: ;;; SPCLDEF_UP2_EFFECT
@@ -389,6 +400,21 @@ _GenericAlwaysGoesFirstText:: ;;;
 _CounterDexEntry::
 	text "Returns a physical"
 	next "attack double"
+	dex
+
+_BulkUpDexEntry:: ;;; BULK_UP_EFFECT
+	text "Raises the user's"
+	next "Atk and Def."
+	dex
+
+_CalmMindDexEntry:: ;;; CALM_MIND_EFFECT
+	text "Raises the user's"
+	next "Sp.Atk and Sp.Def"
+	dex
+
+_DragonDanceDexEntry:: ;;; DRAGON_DANCE_EFFECT
+	text "Raises the user's"
+	next "Attack and Speed"
 	dex
 
 ; ; PureRGBnote: ADDED: text pointers for the descriptions that show up in the movedex.

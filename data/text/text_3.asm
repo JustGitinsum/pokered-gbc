@@ -197,6 +197,32 @@ _NothingHappenedText::
 	text "Nothing happened!"
 	prompt
 
+_TrappedByMoveText::
+	text "<TARGET>"
+	line "was trapped by"
+	cont "@"
+	text_ram wStringBuffer
+	text "!"
+	prompt
+
+_HurtByTrappingMoveText::
+	text "<USER>"
+	line "hurt by @"
+	text_ram wStringBuffer
+	text "!"
+	prompt
+
+_ReleasedFromTrapText::
+	text "<USER>"
+	line "was freed!"
+	prompt
+
+_CantSwitchWhileTrappedText::
+	text "Can't switch!"
+	line "Your #MON"
+	cont "is trapped!"
+	prompt
+
 _NoEffectText::
 	text "No effect!"
 	prompt

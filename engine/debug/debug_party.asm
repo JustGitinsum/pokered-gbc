@@ -89,7 +89,7 @@ IF DEF(_DEBUG)
 
 	; Pikachu gets Surf.
 	ld hl, wPartyMon6Moves + 2
-	ld a, SURF
+	ld a, FOCUS_ENERGY
 	ld [hl], a
 	ld hl, wPartyMon6PP + 2
 	ld a, 15

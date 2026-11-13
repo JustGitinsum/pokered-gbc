@@ -138,6 +138,7 @@ SetScrollXForSlidingPlayerBodyLeft:
 	ret
 
 StartBattle:
+	farcall ClearTrappingState
 	xor a
 	ld [wPartyGainExpFlags], a
 	ld [wPartyFoughtCurrentEnemyFlags], a
@@ -319,15 +320,8 @@ MainInBattleLoop:
 	and (1 << FRZ)
 	jr nz, .selectEnemyMove ; if so, jump
 	ld a, [wPlayerBattleStatus1]
-	and (1 << STORING_ENERGY) | (1 << USING_TRAPPING_MOVE) ; check player is using Bide or using a multi-turn attack like wrap
+	and 1 << STORING_ENERGY
 	jr nz, .selectEnemyMove ; if so, jump
-	ld a, [wEnemyBattleStatus1]
-	bit USING_TRAPPING_MOVE, a ; check if enemy is using a multi-turn attack like wrap
-	jr z, .selectPlayerMove ; if not, jump
-; enemy is using a multi-turn attack like wrap, so player is trapped and cannot execute a move
-	ld a, CANNOT_MOVE
-	ld [wPlayerSelectedMove], a
-	jr .selectEnemyMove
 .selectPlayerMove
 	ld a, [wActionResultOrTookBattleTurn]
 	and a ; has the player already used the turn (e.g. by using an item, trying to run or switching pokemon)
@@ -339,28 +333,7 @@ MainInBattleLoop:
 	ld [wMenuItemToSwap], a
 	call MoveSelectionMenu
 	push af
-	farcall ClearBattleMenuPPPalette
-	call LoadScreenTilesFromBuffer1
-	call DrawHUDsAndHPBars
-
-	ld a, ICE ; this is to ensure the the EXP Bar is blue (Same color as Ice type icon)
-	ld [wPlayerMoveType], a
-
-IF GEN_2_GRAPHICS
-	; The player cancelled, so restore the EXP-bar palette.
-	ld d, PAL_EXP
-	ld e, 4
-	farcall LoadSGBPalette
-
-	; Request a background-palette update.
-	ld a, 2
-	ldh [rWBK], a
-	ld a, 1
-	ld [W2_ForceBGPUpdate], a
-	ldh [rWBK], a
-ENDC
-
-
+	call RestoreBattleAfterMoveMenu
 	pop af
     jr z, .selectEnemyMove ; A = 0 means a move was selected
 
@@ -382,20 +355,6 @@ ENDC
 	sub 4
 	jr c, .noLinkBattle
 ; the link battle enemy has switched mons
-	ld a, [wPlayerBattleStatus1]
-	bit USING_TRAPPING_MOVE, a ; check if using multi-turn move like Wrap
-	jr z, .specialMoveNotUsed
-	ld a, [wPlayerMoveListIndex]
-	ld hl, wBattleMonMoves
-	ld c, a
-	ld b, 0
-	add hl, bc
-	ld a, [hl]
-	cp METRONOME ; a MIRROR MOVE check is missing, might lead to a desync in link battles
-	             ; when combined with multi-turn moves
-	jr nz, .specialMoveNotUsed
-	ld [wPlayerSelectedMove], a
-.specialMoveNotUsed
 	callfar SwitchEnemyMon
 .noLinkBattle
 ; 	ld a, [wPlayerSelectedMove]
@@ -473,8 +432,7 @@ ENDC
 	call HandlePoisonBurnLeechSeed
 	jp z, HandlePlayerMonFainted
 	call DrawHUDsAndHPBars
-	call CheckNumAttacksLeft
-	jp MainInBattleLoop
+	jp TrappingEndTurn
 .playerMovesFirst
 	call ExecutePlayerMove
 	ld a, [wEscapedFromBattle]
@@ -501,7 +459,18 @@ ENDC
 	call HandlePoisonBurnLeechSeed
 	jp z, HandleEnemyMonFainted
 	call DrawHUDsAndHPBars
-	call CheckNumAttacksLeft
+	jp TrappingEndTurn
+
+TrappingEndTurn:
+	farcall HandleTrappingEndTurn
+	ld hl, wBattleMonHP
+	ld a, [hli]
+	or [hl]
+	jp z, HandlePlayerMonFainted
+	ld hl, wEnemyMonHP
+	ld a, [hli]
+	or [hl]
+	jp z, HandleEnemyMonFainted
 	jp MainInBattleLoop
 
 HandleMovePriority:
@@ -766,22 +735,6 @@ UpdateCurMonHPBar:
 	pop bc
 	ret
 
-CheckNumAttacksLeft:
-	ld a, [wPlayerNumAttacksLeft]
-	and a
-	jr nz, .checkEnemy
-; player has 0 attacks left
-	ld hl, wPlayerBattleStatus1
-	res USING_TRAPPING_MOVE, [hl] ; player not using multi-turn attack like wrap any more
-.checkEnemy
-	ld a, [wEnemyNumAttacksLeft]
-	and a
-	ret nz
-; enemy has 0 attacks left
-	ld hl, wEnemyBattleStatus1
-	res USING_TRAPPING_MOVE, [hl] ; enemy not using multi-turn attack like wrap any more
-	ret
-
 HandleEnemyMonFainted:
 	xor a
 	ld [wInHandlePlayerMonFainted], a
@@ -816,6 +769,7 @@ HandleEnemyMonFainted:
 	jp MainInBattleLoop
 
 FaintEnemyPokemon:
+	farcall ClearTrappingState
 	call ReadPlayerMonCurHPAndStatus
 	ld a, [wIsInBattle]
 	dec a
@@ -1058,6 +1012,7 @@ HandlePlayerMonFainted:
 
 ; resets flags, slides mon's pic down, plays cry, and prints fainted message
 RemoveFaintedPlayerMon:
+	farcall ClearTrappingState
 	ld a, [wPlayerMonNumber]
 	ld c, a
 	ld hl, wPartyGainExpFlags
@@ -1348,6 +1303,7 @@ EnemySendOut:
 
 ; don't change wPartyGainExpFlags or wPartyFoughtCurrentEnemyFlags
 EnemySendOutFirstMon:
+	farcall ClearTrappingState
 	xor a
 	ld hl, wEnemyStatsToDouble ; clear enemy statuses
 	ld [hli], a
@@ -1363,8 +1319,6 @@ EnemySendOutFirstMon:
 	ld [hl], a
 	dec a
 	ld [wAICount], a
-	ld hl, wPlayerBattleStatus1
-	res USING_TRAPPING_MOVE, [hl]
 	hlcoord 18, 0
 	ld a, 8
 	call SlideTrainerPicOffScreen
@@ -1563,6 +1517,9 @@ TryRunningFromBattle:
 	ld a, [wIsInBattle]
 	dec a
 	jr nz, .trainerBattle ; jump if it's a trainer battle
+	ld a, [wPlayerTrapCounter]
+	and a
+	jp nz, .cantEscape
 	ld a, [wNumRunAttempts]
 	inc a
 	ld [wNumRunAttempts], a
@@ -1625,7 +1582,7 @@ TryRunningFromBattle:
 	cp b
 	jr nc, .canEscape ; if the random value was less than or equal to the quotient
 	                  ; plus 30 times the number of attempts, the player can escape
-; can't escape
+.cantEscape
 	ld a, $1
 	ld [wActionResultOrTookBattleTurn], a ; you lose your turn when you can't escape
 	ld hl, CantEscapeText
@@ -1779,6 +1736,7 @@ LoadEnemyMonFromParty:
 	ret
 
 SendOutMon:
+	farcall ClearTrappingState
 	callfar PrintSendOutMonMessage
 	ld hl, wEnemyMonHP
 	ld a, [hli]
@@ -1810,8 +1768,6 @@ SendOutMon:
 	ld [wPlayerMonMinimized], a
 	ld b, SET_PAL_BATTLE
 	call RunPaletteCommand
-	ld hl, wEnemyBattleStatus1
-	res USING_TRAPPING_MOVE, [hl]
 	ld a, $1
 	ldh [hWhoseTurn], a
 	ld a, POOF_ANIM
@@ -2497,15 +2453,6 @@ UseBattleItem:
 	jp BagWasSelected
 .itemUsed
 
-	ld a, [wPlayerBattleStatus1]
-	bit USING_TRAPPING_MOVE, a ; is the player using a multi-turn move like wrap?
-	jr z, .checkIfMonCaptured
-	ld hl, wPlayerNumAttacksLeft
-	dec [hl]
-	jr nz, .checkIfMonCaptured
-	ld hl, wPlayerBattleStatus1
-	res USING_TRAPPING_MOVE, [hl] ; not using multi-turn move any more
-
 .checkIfMonCaptured
 	ld a, [wCapturedMonSpecies]
 	and a ; was the enemy mon captured with a ball?
@@ -2672,6 +2619,8 @@ PartyMenuOrRockOrRun:
 .notAlreadyOut
 	call HasMonFainted
 	jp z, .partyMonDeselected ; can't switch to fainted mon
+	farcall CheckPlayerTrappedSwitch
+	jp nz, .partyMonDeselected
 	ld a, $1
 	ld [wActionResultOrTookBattleTurn], a
 	call GBPalWhiteOut
@@ -3121,6 +3070,15 @@ SwapMovesInMenu:
 	ld [wMenuItemToSwap], a ; select the current menu item for swapping
 	jp MoveSelectionMenu
 
+RestoreBattleAfterMoveMenu:
+	xor a
+	ldh [hAutoBGTransferEnabled], a
+	farcall ClearBattleMenuPPPalette
+	farcall QueueBattleEXPBarPalette
+	call LoadScreenTilesFromBuffer1
+	call DrawHUDsAndHPBars
+	jp Delay3
+
 PrintMenuItem:: ; edited, double colon
 	xor a
 	ldh [hAutoBGTransferEnabled], a
@@ -3254,8 +3212,6 @@ PrintMenuItem:: ; edited, double colon
 	call PlaceString
 	farcall LoadStatusMoveIcon
 .accuracy
-	farcall SetPal_MovePreview
-
 	; accuracy starts here
 	ld a, [wPlayerMoveAccuracy] ; this is a 0-255 value, need to get 0-100
 	ld hl, 0
@@ -3275,9 +3231,11 @@ PrintMenuItem:: ; edited, double colon
 	call GetCurrentMove
 	; hlcoord 11, 11
 	; predef PrintMoveType
+	; Publish the icon graphics and palette only with the row-11 tile transfer.
+	farcall SetPal_MovePreview
 	ld a, [wPlayerMoveType]
 	ld d, a
-	farcall LoadTypeIcon8Tile
+	farcall QueueBattleMoveTypeIcon
 
 	hlcoord 11, 11
 	ld a, $c9
@@ -3346,7 +3304,7 @@ SelectEnemyMove:
 	cp LINKBATTLE_STRUGGLE
 	jp z, .linkedOpponentUsedStruggle
 	cp LINKBATTLE_NO_ACTION
-	jr z, .unableToSelectMove
+	jp z, .unableToSelectMove
 	cp 4
 	ret nc
 	ld [wEnemyMoveListIndex], a
@@ -3368,14 +3326,8 @@ SelectEnemyMove:
 	and (1 << FRZ)
 	ret nz
 	ld a, [wEnemyBattleStatus1]
-	and (1 << USING_TRAPPING_MOVE) | (1 << STORING_ENERGY) ; using a trapping move like wrap or bide
+	and 1 << STORING_ENERGY
 	ret nz
-	ld a, [wPlayerBattleStatus1]
-	bit USING_TRAPPING_MOVE, a ; caught in player's trapping move (e.g. wrap)
-	jr z, .canSelectMove
-.unableToSelectMove
-	ld a, $ff
-	jr .done
 .canSelectMove
 	ld hl, wEnemyMonMoves+1 ; 2nd enemy move
 	ld a, [hld]
@@ -3424,6 +3376,9 @@ SelectEnemyMove:
 	ret
 .linkedOpponentUsedStruggle
 	ld a, STRUGGLE
+	jr .done
+.unableToSelectMove
+	ld a, CANNOT_MOVE
 	jr .done
 
 ; this appears to exchange data with the other gameboy during link battles
@@ -3503,6 +3458,7 @@ ExecutePlayerMove:
 	ld [wMoveMissed], a
 	ld [wMonIsDisobedient], a
 	ld [wMoveDidntMiss], a
+	ld [wAttackHitSubstitute], a
 	ld a, EFFECTIVE
 	ld [wDamageMultipliers], a
 	ld a, [wActionResultOrTookBattleTurn]
@@ -3552,7 +3508,7 @@ PlayerCanExecuteMove:
 	ld hl, SpecialEffectsCont
 	ld de, 1
 	call IsInArray
-	call c, JumpMoveEffect ; execute the effects of SpecialEffectsCont moves (e.g. Wrap, Thrash) but don't skip anything
+	call c, JumpMoveEffect ; execute Thrash/Petal Dance before damage calculation
 PlayerCalcMoveDamage:
 	ld a, [wPlayerMoveEffect]
 	ld hl, SetDamageEffects
@@ -3781,20 +3737,11 @@ CheckPlayerStatusConditions:
 
 .FrozenCheck
 	bit FRZ, [hl] ; frozen?
-	jr z, .HeldInPlaceCheck
+	jr z, .FlinchedCheck
 	ld hl, IsFrozenText
 	call PrintText
 	xor a
 	ld [wPlayerUsedMove], a
-	ld hl, ExecutePlayerMoveDone ; player can't move this turn
-	jp .returnToHL
-
-.HeldInPlaceCheck
-	ld a, [wEnemyBattleStatus1]
-	bit USING_TRAPPING_MOVE, a ; is enemy using a multi-turn move like wrap?
-	jp z, .FlinchedCheck
-	ld hl, CantMoveText
-	call PrintText
 	ld hl, ExecutePlayerMoveDone ; player can't move this turn
 	jp .returnToHL
 
@@ -3886,8 +3833,8 @@ CheckPlayerStatusConditions:
 .MonHurtItselfOrFullyParalysed
 	ld hl, wPlayerBattleStatus1
 	ld a, [hl]
-	; clear bide, thrashing, charging up, and trapping moves such as warp (already cleared for confusion damage)
-	and ~((1 << STORING_ENERGY) | (1 << THRASHING_ABOUT) | (1 << CHARGING_UP) | (1 << USING_TRAPPING_MOVE))
+	; Clear Bide, Thrash, and charging up after confusion damage or full paralysis.
+	and ~((1 << STORING_ENERGY) | (1 << THRASHING_ABOUT) | (1 << CHARGING_UP))
 	ld [hl], a
 	ld a, [wPlayerMoveEffect]
 	cp FLY_EFFECT
@@ -3957,7 +3904,7 @@ CheckPlayerStatusConditions:
 
 .ThrashingAboutCheck
 	bit THRASHING_ABOUT, [hl] ; is mon using thrash or petal dance?
-	jr z, .MultiturnMoveCheck
+	jr z, .RageCheck
 	ld a, THRASH
 	ld [wPlayerMoveNum], a
 	ld hl, ThrashingAboutText
@@ -3976,19 +3923,6 @@ CheckPlayerStatusConditions:
 	inc a ; confused for 2-5 turns
 	ld [wPlayerConfusedCounter], a
 	pop hl ; skip DecrementPP
-	jp .returnToHL
-
-.MultiturnMoveCheck
-	bit USING_TRAPPING_MOVE, [hl] ; is mon using multi-turn move?
-	jp z, .RageCheck
-	ld hl, AttackContinuesText
-	call PrintText
-	ld a, [wPlayerNumAttacksLeft]
-	dec a ; did multi-turn move end?
-	ld [wPlayerNumAttacksLeft], a
-	ld hl, getPlayerAnimationType ; if it didn't, skip damage calculation (deal damage equal to last hit),
-	                ; DecrementPP and MoveHitTest
-	jp nz, .returnToHL
 	jp .returnToHL
 
 .RageCheck
@@ -4063,14 +3997,6 @@ UnleashedEnergyText:
 
 ThrashingAboutText:
 	text_far _ThrashingAboutText
-	text_end
-
-AttackContinuesText:
-	text_far _AttackContinuesText
-	text_end
-
-CantMoveText:
-	text_far _CantMoveText
 	text_end
 
 PrintMoveIsDisabledText:
@@ -5127,72 +5053,72 @@ JumpToOHKOMoveEffect:
 INCLUDE "data/battle/unused_critical_hit_moves.asm"
 
 ; determines if attack is a critical hit
-; Azure Heights claims "the fastest pokémon (who are, not coincidentally,
-; among the most popular) tend to CH about 20 to 25% of the time."
+; updated to use gen 7 critical mechanics with stages
+; stage 0 = 1/24 ~4.17%
+; stage 1 = 1/8 12.5%
+; stage 2 = 1/2 50%
+; stage 3+ = 100%
+; high crit moves add +1 and focus energy adds +2
 CriticalHitTest:
-	xor a
+	xor a                               ; set critical flag to 0
+	ld b, a                             ; set critical stage to 0
 	ld [wCriticalHitOrOHKO], a
-	ldh a, [hWhoseTurn]
-	and a
-	ld a, [wEnemyMonSpecies]
-	jr nz, .handleEnemy
-	ld a, [wBattleMonSpecies]
-.handleEnemy
-	ld [wCurSpecies], a
-	call GetMonHeader
-	ld a, [wMonHBaseSpeed]
-	ld b, a
-	srl b                        ; (effective (base speed/2))
-	ldh a, [hWhoseTurn]
+	ldh a, [hWhoseTurn]                 ; check whose turn is this, player or enemy
 	and a
 	ld hl, wPlayerMovePower
 	ld de, wPlayerBattleStatus2
-	jr z, .calcCriticalHitProbability
+	jr z, .checkIfDamageMove            ; if player's turn jump
 	ld hl, wEnemyMovePower
 	ld de, wEnemyBattleStatus2
-.calcCriticalHitProbability
-	ld a, [hld]                  ; read base power from RAM
+.checkIfDamageMove
+	ld a, [hld]                         ; read base power from RAM
 	and a
-	ret z                        ; do nothing if zero
+	ret z                               ; do nothing if zero (status moves)
 	dec hl
-	ld c, [hl]                   ; read move id
+	ld c, [hl]                          ; read move id
+	ld hl, HighCriticalMoves            ; table of high critical hit moves
+.checkIfHighCritMoveLoop
+	ld a, [hli]                         ; read move from move table
+	cp c                                ; does it match the move about to be used?
+	jr z, .highCriticalMove             ; if so, the move about to be used is a high critical hit ratio move
+	inc a                               ; move on to the next move, FF terminates loop
+	jr nz, .checkIfHighCritMoveLoop     ; check the next move in HighCriticalMoves
+	jr .checkForFocusEnergy             ; continue as a normal move
+.highCriticalMove
+	inc b                               ; +1 stage for high crit moves
+.checkForFocusEnergy
 	ld a, [de]
-	bit GETTING_PUMPED, a        ; test for focus energy
-	jr nz, .focusEnergyUsed      ; bug: using focus energy causes a shift to the right instead of left,
-	                             ; resulting in 1/4 the usual crit chance
-	sla b                        ; (effective (base speed/2)*2)
-	jr nc, .noFocusEnergyUsed
-	ld b, $ff                    ; cap at 255/256
-	jr .noFocusEnergyUsed
-.focusEnergyUsed
-	srl b
+	bit GETTING_PUMPED, a               ; test for focus energy
+	jr z, .noFocusEnergyUsed
+	inc b                               ; +2 stages for focus energy / dire hit 
+	inc b  
 .noFocusEnergyUsed
-	ld hl, HighCriticalMoves     ; table of high critical hit moves
-.Loop
-	ld a, [hli]                  ; read move from move table
-	cp c                         ; does it match the move about to be used?
-	jr z, .HighCritical          ; if so, the move about to be used is a high critical hit ratio move
-	inc a                        ; move on to the next move, FF terminates loop
-	jr nz, .Loop                 ; check the next move in HighCriticalMoves
-	srl b                        ; /2 for regular move (effective (base speed / 2))
-	jr .SkipHighCritical         ; continue as a normal move
-.HighCritical
-	sla b                        ; *2 for high critical hit moves
-	jr nc, .noCarry
-	ld b, $ff                    ; cap at 255/256
-.noCarry
-	sla b                        ; *4 for high critical move (effective (base speed/2)*8))
-	jr nc, .SkipHighCritical
-	ld b, $ff
-.SkipHighCritical
-	call BattleRandom            ; generates a random value, in "a"
-	rlc a
-	rlc a
-	rlc a
-	cp b                         ; check a against calculated crit rate
-	ret nc                       ; no critical hit if no borrow
+	ld a, b
+	cp 3                                ; stage 3+ 100% chance
+	jr nc, .criticalHit
+	cp 2 
+	ld b, 128                           ; stage 2 1/2 chance 50%
+	jr z, .rng
+	cp 1
+	ld b, 32                            ; stage 1 1/8 chance 12.5%
+	jr z, .rng
+	ld b, 11                            ; stage 0 1/24 chance ~4.17%
+.rng
+	call BattleRandom                   ; generates a random value, in "a"
+	cp b                                ; check a against calculated crit rate
+	ret nc                              ; no critical hit if no borrow
+; stage 0 uses 11/256, then rerolls 10 so the total is 2731/65536 (closest to 1/24)
+	cp 10
+	jr nz, .criticalHit                 ; 0-9 always crit; 10 only matters at stage 0
+	ld a, b
+	cp 11                               ; check if this is stage 0
+	jr nz, .criticalHit
+	call BattleRandom
+	cp 171                              ; 171/256 of the 10s crit
+	ret nc
+.criticalHit
 	ld a, $1
-	ld [wCriticalHitOrOHKO], a   ; set critical hit flag
+	ld [wCriticalHitOrOHKO], a          ; set critical hit flag
 	ret
 
 INCLUDE "data/battle/critical_hit_moves.asm"
@@ -5501,6 +5427,8 @@ ApplyAttackToPlayerPokemonDone:
 	jp DrawHUDsAndHPBars
 
 AttackSubstitute:
+	ld a, 1
+	ld [wAttackHitSubstitute], a
 ; Unlike the two ApplyAttackToPokemon functions, Attack Substitute is shared by player and enemy.
 ; Self-confusion damage as well as Hi-Jump Kick and Jump Kick recoil cause a momentary turn swap before being applied.
 ; If the user has a Substitute up and would take damage because of that,
@@ -5933,7 +5861,7 @@ MoveHitTest:
 .enemyMistCheck
 ; if move effect is from $12 to $19 inclusive or $3a to $41 inclusive
 ; i.e. the following moves
-; GROWL, TAIL WHIP, LEER, STRING SHOT, SAND-ATTACK, SMOKESCREEN, KINESIS,
+; GROWL, TAIL WHIP, LEER, STRING SHOT, SAND-ATTACK, SMOKESCREEN, CALM_MIND,
 ; FLASH, CONVERSION*, HAZE*, SCREECH, LIGHT SCREEN*, REFLECT*
 ; the moves that are marked with an asterisk are not affected since this
 ; function is not called when those moves are used
@@ -5994,16 +5922,6 @@ MoveHitTest:
 	ld [hl], a
 	inc a
 	ld [wMoveMissed], a
-	ldh a, [hWhoseTurn]
-	and a
-	jr z, .playerTurn2
-.enemyTurn2
-	ld hl, wEnemyBattleStatus1
-	res USING_TRAPPING_MOVE, [hl] ; end multi-turn attack e.g. wrap
-	ret
-.playerTurn2
-	ld hl, wPlayerBattleStatus1
-	res USING_TRAPPING_MOVE, [hl] ; end multi-turn attack e.g. wrap
 	ret
 
 ; values for player turn
@@ -6039,17 +5957,15 @@ CalcHitChance:
 ; the second iteration multiplies by the evasion ratio
 .loop
 	push bc
-	ld hl, StatModifierRatios  ; stat modifier ratios
-	dec b
-	sla b
-	ld c, b
-	ld b, $00
-	add hl, bc ; hl = address of stat modifier ratio
+	push de
+	ld d, b
+	farcall GetStatModifierRatio
+	pop de
 	pop bc
-	ld a, [hli]
+	ld a, l
 	ldh [hMultiplier], a ; set multiplier to the numerator of the ratio
 	call Multiply
-	ld a, [hl]
+	ld a, h
 	ldh [hDivisor], a ; set divisor to the the denominator of the ratio
 	                 ; (the dividend is the product of the previous multiplication)
 	ld b, $04 ; number of bytes in the dividend
@@ -6138,6 +6054,7 @@ ExecuteEnemyMove:
 	xor a
 	ld [wMoveMissed], a
 	ld [wMoveDidntMiss], a
+	ld [wAttackHitSubstitute], a
 	ld a, EFFECTIVE
 	ld [wDamageMultipliers], a
 	call CheckEnemyStatusConditions
@@ -6364,19 +6281,11 @@ CheckEnemyStatusConditions:
 	jp .enemyReturnToHL
 .checkIfFrozen
 	bit FRZ, [hl]
-	jr z, .checkIfTrapped
+	jr z, .checkIfFlinched
 	ld hl, IsFrozenText
 	call PrintText
 	xor a
 	ld [wEnemyUsedMove], a
-	ld hl, ExecuteEnemyMoveDone ; enemy can't move this turn
-	jp .enemyReturnToHL
-.checkIfTrapped
-	ld a, [wPlayerBattleStatus1]
-	bit USING_TRAPPING_MOVE, a ; is the player using a multi-turn attack like warp
-	jp z, .checkIfFlinched
-	ld hl, CantMoveText
-	call PrintText
 	ld hl, ExecuteEnemyMoveDone ; enemy can't move this turn
 	jp .enemyReturnToHL
 .checkIfFlinched
@@ -6500,8 +6409,8 @@ CheckEnemyStatusConditions:
 .monHurtItselfOrFullyParalysed
 	ld hl, wEnemyBattleStatus1
 	ld a, [hl]
-	; clear bide, thrashing about, charging up, and multi-turn moves such as warp
-	and ~((1 << STORING_ENERGY) | (1 << THRASHING_ABOUT) | (1 << CHARGING_UP) | (1 << USING_TRAPPING_MOVE))
+	; Clear Bide, Thrash, and charging up after confusion damage or full paralysis.
+	and ~((1 << STORING_ENERGY) | (1 << THRASHING_ABOUT) | (1 << CHARGING_UP))
 	ld [hl], a
 	ld a, [wEnemyMoveEffect]
 	cp FLY_EFFECT
@@ -6569,7 +6478,7 @@ CheckEnemyStatusConditions:
 	jp .enemyReturnToHL
 .checkIfThrashingAbout
 	bit THRASHING_ABOUT, [hl] ; is mon using thrash or petal dance?
-	jr z, .checkIfUsingMultiturnMove
+	jr z, .checkIfUsingRage
 	ld a, THRASH
 	ld [wEnemyMoveNum], a
 	ld hl, ThrashingAboutText
@@ -6588,17 +6497,6 @@ CheckEnemyStatusConditions:
 	inc a ; confused for 2-5 turns
 	ld [wEnemyConfusedCounter], a
 	pop hl ; skip DecrementPP
-	jp .enemyReturnToHL
-.checkIfUsingMultiturnMove
-	bit USING_TRAPPING_MOVE, [hl] ; is mon using multi-turn move?
-	jp z, .checkIfUsingRage
-	ld hl, AttackContinuesText
-	call PrintText
-	ld hl, wEnemyNumAttacksLeft
-	dec [hl] ; did multi-turn move end?
-	ld hl, GetEnemyAnimationType ; if it didn't, skip damage calculation (deal damage equal to last hit),
-	                             ; DecrementPP and MoveHitTest
-	jp nz, .enemyReturnToHL
 	jp .enemyReturnToHL
 .checkIfUsingRage
 	ld a, [wEnemyBattleStatus2]
@@ -7084,12 +6982,10 @@ CalculateModifiedStat:
 .noCarry2
 	pop bc
 	push hl
-	ld hl, StatModifierRatios
-	dec b
-	sla b
-	ld c, b
-	ld b, 0
-	add hl, bc
+	push de
+	ld d, b
+	farcall GetStatModifierRatio
+	pop de
 	xor a
 	ldh [hMultiplicand], a
 	ld a, [de]
@@ -7097,10 +6993,10 @@ CalculateModifiedStat:
 	inc de
 	ld a, [de]
 	ldh [hMultiplicand + 2], a
-	ld a, [hli]
+	ld a, l
 	ldh [hMultiplier], a
 	call Multiply
-	ld a, [hl]
+	ld a, h
 	ldh [hDivisor], a
 	ld b, $4
 	call Divide

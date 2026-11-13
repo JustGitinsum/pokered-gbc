@@ -20,7 +20,7 @@ MoveSoundTable:
 	db SFX_BATTLE_12,          $10, $a0 ; WING_ATTACK
 	db SFX_BATTLE_13,          $00, $e0 ; SILVER_WIND
 	db SFX_NOT_VERY_EFFECTIVE, $20, $c0 ; FLY
-	db SFX_BATTLE_14,          $00, $80 ; BIND
+	db SFX_BATTLE_14,          $00, $80 ; SAND_TOMB
 	db SFX_BATTLE_22,          $00, $80 ; SLAM
 	db SFX_VINE_WHIP,          $01, $80 ; VINE_WHIP
 	db SFX_BATTLE_20,          $00, $80 ; STOMP
@@ -134,7 +134,7 @@ MoveSoundTable:
 	db SFX_BATTLE_26,          $1f, $18 ; SPIKE_CANNON
 	db SFX_BATTLE_14,          $0f, $80 ; CONSTRICT
 	db SFX_BATTLE_09,          $f8, $10 ; AMNESIA
-	db SFX_FAINT_FALL,         $18, $20 ; KINESIS
+	db SFX_FAINT_FALL,         $18, $20 ; CALM_MIND
 	db SFX_BATTLE_32,          $08, $40 ; SOFTBOILED
 	db SFX_BATTLE_17,          $01, $e0 ; HI_JUMP_KICK
 	db SFX_NOT_VERY_EFFECTIVE, $09, $ff ; GLARE
@@ -159,7 +159,7 @@ MoveSoundTable:
 	db SFX_BATTLE_21,          $12, $10 ; REST
 	db SFX_BATTLE_36,          $f0, $20 ; ROCK_SLIDE
 	db SFX_BATTLE_1E,          $12, $ff ; HYPER_FANG
-	db SFX_BATTLE_31,          $80, $04 ; SHARPEN
+	db SFX_BATTLE_31,          $80, $04 ; BULK_UP
 	db SFX_BATTLE_33,          $f0, $10 ; CONVERSION
 	db SFX_BATTLE_29,          $f8, $ff ; TRI_ATTACK
 	db SFX_BATTLE_26,          $f0, $ff ; SUPER_FANG
@@ -216,5 +216,7 @@ MoveSoundTable:
 	db SFX_BATTLE_0D,          $00, $a0 ; AURA_WHEEL
 	db SFX_BATTLE_29,          $f0, $e0 ; GLACIAL_LANCE
 	db SFX_NOT_VERY_EFFECTIVE, $01, $ff ; BITTER_BLADE
+	db SFX_BATTLE_0B,          $00, $40 ; DRAGON_DANCE
+	db SFX_BATTLE_09,          $f8, $10 ; NASTY_PLOT
 	assert_table_length NUM_ATTACKS
 	db SFX_BATTLE_0B,          $00, $80

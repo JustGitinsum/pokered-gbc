@@ -74,7 +74,7 @@ CaptureBattlePicturePalette:
 	ldh [rWBK], a
 	ret
 
-; Palette commands relinquish both raster regions with one WRAM-bank switch.
+; Palette commands cancel raster regions and pending HUD palette handoffs.
 ClearBattlePaletteSplits:
 	ldh a, [rWBK]
 	ld b, a
@@ -82,7 +82,36 @@ ClearBattlePaletteSplits:
 	ldh [rWBK], a
 	xor a
 	ld [W2_BattlePictureSplitActive], a
+	ld [W2_BattleTypePalettePending], a
 	jp ClearBattlePaletteSplit.clear
+
+QueueBattleEXPBarPalette:
+	ld d, PAL_EXP
+; d = palette ID; the window transfer commits it with row 11.
+QueueBattleTypePalette:
+	ld l, d
+	ld h, 0
+	add hl, hl
+	add hl, hl
+	add hl, hl
+	ld de, SuperPalettes
+	add hl, de
+	ldh a, [rWBK]
+	ld b, a
+	ld a, 2
+	ldh [rWBK], a
+	push bc
+	xor a
+	ld [W2_BattleTypePalettePending], a
+	ld de, W2_BattleTypePalette
+	ld bc, 8
+	ld a, BANK(SuperPalettes)
+	call FarCopyData2
+	ld a, 1
+	ld [W2_BattleTypePalettePending], a
+	pop af
+	ldh [rWBK], a
+	ret
 
 ; DE = front-picture load destination. Replacement state follows graphics,
 ; not HAS_SUBSTITUTE_UP, since animations temporarily reveal the original mon.
@@ -442,6 +471,21 @@ IF GEN_2_GRAPHICS
 ELSE
 	db PAL_PURPLEMON, PAL_YELLOWBAR, PAL_GRAYMON, PAL_REDMON, PAL_BLUEMON, PAL_BLACK
 ENDC
+
+; de = battle status byte; returns e = icon index, d = palette, carry = no icon.
+GetBattleInfoStatus:
+	ld h, d
+	ld l, e
+	call GetStatusIconIndex
+	ld e, a
+	ret c
+	ld c, a
+	ld b, 0
+	ld hl, StatusIconPalettes
+	add hl, bc
+	ld d, [hl]
+	and a
+	ret
 
 ; Party-menu palette slots; paralysis shares the yellow HP-bar slot.
 PartyStatusIconSlots:

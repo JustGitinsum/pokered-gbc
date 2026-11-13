@@ -1057,16 +1057,6 @@ _ThrashingAboutText::
 	line "thrashing about!"
 	done
 
-_AttackContinuesText::
-	text "<USER>'s"
-	line "attack continues!"
-	done
-
-_CantMoveText::
-	text "<USER>"
-	line "can't move!"
-	prompt
-
 _MoveIsDisabledText::
 	text "<USER>'s"
 	line "@"

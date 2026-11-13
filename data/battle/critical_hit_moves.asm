@@ -7,4 +7,5 @@ HighCriticalMoves:
 	db X_SCISSOR
 	db PSYCHO_CUT
 	db SHADOW_CLAW
+	db SKY_ATTACK
 	db -1 ; end

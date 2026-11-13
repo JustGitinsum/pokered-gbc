@@ -250,6 +250,7 @@ wPlayerMonNumber:: db
 wMenuCursorLocation:: dw
 
 wBattleMenuBall:: db ; selected ball item ID, or 0 to choose the first available
+wBattleInfoSide:: db ; 0 = opponent, 1 = player
 wFieldMoveFromHM:: db ; 0: party menu, 1: menu needs restoration, 2: overworld already restored
 
 ; how many times should HandleMenuInput poll the joypad state before it returns?
@@ -528,7 +529,13 @@ wLowHealthAlarmDisabled:: db
 
 wPlayerMonMinimized:: db
 
-	ds 13
+; Consecutive end-of-turn damage ticks remaining, followed by the move IDs.
+wPlayerTrapCounter:: db
+wEnemyTrapCounter:: db
+wPlayerTrappingMove:: db
+wEnemyTrappingMove:: db
+wAttackHitSubstitute:: db
+	ds 8
 
 UNION
 ; the amount of damage accumulated by the enemy while biding

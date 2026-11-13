@@ -172,6 +172,12 @@ AIMoveChoiceModification2:
 	inc de
 	call ReadMove
 	ld a, [wEnemyMoveEffect]
+	cp BULK_UP_EFFECT
+	jr z, .preferMove
+	cp CALM_MIND_EFFECT
+	jr z, .preferMove
+	cp DRAGON_DANCE_EFFECT
+	jr z, .preferMove
 	cp ATTACK_UP1_EFFECT
 	jr c, .nextMove
 	cp BIDE_EFFECT
@@ -588,6 +594,9 @@ AISwitchIfEnoughMons:
 	ret
 
 SwitchEnemyMon:
+	ld a, [wEnemyTrapCounter]
+	and a
+	ret nz
 
 ; prepare to withdraw the active monster: copy hp, number, and status to roster
 
@@ -642,11 +651,9 @@ AICureStatus:
 	ret
 
 AIUseXAccuracy: ; unreferenced
-	call AIPlayRestoringSFX
-	ld hl, wEnemyBattleStatus2
-	set USING_X_ACCURACY, [hl]
+	ld b, ACCURACY_UP2_EFFECT
 	ld a, X_ACCURACY
-	jp AIPrintItemUse
+	jp AIIncreaseStat
 
 ; AIUseGuardSpec:
 ; 	call AIPlayRestoringSFX
@@ -689,22 +696,22 @@ AICheckIfHPBelowFraction:
 	ret
 
 AIUseXAttack:
-	ld b, ATTACK_UP1_EFFECT
+	ld b, ATTACK_UP2_EFFECT
 	ld a, X_ATTACK
 	jr AIIncreaseStat
 
 AIUseXDefend:
-	ld b, DEFENSE_UP1_EFFECT
+	ld b, DEFENSE_UP2_EFFECT
 	ld a, X_DEFEND
 	jr AIIncreaseStat
 
 AIUseXSpeed:
-	ld b, SPEED_UP1_EFFECT
+	ld b, SPEED_UP2_EFFECT
 	ld a, X_SPEED
 	jr AIIncreaseStat
 
 AIUseXSpecial:
-	ld b, SPCLATK_UP1_EFFECT
+	ld b, NASTY_PLOT_EFFECT
 	ld a, X_SPECIAL
 	; fallthrough
 
@@ -724,6 +731,8 @@ AIIncreaseStat:
 	ld [hli], a
 	ld [hl], b
 	callfar StatModifierUpEffect
+	xor a
+	ld [wAltAnimationID], a ; a failed boost does not play and clear the item animation
 	pop hl
 	pop af
 	ld [hli], a

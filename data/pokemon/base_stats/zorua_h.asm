@@ -10,7 +10,7 @@
 	INCBIN "gfx/pokemon/gsfront/zorua_h.pic", 0, 1 ; sprite dimensions
 	dw ZoruaHPicFront, ZoruaHPicBack
 
-	db SCRATCH, LEER, SHARPEN, NO_MOVE ; level 1 learnset
+	db SCRATCH, LEER, BULK_UP, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_SLOW ; growth rate
 
 	; tm/hm learnset

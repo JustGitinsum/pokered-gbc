@@ -460,6 +460,10 @@ BuyMenuPartyMonOAM:
 
 POPS
 
+LoadBattleInfoMonIcon:
+	ld a, [wPokedexNum]
+	jr LoadPartyMonSprite
+
 LoadLearnsetMonIcon:
 	; farcall clobbers a, so read the species after switching banks.
 	ld a, [wPokedexNum]

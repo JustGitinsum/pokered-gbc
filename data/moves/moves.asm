@@ -28,9 +28,9 @@ Moves:
 	move CUT,          NO_ADDITIONAL_EFFECT,        75, NORMAL,        95, 30
 	move GUST,         NO_ADDITIONAL_EFFECT,        40, FLYING,       100, 35
 	move WING_ATTACK,  NO_ADDITIONAL_EFFECT,        60, FLYING,       100, 35
-	move SILVER_WIND,  NO_ADDITIONAL_EFFECT,        60,    BUG,       100, 10
+	move SILVER_WIND,  ALL_STATSUP_20P_EFFECT,      60,    BUG,       100, 10
 	move FLY,          FLY_EFFECT,                  95, FLYING,       100, 15
-	move BIND,         TRAPPING_EFFECT,             15, NORMAL,        75, 20
+	move SAND_TOMB,    TRAPPING_EFFECT,             35, NORMAL,        85, 15
 	move SLAM,         NO_ADDITIONAL_EFFECT,        80, NORMAL,        75, 20
 	move VINE_WHIP,    NO_ADDITIONAL_EFFECT,        40, GRASS,        100, 25
 	move STOMP,        FLINCH_SIDE_EFFECT2,         65, NORMAL,       100, 20
@@ -45,7 +45,7 @@ Moves:
 	move PLAY_ROUGH,   ATTACK_DOWN_SIDE_EFFECT,     90, FAIRY,         90, 10
 	move TACKLE,       NO_ADDITIONAL_EFFECT,        40, NORMAL,       100, 35
 	move BODY_SLAM,    PARALYZE_SIDE_EFFECT2,       85, NORMAL,       100, 15
-	move WRAP,         TRAPPING_EFFECT,             15, NORMAL,        85, 20
+	move WRAP,         TRAPPING_EFFECT,             15, NORMAL,        90, 20
 	move BULLDOZE,     SPEED_DOWN_SIDE_EFFECT,      60, GROUND,       100, 20
 	move THRASH,       THRASH_PETAL_DANCE_EFFECT,   90, NORMAL,       100, 20
 	move DOUBLE_EDGE,  RECOIL_EFFECT,              100, NORMAL,       100, 15
@@ -93,7 +93,7 @@ Moves:
 	move MAGICAL_LEAF, SWIFT_EFFECT,                60, GRASS,        100, 20
 	move STRING_SHOT,  SPEED_DOWN1_EFFECT,           0, BUG,           95, 40
 	move DRAGON_RAGE,  SPECIAL_DAMAGE_EFFECT,        1, DRAGON,       100, 10
-	move FIRE_SPIN,    TRAPPING_EFFECT,             15, FIRE,          70, 15 ;;;Will-O-Wisp?
+	move FIRE_SPIN,    TRAPPING_EFFECT,             35, FIRE,          85, 15 ;;;Will-O-Wisp?
 	move THUNDERSHOCK, PARALYZE_SIDE_EFFECT1,       40, ELECTRIC,     100, 30
 	move THUNDERBOLT,  PARALYZE_SIDE_EFFECT1,       95, ELECTRIC,     100, 15
 	move THUNDER_WAVE, PARALYZE_EFFECT,              0, ELECTRIC,     100, 20
@@ -106,12 +106,12 @@ Moves:
 	move CONFUSION,    CONFUSION_SIDE_EFFECT,       50, PSYCHIC_TYPE, 100, 25
 	move PSYCHIC_M,    SPCLDEF_DOWN_SIDE_EFFECT,    90, PSYCHIC_TYPE, 100, 10
 	move HYPNOSIS,     SLEEP_EFFECT,                 0, PSYCHIC_TYPE,  60, 20
-	move MEDITATE,     ATTACK_UP1_EFFECT,            0, PSYCHIC_TYPE, 100, 40 ; Make it CALM_MIND
+	move MEDITATE,     ATTACK_UP1_EFFECT,            0, PSYCHIC_TYPE, 100, 40
 	move AGILITY,      SPEED_UP2_EFFECT,             0, PSYCHIC_TYPE, 100, 30
 	move QUICK_ATTACK, NO_ADDITIONAL_EFFECT,        40, NORMAL,       100, 30
 	move RAGE,         RAGE_EFFECT,                 20, NORMAL,       100, 20 ;;;dump
 	move TELEPORT,     SWITCH_AND_TELEPORT_EFFECT,   0, PSYCHIC_TYPE, 100, 20
-	move OMINOUS_WIND, NO_ADDITIONAL_EFFECT,        60, GHOST,        100, 15
+	move OMINOUS_WIND, ALL_STATSUP_20P_EFFECT ,     60, GHOST,        100, 10
 	move MIMIC,        MIMIC_EFFECT,                 0, NORMAL,       100, 10 ;;;dump
 	move SCREECH,      DEFENSE_DOWN2_EFFECT,         0, NORMAL,        85, 40
 	move DOUBLE_TEAM,  EVASION_UP1_EFFECT,           0, NORMAL,       100, 15
@@ -144,7 +144,7 @@ Moves:
 	move SPIKE_CANNON, TWO_TO_FIVE_ATTACKS_EFFECT,  20, NORMAL,       100, 15
 	move CONSTRICT,    SPEED_DOWN_SIDE_EFFECT,      60, NORMAL,       100, 20
 	move AMNESIA,      SPCLDEF_UP2_EFFECT,           0, PSYCHIC_TYPE, 100, 20
-	move KINESIS,      ACCURACY_DOWN1_EFFECT,        0, PSYCHIC_TYPE,  80, 15
+	move CALM_MIND,    CALM_MIND_EFFECT,             0, PSYCHIC_TYPE, 100, 20
 	move SOFTBOILED,   HEAL_EFFECT,                  0, NORMAL,       100, 10
 	move HI_JUMP_KICK, JUMP_KICK_EFFECT,            85, FIGHTING,      90, 20
 	move GLARE,        PARALYZE_EFFECT,              0, NORMAL,        75, 30
@@ -156,7 +156,7 @@ Moves:
 	move SKY_ATTACK,   CHARGE_EFFECT,              140, FLYING,        90,  5 ;;;;maybe dump
 	move TRANSFORM,    TRANSFORM_EFFECT,             0, NORMAL,       100, 10
 	move BUBBLE,       SPEED_DOWN_SIDE_EFFECT,      20, WATER,        100, 30
-	move DIZZY_PUNCH,  CONFUSION_SIDE_EFFECT,        70, NORMAL,       100, 10
+	move DIZZY_PUNCH,  CONFUSION_SIDE_EFFECT,       70, NORMAL,       100, 10
 	move SPORE,        SLEEP_EFFECT,                 0, GRASS,        100, 15
 	move FLASH,        FLINCH_SIDE_EFFECT1,         60, FAIRY,        100, 20
 	move EXTRASENSORY, FLINCH_SIDE_EFFECT1,         80, PSYCHIC_TYPE, 100, 20
@@ -169,7 +169,7 @@ Moves:
 	move REST,         HEAL_EFFECT,                  0, PSYCHIC_TYPE, 100, 10
 	move ROCK_SLIDE,   NO_ADDITIONAL_EFFECT,        75, ROCK,          90, 10
 	move HYPER_FANG,   FLINCH_SIDE_EFFECT1,         80, NORMAL,        90, 15
-	move SHARPEN,      ATTACK_UP1_EFFECT,            0, NORMAL,       100, 30 ; Make it BULK_UP
+	move BULK_UP,      BULK_UP_EFFECT,               0, FIGHTING,     100, 20
 	move CONVERSION,   CONVERSION_EFFECT,            0, NORMAL,       100, 30
 	move TRI_ATTACK,   TRI_ATTACK_EFFECT,           40, NORMAL,       100, 10
 	move SUPER_FANG,   SUPER_FANG_EFFECT,            1, NORMAL,        90, 10
@@ -178,7 +178,7 @@ Moves:
 	move FIRE_FANG,    FLINCH_SIDE_EFFECT2,         65, FIRE,          95, 15
 	move ICE_FANG,     FLINCH_SIDE_EFFECT2,         65, ICE,           95, 15
 	move THUNDERFANG,  FLINCH_SIDE_EFFECT2,         65, ELECTRIC,      95, 15
-	move ANCIENTPOWER, NO_ADDITIONAL_EFFECT,        60, ROCK,         100,  5
+	move ANCIENTPOWER, ALL_STATSUP_20P_EFFECT ,     60, ROCK,         100, 10
 	move BOUNCE,       NO_ADDITIONAL_EFFECT,        80, FLYING,       100, 10
 	move FLAME_WHEEL,  BURN_SIDE_EFFECT1,           60, FIRE,         100, 25
 	move SHOCK_WAVE,   SWIFT_EFFECT,  				60, ELECTRIC,     100, 20
@@ -225,7 +225,9 @@ Moves:
 	move AURA_WHEEL,   PARALYZE_SIDE_EFFECT1,      110, ELECTRIC,     100, 10
 	move GLACIAL_LANCE,NO_ADDITIONAL_EFFECT,       120, ICE,          100,  5
 	move BITTER_BLADE, DRAIN_HP_EFFECT,             90, FIRE,         100, 10
+	move DRAGON_DANCE, DRAGON_DANCE_EFFECT,          0, DRAGON,       100, 20
+	move NASTY_PLOT,   NASTY_PLOT_EFFECT,            0, DARK,         100, 20
 	move STRUGGLE,     RECOIL_EFFECT,               50, NORMAL,       100, 10
 	assert_table_length NUM_ATTACKS
 
-;;; ADD:  MAKEITRAIN DRAIN_PUNCH AQUA_TAIL SEED_BOMB, PSYCHIC_FANGS, MEGAHORN, DRILL_RUN, AERO_BLAST, OBLIVIONWING
+;;; ADD: MAKEITRAIN DRAIN_PUNCH AQUA_TAIL SEED_BOMB, PSYCHIC_FANGS, MEGAHORN, DRILL_RUN, AERO_BLAST, OBLIVIONWING, BHEMOTHBLADE

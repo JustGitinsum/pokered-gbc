@@ -25,7 +25,7 @@
 	const WING_ATTACK  ; 11
 	const SILVER_WIND    ; 12
 	const FLY          ; 13
-	const BIND         ; 14
+	const SAND_TOMB         ; 14
 	const SLAM         ; 15
 	const VINE_WHIP    ; 16
 	const STOMP        ; 17
@@ -139,7 +139,7 @@
 	const SPIKE_CANNON ; 83
 	const CONSTRICT    ; 84
 	const AMNESIA      ; 85
-	const KINESIS      ; 86
+	const CALM_MIND    ; 86
 	const SOFTBOILED   ; 87
 	const HI_JUMP_KICK ; 88
 	const GLARE        ; 89
@@ -164,7 +164,7 @@
 	const REST         ; 9c
 	const ROCK_SLIDE   ; 9d
 	const HYPER_FANG   ; 9e
-	const SHARPEN      ; 9f
+	const BULK_UP      ; 9f
 	const CONVERSION   ; a0
 	const TRI_ATTACK   ; a1
 	const SUPER_FANG   ; a2
@@ -220,6 +220,8 @@
 	const AURA_WHEEL
 	const GLACIAL_LANCE
 	const BITTER_BLADE
+	const DRAGON_DANCE
+	const NASTY_PLOT
 	const STRUGGLE     ; a5
 DEF NUM_ATTACKS EQU const_value - 1
 

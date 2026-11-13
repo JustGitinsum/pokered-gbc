@@ -91,15 +91,37 @@ TypeGraphicMapping:
 	dw DarkTypeIcon;dark
     dw FairyTypeIcon;fairy
 
-; input: d = type ID
-LoadTypeIcon8Tile:
-    ld e, $c9
-
 ; input: d = type ID, e = first tile ID for the icon
 LoadTypeIcon8TileAt:
     ld hl, TypeGraphicMapping8Tile
     ld a, 8
     jr LoadTypeIconTiles
+
+; d = move type. The palette must already be queued and tile transfer disabled.
+; Stage graphics instead of overwriting the icon that is still visible.
+QueueBattleMoveTypeIcon:
+    ld hl, TypeGraphicMapping8Tile
+    ld b, 0
+    ld c, d
+    add hl, bc
+    add hl, bc
+    ld a, [hli]
+    ld h, [hl]
+    ld l, a
+    ldh a, [rWBK]
+    ld b, a
+    ld a, 2
+    ldh [rWBK], a
+    push bc
+    ld de, W2_BattleTypeIconTiles
+    ld bc, 8 tiles
+    ld a, BANK(NormalTypeIcon8Tile)
+    call FarCopyData2
+    ld a, 3
+    ld [W2_BattleTypePalettePending], a
+    pop af
+    ldh [rWBK], a
+    ret
 
 ; input: d = type ID, e = first tile ID
 LoadTypeIcon4TileAt::

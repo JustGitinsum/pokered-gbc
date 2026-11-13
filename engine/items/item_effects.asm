@@ -1601,15 +1601,6 @@ ItemUseRepelCommon:
 	ld [wRepelRemainingSteps], a
 	jp PrintItemUseTextAndRemoveItem
 
-; handles X Accuracy item
-ItemUseXAccuracy:
-	ld a, [wIsInBattle]
-	and a
-	jp z, ItemUseNotTime
-	ld hl, wPlayerBattleStatus2
-	set USING_X_ACCURACY, [hl] ; X Accuracy bit
-	jp PrintItemUseTextAndRemoveItem
-
 ; This function is bugged and never works. It always jumps to ItemUseNotTime.
 ; The Card Key is handled in a different way.
 ItemUseCardKey:
@@ -1696,7 +1687,17 @@ ItemUseMaxRepel:
 ; 	set GETTING_PUMPED, [hl] ; Focus Energy bit
 ; 	jp PrintItemUseTextAndRemoveItem
 
+; X items raise their stat by two stages. X Accuracy uses the normal accuracy
+; stage instead of Gen 1's hidden always-hit flag.
+ItemUseXAccuracy:
+	ld b, ACCURACY_UP2_EFFECT
+	jr ItemUseXStatCommon
+
 ItemUseXStat:
+	ld a, [wCurItem]
+	sub X_ATTACK - ATTACK_UP2_EFFECT
+	ld b, a
+ItemUseXStatCommon:
 	ld a, [wIsInBattle]
 	and a
 	jr nz, .inBattle
@@ -1711,9 +1712,7 @@ ItemUseXStat:
 	ld a, [hl]
 	push af ; save [wPlayerMoveEffect]
 	push hl
-	ld a, [wCurItem]
-	sub X_ATTACK - ATTACK_UP1_EFFECT
-	ld [hl], a ; store player move effect
+	ld [hl], b ; store player move effect
 	call PrintItemUseTextAndRemoveItem
 	ld a, XSTATITEM_ANIM ; X stat item animation ID
 	ld [wPlayerMoveNum], a
@@ -1723,6 +1722,8 @@ ItemUseXStat:
 	xor a
 	ldh [hWhoseTurn], a ; set turn to player's turn
 	farcall StatModifierUpEffect ; do stat increase move
+	xor a
+	ld [wAltAnimationID], a ; a failed boost does not play and clear the item animation
 	pop hl
 	pop af
 	ld [hld], a ; restore [wPlayerMoveEffect]

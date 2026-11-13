@@ -235,12 +235,18 @@ SECTION "Battle Core", ROMX
 INCLUDE "engine/battle/core.asm"
 ;INCLUDE "engine/battle/effects.asm"
 
+SECTION "Trapping Moves", ROMX
+INCLUDE "engine/battle/move_effects/trapping.asm"
+
 SECTION "Battle Status Icons", ROMX
 
 BattleStatusIconGraphics: INCBIN "gfx/battle/status.2bpp"
 BattleStatusIconGraphicsEnd:
 
 INCLUDE "engine/battle/status_icons.asm"
+
+SECTION "Battle Info Screen", ROMX
+INCLUDE "engine/battle/battle_info.asm"
 
 SECTION "Battle Menu Ball Graphics", ROMX
 

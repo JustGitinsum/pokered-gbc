@@ -78,24 +78,6 @@ SetPal_Battle:
 	ret
 
 ; Quick-ball helpers share this bank because Battle Core is nearly full.
-HandleBattleMenuInput:
-	; Observe vertical cursor changes without treating them as menu selections.
-	ld a, [wMenuWatchedKeys]
-	push af
-	or PAD_UP | PAD_DOWN
-	ld [wMenuWatchedKeys], a
-.loop
-	call UpdateBattleMenuBallHint
-	call HandleMenuInput
-	pop bc
-	push bc
-	ldh a, [hJoy5]
-	and b
-	jr z, .loop
-	pop af
-	ld [wMenuWatchedKeys], a
-	ret
-
 UpdateBattleMenuBallHint:
 	; The blank between SELECT and the ball is reserved for the cycling hint.
 	hlcoord 1, 16
@@ -272,19 +254,14 @@ SetPal_Battle_Common:
 	ld e, 3
 	farcall LoadSGBPalette
 
-	; Player EXP Bar or Move Types
+	; Normal battle HUD; SetPal_MovePreview separately owns the type preview.
 	IF GEN_2_GRAPHICS
-    ld a, [wPlayerMoveType]
-    ld hl, MoveTypeExpBarPalette
-    ld c, a
-    ld b, 0
-    add hl, bc
-    ld d, [hl]
+    ld d, PAL_EXP
 ELSE
     ld d, PAL_BLACK
 ENDC
     ld e, 4
-    farcall LoadSGBPalette
+    farcall QueueBattleTypePalette
 
 	; Catagory icons (physical/special/status)
 	farcall DetermineMoveCategory
@@ -408,7 +385,7 @@ ELSE
     ld d, PAL_BLACK
 ENDC
     ld e, 4
-    farcall LoadSGBPalette
+    farcall QueueBattleTypePalette
 
     ; Palette for the physical/special/status category icon.
     ld a, [wPlayerMoveCategory]
@@ -2373,6 +2350,14 @@ MoveTypeExpBarPalette:
     db PAL_CHANSEY   ; $1C FAIRY
 
     assert_table_length NUM_TYPES
+
+GetBattleInfoTypePalette:
+	ld hl, MoveTypeExpBarPalette
+	ld b, 0
+	ld c, d
+	add hl, bc
+	ld d, [hl]
+	ret
 
 ; Everything else goes in bank $2C (unused by original game)
 SECTION "bank2C", ROMX

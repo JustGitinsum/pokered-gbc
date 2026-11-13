@@ -422,20 +422,160 @@ FireDefrostedText:
 	text_end
 
 StatModifierUpEffect:
+	farjp _StatModifierUpEffect
+
+PairedStatModifierUpEffect:
+	farjp _PairedStatModifierUpEffect
+
+AllStatsUpSideEffect:
+	call BattleRandom
+	cp 20 percent + 1
+	ret nc
+	farjp _AllStatsUpSideEffect
+
+PUSHS
+SECTION FRAGMENT "Stat Raising", ROMX
+
+GetStatBoostUser:
 	ld hl, wPlayerMonStatMods
 	ld de, wPlayerMoveEffect
 	ldh a, [hWhoseTurn]
 	and a
-	jr z, .statModifierUpEffect
+	ret z
 	ld hl, wEnemyMonStatMods
 	ld de, wEnemyMoveEffect
-.statModifierUpEffect
+	ret
+
+_StatModifierUpEffect:
+	call GetStatBoostUser
 	ld a, [de]
 	sub ATTACK_UP1_EFFECT
 	cp EVASION_UP1_EFFECT + 1 - ATTACK_UP1_EFFECT ; covers all +1 effects
-	jr c, .incrementStatMod
+	jr c, .raiseStat
 	sub ATTACK_UP2_EFFECT - ATTACK_UP1_EFFECT ; map +2 effects to equivalent +1 effect
-.incrementStatMod
+.raiseStat
+	call RaiseStatModifier
+	jp nc, StatUpFailed
+	jp UpdateStatDone
+
+_PairedStatModifierUpEffect:
+	call GetStatBoostUser
+	ld c, wPlayerMonAttackMod - wPlayerMonStatMods
+	ld b, wPlayerMonDefenseMod - wPlayerMonStatMods
+	ld a, [de]
+	cp BULK_UP_EFFECT
+	jr z, .raisePair
+	cp DRAGON_DANCE_EFFECT
+	jr nz, .specialStats
+	ld b, wPlayerMonSpeedMod - wPlayerMonStatMods
+	jr .raisePair
+.specialStats
+	ld c, wPlayerMonSpclAtkMod - wPlayerMonStatMods
+	ld b, wPlayerMonSpclDefMod - wPlayerMonStatMods
+.raisePair
+	push hl
+	push de
+	push bc
+	ld a, c
+	call RaiseStatModifier
+	pop bc
+	pop de
+	pop hl
+	ld a, 0
+	adc a, 0
+	push af ; remember whether the first stat changed
+	push bc ; remember which stats were selected
+	ld a, b
+	call RaiseStatModifier
+	pop de
+	pop bc
+	ld a, 0
+	adc a, b
+	and a
+	jp z, StatUpFailed
+	cp 2
+	jr z, .bothRaised
+	ld a, b
+	and a
+	ld c, e
+	jr nz, .singleRaised
+	ld c, d
+.singleRaised
+	jp UpdateStatDone
+.bothRaised
+	ld hl, .attackDefenseName
+	ld bc, .attackDefenseNameEnd - .attackDefenseName
+	ld a, d
+	cp wPlayerMonDefenseMod - wPlayerMonStatMods
+	jr z, .copyNames
+	ld hl, .attackSpeedName
+	ld bc, .attackSpeedNameEnd - .attackSpeedName
+	cp wPlayerMonSpeedMod - wPlayerMonStatMods
+	jr z, .copyNames
+	ld hl, .specialStatsName
+	ld bc, .specialStatsNameEnd - .specialStatsName
+.copyNames
+	ld de, wStringBuffer
+	call CopyData
+	farjp StatUpAnimationAndText
+.attackDefenseName
+	db "ATTACK and<SCROLL>DEFENSE@"
+.attackDefenseNameEnd
+.attackSpeedName
+	db "ATTACK and<SCROLL>SPEED@"
+.attackSpeedNameEnd
+.specialStatsName
+	db "SP.ATK and<SCROLL>SP.DEF@"
+.specialStatsNameEnd
+
+_AllStatsUpSideEffect:
+	call GetStatBoostUser
+	ld bc, 0 ; b: stats raised, c: last raised stat
+	xor a
+.loop
+	push af
+	push bc
+	push hl
+	push de
+	call RaiseStatModifier
+	pop de
+	pop hl
+	pop bc
+	jr nc, .nextStat
+	inc b
+	pop af
+	ld c, a
+	push af
+.nextStat
+	pop af
+	inc a
+	cp NUM_STATS - 1
+	jr c, .loop
+	ld a, b
+	and a
+	ret z ; no message when every stat is already capped
+	dec a
+	jp z, UpdateStatDone
+	cp NUM_STATS - 2
+	ld hl, .allStatsName
+	ld bc, .allStatsNameEnd - .allStatsName
+	jr z, .copyName
+	ld hl, .statsName
+	ld bc, .statsNameEnd - .statsName
+.copyName
+	ld de, wStringBuffer
+	call CopyData
+	farjp StatUpAnimationAndText
+.allStatsName
+	db "ALL "
+.statsName
+	db "STATS@"
+.allStatsNameEnd
+.statsNameEnd
+
+; a: zero-based stat index; hl: user's modifiers; de: user's move effect.
+; Returns carry if the stat was raised, without animation or text.
+RaiseStatModifier:
 	ld c, a
 	ld b, $0
 	add hl, bc
@@ -443,20 +583,32 @@ StatModifierUpEffect:
 	inc b ; increment corresponding stat mod
 	ld a, $d
 	cp b ; can't raise stat past +6 ($d or 13)
-	jp c, PrintNothingHappenedText
+	jr nc, .checkAmount
+	and a
+	ret
+.checkAmount
 	ld a, [de]
 	cp ATTACK_UP2_EFFECT ; is it a +2 effect?
 	jr c, .ok
+	cp EVASION_UP2_EFFECT + 1
+	jr nc, .ok
 	inc b ; if so, increment stat mod again
 	ld a, $d
 	cp b ; unless it's already +6
 	jr nc, .ok
 	ld b, a
 .ok
-	ld [hl], b
 	ld a, c
 	cp NUM_STATS - 1
-	jr nc, UpdateStatDone ; jump if mod affected is evasion/accuracy
+	jr c, .recalculate
+	ld [hl], b
+	scf
+	ret ; no calculated stat for evasion/accuracy
+.recalculate
+	; Keep the exact old stage: a rejected +2 boost cannot roll back with DEC.
+	ld a, [hl]
+	ld [hl], b
+	push af
 	push hl
 	ld hl, wBattleMonAttack + 1
 	ld de, wPlayerMonUnmodifiedAttack
@@ -527,10 +679,28 @@ UpdateStat:
 	ldh a, [hProduct + 3]
 	ld [hl], a
 	pop hl
+	pop af
+	scf
+	ret
 UpdateStatDone:
-	ld b, c
-	inc b
-	call PrintStatText
+	ld d, c
+	inc d
+	farcall _PrintStatText
+	farjp StatUpAnimationAndText
+
+RestoreOriginalStatModifier:
+	pop hl
+	pop af
+	ld [hl], a
+	and a
+	ret
+
+StatUpFailed:
+	farjp PrintNothingHappenedText
+
+POPS
+
+StatUpAnimationAndText:
 	ld hl, wPlayerBattleStatus2
 	ld de, wPlayerMoveNum
 	ld bc, wPlayerMonMinimized
@@ -544,7 +714,7 @@ UpdateStatDone:
 ; check if we used an X-stat up item
 	ld a, [wAltAnimationID]
 	and a
-	jr nz, .notMinimize
+	jr nz, .playAnimation ; X items keep the last move's power, so don't skip their animation
 	ld a, [de]
 	cp MINIMIZE
 	jr nz, .notMinimize
@@ -567,6 +737,7 @@ UpdateStatDone:
 .gotUsersPower1
     and a ; Skip animation if damage dealing move
     jr nz, .skipAnimation
+.playAnimation
 	call PlayCurrentMoveAnimation
 .skipAnimation
 	ld a, [de]
@@ -591,10 +762,6 @@ UpdateStatDone:
 	call QuarterSpeedDueToParalysis ; apply speed penalty to the player whose turn is not, if it's paralyzed
 	jp HalveAttackDueToBurn ; apply attack penalty to the player whose turn is not, if it's burned
 
-RestoreOriginalStatModifier:
-	pop hl
-	dec [hl]
-
 PrintNothingHappenedText:
 	ld hl, NothingHappenedText
 	jp PrintText
@@ -609,8 +776,15 @@ MonsStatsRoseText:
 	jr z, .playerTurn
 	ld a, [wEnemyMoveEffect]
 .playerTurn
+	; The new one-stage effects form a contiguous range above the +2 effects.
+	cp BULK_UP_EFFECT
+	jr c, .ordinaryEffect
+	cp ALL_STATSUP_20P_EFFECT + 1
+	jr c, .rose
+.ordinaryEffect
 	cp ATTACK_DOWN1_EFFECT
 	ret nc
+.rose
 	ld hl, RoseText
 	ret
 
@@ -715,12 +889,10 @@ StatModifierDownEffect:
 ; paralysis and burn penalties, as well as badge boosts are ignored
 	push hl
 	push bc
-	ld hl, StatModifierRatios
-	dec b
-	sla b
-	ld c, b
-	ld b, $0
-	add hl, bc
+	push de
+	ld d, b
+	farcall GetStatModifierRatio
+	pop de
 	pop bc
 	xor a
 	ldh [hMultiplicand], a
@@ -729,10 +901,10 @@ StatModifierDownEffect:
 	inc de
 	ld a, [de]
 	ldh [hMultiplicand + 2], a
-	ld a, [hli]
+	ld a, l
 	ldh [hMultiplier], a
 	call Multiply
-	ld a, [hl]
+	ld a, h
 	ldh [hDivisor], a
 	ld b, $4
 	call Divide
@@ -833,7 +1005,24 @@ PrintStatText:
 	ld d, b
 	farjp _PrintStatText
 
+PUSHS
+SECTION FRAGMENT "Stat Raising", ROMX
+
+; d: stat modifier; returns numerator in l and denominator in h.
+GetStatModifierRatio:
+	ld c, d
+	dec c
+	sla c
+	ld b, 0
+	ld hl, StatModifierRatios
+	add hl, bc
+	ld a, [hli]
+	ld h, [hl]
+	ld l, a
+	ret
+
 INCLUDE "data/battle/stat_modifiers.asm"
+POPS
 
 BideEffect:
 	ld hl, wPlayerBattleStatus1
@@ -882,6 +1071,8 @@ ThrashPetalDanceEffect:
 	jp PlayAlternativeAnimation2
 
 SwitchAndTeleportEffect:
+	farcall CheckTrappedTeleport
+	jp nz, PrintButItFailedText_
 	ldh a, [hWhoseTurn]
 	and a
 	jr nz, .handleEnemy
@@ -1160,28 +1351,13 @@ DugAHoleText:
 	text_end
 
 TrappingEffect:
-	ld hl, wPlayerBattleStatus1
-	ld de, wPlayerNumAttacksLeft
-	ldh a, [hWhoseTurn]
-	and a
-	jr z, .trappingEffect
-	ld hl, wEnemyBattleStatus1
-	ld de, wEnemyNumAttacksLeft
-.trappingEffect
-	bit USING_TRAPPING_MOVE, [hl]
-	ret nz
-	call ClearHyperBeam ; since this effect is called before testing whether the move will hit,
-                        ; the target won't need to recharge even if the trapping move missed
-	set USING_TRAPPING_MOVE, [hl] ; mon is now using a trapping move
-	call BattleRandom ; 3/8 chance for 2 and 3 attacks, and 1/8 chance for 4 and 5 attacks
-	and $3
-	cp $2
-	jr c, .setTrappingCounter
+	farjp ApplyTrappingEffect
+
+GetTrappingDuration:
 	call BattleRandom
-	and $3
-.setTrappingCounter
-	inc a
-	ld [de], a
+	and 1
+	add 4
+	ld d, a
 	ret
 
 MistEffect:

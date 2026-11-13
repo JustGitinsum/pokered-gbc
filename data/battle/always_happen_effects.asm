@@ -10,4 +10,5 @@ AlwaysHappenSideEffects:
 	db RECOIL_EFFECT
 	db TWINEEDLE_EFFECT
 	db RAGE_EFFECT
+	db ALL_STATSUP_20P_EFFECT
 	db -1 ; end

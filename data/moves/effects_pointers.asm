@@ -55,7 +55,7 @@ MoveEffectPointerTable:
 	dw StatModifierUpEffect      ; ATTACK_UP2_EFFECT
 	dw StatModifierUpEffect      ; DEFENSE_UP2_EFFECT
 	dw StatModifierUpEffect      ; SPEED_UP2_EFFECT
-	dw StatModifierUpEffect      ; SPCLATK_UP2_EFFECT
+	dw StatModifierUpEffect      ; NASTY_PLOT_EFFECT
 	dw StatModifierUpEffect      ; SPCLDEF_UP2_EFFECT
 	dw StatModifierUpEffect      ; ACCURACY_UP2_EFFECT
 	dw StatModifierUpEffect      ; EVASION_UP2_EFFECT
@@ -92,4 +92,8 @@ MoveEffectPointerTable:
 	dw LeechSeedEffect           ; LEECH_SEED_EFFECT
 	dw SplashEffect              ; SPLASH_EFFECT
 	dw DisableEffect             ; DISABLE_EFFECT
+	dw PairedStatModifierUpEffect ; BULK_UP_EFFECT
+	dw PairedStatModifierUpEffect ; CALM_MIND_EFFECT
+	dw PairedStatModifierUpEffect ; DRAGON_DANCE_EFFECT
+	dw AllStatsUpSideEffect      ; ALL_STATSUP_20P_EFFECT
 	assert_table_length NUM_MOVE_EFFECTS

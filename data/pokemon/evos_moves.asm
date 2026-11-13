@@ -211,7 +211,7 @@ RhydonEvosMoves:
 	db 5, ACCELEROCK
 	db 10, BULLDOZE
 	db 15, HORN_ATTACK
-	db 20, SHARPEN
+	db 20, BULK_UP
 	db 25, STOMP
 	db 30, ROCK_SLIDE
 	;db 35, DRILL_RUN
@@ -475,7 +475,7 @@ RhyhornEvosMoves:
 	db 5, ACCELEROCK
 	db 10, BULLDOZE
 	db 15, HORN_ATTACK
-	db 20, SHARPEN
+	db 20, BULK_UP
 	db 25, STOMP
 	db 30, ROCK_SLIDE
 	;db 35, DRILL_RUN
@@ -526,7 +526,7 @@ MewEvosMoves:
 	db 30, ANCIENTPOWER
 	db 35, REFLECT
 	db 40, LIGHT_SCREEN
-	;db 50, NASTY_PLOT
+	db 50, NASTY_PLOT
 	db 60, METRONOME
 	db 80, TRANSFORM
 	db 90, AURA_SPHERE
@@ -541,6 +541,7 @@ GyaradosEvosMoves:
 	db 24, WATERFALL
 	db 30, CRUNCH
 	db 33, IRON_HEAD
+	db 36, DRAGON_DANCE
 	db 40, BOUNCE
 	db 45, OUTRAGE
 	db 50, HYDRO_PUMP
@@ -908,11 +909,11 @@ DrowzeeEvosMoves:
 	db 13, HEADBUTT
 	db 17, POISON_GAS
 	db 21, PSYBEAM
-	db 25, MEDITATE
+	db 25, AMNESIA
 	db 29, ZEN_HEADBUTT
 	db 33, ANCIENTPOWER
 	db 37, PSYCHIC_M
-	db 41, AMNESIA
+	db 41, NASTY_PLOT
 	db 0
 
 GolemEvosMoves:
@@ -1045,7 +1046,8 @@ DiglettEvosMoves:
 	db EVOLVE_LEVEL, 26, DUGTRIO
 	db 0
 ; Learnset Gen9
-	db 12, BULLDOZE
+	db 9, BULLDOZE
+	db 12, SAND_TOMB
 	db 16, METAL_CLAW
 	db 20, SUCKER_PUNCH
 	db 24, SLASH
@@ -1169,6 +1171,7 @@ DragoniteEvosMoves:
 	db 50, EXTREMESPEED
 	db 56, OUTRAGE
 	db 60, HYPER_BEAM
+	db 62, DRAGON_DANCE
 	db EVOLUTION_MOVE, WING_ATTACK
 	db 0
 
@@ -1177,6 +1180,7 @@ GibleEvosMoves:
 	db EVOLVE_LEVEL, 24, GABITE
 	db 0
 ; Learnset ZA
+	db 7, SAND_TOMB
 	db 12, DRAGONBREATH
 	db 18, BULLDOZE
 	db 25, BITE
@@ -1192,6 +1196,7 @@ GabiteEvosMoves:
 	db EVOLVE_LEVEL, 48, GARCHOMP
 	db 0
 ; Learnset ZA
+	db 7, SAND_TOMB
 	db 12, DRAGONBREATH
 	db 18, BULLDOZE
 	db 25, BITE
@@ -1206,6 +1211,7 @@ GarchompEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset ZA
+	db 7, SAND_TOMB
 	db 12, DRAGONBREATH
 	db 18, BULLDOZE
 	db 25, BITE
@@ -1338,6 +1344,7 @@ MeowthEvosMoves:
 	db 32, SLASH
 	db 36, CRUNCH
 	db 48, PLAY_ROUGH
+	db 54, NASTY_PLOT
 	db 0
 
 KrabbyEvosMoves:
@@ -1437,7 +1444,7 @@ TyruntEvosMoves:
 ; Learnset ZA/SV
 	db 4, ROAR
 	db 8, ROCK_TOMB
-	db 12, SHARPEN
+	db 12, BULK_UP
 	db 16, BITE
 	db 24, STOMP
 	db 28, ROCK_SLIDE
@@ -1452,7 +1459,7 @@ TyrantrumEvosMoves:
 ; Learnset ZA/SV
 	db 4, ROAR
 	db 8, ROCK_TOMB
-	db 12, SHARPEN
+	db 12, BULK_UP
 	db 16, BITE
 	db 24, STOMP
 	db 28, ROCK_SLIDE
@@ -1473,6 +1480,7 @@ DratiniEvosMoves:
 	db 20, AGILITY
 	db 30, SLAM
 	db 40, DRAGON_RAGE
+	db 50, DRAGON_DANCE
 	db 55, OUTRAGE
 	db 60, HYPER_BEAM
 	db 0
@@ -1487,6 +1495,7 @@ DragonairEvosMoves:
 	db 20, AGILITY
 	db 35, SLAM
 	db 45, DRAGON_RAGE
+	db 50, DRAGON_DANCE
 	db 56, OUTRAGE
 	db 60, HYPER_BEAM
 	db 0
@@ -1538,6 +1547,7 @@ HorseaEvosMoves:
 	db 28, AURORA_BEAM
 	db 30, AGILITY
 	db 45, HYDRO_PUMP
+	db 50, DRAGON_DANCE
 	db 0
 
 SeadraEvosMoves:
@@ -1551,6 +1561,7 @@ SeadraEvosMoves:
 	db 28, AURORA_BEAM
 	db 30, AGILITY
 	db 45, HYDRO_PUMP
+	db 58, DRAGON_DANCE
 	db 0
 
 ZoruaEvosMoves:
@@ -1566,6 +1577,7 @@ ZoruaEvosMoves:
 	db 33, MYSTICAL_FIRE
 	db 37, MOONLIGHT
 	db 40, SHADOW_BALL
+	db 44, NASTY_PLOT
 	db 0
 
 ZoroarkEvosMoves:
@@ -1580,6 +1592,7 @@ ZoroarkEvosMoves:
 	db 35, MYSTICAL_FIRE
 	db 39, MOONLIGHT
 	db 42, SHADOW_BALL
+	db 52, NASTY_PLOT
 	db 60, SWORDS_DANCE
 	db EVOLUTION_MOVE, SLASH
 	db 0
@@ -1874,6 +1887,7 @@ KingdraEvosMoves:
 	db 28, AURORA_BEAM
 	db 30, AGILITY
 	db 45, HYDRO_PUMP
+	db 28, DRAGON_DANCE
 	db 0
 
 DodrioEvosMoves:
@@ -1916,7 +1930,8 @@ DugtrioEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 12, BULLDOZE
+	db 9, BULLDOZE
+	db 12, SAND_TOMB
 	db 16, METAL_CLAW
 	db 20, SUCKER_PUNCH
 	db 24, SLASH
@@ -2066,11 +2081,11 @@ HypnoEvosMoves:
 	db 13, HEADBUTT
 	db 17, POISON_GAS
 	db 21, PSYBEAM
-	db 25, MEDITATE
+	db 25, AMNESIA
 	db 32, ZEN_HEADBUTT
 	db 37, ANCIENTPOWER
 	db 42, PSYCHIC_M
-	db 47, AMNESIA
+	db 47, NASTY_PLOT
 	db 0
 
 GolbatEvosMoves:
@@ -2281,6 +2296,7 @@ PersianEvosMoves:
 	db 32, SLASH
 	db 36, CRUNCH
 	db 48, PLAY_ROUGH
+	db 54, NASTY_PLOT
 	db 0
 
 MarowakEvosMoves:

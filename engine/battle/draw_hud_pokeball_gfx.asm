@@ -70,6 +70,17 @@ SetupPokeballs:
 	jr nz, .monloop
 	ret
 
+SetupBattleInfoPokeballs:
+	ld hl, wEnemyMons
+	ld de, wEnemyPartyCount
+	ld a, [wBattleInfoSide]
+	and a
+	jr z, .party
+	ld hl, wPartyMons
+	ld de, wPartyCount
+.party
+	jp SetupPokeballs
+
 PickPokeball:
 	inc hl
 	ld a, [hli]

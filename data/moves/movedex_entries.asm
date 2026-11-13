@@ -2,866 +2,541 @@
 
 MovedexEntryPointers:
 	table_width 2, MovedexEntryPointers
-	dw PoundDexEntry
-	dw KarateChopDexEntry
-	dw DoubleSlapDexEntry
-	dw CometPunchDexEntry
-	dw AerialAceDexEntry
-	dw PayDayDexEntry
-	dw FirePunchDexEntry
-	dw IcePunchDexEntry
-	dw ThunderPunchDexEntry
-	dw ScratchDexEntry
-	dw VicegripDexEntry
-	dw SacredSwordDexEntry
-	dw AirSlashDexEntry
-	dw SwordsDanceDexEntry
-	dw CutDexEntry
-	dw GustDexEntry
-	dw WingAttackDexEntry
-	dw SilverWindDexEntry
-	dw FlyDexEntry
-	dw BindDexEntry
-	dw SlamDexEntry
-	dw VineWhipDexEntry
-	dw StompDexEntry
-	dw DoubleKickDexEntry
-	dw CloseCombatDexEntry
-	dw JumpKickDexEntry
-	dw BrickBreakDexEntry
-	dw SandAttackDexEntry
-	dw HeadbuttDexEntry
-	dw HornAttackDexEntry
-	dw FuryAttackDexEntry
-	dw PlayRoughDexEntry
-	dw TackleDexEntry
-	dw BodySlamDexEntry
-	dw WrapDexEntry
-	dw BulldozeDexEntry
-	dw ThrashDexEntry
-	dw DoubleEdgeDexEntry
-	dw TailWhipDexEntry
-	dw PoisonFangDexEntry
-	dw TwineedleDexEntry
-	dw PinMissileDexEntry
-	dw LeerDexEntry
-	dw BiteDexEntry
-	dw GrowlDexEntry
-	dw RoarDexEntry
-	dw SingDexEntry
-	dw SupersonicDexEntry
-	dw SonicBoomDexEntry
-	dw DisableDexEntry
-	dw AcidDexEntry
-	dw EmberDexEntry
-	dw FlamethrowerDexEntry
-	dw MistDexEntry
-	dw WaterGunDexEntry
-	dw HydroPumpDexEntry
-	dw SurfDexEntry
-	dw IceBeamDexEntry
-	dw BlizzardDexEntry
-	dw PsyBeamDexEntry
-	dw BubbleBeamDexEntry
-	dw AuroraBeamDexEntry
-	dw HyperBeamDexEntry
-	dw PeckDexEntry
-	dw DrillPeckDexEntry
-	dw ExtremeSpeedDexEntry
-	dw LowSweepDexEntry
-	dw CounterDexEntry
-	dw SeismicTossDexEntry
-	dw StrengthDexEntry
-	dw MegaDrainDexEntry
-	dw GigaDrainDexEntry
-	dw LeechSeedDexEntry
-	dw GrowthDexEntry
-	dw RazorLeafDexEntry
-	dw EnergyBallDexEntry
-	dw PoisonPowderDexEntry
-	dw StunSporeDexEntry
-	dw SleepPowderDexEntry
-	dw MagicalLeafDexEntry
-	dw StringShotDexEntry
-	dw DragonRageDexEntry
-	dw FireSpinDexEntry
-	dw ThunderShockDexEntry
-	dw ThunderBoltDexEntry
-	dw ThunderWaveDexEntry
-	dw ThunderDexEntry
-	dw RockTombDexEntry
-	dw EarthquakeDexEntry
-	dw EarthPowerDexEntry
-	dw DigDexEntry
-	dw ToxicDexEntry
-	dw ConfusionDexEntry
-	dw PsychicDexEntry
-	dw HypnosisDexEntry
-	dw MeditateDexEntry
-	dw AgilityDexEntry
-	dw QuickAttackDexEntry
-	dw RageDexEntry
-	dw TeleportDexEntry
-	dw OminousWindDexEntry
-	dw MimicDexEntry
-	dw ScreechDexEntry
-	dw DoubleTeamDexEntry
-	dw RecoverDexEntry
-	dw HardenDexEntry
-	dw MinimizeDexEntry
-	dw SmokeScreenDexEntry
-	dw ConfuseRayDexEntry
-	dw WithdrawDexEntry
-	dw DefenseCurlDexEntry
-	dw BarrierDexEntry
-	dw LightScreenDexEntry
-	dw HazeDexEntry
-	dw ReflectDexEntry
-	dw FocusEnergyDexEntry
-	dw BideDexEntry
-	dw MetronomeDexEntry
-	dw MirrorMoveDexEntry
-	dw SelfdestructDexEntry
-	dw EggBombDexEntry
-	dw LickDexEntry
-	dw SmogDexEntry
-	dw SludgeDexEntry
-	dw ShadowBoneDexEntry
-	dw FireBlastDexEntry
-	dw WaterfallDexEntry
-	dw RazorShellDexEntry
-	dw SwiftDexEntry
-	dw IronHeadDexEntry
-	dw SpikeCannonDexEntry
-	dw ConstrictDexEntry
-	dw AmnesiaDexEntry
-	dw KinesisDexEntry
-	dw SoftboiledDexEntry
-	dw HiJumpKickDexEntry
-	dw GlareDexEntry
-	dw DreamEaterDexEntry
-	dw PoisonGasDexEntry
-	dw BulletSeedDexEntry
-	dw LeechLifeDexEntry
-	dw LovelyKissDexEntry
-	dw SkyAttackDexEntry
-	dw TransformDexEntry
-	dw BubbleDexEntry
-	dw DizzyPunchDexEntry
-	dw SporeDexEntry
-	dw FlashDexEntry
-	dw ExtrasensoryDexEntry
-	dw RapidSpinDexEntry
-	dw AcidArmorDexEntry
-	dw CrabHammerDexEntry
-	dw ExplosionDexEntry
-	dw FurySwipesDexEntry
-	dw BonemerangDexEntry
-	dw RestDexEntry
-	dw RockSlideDexEntry
-	dw HyperFangDexEntry
-	dw SharpenDexEntry
-	dw ConversionDexEntry
-	dw TriAttackDexEntry
-	dw SuperFangDexEntry
-	dw SlashDexEntry
-	dw SubstituteDexEntry
-	dw FireFangDexEntry
-	dw IceFangDexEntry
-	dw ThunderFangDexEntry
-	dw AncientPowerDexEntry
-	dw BounceDexEntry
-	dw FlameWheelDexEntry
-	dw ShockWaveDexEntry
-	dw AccelerockDexEntry
-	dw TrailblazeDexEntry
-	dw RolloutDexEntry
-	dw FlashCannonDexEntry
-	dw DragonBreathDexEntry
-	dw HeatCrashDexEntry
-	dw DragonClawDexEntry
-	dw SuckerPunchDexEntry
-	dw CrunchDexEntry
-	dw ZenHeadbuttDexEntry
-	dw PsychoCutDexEntry
-	dw ShadowBallDexEntry
-	dw AuraSphereDexEntry
-	dw PounceDexEntry
-	dw SignalBeamDexEntry
-	dw LungeDexEntry
-	dw XScissorDexEntry
-	dw OutrageDexEntry
-	dw ElectrowebDexEntry
-	dw SteelWingDexEntry
-	dw LeafBladeDexEntry
-	dw PhantomForceDexEntry
-	dw SludgeBombDexEntry
-	dw DarkPulseDexEntry
-	dw MoonblastDexEntry
-	dw DragonPulseDexEntry
-	dw MightyCleaveDexEntry
-	dw PowerGemDexEntry
-	dw ThiefDexEntry
-	dw PoisonJabDexEntry
-	dw DrainKissDexEntry
-	dw MetalClawDexEntry
-	dw BelchDexEntry
-	dw ChatterDexEntry
-	dw RoostDexEntry
-	dw SynthesisDexEntry
-	dw MoonlightDexEntry
-	dw MysticalFireDexEntry
-	dw ShadowClawDexEntry
-	dw HyperVoiceDexEntry
-	dw AuraWheelDexEntry
-	dw GlacialLanceDexEntry
-	dw BitterBladeDexEntry
-	dw StruggleDexEntry
+	dw MovedexGenericNoAdditionalEffect     ; POUND
+	dw MovedexGenericOftenLandsCriticalHits ; KARATE_CHOP
+	dw MovedexGeneric2To5Hits               ; DOUBLESLAP
+	dw MovedexGeneric2To5Hits               ; COMET_PUNCH
+	dw MovedexGenericNeverMiss              ; AERIAL_ACE
+	dw MovedexPayDay                        ; PAY_DAY
+	dw MovedexGeneric10PercentBurn          ; FIRE_PUNCH
+	dw MovedexGeneric10PercentFreeze        ; ICE_PUNCH
+	dw MovedexGeneric10PercentParalysis     ; THUNDERPUNCH
+	dw MovedexGenericNoAdditionalEffect     ; SCRATCH
+	dw MovedexGenericNoAdditionalEffect     ; VICEGRIP
+	dw MovedexGenericNoAdditionalEffect     ; SACRED_SWORD
+	dw MovedexGeneric30PercentFlinch        ; AIR_SLASH
+	dw MovedexSwordsDance                   ; SWORDS_DANCE
+	dw MovedexGenericNoAdditionalEffect     ; CUT
+	dw MovedexGenericNoAdditionalEffect     ; GUST
+	dw MovedexGenericNoAdditionalEffect     ; WING_ATTACK
+	dw MovedexGenericRaiseAllStats          ; SILVER_WIND
+	dw MovedexGenericChargeEffect           ; FLY
+	dw MovedexGenericTrappingMove           ; SAND_TOMB
+	dw MovedexGenericNoAdditionalEffect     ; SLAM
+	dw MovedexGenericNoAdditionalEffect     ; VINE_WHIP
+	dw MovedexGeneric30PercentFlinch        ; STOMP
+	dw MovedexGenericHitsTwice              ; DOUBLE_KICK
+	dw MovedexGenericNoAdditionalEffect     ; CLOSE_COMBAT
+	dw MovedexGenericKeptGoingCrashed       ; JUMP_KICK
+	dw MovedexGeneric33PercentLowerDefense  ; BRICK_BREAK
+	dw MovedexGenericLowersAccuracy1Stage   ; SAND_ATTACK
+	dw MovedexGeneric30PercentFlinch        ; HEADBUTT
+	dw MovedexGenericNoAdditionalEffect     ; HORN_ATTACK
+	dw MovedexGeneric2To5Hits               ; FURY_ATTACK
+	dw MovedexGeneric33PercentLowerAttack   ; PLAY_ROUGH
+	dw MovedexGenericNoAdditionalEffect     ; TACKLE
+	dw MovedexGeneric30PercentParalysis     ; BODY_SLAM
+	dw MovedexGenericTrappingMove           ; WRAP
+	dw MovedexGeneric33PercentLowerSpeed    ; BULLDOZE
+	dw MovedexGenericThrashEffect           ; THRASH
+	dw MovedexGeneric25PercentRecoil        ; DOUBLE_EDGE
+	dw MovedexGenericLowersDefense1Stage    ; TAIL_WHIP
+	dw MovedexGeneric20PercentPoison        ; POISON_FANG
+	dw MovedexTwineedle                     ; TWINEEDLE
+	dw MovedexGeneric2To5Hits               ; PIN_MISSILE
+	dw MovedexGenericLowersDefense1Stage    ; LEER
+	dw MovedexGeneric10PercentFlinch        ; BITE
+	dw MovedexGenericLowersAttack1Stage     ; GROWL
+	dw MovedexGenericFleeingEffect          ; ROAR
+	dw MovedexGenericPutsFoeAsleep          ; SING
+	dw MovedexGenericConfuse                ; SUPERSONIC
+	dw MovedexSonicboom                     ; SONICBOOM
+	dw MovedexDisable                       ; DISABLE
+	dw MovedexGeneric33PercentLowerDefense  ; ACID
+	dw MovedexGeneric10PercentBurn          ; EMBER
+	dw MovedexGeneric10PercentBurn          ; FLAMETHROWER
+	dw MovedexMist                          ; MIST
+	dw MovedexGenericNoAdditionalEffect     ; WATER_GUN
+	dw MovedexGenericNoAdditionalEffect     ; HYDRO_PUMP
+	dw MovedexGenericNoAdditionalEffect     ; SURF
+	dw MovedexGeneric10PercentFreeze        ; ICE_BEAM
+	dw MovedexGeneric10PercentFreeze        ; BLIZZARD
+	dw MovedexGeneric10PercentConfusion     ; PSYBEAM
+	dw MovedexGeneric33PercentLowerSpeed    ; BUBBLEBEAM
+	dw MovedexGeneric33PercentLowerAttack   ; AURORA_BEAM
+	dw MovedexHyperBeam                     ; HYPER_BEAM
+	dw MovedexGenericNoAdditionalEffect     ; PECK
+	dw MovedexGenericNoAdditionalEffect     ; DRILL_PECK
+	dw MovedexGenericAlwaysGoesFirst        ; EXTREMESPEED
+	dw MovedexGeneric33PercentLowerSpeed    ; LOW_SWEEP
+	dw MovedexCounter                       ; COUNTER
+	dw MovedexSeismicToss                   ; SEISMIC_TOSS
+	dw MovedexGenericRaisesAttack1Stage     ; STRENGTH
+	dw MovedexGenericAbsorbMove             ; MEGA_DRAIN
+	dw MovedexGenericAbsorbMove             ; GIGA_DRAIN
+	dw MovedexLeechSeed                     ; LEECH_SEED
+	dw MovedexGenericRaisesSpecial1Stage    ; GROWTH
+	dw MovedexGenericOftenLandsCriticalHits ; RAZOR_LEAF
+	dw MovedexGeneric33PercentLowerSpDef    ; ENERGY_BALL
+	dw MovedexGenericPoisonEffect           ; POISONPOWDER
+	dw MovedexGenericParalyzeEffect         ; STUN_SPORE
+	dw MovedexGenericPutsFoeAsleep          ; SLEEP_POWDER
+	dw MovedexGenericNeverMiss              ; MAGICAL_LEAF
+	dw MovedexGenericLowersSpeed1Stage      ; STRING_SHOT
+	dw MovedexDragonRage                    ; DRAGON_RAGE
+	dw MovedexGenericTrappingMove           ; FIRE_SPIN
+	dw MovedexGeneric10PercentParalysis     ; THUNDERSHOCK
+	dw MovedexGeneric10PercentParalysis     ; THUNDERBOLT
+	dw MovedexGenericParalyzeEffect         ; THUNDER_WAVE
+	dw MovedexGeneric10PercentParalysis     ; THUNDER
+	dw MovedexGeneric33PercentLowerSpeed    ; ROCK_TOMB
+	dw MovedexGenericNoAdditionalEffect     ; EARTHQUAKE
+	dw MovedexGeneric33PercentLowerDefense  ; EARTH_POWER
+	dw MovedexGenericChargeEffect           ; DIG
+	dw MovedexToxic                         ; TOXIC
+	dw MovedexGeneric10PercentConfusion     ; CONFUSION
+	dw MovedexGeneric33PercentLowerSpDef    ; PSYCHIC_M
+	dw MovedexGenericPutsFoeAsleep          ; HYPNOSIS
+	dw MovedexGenericRaisesAttack1Stage     ; MEDITATE
+	dw MovedexAgility                       ; AGILITY
+	dw MovedexGenericAlwaysGoesFirst        ; QUICK_ATTACK
+	dw MovedexRage                          ; RAGE
+	dw MovedexGenericFleeingEffect          ; TELEPORT
+	dw MovedexGenericRaiseAllStats          ; OMINOUS_WIND
+	dw MovedexMimic                         ; MIMIC
+	dw MovedexScreech                       ; SCREECH
+	dw MovedexGenericRaisesEvasion1Stage    ; DOUBLE_TEAM
+	dw MovedexGenericHealsHalf              ; RECOVER
+	dw MovedexGenericRaisesDefense1Stage    ; HARDEN
+	dw MovedexGenericRaisesEvasion1Stage    ; MINIMIZE
+	dw MovedexGenericLowersAccuracy1Stage   ; SMOKESCREEN
+	dw MovedexGenericConfuse                ; CONFUSE_RAY
+	dw MovedexGenericRaisesDefense1Stage    ; WITHDRAW
+	dw MovedexGenericRaisesDefense1Stage    ; DEFENSE_CURL
+	dw MovedexGenericRaisesDefense2Stage    ; BARRIER
+	dw MovedexLightScreen                   ; LIGHT_SCREEN
+	dw MovedexHaze                          ; HAZE
+	dw MovedexReflect                       ; REFLECT
+	dw MovedexFocusEnergy                   ; FOCUS_ENERGY
+	dw MovedexBide                          ; BIDE
+	dw MovedexMetronome                     ; METRONOME
+	dw MovedexMirrorMove                    ; MIRROR_MOVE
+	dw MovedexSelfdestruct                  ; SELFDESTRUCT
+	dw MovedexGenericNoAdditionalEffect     ; EGG_BOMB
+	dw MovedexGeneric30PercentParalysis     ; LICK
+	dw MovedexGeneric40PercentPoison        ; SMOG
+	dw MovedexGeneric40PercentPoison        ; SLUDGE
+	dw MovedexGeneric33PercentLowerDefense  ; SHADOW_BONE
+	dw MovedexGeneric40PercentBurn          ; FIRE_BLAST
+	dw MovedexGenericNoAdditionalEffect     ; WATERFALL
+	dw MovedexGeneric33PercentLowerDefense  ; RAZOR_SHELL
+	dw MovedexGenericNeverMiss              ; SWIFT
+	dw MovedexGeneric30PercentFlinch        ; IRON_HEAD
+	dw MovedexGeneric2To5Hits               ; SPIKE_CANNON
+	dw MovedexGeneric33PercentLowerSpeed    ; CONSTRICT
+	dw MovedexAmnesia                       ; AMNESIA
+	dw MovedexCalmMind                      ; CALM_MIND
+	dw MovedexGenericHealsHalf              ; SOFTBOILED
+	dw MovedexGenericKeptGoingCrashed       ; HI_JUMP_KICK
+	dw MovedexGenericParalyzeEffect         ; GLARE
+	dw MovedexDreamEater                    ; DREAM_EATER
+	dw MovedexGenericPoisonEffect           ; POISON_GAS
+	dw MovedexGeneric2To5Hits               ; BULLET_SEED
+	dw MovedexGenericAbsorbMove             ; LEECH_LIFE
+	dw MovedexGenericPutsFoeAsleep          ; LOVELY_KISS
+	dw MovedexGenericChargeEffect           ; SKY_ATTACK
+	dw MovedexTransform                     ; TRANSFORM
+	dw MovedexGeneric33PercentLowerSpeed    ; BUBBLE
+	dw MovedexGeneric10PercentConfusion     ; DIZZY_PUNCH
+	dw MovedexGenericPutsFoeAsleep          ; SPORE
+	dw MovedexGeneric10PercentFlinch        ; FLASH
+	dw MovedexGeneric10PercentFlinch        ; EXTRASENSORY
+	dw MovedexGenericNoAdditionalEffect     ; RAPID_SPIN
+	dw MovedexGenericRaisesDefense2Stage    ; ACID_ARMOR
+	dw MovedexGenericOftenLandsCriticalHits ; CRABHAMMER
+	dw MovedexSelfdestruct                  ; EXPLOSION
+	dw MovedexGeneric2To5Hits               ; FURY_SWIPES
+	dw MovedexGenericHitsTwice              ; BONEMERANG
+	dw MovedexRest                          ; REST
+	dw MovedexGenericNoAdditionalEffect     ; ROCK_SLIDE
+	dw MovedexGeneric10PercentFlinch        ; HYPER_FANG
+	dw MovedexBulkUp                        ; BULK_UP
+	dw MovedexConversion                    ; CONVERSION
+	dw MovedexTriAttack                     ; TRI_ATTACK
+	dw MovedexSuperFang                     ; SUPER_FANG
+	dw MovedexGenericOftenLandsCriticalHits ; SLASH
+	dw MovedexSubstitute                    ; SUBSTITUTE
+	dw MovedexGeneric30PercentFlinch        ; FIRE_FANG
+	dw MovedexGeneric30PercentFlinch        ; ICE_FANG
+	dw MovedexGeneric30PercentFlinch        ; THUNDERFANG
+	dw MovedexGenericRaiseAllStats          ; ANCIENTPOWER
+	dw MovedexGenericNoAdditionalEffect     ; BOUNCE
+	dw MovedexGeneric10PercentBurn          ; FLAME_WHEEL
+	dw MovedexGenericNeverMiss              ; SHOCK_WAVE
+	dw MovedexGenericAlwaysGoesFirst        ; ACCELEROCK
+	dw MovedexGenericRaisesSpeed1Stage      ; TRAILBLAZE
+	dw MovedexGenericNoAdditionalEffect     ; ROLLOUT
+	dw MovedexGeneric33PercentLowerSpDef    ; FLASH_CANNON
+	dw MovedexGeneric10PercentParalysis     ; DRAGONBREATH
+	dw MovedexGeneric10PercentBurn          ; HEAT_CRASH
+	dw MovedexGenericNoAdditionalEffect     ; DRAGON_CLAW
+	dw MovedexGenericAlwaysGoesFirst        ; SUCKER_PUNCH
+	dw MovedexGeneric33PercentLowerDefense  ; CRUNCH
+	dw MovedexGeneric30PercentFlinch        ; ZEN_HEADBUTT
+	dw MovedexGenericOftenLandsCriticalHits ; PSYCHO_CUT
+	dw MovedexGeneric33PercentLowerDefense  ; SHADOW_BALL
+	dw MovedexGenericNeverMiss              ; AURA_SPHERE
+	dw MovedexGeneric33PercentLowerSpeed    ; POUNCE
+	dw MovedexGeneric10PercentConfusion     ; SIGNAL_BEAM
+	dw MovedexGeneric33PercentLowerAttack   ; LUNGE
+	dw MovedexGenericOftenLandsCriticalHits ; X_SCISSOR
+	dw MovedexGenericThrashEffect           ; OUTRAGE
+	dw MovedexGeneric33PercentLowerSpeed    ; ELECTROWEB
+	dw MovedexGenericNoAdditionalEffect     ; STEEL_WING
+	dw MovedexGenericOftenLandsCriticalHits ; LEAF_BLADE
+	dw MovedexGenericNoAdditionalEffect     ; PHANTOMFORCE
+	dw MovedexGeneric33PercentLowerDefense  ; SLUDGE_BOMB
+	dw MovedexGeneric10PercentFlinch        ; DARK_PULSE
+	dw MovedexGeneric33PercentLowerSpAtk    ; MOONBLAST
+	dw MovedexGenericNoAdditionalEffect     ; DRAGON_PULSE
+	dw MovedexGenericNoAdditionalEffect     ; MIGHTY_CLEAVE
+	dw MovedexGenericNoAdditionalEffect     ; POWER_GEM
+	dw MovedexPayDay                        ; THIEF
+	dw MovedexGeneric40PercentPoison        ; POISON_JAB
+	dw MovedexGenericAbsorbMove             ; DRAIN_KISS
+	dw MovedexGenericNoAdditionalEffect     ; METAL_CLAW
+	dw MovedexGeneric33PercentLowerDefense  ; BELCH
+	dw MovedexGeneric10PercentConfusion     ; CHATTER
+	dw MovedexGenericHealsHalf              ; ROOST
+	dw MovedexGenericHealsHalf              ; SYNTHESIS
+	dw MovedexGenericHealsHalf              ; MOONLIGHT
+	dw MovedexGeneric33PercentLowerSpAtk    ; MYSTICAL_FIRE
+	dw MovedexGenericOftenLandsCriticalHits ; SHADOW_CLAW
+	dw MovedexGenericNoAdditionalEffect     ; HYPER_VOICE
+	dw MovedexGeneric10PercentParalysis     ; AURA_WHEEL
+	dw MovedexGenericNoAdditionalEffect     ; GLACIAL_LANCE
+	dw MovedexGenericAbsorbMove             ; BITTER_BLADE
+	dw MovedexDragonDance                   ; DRAGON_DANCE
+	dw MovedexNastyPlot                     ; NASTY_PLOT
+	dw MovedexGeneric25PercentRecoil        ; STRUGGLE
 	assert_table_length NUM_ATTACKS
 
-PoundDexEntry:
+MovedexGenericNoAdditionalEffect:
 	text_far _GenericNoAdditionalEffectText
 	text_end
-KarateChopDexEntry:
+
+MovedexGenericOftenLandsCriticalHits:
 	text_far _GenericOftenLandsCriticalHitsText
 	text_end
-DoubleSlapDexEntry:
+
+MovedexGeneric2To5Hits:
 	text_far _Generic2To5HitsText
 	text_end
-CometPunchDexEntry:
-	text_far _Generic2To5HitsText
-	text_end
-AerialAceDexEntry:
+
+MovedexGenericNeverMiss:
 	text_far _GenericNeverMissDexEntry
 	text_end
 
-PayDayDexEntry:
+MovedexPayDay:
 	text_far _PayDayDexEntry
 	text_end
-FirePunchDexEntry:
+
+MovedexGeneric10PercentBurn:
 	text_far _Generic10PercentBurnText
 	text_end
-IcePunchDexEntry:
+
+MovedexGeneric10PercentFreeze:
 	text_far _Generic10PercentFreezeText
 	text_end
-ThunderPunchDexEntry:
+
+MovedexGeneric10PercentParalysis:
 	text_far _Generic10PercentParalysisText
 	text_end
-ScratchDexEntry:
-	text_far _GenericNoAdditionalEffectText
-	text_end
-VicegripDexEntry:
-	text_far _GenericNoAdditionalEffectText
-	text_end
-SacredSwordDexEntry:
-	text_far _GenericNoAdditionalEffectText
-	text_end
-AirSlashDexEntry:
+
+MovedexGeneric30PercentFlinch:
 	text_far _Generic30PercentFlinchText
 	text_end
-SwordsDanceDexEntry:
+
+MovedexSwordsDance:
 	text_far _SwordsDanceDexEntry
 	text_end
-CutDexEntry:
-	text_far _GenericNoAdditionalEffectText
+
+MovedexGenericRaiseAllStats:
+	text_far _GenericRaiseAllStatsText
 	text_end
-GustDexEntry:
-	text_far _GenericNoAdditionalEffectText
-	text_end
-WingAttackDexEntry:
-	text_far _GenericNoAdditionalEffectText
-	text_end
-SilverWindDexEntry:
-	text_far _GenericNoAdditionalEffectText
-	text_end
-FlyDexEntry:
+
+MovedexGenericChargeEffect:
 	text_far _GenericChargeEffectText
 	text_end
-BindDexEntry:
+
+MovedexGenericTrappingMove:
 	text_far _GenericTrappingMoveText
 	text_end
-SlamDexEntry:
-	text_far _GenericNoAdditionalEffectText
-	text_end
-VineWhipDexEntry:
-	text_far _GenericNoAdditionalEffectText
-	text_end
-StompDexEntry:
-	text_far _Generic30PercentFlinchText
-	text_end
-DoubleKickDexEntry:
+
+MovedexGenericHitsTwice:
 	text_far _GenericHitsTwiceText
 	text_end
-CloseCombatDexEntry:
-	text_far _GenericNoAdditionalEffectText
-	text_end
-JumpKickDexEntry:
+
+MovedexGenericKeptGoingCrashed:
 	text_far _GenericKeptGoingCrashedText
 	text_end
-BrickBreakDexEntry:
+
+MovedexGeneric33PercentLowerDefense:
 	text_far _Generic33PercentLowerDefenseText
 	text_end
-SandAttackDexEntry:
+
+MovedexGenericLowersAccuracy1Stage:
 	text_far _GenericLowersAccuracy1StageText
 	text_end
-HeadbuttDexEntry:
-	text_far _Generic30PercentFlinchText
-	text_end
-HornAttackDexEntry:
-	text_far _GenericNoAdditionalEffectText
-	text_end
-FuryAttackDexEntry:
-	text_far _Generic2To5HitsText
-	text_end
-PlayRoughDexEntry:
+
+MovedexGeneric33PercentLowerAttack:
 	text_far _Generic33PercentLowerAttackText
 	text_end
-TackleDexEntry:
-	text_far _GenericNoAdditionalEffectText
-	text_end
-BodySlamDexEntry:
+
+MovedexGeneric30PercentParalysis:
 	text_far _Generic30PercentParalysisText
 	text_end
-WrapDexEntry:
-	text_far _GenericTrappingMoveText
-	text_end
-BulldozeDexEntry:
+
+MovedexGeneric33PercentLowerSpeed:
 	text_far _Generic33PercentLowerSpeedText
 	text_end
-ThrashDexEntry:
+
+MovedexGenericThrashEffect:
 	text_far _GenericThrashEffectText
 	text_end
-DoubleEdgeDexEntry:
+
+MovedexGeneric25PercentRecoil:
 	text_far _Generic25PercentRecoilText
 	text_end
-TailWhipDexEntry:
+
+MovedexGenericLowersDefense1Stage:
 	text_far _GenericLowersDefense1StageText
 	text_end
-PoisonFangDexEntry:
+
+MovedexGeneric20PercentPoison:
 	text_far _Generic20PercentPoisonText
 	text_end
-TwineedleDexEntry:
+
+MovedexTwineedle:
 	text_far _TwineedleDexEntry
 	text_end
-PinMissileDexEntry:
-	text_far _Generic2To5HitsText
-	text_end
-LeerDexEntry:
-	text_far _GenericLowersDefense1StageText
-	text_end
-BiteDexEntry:
+
+MovedexGeneric10PercentFlinch:
 	text_far _Generic10PercentFlinchText
 	text_end
-GrowlDexEntry:
+
+MovedexGenericLowersAttack1Stage:
 	text_far _GenericLowersAttack1StageText
 	text_end
-RoarDexEntry:
+
+MovedexGenericFleeingEffect:
 	text_far _GenericFleeingEffectText
 	text_end
-SingDexEntry:
+
+MovedexGenericPutsFoeAsleep:
 	text_far _GenericPutsFoeAsleepText
 	text_end
-SupersonicDexEntry:
+
+MovedexGenericConfuse:
 	text_far _GenericConfuseText
 	text_end
-SonicBoomDexEntry:
+
+MovedexSonicboom:
 	text_far _SonicboomDexEntry
 	text_end
-DisableDexEntry:
+
+MovedexDisable:
 	text_far _DisableDexEntry
 	text_end
-AcidDexEntry:
-	text_far _Generic33PercentLowerDefenseText
-	text_end
-EmberDexEntry:
-	text_far _Generic10PercentBurnText
-	text_end
-FlamethrowerDexEntry:
-	text_far _Generic10PercentBurnText
-	text_end
-MistDexEntry:
+
+MovedexMist:
 	text_far _MistDexEntry
 	text_end
-WaterGunDexEntry:
-	text_far _GenericNoAdditionalEffectText
-	text_end
-HydroPumpDexEntry:
-	text_far _GenericNoAdditionalEffectText
-	text_end
-SurfDexEntry:
-	text_far _GenericNoAdditionalEffectText
-	text_end
-IceBeamDexEntry:
-	text_far _Generic10PercentFreezeText
-	text_end
-BlizzardDexEntry:
-	text_far _Generic10PercentFreezeText
-	text_end
-PsyBeamDexEntry:
+
+MovedexGeneric10PercentConfusion:
 	text_far _Generic10PercentConfusionText
 	text_end
-BubbleBeamDexEntry:
-	text_far _Generic33PercentLowerSpeedText
-	text_end
-AuroraBeamDexEntry:
-	text_far _Generic33PercentLowerAttackText
-	text_end
-HyperBeamDexEntry:
+
+MovedexHyperBeam:
 	text_far _HyperBeamDexEntry
 	text_end
-PeckDexEntry:
-	text_far _GenericNoAdditionalEffectText
-	text_end
-DrillPeckDexEntry:
-	text_far _GenericNoAdditionalEffectText
-	text_end
-ExtremeSpeedDexEntry:
+
+MovedexGenericAlwaysGoesFirst:
 	text_far _GenericAlwaysGoesFirstText
 	text_end
-LowSweepDexEntry:
-	text_far _Generic33PercentLowerSpeedText
-	text_end
-CounterDexEntry:
+
+MovedexCounter:
 	text_far _CounterDexEntry
 	text_end
-SeismicTossDexEntry:
+
+MovedexSeismicToss:
 	text_far _SeismicTossDexEntry
 	text_end
-StrengthDexEntry:
+
+MovedexGenericRaisesAttack1Stage:
 	text_far _GenericRaisesAttack1StageText
 	text_end
-MegaDrainDexEntry:
+
+MovedexGenericAbsorbMove:
 	text_far _GenericAbsorbMoveText
 	text_end
-GigaDrainDexEntry:
-	text_far _GenericAbsorbMoveText
-	text_end
-LeechSeedDexEntry:
+
+MovedexLeechSeed:
 	text_far _LeechSeedDexEntry
 	text_end
-GrowthDexEntry:
+
+MovedexGenericRaisesSpecial1Stage:
 	text_far _GenericRaisesSpecial1StageText
 	text_end
-RazorLeafDexEntry:
-	text_far _GenericOftenLandsCriticalHitsText
-	text_end
-EnergyBallDexEntry:
+
+MovedexGeneric33PercentLowerSpDef:
 	text_far _Generic33PercentLowerSpDefText
 	text_end
-PoisonPowderDexEntry:
+
+MovedexGenericPoisonEffect:
 	text_far _GenericPoisonEffectText
 	text_end
-StunSporeDexEntry:
+
+MovedexGenericParalyzeEffect:
 	text_far _GenericParalyzeEffectText
 	text_end
-SleepPowderDexEntry:
-	text_far _GenericPutsFoeAsleepText
-	text_end
-MagicalLeafDexEntry:
-	text_far _GenericNeverMissDexEntry
-	text_end
-StringShotDexEntry:
+
+MovedexGenericLowersSpeed1Stage:
 	text_far _GenericLowersSpeed1StageText
 	text_end
-DragonRageDexEntry:
+
+MovedexDragonRage:
 	text_far _DragonRageDexEntry
 	text_end
-FireSpinDexEntry:
-	text_far _GenericTrappingMoveText
-	text_end
-ThunderShockDexEntry:
-	text_far _Generic10PercentParalysisText
-	text_end
-ThunderBoltDexEntry:
-	text_far _Generic10PercentParalysisText
-	text_end
-ThunderWaveDexEntry:
-	text_far _GenericParalyzeEffectText
-	text_end
-ThunderDexEntry:
-	text_far _Generic10PercentParalysisText
-	text_end
-RockTombDexEntry:
-	text_far _Generic33PercentLowerSpeedText
-	text_end
-EarthquakeDexEntry:
-	text_far _GenericNoAdditionalEffectText
-	text_end
-EarthPowerDexEntry:
-	text_far _Generic33PercentLowerDefenseText
-	text_end
-DigDexEntry:
-	text_far _GenericChargeEffectText
-	text_end
-ToxicDexEntry:
+
+MovedexToxic:
 	text_far _ToxicDexEntry
 	text_end
-ConfusionDexEntry:
-	text_far _Generic10PercentConfusionText
-	text_end
-PsychicDexEntry:
-	text_far _Generic33PercentLowerSpDefText
-	text_end
-HypnosisDexEntry:
-	text_far _GenericPutsFoeAsleepText
-	text_end
-MeditateDexEntry:
-	text_far _GenericRaisesAttack1StageText
-	text_end
-AgilityDexEntry:
+
+MovedexAgility:
 	text_far _AgilityDexEntry
 	text_end
-QuickAttackDexEntry:
-	text_far _GenericAlwaysGoesFirstText
-	text_end
-RageDexEntry:
+
+MovedexRage:
 	text_far _RageDexEntry
 	text_end
-TeleportDexEntry:
-	text_far _GenericFleeingEffectText
-	text_end
-OminousWindDexEntry:
-	text_far _GenericNoAdditionalEffectText
-	text_end
-MimicDexEntry:
+
+MovedexMimic:
 	text_far _MimicDexEntry
 	text_end
-ScreechDexEntry:
+
+MovedexScreech:
 	text_far _ScreechDexEntry
 	text_end
-DoubleTeamDexEntry:
+
+MovedexGenericRaisesEvasion1Stage:
 	text_far _GenericRaisesEvasion1StageText
 	text_end
-RecoverDexEntry:
+
+MovedexGenericHealsHalf:
 	text_far _GenericHealsHalfText
 	text_end
-HardenDexEntry:
+
+MovedexGenericRaisesDefense1Stage:
 	text_far _GenericRaisesDefense1StageText
 	text_end
-MinimizeDexEntry:
-	text_far _GenericRaisesEvasion1StageText
-	text_end
-SmokeScreenDexEntry:
-	text_far _GenericLowersAccuracy1StageText
-	text_end
-ConfuseRayDexEntry:
-	text_far _GenericConfuseText
-	text_end
-WithdrawDexEntry:
-	text_far _GenericRaisesDefense1StageText
-	text_end
-DefenseCurlDexEntry:
-	text_far _GenericRaisesDefense1StageText
-	text_end
-BarrierDexEntry:
+
+MovedexGenericRaisesDefense2Stage:
 	text_far _GenericRaisesDefense2StageText
 	text_end
-LightScreenDexEntry:
+
+MovedexLightScreen:
 	text_far _LightScreenDexEntry
 	text_end
-HazeDexEntry:
+
+MovedexHaze:
 	text_far _HazeDexEntry
 	text_end
-ReflectDexEntry:
+
+MovedexReflect:
 	text_far _ReflectDexEntry
 	text_end
-FocusEnergyDexEntry:
+
+MovedexFocusEnergy:
 	text_far _FocusEnergyDexEntry
 	text_end
-BideDexEntry:
+
+MovedexBide:
 	text_far _BideDexEntry
 	text_end
-MetronomeDexEntry:
+
+MovedexMetronome:
 	text_far _MetronomeDexEntry
 	text_end
-MirrorMoveDexEntry:
+
+MovedexMirrorMove:
 	text_far _MirrorMoveDexEntry
 	text_end
-SelfdestructDexEntry:
+
+MovedexSelfdestruct:
 	text_far _SelfdestructDexEntry
 	text_end
-EggBombDexEntry:
-	text_far _GenericNoAdditionalEffectText
-	text_end
-LickDexEntry:
-	text_far _Generic30PercentParalysisText
-	text_end
-SmogDexEntry:
+
+MovedexGeneric40PercentPoison:
 	text_far _Generic40PercentPoisonText
 	text_end
-SludgeDexEntry:
-	text_far _Generic40PercentPoisonText
-	text_end
-ShadowBoneDexEntry:
-	text_far _Generic33PercentLowerDefenseText
-	text_end
-FireBlastDexEntry:
+
+MovedexGeneric40PercentBurn:
 	text_far _Generic40PercentBurnText
 	text_end
-WaterfallDexEntry:
-	text_far _GenericNoAdditionalEffectText
-	text_end
-RazorShellDexEntry:
-	text_far _Generic33PercentLowerDefenseText
-	text_end
-SwiftDexEntry:
-	text_far _GenericNeverMissDexEntry
-	text_end
-IronHeadDexEntry:
-	text_far _Generic30PercentFlinchText
-	text_end
-SpikeCannonDexEntry:
-	text_far _Generic2To5HitsText
-	text_end
-ConstrictDexEntry:
-	text_far _Generic33PercentLowerSpeedText
-	text_end
-AmnesiaDexEntry:
+
+MovedexAmnesia:
 	text_far _AmnesiaDexEntry
 	text_end
-KinesisDexEntry:
-	text_far _GenericLowersAccuracy1StageText
+
+MovedexCalmMind:
+	text_far _CalmMindDexEntry
 	text_end
-SoftboiledDexEntry:
-	text_far _GenericHealsHalfText
-	text_end
-HiJumpKickDexEntry:
-	text_far _GenericKeptGoingCrashedText
-	text_end
-GlareDexEntry:
-	text_far _GenericParalyzeEffectText
-	text_end
-DreamEaterDexEntry:
+
+MovedexDreamEater:
 	text_far _DreamEaterDexEntry
 	text_end
-PoisonGasDexEntry:
-	text_far _GenericPoisonEffectText
-	text_end
-BulletSeedDexEntry:
-	text_far _Generic2To5HitsText
-	text_end
-LeechLifeDexEntry:
-	text_far _GenericAbsorbMoveText
-	text_end
-LovelyKissDexEntry:
-	text_far _GenericPutsFoeAsleepText
-	text_end
-SkyAttackDexEntry:
-	text_far _GenericChargeEffectText
-	text_end
-TransformDexEntry:
+
+MovedexTransform:
 	text_far _TransformDexEntry
 	text_end
-BubbleDexEntry:
-	text_far _Generic33PercentLowerSpeedText
-	text_end
-DizzyPunchDexEntry:
-	text_far _Generic10PercentConfusionText
-	text_end
-SporeDexEntry:
-	text_far _GenericPutsFoeAsleepText
-	text_end
-FlashDexEntry:
-	text_far _Generic10PercentFlinchText
-	text_end
-ExtrasensoryDexEntry:
-	text_far _Generic10PercentFlinchText
-	text_end
-RapidSpinDexEntry:
-	text_far _GenericNoAdditionalEffectText
-	text_end
-AcidArmorDexEntry:
-	text_far _GenericRaisesDefense2StageText
-	text_end
-CrabHammerDexEntry:
-	text_far _GenericOftenLandsCriticalHitsText
-	text_end
-ExplosionDexEntry:
-	text_far _SelfdestructDexEntry
-	text_end
-FurySwipesDexEntry:
-	text_far _Generic2To5HitsText
-	text_end
-BonemerangDexEntry:
-	text_far _GenericHitsTwiceText
-	text_end
-RestDexEntry:
+
+MovedexRest:
 	text_far _RestDexEntry
 	text_end
-RockSlideDexEntry:
-	text_far _GenericNoAdditionalEffectText
+
+MovedexBulkUp:
+	text_far _BulkUpDexEntry
 	text_end
-HyperFangDexEntry:
-	text_far _Generic10PercentFlinchText
-	text_end
-SharpenDexEntry:
-	text_far _GenericRaisesAttack1StageText
-	text_end
-ConversionDexEntry:
+
+MovedexConversion:
 	text_far _ConversionDexEntry
 	text_end
-TriAttackDexEntry:
+
+MovedexTriAttack:
 	text_far _TriAttackDexEntry
 	text_end
-SuperFangDexEntry:
+
+MovedexSuperFang:
 	text_far _SuperFangDexEntry
 	text_end
-SlashDexEntry:
-	text_far _GenericOftenLandsCriticalHitsText
-	text_end
-SubstituteDexEntry:
+
+MovedexSubstitute:
 	text_far _SubstituteDexEntry
 	text_end
-FireFangDexEntry:
-	text_far _Generic30PercentFlinchText
-	text_end
-IceFangDexEntry:
-	text_far _Generic30PercentFlinchText
-	text_end
-ThunderFangDexEntry:
-	text_far _Generic30PercentFlinchText
-	text_end
-AncientPowerDexEntry:
-	text_far _GenericNoAdditionalEffectText
-	text_end
-BounceDexEntry:
-	text_far _GenericNoAdditionalEffectText
-	text_end
-FlameWheelDexEntry:
-	text_far _Generic10PercentBurnText
-	text_end
-ShockWaveDexEntry:
-	text_far _GenericNeverMissDexEntry
-	text_end
-AccelerockDexEntry:
-	text_far _GenericAlwaysGoesFirstText
-	text_end
-TrailblazeDexEntry:
+
+MovedexGenericRaisesSpeed1Stage:
 	text_far _GenericRaisesSpeed1StageText
 	text_end
-RolloutDexEntry:
-	text_far _GenericNoAdditionalEffectText
-	text_end
-FlashCannonDexEntry:
-	text_far _Generic33PercentLowerSpDefText
-	text_end
-DragonBreathDexEntry:
-	text_far _Generic10PercentParalysisText
-	text_end
-HeatCrashDexEntry:
-	text_far _Generic10PercentBurnText
-	text_end
-DragonClawDexEntry:
-	text_far _GenericNoAdditionalEffectText
-	text_end
-SuckerPunchDexEntry:
-	text_far _GenericAlwaysGoesFirstText
-	text_end
-CrunchDexEntry:
-	text_far _Generic33PercentLowerDefenseText
-	text_end
-ZenHeadbuttDexEntry:
-	text_far _Generic30PercentFlinchText
-	text_end
-PsychoCutDexEntry:
-	text_far _GenericOftenLandsCriticalHitsText
-	text_end
-ShadowBallDexEntry:
-	text_far _Generic33PercentLowerDefenseText
-	text_end
-AuraSphereDexEntry:
-	text_far _GenericNeverMissDexEntry
-	text_end
-PounceDexEntry:
-	text_far _Generic33PercentLowerSpeedText
-	text_end
-SignalBeamDexEntry:
-	text_far _Generic10PercentConfusionText
-	text_end
-LungeDexEntry:
-	text_far _Generic33PercentLowerAttackText
-	text_end
-XScissorDexEntry:
-	text_far _GenericOftenLandsCriticalHitsText
-	text_end
-OutrageDexEntry:
-	text_far _GenericThrashEffectText
-	text_end
-ElectrowebDexEntry:
-	text_far _Generic33PercentLowerSpeedText
-	text_end
-SteelWingDexEntry:
-	text_far _GenericNoAdditionalEffectText
-	text_end
-LeafBladeDexEntry:
-	text_far _GenericOftenLandsCriticalHitsText
-	text_end
-PhantomForceDexEntry:
-	text_far _GenericNoAdditionalEffectText
-	text_end
-SludgeBombDexEntry:
-	text_far _Generic33PercentLowerDefenseText
-	text_end
-DarkPulseDexEntry:
-	text_far _Generic10PercentFlinchText
-	text_end
-MoonblastDexEntry:
+
+MovedexGeneric33PercentLowerSpAtk:
 	text_far _Generic33PercentLowerSpAtkText
 	text_end
-DragonPulseDexEntry:
-	text_far _GenericNoAdditionalEffectText
+
+MovedexDragonDance:
+	text_far _DragonDanceDexEntry
 	text_end
-MightyCleaveDexEntry:
-	text_far _GenericNoAdditionalEffectText
-	text_end
-PowerGemDexEntry:
-	text_far _GenericNoAdditionalEffectText
-	text_end
-ThiefDexEntry:
-	text_far _PayDayDexEntry
-	text_end
-PoisonJabDexEntry:
-	text_far _Generic40PercentPoisonText
-	text_end
-DrainKissDexEntry:
-	text_far _GenericAbsorbMoveText
-	text_end
-MetalClawDexEntry:
-	text_far _GenericNoAdditionalEffectText
-	text_end
-BelchDexEntry:
-	text_far _Generic33PercentLowerDefenseText
-	text_end
-ChatterDexEntry:
-	text_far _Generic10PercentConfusionText
-	text_end
-RoostDexEntry:
-	text_far _GenericHealsHalfText
-	text_end
-SynthesisDexEntry:
-	text_far _GenericHealsHalfText
-	text_end
-MoonlightDexEntry:
-	text_far _GenericHealsHalfText
-	text_end
-MysticalFireDexEntry:
-	text_far _Generic33PercentLowerSpAtkText
-	text_end
-ShadowClawDexEntry:
-	text_far _GenericOftenLandsCriticalHitsText
-	text_end
-HyperVoiceDexEntry:
-	text_far _GenericNoAdditionalEffectText
-	text_end
-AuraWheelDexEntry:
-	text_far _Generic10PercentParalysisText
-	text_end
-GlacialLanceDexEntry:
-	text_far _GenericNoAdditionalEffectText
-	text_end
-BitterBladeDexEntry:
-	text_far _GenericAbsorbMoveText
-	text_end
-StruggleDexEntry:
-	text_far _Generic25PercentRecoilText
+
+MovedexNastyPlot:
+	text_far _NastyPlotDexEntry
 	text_end

@@ -58,8 +58,61 @@ Growth raises Special Attack, Amnesia sharply raises Special Defence, and
 Psychic, Energy Ball, and Flash Cannon can lower Special Defence. Moonblast
 and Mystical Fire can lower Special Attack. Existing side-effect chances
 are unchanged. Transform and Haze include both stats.
+`BULK_UP_EFFECT` raises the user's Attack and Defense by one stage;
+`CALM_MIND_EFFECT` does the same for Special Attack and Special Defence.
+`DRAGON_DANCE_EFFECT` raises the user's Attack and Speed by one stage.
+`NASTY_PLOT_EFFECT` raises the user's Special Attack by two stages, matching
+`ATTACK_UP2_EFFECT` for Attack.
+`ALL_STATSUP_20P_EFFECT` is for damaging moves: after a hit, including a KO,
+one 20% roll raises the user's Attack, Defense, Speed, Special Attack, and
+Special Defence by one stage each. It shows one message: "ALL STATS" when all
+five rise, the stat name when only one rises, or "STATS" for other partial
+boosts. Fully capped stats are skipped silently.
+Paired boosts show one message naming only the stats that rose (both names when
+both rise), and only show "Nothing happened!" when neither can rise.
+Rejected boosts leave the original stage unchanged, including two-stage boosts
+when the calculated stat is already capped at 999.
 The Volcano Badge still boosts only Special Attack. Calcium and X Special
 affect Special Attack; Zinc and X Sp. Def are not added.
+
+Sand Tomb, Wrap, and Fire Spin deal their usual initial damage, then trap the target
+for 4-5 end-of-turn damage ticks, including the application turn. Each tick deals
+1/8 of the target's maximum HP (minimum 1), independently of Toxic, and replays
+the trapping move's animation with its own type palette when battle animations
+are enabled.
+Both Pokemon can choose and use moves normally. Trapping blocks voluntary
+switching, ordinary running, and Teleport; link-battle forfeiting is unchanged.
+Hits blocked by Substitute (even if it breaks), misses, and immunities do not
+apply trapping. Repeated hits do not refresh an existing trap.
+Trapping ends after its last damage tick or when either Pokemon leaves or faints.
+Poke Dolls and forced escape moves retain their existing behavior.
+
+Normal battle palette redraws, including returns from the Bag, use the EXP
+palette rather than the last attack's type. Move previews still use type colors.
+Entering and leaving FIGHT commits the shared EXP/type palette in the same
+VBlank as the corresponding row's tiles, preventing either display from
+briefly using the other's colors.
+Move-preview tile transfers remain disabled until the palette is queued.
+Changing the move cursor also commits the type icon's graphics and palette
+together, so the new type never briefly inherits the previous type's colors.
+START in the normal battle command menu opens battle info; B returns without
+taking a turn. The opponent is above the player, with animated species icons,
+current levels/types/statuses, and party balls in trainer battles only.
+Party balls use the red/orange `PAL_REDMON` palette in both panels.
+Attack, Defense, Speed, Special Attack, Special Defence, Accuracy, and Evasion
+show their live stages: +0 normally, red for decreases, blue for increases.
+Crit shows +2 while Focus Energy is active and +0 otherwise; move-specific
+high-crit bonuses are not shown. Critical hits use Gen 7 stages: high-crit moves
++1, Focus Energy +2; stage 0/1/2/3+ is 1/24, 1/8, 1/2, and guaranteed.
+Safari battles and the old-man tutorial
+do not open this screen.
+Accuracy/evasion scaling and battle stat recalculation use the banked stat-ratio
+lookup shared with stat-changing effects. At neutral accuracy and evasion,
+100%-accuracy moves do not make a random accuracy roll.
+X items raise their stat by two stages. X Accuracy uses the normal Accuracy
+stage rather than Gen 1's hidden always-hit flag. X-item animations play even
+if the last selected move dealt damage.
+
 Vitamins add 2,560 stat experience and can be used while the relevant stat
 is below 56,320, allowing 22 vitamins from zero. The final vitamin can bring
 the total above that threshold.

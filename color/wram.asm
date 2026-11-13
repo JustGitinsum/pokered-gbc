@@ -72,12 +72,27 @@ DEF W2_BattlePicturePalette     EQU $d7bc ; slot 6 after the enemy status row, 8
 DEF W2_BattlePictureReplaced    EQU $d7c4 ; current graphics are not the original front picture
 DEF W2_BattlePictureSlot5Active EQU $d7c5 ; upward slide temporarily borrows category palette
 DEF W2_BattlePictureTileAttrs   EQU $d7c6 ; 49 front-picture tiles, through $d7f6
+DEF W2_BattleTypePalettePending EQU $d7f7 ; bit 0: palette; bit 1: move icon tiles
 ASSERT HIGH(W2_BattleLowerPalette) == HIGH(W2_BattleLowerPalette + 7)
 ASSERT HIGH(W2_BattlePicturePalette) == HIGH(W2_BattlePicturePalette + 7)
 DEF W2_ItemMenuSavedBgPalettes     EQU $d800 ; slots 2-6, $28 bytes
 DEF W2_ItemMenuSavedPaletteMap     EQU $d830 ; $180 bytes, through $d9af
 DEF W2_BattleBagSavedBackPicTiles  EQU $d9b0 ; last two player-picture tiles, $20 bytes
+DEF W2_BattleTypePalette          EQU $d9d0 ; queued shared EXP/type palette, 8 bytes
+ASSERT HIGH(W2_BattleTypePalette) == HIGH(W2_BattleTypePalette + 7)
+DEF W2_BattleTypeIconTiles        EQU $d9e0 ; 8 queued tiles, through $da5f
+ASSERT W2_BattleTypeIconTiles % $10 == 0 ; GDMA source alignment
 DEF W2_BagPocketSavedTiles         EQU $db50 ; 20 tiles, through $dc8f
+ASSERT W2_BattleTypeIconTiles + 8 tiles <= W2_BagPocketSavedTiles
+
+; Battle info borrows bank 3 only while the LCD is off. Keep clear of the stack.
+DEF W3_BattleInfoSavedColorState EQU $d000 ; bank-2 $d000-$d7ff
+DEF W3_BattleInfoSavedSprites    EQU $d800 ; sprite tiles $00-$2b
+DEF W3_BattleInfoSavedTypes      EQU $dac0 ; BG tiles $40-$4f
+DEF W3_BattleInfoSavedBalls      EQU $dbc0 ; BG tiles $60-$64
+DEF W3_BattleInfoSavedTileMap    EQU $dc10 ; SCREEN_AREA
+DEF W3_BattleInfoSavedOAM        EQU W3_BattleInfoSavedTileMap + SCREEN_AREA
+ASSERT W3_BattleInfoSavedOAM + 40 * 4 < $df00
 
 ; Saved copy of an individual borrowed slot.
 DEF W2_ItemMenuSavedPocketPalette  EQU W2_ItemMenuSavedBgPalettes + (2 - ITEM_MENU_FIRST_SAVED_PAL) * 8

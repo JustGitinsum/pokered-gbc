@@ -14,7 +14,7 @@ ELSE
 ENDC
 	dw PorygonPicFront, PorygonPicBack
 
-	db TACKLE, SHARPEN, CONVERSION, CONFUSE_RAY ; level 1 learnset
+	db TACKLE, BULK_UP, CONVERSION, CONFUSE_RAY ; level 1 learnset
 	db GROWTH_MEDIUM_FAST ; growth rate
 
 	; tm/hm learnset

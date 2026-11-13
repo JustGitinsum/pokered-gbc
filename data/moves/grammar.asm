@@ -26,7 +26,7 @@ ExclamationPointMoveSets:
 	db VICEGRIP
 	db WING_ATTACK
 	db FLY
-	db BIND
+	db SAND_TOMB
 	db SLAM
 	db HORN_ATTACK
 	db BODY_SLAM
@@ -64,7 +64,7 @@ ExclamationPointMoveSets:
 	db ACID_ARMOR
 	db FURY_SWIPES
 	db REST
-	db SHARPEN
+	db BULK_UP
 	db SLASH
 	db SUBSTITUTE
 	db 0 ; end set
