@@ -155,6 +155,9 @@
 	const DEX_MEWTWO     ; 150
 	const DEX_MEW        ; 151
 	const DEX_CROBAT      ; 152
+	const DEX_MAREEP      ; 153
+	const DEX_FLAAFFY     ; 154
+	const DEX_AMPHAROS    ; 155
 	const DEX_GLIGAR     ; 152
 	const DEX_STEELIX     ; 153
 	const DEX_SCIZOR      ; 154

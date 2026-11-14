@@ -244,6 +244,9 @@ IF GEN_2_GRAPHICS
 	const PAL_MEWTWO     ; $BA
 	const PAL_MEW        ; $BB
 	const PAL_CROBAT     ; $BC
+	;const PAL_MAREEP
+	;const PAL_FLAAFFY
+	;const PAL_AMPHAROS
 	;const PAL_GLIGAR
 	; const PAL_STEELIX
 	; const PAL_SCIZOR

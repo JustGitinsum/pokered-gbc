@@ -78,9 +78,9 @@ PokedexEntryPointers:
 	dw DittoDexEntry
 	dw MeowthDexEntry
 	dw KrabbyDexEntry
-	dw MissingNoDexEntry
-	dw MissingNoDexEntry
-	dw MissingNoDexEntry
+	dw MareepDexEntry
+	dw FlaaffyDexEntry
+	dw AmpharosDexEntry
 	dw VulpixDexEntry
 	dw NinetalesDexEntry
 	dw PikachuDexEntry
@@ -713,6 +713,27 @@ KrabbyDexEntry:
 	db 1,4
 	dw 140
 	;text_far _KrabbyDexEntry
+	text_end
+
+MareepDexEntry:
+	db "Wool@"
+	db 2,0
+	dw 172
+	;text_far _MareepDexEntry
+	text_end
+
+FlaaffyDexEntry:
+	db "Wool@"
+	db 2,07
+	dw 293
+	;text_far _FlaaffyDexEntry
+	text_end
+
+AmpharosDexEntry:
+	db "Light@"
+	db 4,07
+	dw 1356
+	;text_far _AmpharosDexEntry
 	text_end
 
 VulpixDexEntry:

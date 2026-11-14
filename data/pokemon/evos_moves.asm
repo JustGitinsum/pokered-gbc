@@ -90,9 +90,9 @@ EvosMovesPointerTable:
 	dw DittoEvosMoves
 	dw MeowthEvosMoves
 	dw KrabbyEvosMoves
-	dw MissingNo4FEvosMoves
-	dw MissingNo50EvosMoves
-	dw MissingNo51EvosMoves
+	dw MareepEvosMoves
+	dw FlaaffyEvosMoves
+	dw AmpharosEvosMoves
 	dw VulpixEvosMoves
 	dw NinetalesEvosMoves
 	dw PikachuEvosMoves
@@ -1363,22 +1363,56 @@ KrabbyEvosMoves:
 	db 44, CRABHAMMER
 	db 0
 
-MissingNo4FEvosMoves:
+MareepEvosMoves:
 ; Evolutions
+	db EVOLVE_LEVEL, 15, FLAAFFY
 	db 0
 ; Learnset
+	db 6, THUNDERSHOCK
+	db 10, THUNDER_WAVE
+	db 15, CALM_MIND
+	db 16, CONFUSE_RAY
+	db 19, SHOCK_WAVE
+	db 28, AMNESIA
+	db 32, POWER_GEM
+	db 36, THUNDERBOLT
+	db 40, LIGHT_SCREEN
+	db 42, THUNDER
 	db 0
 
-MissingNo50EvosMoves:
+FlaaffyEvosMoves:
 ; Evolutions
+	db EVOLVE_LEVEL, 30, AMPHAROS
 	db 0
 ; Learnset
+	db 6, THUNDERSHOCK
+	db 10, THUNDER_WAVE
+	db 15, CALM_MIND
+	db 17, CONFUSE_RAY
+	db 20, SHOCK_WAVE
+	db 28, AMNESIA
+	db 32, POWER_GEM
+	db 36, THUNDERBOLT
+	db 40, LIGHT_SCREEN
+	db 42, THUNDER
 	db 0
 
-MissingNo51EvosMoves:
+AmpharosEvosMoves:
 ; Evolutions
 	db 0
-; Learnset
+; Learnset SV
+	db 6, THUNDERSHOCK
+	db 10, THUNDER_WAVE
+	db 15, CALM_MIND
+	db 17, CONFUSE_RAY
+	db 20, SHOCK_WAVE
+	db 28, AMNESIA
+	db 32, POWER_GEM
+	db 36, THUNDERBOLT
+	db 40, LIGHT_SCREEN
+	db 42, THUNDER
+	db 50, DRAGON_PULSE
+	db EVOLUTION_MOVE, THUNDERPUNCH
 	db 0
 
 VulpixEvosMoves:
@@ -2729,7 +2763,7 @@ GligarEvosMoves:
 	db 7, HARDEN
 	db 10, BITE
 	db 13, QUICK_ATTACK
-	db 16, POUNCE
+	db 16, BULLDOZE
 	db 19, POISON_FANG
 	db 22, WING_ATTACK
 	db 27, SLASH
@@ -2747,7 +2781,7 @@ GliscorEvosMoves:
 	db 7, HARDEN
 	db 10, BITE
 	db 13, QUICK_ATTACK
-	db 16, POUNCE
+	db 16, BULLDOZE
 	db 19, POISON_FANG
 	db 22, WING_ATTACK
 	db 27, SLASH

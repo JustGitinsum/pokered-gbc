@@ -392,7 +392,7 @@ MoveNamesLowercase::
 	li "AncientPower"
 	li "Bounce"
 	li "Flame Wheel"
-	li "Shocker Wave"
+	li "Shock Wave"
 	li "Accelerock"
 	li "Trailblaze"
 	li "Rollout"

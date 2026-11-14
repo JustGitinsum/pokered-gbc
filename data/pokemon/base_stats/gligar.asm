@@ -10,7 +10,7 @@
 	INCBIN "gfx/pokemon/gsfront/gligar.pic", 0, 1 ; sprite dimensions
 	dw GligarPicFront, GligarPicBack
 
-	db SCRATCH, SAND_ATTACK, NO_MOVE, NO_MOVE ; level 1 learnset
+	db SCRATCH, SAND_ATTACK, POUNCE, NO_MOVE ; level 1 learnset
 	db GROWTH_MEDIUM_SLOW ; growth rate
 
 	; tm/hm learnset

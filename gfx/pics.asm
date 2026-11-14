@@ -173,6 +173,12 @@ GligarPicFront::      INCBIN "gfx/pokemon/gsfront/gligar.pic"
 GligarPicBack::       INCBIN "gfx/pokemon/gsback/gligarb.pic"
 GliscorPicFront::      INCBIN "gfx/pokemon/gsfront/gliscor.pic"
 GliscorPicBack::       INCBIN "gfx/pokemon/gsback/gliscorb.pic"
+MareepPicFront::      INCBIN "gfx/pokemon/gsfront/mareep.pic"
+MareepPicBack::       INCBIN "gfx/pokemon/gsback/mareepb.pic"
+FlaaffyPicFront::     INCBIN "gfx/pokemon/gsfront/flaaffy.pic"
+FlaaffyPicBack::      INCBIN "gfx/pokemon/gsback/flaaffyb.pic"
+AmpharosPicFront::    INCBIN "gfx/pokemon/gsfront/ampharos.pic"
+AmpharosPicBack::     INCBIN "gfx/pokemon/gsback/ampharosb.pic"
 
 SECTION "Pics 4", ROMX
 
