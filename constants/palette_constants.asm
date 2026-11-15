@@ -261,6 +261,8 @@ IF GEN_2_GRAPHICS
 	; const PAL_RIOLU			   ; $A2
 	; const PAL_LUCARIO
 	; const PAL_MAGNEZONE
+	; const PAL_ELECTIVIRE
+	; const PAL_MAGMORTAR
 	; const PAL_GLISCOR
 	; const PAL_GALLADE               ; $A2
 	; const PAL_TYRUNT

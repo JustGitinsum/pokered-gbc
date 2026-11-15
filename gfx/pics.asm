@@ -179,6 +179,10 @@ FlaaffyPicFront::     INCBIN "gfx/pokemon/gsfront/flaaffy.pic"
 FlaaffyPicBack::      INCBIN "gfx/pokemon/gsback/flaaffyb.pic"
 AmpharosPicFront::    INCBIN "gfx/pokemon/gsfront/ampharos.pic"
 AmpharosPicBack::     INCBIN "gfx/pokemon/gsback/ampharosb.pic"
+ElectivirePicFront::    INCBIN "gfx/pokemon/gsfront/electivire.pic"
+ElectivirePicBack::     INCBIN "gfx/pokemon/gsback/electivireb.pic"
+MagmortarPicFront::    INCBIN "gfx/pokemon/gsfront/magmortar.pic"
+MagmortarPicBack::     INCBIN "gfx/pokemon/gsback/magmortarb.pic"
 
 SECTION "Pics 4", ROMX
 

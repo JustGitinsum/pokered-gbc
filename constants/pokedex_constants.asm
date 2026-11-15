@@ -172,6 +172,8 @@
 	const DEX_RIOLU			   ; $A5
 	const DEX_LUCARIO              ; $A6
 	const DEX_MAGNEZONE              ; $A6
+	const DEX_ELECTIVIRE           ; $A6
+	const DEX_MAGMORTAR              ; $A6
 	const DEX_GLISCOR     ; $A7
 	const DEX_GALLADE               ; $A7
 	const DEX_TYRUNT                ; $A8

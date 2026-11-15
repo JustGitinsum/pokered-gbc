@@ -171,6 +171,8 @@ IF GEN_2_GRAPHICS
 	db PAL_TANGELA              ;RIOLU
 	db PAL_TANGELA              ;LUCARIO
 	db PAL_MAGNETON             ;MAGNEZONE
+	db PAL_PIKACHU              ;ELECTIVIRE
+	db PAL_MAGMAR               ;MAGMORTAR
 	db PAL_GENGAR	  			;GLISCOR
 	db PAL_IVYSAUR              ;GALLADE
 	db PAL_KABUTOPS             ;TYRUNT

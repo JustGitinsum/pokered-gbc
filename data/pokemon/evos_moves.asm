@@ -61,9 +61,9 @@ EvosMovesPointerTable:
 	dw PsyduckEvosMoves
 	dw DrowzeeEvosMoves
 	dw GolemEvosMoves
-	dw MissingNo32EvosMoves
+	dw MagmortarEvosMoves
 	dw MagmarEvosMoves
-	dw MissingNo34EvosMoves
+	dw ElectivireEvosMoves
 	dw ElectabuzzEvosMoves
 	dw MagnetonEvosMoves
 	dw KoffingEvosMoves
@@ -930,41 +930,72 @@ GolemEvosMoves:
 	db 42, ROCK_SLIDE
 	db 0
 
-MissingNo32EvosMoves:
+MagmortarEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
+    db 6, EMBER
+	db 12, SMOG
+	db 16, FLAME_WHEEL
+	db 20, CONFUSE_RAY
+	db 24, SMOKESCREEN
+	db 28, FIRE_PUNCH
+	db 34, BODY_SLAM
+	db 40, LOW_SWEEP
+	db 46, FLAMETHROWER
+	db 52, REFLECT
+	db 58, FIRE_BLAST
+	db 64, HYPER_BEAM
 	db 0
 
 MagmarEvosMoves:
 ; Evolutions
+	db EVOLVE_ITEM, FIRE_STONE, 1, MAGMORTAR
 	db 0
 ; Learnset
-	db 36, LEER
-	db 39, CONFUSE_RAY
-	db 43, FIRE_PUNCH
-	db 48, SMOKESCREEN
-	db 52, SMOG
-	db 55, FLAMETHROWER
+    db 6, EMBER
+	db 12, SMOG
+	db 16, FLAME_WHEEL
+	db 20, CONFUSE_RAY
+	db 24, SMOKESCREEN
+	db 28, FIRE_PUNCH
+	db 34, BODY_SLAM
+	db 40, LOW_SWEEP
+	db 46, FLAMETHROWER
 	db 0
 
-MissingNo34EvosMoves:
+ElectivireEvosMoves:
 ; Evolutions
 	db 0
-; Learnset
+; Learnset SV
+    db 6, THUNDERSHOCK
+	db 12, SWIFT
+	db 16, SHOCK_WAVE
+	db 20, THUNDER_WAVE
+	db 24, SCREECH
+	db 28, THUNDERPUNCH
+	db 34, BODY_SLAM
+	db 40, LOW_SWEEP
+	db 46, THUNDERBOLT
+	db 52, LIGHT_SCREEN
+	db 58, THUNDER
+	db 64, HYPER_BEAM
 	db 0
 
 ElectabuzzEvosMoves:
 ; Evolutions
+	db EVOLVE_ITEM, THUNDER_STONE, 1, ELECTIVIRE
 	db 0
 ; Learnset
-	db 22, LOW_SWEEP
-	db 25, SHOCK_WAVE
-	db 28, LIGHT_SCREEN
-	db 33, THUNDERPUNCH
-	db 39, SCREECH
-	db 44, THUNDERBOLT
-	db 50, THUNDER
+    db 6, THUNDERSHOCK
+	db 12, SWIFT
+	db 16, SHOCK_WAVE
+	db 20, THUNDER_WAVE
+	db 24, SCREECH
+	db 28, THUNDERPUNCH
+	db 34, BODY_SLAM
+	db 40, LOW_SWEEP
+	db 46, THUNDERBOLT
 	db 0
 
 MagnetonEvosMoves:
