@@ -39,6 +39,8 @@ HandleLedges::
 	ldh a, [hJoyHeld]
 	and e
 	ret z
+StartLedgeHop::
+; E = joypad direction; also used for scripted hops without a ledge tile.
 	ld a, PAD_BUTTONS | PAD_CTRL_PAD
 	ld [wJoyIgnore], a
 	ld hl, wMovementFlags

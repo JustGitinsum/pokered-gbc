@@ -7,6 +7,14 @@ PokemonTower5F_Script:
 	ld [wPokemonTower5FCurScript], a
 	ret
 
+ResetPurifiedZoneTextOnMapChange::
+	ld a, [wCurMap]
+	ld hl, wPurifiedZoneTextMap
+	cp [hl]
+	ret z
+	ld [hl], -1
+	ret
+
 PokemonTower5F_ScriptPointers:
 	def_script_pointers
 	dw_const PokemonTower5FDefaultScript,           SCRIPT_POKEMONTOWER5F_DEFAULT
@@ -35,9 +43,16 @@ PokemonTower5FDefaultScript:
 	call Delay3
 	call Delay3
 	call GBFadeInFromWhite
+	; Re-entering still heals, but repeats the message only after a map change.
+	ld a, [wCurMap]
+	ld hl, wPurifiedZoneTextMap
+	cp [hl]
+	jr z, .done
+	ld [hl], a
 	ld a, TEXT_POKEMONTOWER5F_PURIFIEDZONE
 	ldh [hTextID], a
 	call DisplayTextID
+.done
 	xor a
 	ld [wJoyIgnore], a
 	ret

@@ -7,6 +7,7 @@ MarkTownVisitedAndLoadMissableObjects::
 	callfar ResetFossilScientistIntroOnMapChange
 	callfar ResetNameRaterIntroOnMapChange
 	callfar ResetStarterCheatIntroOnMapChange
+	callfar ResetPurifiedZoneTextOnMapChange
 	ld a, [wCurMap]
 	cp FIRST_ROUTE_MAP
 	jr nc, .notInTown

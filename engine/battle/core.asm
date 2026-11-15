@@ -2473,6 +2473,15 @@ UseBattleItem:
 
 .returnAfterCapturingMon
 	call GBPalNormal
+	; Running also returns result 2; record this scripted capture separately.
+	ld a, [wCurMap]
+	cp POKEMON_TOWER_6F
+	jr nz, .captureRecorded
+	ld a, [wPokemonTower6FCurScript]
+	cp SCRIPT_POKEMONTOWER6F_MAROWAK_BATTLE
+	jr nz, .captureRecorded
+	SetEvent EVENT_BEAT_GHOST_MAROWAK
+.captureRecorded
 	xor a
 	ld [wCapturedMonSpecies], a
 	ld a, $2
@@ -3689,6 +3698,16 @@ GetOutText:
 	text_end
 
 IsGhostBattle:
+; Z = unidentified Tower ghost. Preserve callers' data, including escape speeds.
+	push bc
+	push de
+	push hl
+	call .check
+	pop hl
+	pop de
+	pop bc
+	ret
+.check
 	ld a, [wIsInBattle]
 	dec a
 	ret nz
@@ -3697,9 +3716,30 @@ IsGhostBattle:
 	jr c, .next
 	cp POKEMON_TOWER_7F + 1
 	jr nc, .next
+	CheckEvent EVENT_BEAT_GHOST_MAROWAK
+	ret nz
 	ld b, SILPH_SCOPE
 	call IsItemInBag
-	ret z
+	ret nz
+	; The scripted soul still requires the Scope, even if Marowak is Seen.
+	ld a, [wCurOpponent]
+	cp RESTLESS_SOUL
+	jr z, .unidentified
+	ld a, [wEnemyMonSpecies2]
+	ld [wPokedexNum], a
+	predef IndexToPokedex
+	ld a, [wPokedexNum]
+	dec a
+	ld c, a
+	ld b, FLAG_TEST
+	ld hl, wPokedexSeen
+	predef FlagActionPredef
+	ld a, c
+	and a
+	ret
+.unidentified
+	xor a
+	ret
 .next
 	ld a, 1
 	and a
@@ -6684,6 +6724,9 @@ LoadEnemyMonData:
 	ld de, wEnemyMonNick
 	ld bc, NAME_LENGTH
 	call CopyData
+	; Hidden encounters must not reveal their species on the next encounter.
+	call IsGhostBattle
+	jr z, .skipPokedexSeen
 	ld a, [wEnemyMonSpecies2]
 	ld [wPokedexNum], a
 	predef IndexToPokedex
@@ -6693,6 +6736,7 @@ LoadEnemyMonData:
 	ld b, FLAG_SET
 	ld hl, wPokedexSeen
 	predef FlagActionPredef ; mark this mon as seen in the pokedex
+.skipPokedexSeen
 	ld hl, wEnemyMonLevel
 	ld de, wEnemyMonUnmodifiedLevel
 	ld bc, 1 + NUM_STATS * 2

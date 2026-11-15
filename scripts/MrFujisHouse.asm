@@ -79,13 +79,23 @@ MrFujisHouseMrFujiText:
 	ld hl, .ReceivedPokeFluteText
 	call PrintText
 	SetEvent EVENT_GOT_POKE_FLUTE
-	jr .done
+	; Only take the Scope after the Flute has been successfully given.
+	ld b, SILPH_SCOPE
+	call IsItemInBag
+	jr z, .done
+	ld hl, .TakeSilphScopeText
+	call PrintText
+	ld a, SILPH_SCOPE
+	ldh [hItemToRemoveID], a
+	farcall RemoveItemByID
+	ld hl, .SilphScopeRemovedText
+	jr .printText
 .bag_full
 	ld hl, .PokeFluteNoRoomText
-	call PrintText
-	jr .done
+	jr .printText
 .got_item
 	ld hl, .HasMyFluteHelpedYouText
+.printText
 	call PrintText
 .done
 	jp TextScriptEnd
@@ -98,6 +108,14 @@ MrFujisHouseMrFujiText:
 	text_far _MrFujisHouseMrFujiReceivedPokeFluteText
 	sound_get_key_item
 	text_far _MrFujisHouseMrFujiPokeFluteExplanationText
+	text_end
+
+.TakeSilphScopeText:
+	text_far _MrFujisHouseMrFujiTakeSilphScopeText
+	text_end
+
+.SilphScopeRemovedText:
+	text_far _MrFujisHouseSilphScopeRemovedText
 	text_end
 
 .PokeFluteNoRoomText:

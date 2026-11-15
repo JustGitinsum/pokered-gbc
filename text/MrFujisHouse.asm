@@ -64,7 +64,20 @@ _MrFujisHouseMrFujiPokeFluteExplanationText::
 
 	para "It works on all"
 	line "sleeping #MON."
-	done
+	prompt
+
+_MrFujisHouseMrFujiTakeSilphScopeText::
+	text "MR.FUJI: You"
+	line "shouldn't need"
+	cont "this anymore, I'll"
+	para "take it off your"
+	line "hands."
+	prompt
+
+_MrFujisHouseSilphScopeRemovedText::
+	text "SILPH SCOPE was"
+	line "removed."
+	prompt
 
 _MrFujisHouseMrFujiPokeFluteNoRoomText::
 	text "You must make"

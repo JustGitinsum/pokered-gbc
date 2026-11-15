@@ -21,6 +21,7 @@ PokemonTower6F_ScriptPointers:
 	dw_const EndTrainerBattle,                      SCRIPT_POKEMONTOWER6F_END_BATTLE
 	dw_const PokemonTower6FPlayerMovingScript,      SCRIPT_POKEMONTOWER6F_PLAYER_MOVING
 	dw_const PokemonTower6FMarowakBattleScript,     SCRIPT_POKEMONTOWER6F_MAROWAK_BATTLE
+	EXPORT SCRIPT_POKEMONTOWER6F_MAROWAK_BATTLE ; Used by the capture handler.
 
 PokemonTower6FDefaultScript:
 	CheckEvent EVENT_BEAT_GHOST_MAROWAK
@@ -58,35 +59,35 @@ PokemonTower6FMarowakBattleScript:
 	call UpdateSprites
 	ld a, PAD_CTRL_PAD
 	ld [wJoyIgnore], a
+	CheckEvent EVENT_BEAT_GHOST_MAROWAK ; Set by a successful scripted capture.
+	jr nz, .cleared
 	ld a, [wBattleResult]
 	and a
+	jr nz, .did_not_defeat
+	; Item/move escapes can leave result 0, but the soul is still alive.
+	ld hl, wEnemyMonHP
+	ld a, [hli]
+	or [hl]
 	jr nz, .did_not_defeat
 	SetEvent EVENT_BEAT_GHOST_MAROWAK
 	ld a, TEXT_POKEMONTOWER6F_MAROWAK_DEPARTED
 	ldh [hTextID], a
 	call DisplayTextID
-	xor a
-	ld [wJoyIgnore], a
-	ld a, SCRIPT_POKEMONTOWER6F_DEFAULT
-	ld [wPokemonTower6FCurScript], a
-	ld [wCurMapScript], a
-	ret
+.cleared
+	jp PokemonTower6FSetDefaultScript
 .did_not_defeat
-	ld a, $1
-	ld [wSimulatedJoypadStatesIndex], a
-	ld a, PAD_RIGHT
-	ld [wSimulatedJoypadStatesEnd], a
-	xor a
-	ld [wSpritePlayerStateData2MovementByte1], a
-	ld [wOverrideSimulatedJoypadStatesMask], a
-	ld hl, wStatusFlags5
-	set BIT_SCRIPTED_MOVEMENT_STATE, [hl]
+	ld e, PAD_UP
+	farcall StartLedgeHop
 	ld a, SCRIPT_POKEMONTOWER6F_PLAYER_MOVING
 	ld [wPokemonTower6FCurScript], a
 	ld [wCurMapScript], a
 	ret
 
 PokemonTower6FPlayerMovingScript:
+	; The second simulated step begins before the hop animation finishes.
+	ld a, [wMovementFlags]
+	bit BIT_LEDGE_OR_FISHING, a
+	ret nz
 	ld a, [wSimulatedJoypadStatesIndex]
 	and a
 	ret nz

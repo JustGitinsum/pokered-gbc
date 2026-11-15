@@ -29,27 +29,15 @@ PrintBeginningBattleText:
 	call PrintText
 	jr .done
 .pokemonTower
-	ld b, SILPH_SCOPE
-	call IsItemInBag
-	ld a, [wEnemyMonSpecies2]
-	ld [wCurPartySpecies], a
+	callfar IsGhostBattle
+	jr z, .noSilphScope
+	ld a, [wCurOpponent]
 	cp RESTLESS_SOUL
-	jr z, .isMarowak
-	ld a, b
-	and a
-	jr z, .noSilphScope
-	callfar LoadEnemyMonData
-	jr .notPokemonTower
-.noSilphScope
-	ld hl, EnemyAppearedText
-	call PrintText
-	ld hl, GhostCantBeIDdText
-	call PrintText
-	jr .done
+	jr nz, .notPokemonTower
 .isMarowak
-	ld a, b
-	and a
-	jr z, .noSilphScope
+	; Only the scripted soul needs the ghost-to-Marowak reveal animation.
+	ld a, RESTLESS_SOUL
+	ld [wCurPartySpecies], a
 	ld hl, EnemyAppearedText
 	call PrintText
 	ld hl, UnveiledGhostText
@@ -67,6 +55,11 @@ PrintBeginningBattleText:
 	ld a, SFX_SILPH_SCOPE
 	call PlaySound
 	jp WaitForSoundToFinish
+.noSilphScope
+	ld hl, EnemyAppearedText
+	call PrintText
+	ld hl, GhostCantBeIDdText
+	call PrintText
 .done
 	ret
 

@@ -217,8 +217,14 @@ SetPal_Battle_Common:
 	ld b, a
 
 .getEnemyMonPal
+	push bc ; Preserve the player's palette across the ghost check.
+	callfar IsGhostBattle
+	pop bc
+	ld a, PAL_GASTLY
+	jr z, .gotEnemyMonPal
 	ld a, [wEnemyMonSpecies2]         ; enemy Pokemon ID (without transform effect?)
 	call DeterminePaletteID
+.gotEnemyMonPal
 	ld c, a
 
 	ld a, $02

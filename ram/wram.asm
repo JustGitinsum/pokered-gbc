@@ -1743,6 +1743,9 @@ wNameRaterIntroMap:: db
 
 wStarterCheatIntroMap:: db
 
+; Map where the purified-zone message was shown, or -1.
+wPurifiedZoneTextMap:: db
+
 ;;; PureRGBnote: ADDED: new properties in this previously empty space
 wTownMapAreaState:: ; view which state is which in map_pokemon_areas.asm
 wDexMinSeenMon::
