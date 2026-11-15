@@ -181,6 +181,7 @@
 	const DEX_AMAURA               ; $AA
 	const DEX_AURORUS              ; $AB
 	const DEX_MIMIKYU    ; $AC
+	const DEX_SIRFETCHD   ; $AC
 	const DEX_ZORUA       ; $AD
 	const DEX_ZOROARK     ; $AE
 	const DEX_CHARCADET              ; $AF

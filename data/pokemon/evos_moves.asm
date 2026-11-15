@@ -151,7 +151,7 @@ EvosMovesPointerTable:
 	dw SkarmoryEvosMoves
 	dw KinglerEvosMoves
 	dw CloysterEvosMoves
-	dw MissingNo8CEvosMoves
+	dw SirfetchdEvosMoves
 	dw ElectrodeEvosMoves
 	dw ClefableEvosMoves
 	dw WeezingEvosMoves
@@ -1164,13 +1164,21 @@ MissingNo3FEvosMoves:
 
 FarfetchdEvosMoves:
 ; Evolutions
+	db EVOLVE_ITEM, LEAF_STONE, 1, SIRFETCHD
 	db 0
-; Learnset
-	db 7, LEER
-	db 15, FURY_ATTACK
-	db 23, SWORDS_DANCE
-	db 31, AGILITY
-	db 39, SLASH
+; Learnset ZA
+	db 10, KARATE_CHOP
+	db 12, STEEL_WING
+	db 16, AERIAL_ACE
+	db 20, QUICK_ATTACK
+	db 24, SUCKER_PUNCH
+	db 27, FOCUS_ENERGY
+	db 30, SLASH
+	db 34, SWORDS_DANCE
+	db 36, LEAF_BLADE
+	db 40, BRICK_BREAK
+	db 47, AGILITY
+	db 60, CLOSE_COMBAT
 	db 0
 
 VenonatEvosMoves:
@@ -2299,10 +2307,22 @@ CloysterEvosMoves:
 	db EVOLUTION_MOVE, SPIKE_CANNON
 	db 0
 
-MissingNo8CEvosMoves:
+SirfetchdEvosMoves:
 ; Evolutions
 	db 0
-; Learnset
+; Learnset ZA
+	db 10, KARATE_CHOP
+	db 12, STEEL_WING
+	db 16, AERIAL_ACE
+	db 20, QUICK_ATTACK
+	db 24, SUCKER_PUNCH
+	db 27, FOCUS_ENERGY
+	db 30, SLASH
+	db 34, SWORDS_DANCE
+	db 36, LEAF_BLADE
+	db 40, BRICK_BREAK
+	db 47, AGILITY
+	db 60, CLOSE_COMBAT
 	db 0
 
 ElectrodeEvosMoves:

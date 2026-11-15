@@ -145,7 +145,7 @@ CryData::
 	mon_cry SFX_CRY_18, $40, $A0 ; Skarmory
 	mon_cry SFX_CRY_20, $EE, $E0 ; Kingler
 	mon_cry SFX_CRY_18, $6F, $E0 ; Cloyster
-	mon_cry SFX_CRY_00, $00, $00 ; MissingNo.
+	mon_cry SFX_CRY_10, $DD, $01 ; Sirfetch'd
 	mon_cry SFX_CRY_06, $A8, $90 ; Electrode
 	mon_cry SFX_CRY_19, $AA, $20 ; Clefable
 	mon_cry SFX_CRY_12, $FF, $FF ; Weezing

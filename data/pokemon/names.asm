@@ -139,7 +139,7 @@ MonsterNames::
 	db "SKARMORY@@"
 	db "KINGLER@@@"
 	db "CLOYSTER@@"
-	db "MISSINGNO."
+	db "SIRFETCH'D"
 	db "ELECTRODE@"
 	db "CLEFABLE@@"
 	db "WEEZING@@@"

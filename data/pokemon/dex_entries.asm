@@ -139,7 +139,7 @@ PokedexEntryPointers:
 	dw SkarmoryDexEntry
 	dw KinglerDexEntry
 	dw CloysterDexEntry
-	dw MissingNoDexEntry
+	dw SirfetchdDexEntry
 	dw ElectrodeDexEntry
 	dw ClefableDexEntry
 	dw WeezingDexEntry
@@ -1154,6 +1154,13 @@ CloysterDexEntry:
 	db 4,11
 	dw 2920
 	;text_far _CloysterDexEntry
+	text_end
+
+SirfetchdDexEntry:
+	db "Wild Duck@"
+	db 2,07
+	dw 2579
+	;text_far _SirfetchdDexEntry
 	text_end
 
 ElectrodeDexEntry:

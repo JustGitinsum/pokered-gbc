@@ -183,6 +183,8 @@ ElectivirePicFront::    INCBIN "gfx/pokemon/gsfront/electivire.pic"
 ElectivirePicBack::     INCBIN "gfx/pokemon/gsback/electivireb.pic"
 MagmortarPicFront::    INCBIN "gfx/pokemon/gsfront/magmortar.pic"
 MagmortarPicBack::     INCBIN "gfx/pokemon/gsback/magmortarb.pic"
+SirfetchdPicFront::    INCBIN "gfx/pokemon/gsfront/sirfetchd.pic"
+SirfetchdPicBack::     INCBIN "gfx/pokemon/gsback/sirfetchdb.pic"
 
 SECTION "Pics 4", ROMX
 

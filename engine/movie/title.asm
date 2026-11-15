@@ -251,6 +251,9 @@ ENDC
 	ld a, HIGH(vBGMap1)
 	call TitleScreenCopyTileMapToVRAM
 	call Delay3
+	; LoadSAV may have left a dark-map offset from a previous main menu visit.
+	xor a
+	ld [wMapPalOffset], a
 	call LoadGBPal
 	ldh a, [hJoyHeld]
 	ld b, a

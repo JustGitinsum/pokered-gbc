@@ -140,7 +140,7 @@ MonsterNamesLowercase::
 	db "Skarmory@@"
 	db "Kingler@@@"
 	db "Cloyster@@"
-	db "MissingNo."
+	db "Sirfetch'd@"  ; "'d" is one encoded tile
 	db "Electrode@"
 	db "Clefable@@"
 	db "Weezing@@@"
