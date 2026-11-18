@@ -1,5 +1,10 @@
 # pokered-gbc
 
+The Town Map uses the D-pad to move the cursor freely, one map tile at a time.
+The header names the town, landmark, or route under the cursor and is blank
+over unnamed terrain. The player marker stays at the current location.
+A or B closes the map. Fly and Pokedex habitat maps retain their own controls.
+
 After Oak asks you to choose a starter, interact with his lab PC to access
 a secret starter cheat. Answer Yes to hear the PC power-on sound and choose
 Mew, Mewtwo, Articuno, Zapdos, or Moltres at level 5. No or B cancels without
@@ -137,6 +142,12 @@ and the visible portion of her Trainer Card picture. Link opponents still
 use Red's picture and accents.
 Gold's front picture uses `PAL_JOLTEON` on the three selected cap tiles
 in character selection, the intro/name entry, Hall of Fame, and Trainer Card.
+Lyra's front picture uses `PAL_LASS` on the selected clothing tiles in those
+same screens.
+Rosa's front picture uses `PAL_PSYDUCK` on the selected shorts tiles in those
+same screens.
+Brendan's front picture uses `PAL_YOUNGSTER` on the selected upper-body and
+shoe tiles in those same screens.
 
 Debug Pokédex completion sets only real species flags. Pokédex ratings ignore
 unused padding bits, including those left in older debug saves, so the Hall of

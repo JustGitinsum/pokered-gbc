@@ -16,8 +16,10 @@ DEF NO_INPUT EQU 0
 	const PLAYER_RED   ; 0
 	const PLAYER_GREEN ; 1
 	const PLAYER_GOLD  ; 2
-	const PLAYER_KRIS  ; 3
+	const PLAYER_LYRA  ; 3
 	const PLAYER_HILDA ; 4
+	const PLAYER_ROSA  ; 5
+	const PLAYER_BRENDAN ; 6
 DEF NUM_PLAYER_CHARACTERS EQU const_value
 
 ; PlayerCharacters genders

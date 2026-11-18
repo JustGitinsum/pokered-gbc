@@ -158,6 +158,7 @@ ROMX $1C
 	"bank1C_extension"
 	org $75e8
 	"Engine Save"
+	"Trainer Picture Palette Rectangles"
 ROMX $1D
 	"Maps 19"
 	"Itemfinder 1"

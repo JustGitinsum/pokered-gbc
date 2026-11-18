@@ -12,46 +12,26 @@ DisplayTownMap:
 	ld a, $1
 	ldh [hJoy7], a
 	ld a, [wCurMap]
-	push af
 	ld b, $0
 	call DrawPlayerOrBirdSprite
-	hlcoord 1, 0
-	ld de, wNameBuffer
-	call PlaceString
-	ld hl, wShadowOAMSprite00
-	ld de, wShadowOAMBackupSprite00
-	ld bc, 4 * 4
-	call CopyData
+	ld a, [wTownMapCoords]
+	ld [wTownMapCursorCoords], a
 	ld hl, vSprites tile BIRD_BASE_TILE
 	ld de, TownMapCursor
 	lb bc, BANK(TownMapCursor), (TownMapCursorEnd - TownMapCursor) / $8
 	call CopyVideoDataDouble
-	xor a
-	ld [wWhichTownMapLocation], a
-	pop af
-	jr .enterLoop
-
 .townMapLoop
 	hlcoord 0, 0
 	lb bc, 1, 20
 	call ClearScreenArea
-	ld hl, TownMapOrder
-	ld a, [wWhichTownMapLocation]
-	ld c, a
-	ld b, 0
-	add hl, bc
-	ld a, [hl]
-.enterLoop
-	ld de, wTownMapCoords
-	call LoadTownMapEntry
-	ld a, [de]
-	push hl
+	ld a, [wTownMapCursorCoords]
+	ld hl, wShadowOAMSprite04
 	call TownMapCoordsToOAMCoords
 	ld a, $4
 	ld [wOAMBaseTile], a
 	ld hl, wShadowOAMSprite04
 	call WriteTownMapSpriteOAM ; town map cursor sprite
-	pop hl
+	call GetTownMapLocationName
 	ld de, wNameBuffer
 .copyMapName
 	ld a, [hli]
@@ -71,14 +51,13 @@ DisplayTownMap:
 	call JoypadLowSensitivity
 	ldh a, [hJoy5]
 	ld b, a
-	and PAD_A | PAD_B | PAD_UP | PAD_DOWN
+	and PAD_A | PAD_B | PAD_CTRL_PAD
 	jr z, .inputLoop
+	ld a, b
+	and PAD_A | PAD_B
+	jr z, .moveCursor
 	ld a, SFX_TINK
 	call PlaySound
-	bit B_PAD_UP, b
-	jr nz, .pressedUp
-	bit B_PAD_DOWN, b
-	jr nz, .pressedDown
 	xor a
 	ld [wTownMapSpriteBlinkingEnabled], a
 	ldh [hJoy7], a
@@ -88,26 +67,121 @@ DisplayTownMap:
 	pop af
 	ld [hl], a
 	ret
-.pressedUp
-	ld a, [wWhichTownMapLocation]
-	inc a
-	cp TownMapOrderEnd - TownMapOrder ; number of list items + 1
-	jr nz, .noOverflow
-	xor a
-.noOverflow
-	ld [wWhichTownMapLocation], a
-	jp .townMapLoop
-.pressedDown
-	ld a, [wWhichTownMapLocation]
-	dec a
-	cp -1
-	jr nz, .noUnderflow
-	ld a, TownMapOrderEnd - TownMapOrder - 1 ; number of list items
-.noUnderflow
-	ld [wWhichTownMapLocation], a
+.moveCursor
+	ld a, [wTownMapCursorCoords]
+	call MoveTownMapCursor
+	jr nc, .inputLoop
+	ld [wTownMapCursorCoords], a
+	ld a, SFX_TINK
+	call PlaySound
 	jp .townMapLoop
 
+MoveTownMapCursor:
+; a = packed coordinates, b = direction buttons; carry if the cursor moved
+	ld c, a
+	bit B_PAD_UP, b
+	jr nz, .up
+	bit B_PAD_DOWN, b
+	jr nz, .down
+	bit B_PAD_LEFT, b
+	jr nz, .left
+	and $f
+	cp 15
+	ret z
+	ld a, c
+	inc a
+	scf
+	ret
+.up
+	and $f0
+	ret z
+	ld a, c
+	sub $10
+	scf
+	ret
+.down
+	and $f0
+	cp $f0
+	ret z
+	ld a, c
+	add $10
+	scf
+	ret
+.left
+	and $f
+	ret z
+	ld a, c
+	dec a
+	scf
+	ret
+
+GetTownMapLocationName:
+; Named landmarks take precedence over the routes beneath them.
+	ld hl, TownMapOrder
+	ld b, TownMapOrderEnd - TownMapOrder
+.landmarkLoop
+	push bc
+	ld a, [hli]
+	push hl
+	ld de, wTownMapCoords
+	call LoadTownMapEntry
+	ld a, [wTownMapCursorCoords]
+	ld c, a
+	ld a, [de]
+	cp c
+	jr z, .foundLandmark
+	pop hl
+	pop bc
+	dec b
+	jr nz, .landmarkLoop
+	ld hl, TownMapRouteRegions
+.regionLoop
+	ld a, [hli]
+	cp -1
+	jr z, .blank
+	ld b, a
+	ld a, [hli]
+	ld c, a
+	ld a, [wTownMapCursorCoords]
+	and $f
+	cp b
+	jr c, .skipRegion
+	cp c
+	jr nc, .skipRegion
+	ld a, [wTownMapCursorCoords]
+	and $f0
+	ld b, a
+	ld a, [hl]
+	and $f0
+	cp b
+	jr c, .skipRegion
+	ld a, [hl]
+	and $f
+	swap a
+	cp b
+	jr z, .foundRegion
+	jr c, .foundRegion
+.skipRegion
+	inc hl
+	inc hl
+	jr .regionLoop
+.foundRegion
+	inc hl
+	ld a, [hl]
+	ld de, wTownMapCoords
+	jp LoadTownMapEntry
+.foundLandmark
+	pop de
+	pop bc
+	ret
+.blank
+	ld hl, .blankName
+	ret
+.blankName
+	db "@"
+
 INCLUDE "data/maps/town_map_order.asm"
+INCLUDE "data/maps/town_map_regions.asm"
 
 TownMapCursor:
 	INCBIN "gfx/town_map/town_map_cursor.1bpp"

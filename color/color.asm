@@ -2217,6 +2217,8 @@ ApplyPokemonPicPaletteRectsAtDE:
 	pop de
 	ret
 
+PUSHS
+SECTION "Trainer Picture Palette Rectangles", ROMX
 ; Same format as PokemonPicPaletteRects. Non-card offsets are picture-relative;
 ; SetPal_PlayerFrontPic normalizes their contexts to TRAINER_PIC_INTRO.
 TrainerPicPaletteRects:
@@ -2226,11 +2228,16 @@ TrainerPicPaletteRects:
 	db TRAINER_PIC_INTRO, PLAYER_RED, PAL_POLIWRATH, 6
 	dw 5 * SCREEN_WIDTH + 2
 	db 1, 1
+IF GEN_2_GRAPHICS
+	db TRAINER_PIC_INTRO, PLAYER_RED, PAL_POLIWRATH, 6
+	dw 4 * SCREEN_WIDTH + 2
+	db 1, 1
+ENDC
 
-	db TRAINER_PIC_INTRO, PLAYER_HILDA, PAL_YOUNGSTER, 6
+	db TRAINER_PIC_INTRO, PLAYER_HILDA, PAL_BEAUTY, 6
 	dw 3 * SCREEN_WIDTH + 2
 	db 1, 4
-	db TRAINER_PIC_INTRO, PLAYER_HILDA, PAL_YOUNGSTER, 6
+	db TRAINER_PIC_INTRO, PLAYER_HILDA, PAL_BEAUTY, 6
 	dw 4 * SCREEN_WIDTH + 2
 	db 1, 3
 
@@ -2240,6 +2247,24 @@ TrainerPicPaletteRects:
 	db TRAINER_PIC_INTRO, PLAYER_GOLD, PAL_JOLTEON, 6
 	dw SCREEN_WIDTH + 2
 	db 1, 1
+
+	db TRAINER_PIC_INTRO, PLAYER_LYRA, PAL_BEAUTY, 6
+	dw 3 * SCREEN_WIDTH + 2
+	db 2, 2
+
+	db TRAINER_PIC_INTRO, PLAYER_ROSA, PAL_PSYDUCK, 6
+	dw 4 * SCREEN_WIDTH + 3
+	db 1, 2
+
+	db TRAINER_PIC_INTRO, PLAYER_BRENDAN, PAL_YOUNGSTER, 6
+	dw 2 * SCREEN_WIDTH + 2
+	db 1, 3
+	db TRAINER_PIC_INTRO, PLAYER_BRENDAN, PAL_YOUNGSTER, 6
+	dw 3 * SCREEN_WIDTH + 3
+	db 1, 2
+	db TRAINER_PIC_INTRO, PLAYER_BRENDAN, PAL_YOUNGSTER, 6
+	dw 6 * SCREEN_WIDTH + 2
+	db 1, 3
 
 	; The Trainer Card uses tile-based palettes and removes the first pic column.
 	db TRAINER_PIC_CARD, PLAYER_RED, PAL_POLIWRATH, 6
@@ -2251,15 +2276,20 @@ TrainerPicPaletteRects:
 	db TRAINER_PIC_CARD, PLAYER_RED, PAL_POLIWRATH, 6
 	dw 2 * 7 + 5 - 7
 	db 1, 1
+IF GEN_2_GRAPHICS
+	db TRAINER_PIC_CARD, PLAYER_RED, PAL_POLIWRATH, 6
+	dw 2 * 7 + 4 - 7
+	db 1, 1
+ENDC
 
 	; Only picture columns 1-4 are visible on the Trainer Card.
-	db TRAINER_PIC_CARD, PLAYER_HILDA, PAL_YOUNGSTER, 6
+	db TRAINER_PIC_CARD, PLAYER_HILDA, PAL_BEAUTY, 6
 	dw 2 * 7 + 3 - 7
 	db 1, 2
-	db TRAINER_PIC_CARD, PLAYER_HILDA, PAL_YOUNGSTER, 6
+	db TRAINER_PIC_CARD, PLAYER_HILDA, PAL_BEAUTY, 6
 	dw 3 * 7 + 3 - 7
 	db 1, 2
-	db TRAINER_PIC_CARD, PLAYER_HILDA, PAL_YOUNGSTER, 6
+	db TRAINER_PIC_CARD, PLAYER_HILDA, PAL_BEAUTY, 6
 	dw 4 * 7 + 3 - 7
 	db 1, 2
 
@@ -2269,7 +2299,41 @@ TrainerPicPaletteRects:
 	db TRAINER_PIC_CARD, PLAYER_GOLD, PAL_JOLTEON, 6
 	dw 3 * 7 - 7
 	db 1, 1
+
+	db TRAINER_PIC_CARD, PLAYER_LYRA, PAL_BEAUTY, 6
+	dw 2 * 7 + 3 - 7
+	db 1, 2
+	db TRAINER_PIC_CARD, PLAYER_LYRA, PAL_BEAUTY, 6
+	dw 3 * 7 + 3 - 7
+	db 1, 2
+
+	db TRAINER_PIC_CARD, PLAYER_ROSA, PAL_PSYDUCK, 6
+	dw 3 * 7 + 4 - 7
+	db 1, 1
+	db TRAINER_PIC_CARD, PLAYER_ROSA, PAL_PSYDUCK, 6
+	dw 4 * 7 + 4 - 7
+	db 1, 1
+
+	db TRAINER_PIC_CARD, PLAYER_BRENDAN, PAL_YOUNGSTER, 6
+	dw 2 * 7 + 2 - 7
+	db 1, 1
+	db TRAINER_PIC_CARD, PLAYER_BRENDAN, PAL_YOUNGSTER, 6
+	dw 3 * 7 + 2 - 7
+	db 1, 2
+	db TRAINER_PIC_CARD, PLAYER_BRENDAN, PAL_YOUNGSTER, 6
+	dw 4 * 7 + 2 - 7
+	db 1, 2
+	db TRAINER_PIC_CARD, PLAYER_BRENDAN, PAL_YOUNGSTER, 6
+	dw 2 * 7 + 6 - 7
+	db 1, 1
+	db TRAINER_PIC_CARD, PLAYER_BRENDAN, PAL_YOUNGSTER, 6
+	dw 3 * 7 + 6 - 7
+	db 1, 1
+	db TRAINER_PIC_CARD, PLAYER_BRENDAN, PAL_YOUNGSTER, 6
+	dw 4 * 7 + 6 - 7
+	db 1, 1
 	db $ff
+POPS
 
 ; Slot-6 battle accents: species, palette ID, screen x, screen y, height, width.
 ; Use this macro for new slot-6 PIC_CONTEXT_BATTLE entries. Rows 0-1 use the

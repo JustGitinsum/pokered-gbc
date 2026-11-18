@@ -713,7 +713,8 @@ wFlyAnimUsingCoordList:: db
 wFlyLocationsList:: ds NUM_FLY_LOCATIONS + 2 ; edited, to allow fly to Route 4 and Route 10
 
 NEXTU
-wWhichTownMapLocation:: db
+; lower nybble is x, upper nybble is y
+wTownMapCursorCoords:: db
 wFlyAnimCounter:: db
 wFlyAnimBirdSpriteImageIndex:: db
 

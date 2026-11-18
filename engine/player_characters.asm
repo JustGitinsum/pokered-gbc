@@ -9,6 +9,11 @@ GetPlayerCharacterEntry:
 	jr c, .valid
 	xor a ; PLAYER_RED
 .valid
+	ld l, a
+	ld h, 0
+	ld bc, .entryIndices
+	add hl, bc
+	ld a, [hl]
 	; Multiply by 18 in constant time; this lookup also runs during overworld OAM updates.
 	ASSERT PLAYER_CHAR_LENGTH == 18
 	ld l, a
@@ -23,6 +28,18 @@ GetPlayerCharacterEntry:
 	ld bc, PlayerCharacters
 	add hl, bc
 	ret
+
+.entryIndices
+; Indexed by PLAYER_*; keep saved character IDs independent of table order.
+	table_width 1
+	db (PlayerCharacterRed     - PlayerCharacters) / PLAYER_CHAR_LENGTH
+	db (PlayerCharacterGreen   - PlayerCharacters) / PLAYER_CHAR_LENGTH
+	db (PlayerCharacterGold    - PlayerCharacters) / PLAYER_CHAR_LENGTH
+	db (PlayerCharacterLyra    - PlayerCharacters) / PLAYER_CHAR_LENGTH
+	db (PlayerCharacterHilda   - PlayerCharacters) / PLAYER_CHAR_LENGTH
+	db (PlayerCharacterRosa    - PlayerCharacters) / PLAYER_CHAR_LENGTH
+	db (PlayerCharacterBrendan - PlayerCharacters) / PLAYER_CHAR_LENGTH
+	assert_table_length NUM_PLAYER_CHARACTERS
 
 ; a = PLAYER_* constant; returns a = PLAYER_MALE or PLAYER_FEMALE
 ; preserves bc and de; clobbers hl

@@ -1,6 +1,6 @@
 ; BOY/GIRL selection at the start of a new game.
 ; UP/DOWN chooses the gender; LEFT/RIGHT scrolls through the player
-; characters of that gender (see data/player_characters.asm).
+; characters of that gender in PLAYER_* order (see data/player_characters.asm).
 ; The previewed character is stored in wPlayerGender when A is pressed.
 
 ; wStringBuffer is free here and holds the character picked for each gender
@@ -37,8 +37,6 @@ BoyGirlChoice::
 	ld a, PLAYER_FEMALE
 	call GetFirstPlayerCharacter
 	ld [wPlayerSelectGirl], a
-	; boys use vFrontPic and girls use vBackPic, so UP/DOWN only rewrites the tilemap
-	call LoadPlayerSelectPic
 	ld a, [wPlayerSelectBoy]
 	call LoadPlayerSelectPic
 	ld a, [wPlayerSelectBoy]
@@ -58,8 +56,7 @@ BoyGirlChoice::
 	ld hl, wPlayerGender
 	cp [hl]
 	jr z, .loop
-	call ShowPlayerSelectPic
-	jr .loop
+	jr .loadAndShow
 
 .scroll
 	call GetPlayerSelectCharacter
@@ -73,6 +70,9 @@ BoyGirlChoice::
 	push af
 	ld a, SFX_PRESS_AB
 	call PlaySound
+	pop af
+.loadAndShow
+	push af
 	; hide the old pic while the new one is decompressed into its slot
 	hlcoord PLAYER_SELECT_PIC_X, PLAYER_SELECT_PIC_Y
 	lb bc, 7, 7
@@ -88,8 +88,7 @@ BoyGirlChoice::
 	call GetPlayerSelectCharacter
 	ld a, [hl]
 	ld [wPlayerGender], a
-	; vBackPic overlaps the first textbox tiles
-	jp LoadTextBoxTilePatterns
+	ret
 
 ; returns hl = wPlayerSelectBoy or wPlayerSelectGirl for the cursor position
 GetPlayerSelectCharacter:
@@ -100,10 +99,8 @@ GetPlayerSelectCharacter:
 	inc hl
 	ret
 
-; a = PLAYER_* constant; decompresses its front pic into vFrontPic (male)
-; or vBackPic (female)
+; a = PLAYER_* constant; decompresses its front pic into vFrontPic
 LoadPlayerSelectPic:
-	push af
 	ld e, PLAYER_GFX_FRONT
 	call GetPlayerGfxForCharacter
 	ld a, h
@@ -112,38 +109,16 @@ LoadPlayerSelectPic:
 	ld de, sSpriteBuffer0
 	ld bc, $310
 	call CopyData
-	pop af
-	call GetPlayerCharacterGender
 	ld de, vFrontPic
-	ASSERT PLAYER_MALE == 0
-	and a
-	jr z, .gotSlot
-	ld de, vBackPic
-.gotSlot
 	jp InterlaceMergeSpriteBuffers
 
 ; a = PLAYER_* constant; draws its preloaded pic and loads its palette
 ShowPlayerSelectPic:
 	ld [wPlayerGender], a
-	; The cursor already identifies the gender, so no character-table lookup is needed.
-	ld a, [wCurrentMenuItem]
-	and a
-	ld a, 0 ; first tile of vFrontPic
-	jr z, .gotTileID
-	ld a, $31 ; first tile of vBackPic
-.gotTileID
+	xor a ; first tile of vFrontPic
 	ldh [hStartTileID], a
 	hlcoord PLAYER_SELECT_PIC_X, PLAYER_SELECT_PIC_Y
 	predef CopyUncompressedPicToTilemap
-	ld a, [wCurrentMenuItem]
-	and a
-	jr z, .drawArrows
-	; the vBackPic slot's rightmost column is blank, but its last two tiles
-	; share VRAM with textbox tiles $60-$61, so never display that column
-	hlcoord PLAYER_SELECT_PIC_X + 6, PLAYER_SELECT_PIC_Y
-	lb bc, 7, 1
-	call ClearScreenArea
-.drawArrows
 	call DrawPlayerSelectArrows
 	farcall SetPal_OakIntro
 	call GetPlayerPalettes

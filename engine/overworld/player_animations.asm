@@ -520,10 +520,10 @@ GoldFishingTiles:
 	fishing_gfx GoldFishingTilesSide,  2, $0a
 	fishing_gfx RedFishingRodTiles,    3, $fd
 
-KrisFishingTiles:
-	fishing_gfx KrisFishingTilesFront, 2, $02
-	fishing_gfx KrisFishingTilesBack,  2, $06
-	fishing_gfx KrisFishingTilesSide,  2, $0a
+LyraFishingTiles:
+	fishing_gfx LyraFishingTilesFront, 2, $02
+	fishing_gfx LyraFishingTilesBack,  2, $06
+	fishing_gfx LyraFishingTilesSide,  2, $0a
 	fishing_gfx RedFishingRodTiles,    3, $fd
 
 HildaFishingTiles:
@@ -532,14 +532,28 @@ HildaFishingTiles:
 	fishing_gfx HildaFishingTilesSide,  2, $0a
 	fishing_gfx RedFishingRodTiles,    3, $fd
 
+RosaFishingTiles:
+	fishing_gfx RosaFishingTilesFront, 2, $02
+	fishing_gfx RosaFishingTilesBack,  2, $06
+	fishing_gfx RosaFishingTilesSide,  2, $0a
+	fishing_gfx RedFishingRodTiles,    3, $fd
+
+BrendanFishingTiles:
+	fishing_gfx BrendanFishingTilesFront, 2, $02
+	fishing_gfx BrendanFishingTilesBack,  2, $06
+	fishing_gfx BrendanFishingTilesSide,  2, $0a
+	fishing_gfx RedFishingRodTiles,      3, $fd
+
 PlayerFishingTiles:
 ; entries correspond to PLAYER_* constants
 	table_width 2
 	dw RedFishingTiles   ; PLAYER_RED
 	dw GreenFishingTiles ; PLAYER_GREEN
 	dw GoldFishingTiles  ; PLAYER_GOLD
-	dw KrisFishingTiles  ; PLAYER_KRIS
+	dw LyraFishingTiles  ; PLAYER_LYRA
 	dw HildaFishingTiles ; PLAYER_HILDA
+	dw RosaFishingTiles  ; PLAYER_ROSA
+	dw BrendanFishingTiles ; PLAYER_BRENDAN
 	assert_table_length NUM_PLAYER_CHARACTERS
 
 _HandleMidJump::
