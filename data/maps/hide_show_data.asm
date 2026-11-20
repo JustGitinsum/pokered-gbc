@@ -585,5 +585,7 @@ RockTunnelB1FHS:
 	db ROCK_TUNNEL_B1F, ROCKTUNNELB1F_SAIL_FOSSIL, SHOW
 Route9LaprasCaveHS:
 	db ROUTE_9_LAPRAS_CAVE, ROUTE9LAPRASCAVE_LAPRAS, SHOW
+	; Keep Rotom here to preserve existing missable-object flag indices.
+	db SILPH_CO_5F, SILPHCO5F_ROTOM, SHOW
 	db $FF, $01, SHOW ; end
 	assert_table_length NUM_HS_OBJECTS + 1

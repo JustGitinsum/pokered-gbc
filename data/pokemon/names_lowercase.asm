@@ -156,7 +156,7 @@ MonsterNamesLowercase::
 	db "Bulbasaur@"
 	db "Venusaur@@"
 	db "Tentacruel"
-	db "MissingNo."
+	db "Rotom@@@@@"
 	db "Goldeen@@@"
 	db "Seaking@@@"
 	db "Ralts@@@@@"

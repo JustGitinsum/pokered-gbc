@@ -545,7 +545,7 @@ ScientistData:
 ; Silph Co. 10F
 	db 29, MAGNEMITE, KOFFING, 0
 ; Mansion 3F
-	db 33, MAGNETON, MAGNEZONE, SCIZOR, 0
+	db 33, MAGNETON, SCIZOR, ROTOM, 0
 ; Mansion B1F
 	db 34, KABUTOPS, OMASTAR, 0
 

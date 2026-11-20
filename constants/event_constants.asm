@@ -795,6 +795,10 @@ DEF INDIGO_PLATEAU_EVENTS_END EQU const_value - 1
 ; Route 9 Lapras Cave events
 	const EVENT_BEAT_ROUTE_9_LAPRAS
 
+; Silph Co. 5F Rotom
+	const_skip 2 ; event bit must match object 12 modulo 8
+	const EVENT_BEAT_SILPH_CO_5F_ROTOM
+
 ; End of events
 	const_next $A00
 DEF NUM_EVENTS EQU const_value

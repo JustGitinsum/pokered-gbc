@@ -84,6 +84,7 @@ SilphCo5F_TextPointers:
 	dw_const SilphCo5FPokemonReport1Text, TEXT_SILPHCO5F_POKEMON_REPORT1
 	dw_const SilphCo5FPokemonReport2Text, TEXT_SILPHCO5F_POKEMON_REPORT2
 	dw_const SilphCo5FPokemonReport3Text, TEXT_SILPHCO5F_POKEMON_REPORT3
+	dw_const SilphCo5FRotomText,          TEXT_SILPHCO5F_ROTOM
 
 SilphCo5TrainerHeaders:
 	def_trainers 2
@@ -95,6 +96,11 @@ SilphCo5TrainerHeader2:
 	trainer EVENT_BEAT_SILPH_CO_5F_TRAINER_2, 4, SilphCo5FRockerBattleText, SilphCo5FRockerEndBattleText, SilphCo5FRockerAfterBattleText
 SilphCo5TrainerHeader3:
 	trainer EVENT_BEAT_SILPH_CO_5F_TRAINER_3, 3, SilphCo5FRocket2BattleText, SilphCo5FRocket2EndBattleText, SilphCo5FRocket2AfterBattleText
+	; The trainer header's first byte must match Rotom's object index.
+	ASSERT SILPHCO5F_ROTOM == 12
+	def_trainers 12
+SilphCo5FRotomTrainerHeader:
+	trainer EVENT_BEAT_SILPH_CO_5F_ROTOM, 0, SilphCo5FRotomBattleText, SilphCo5FRotomBattleText, SilphCo5FRotomBattleText
 	db -1 ; end
 
 SilphCo5FSilphWorkerMText:
@@ -195,3 +201,17 @@ SilphCo5FPokemonReport2Text:
 SilphCo5FPokemonReport3Text:
 	text_far _SilphCo5FPokemonReport3Text
 	text_end
+
+SilphCo5FRotomText:
+	text_asm
+	ld hl, SilphCo5FRotomTrainerHeader
+	call TalkToTrainer
+	jp TextScriptEnd
+
+SilphCo5FRotomBattleText:
+	text "ROTOM: Bzzzt!@"
+	text_asm
+	ld a, ROTOM
+	call PlayCry
+	call WaitForSoundToFinish
+	jp TextScriptEnd

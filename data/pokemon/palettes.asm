@@ -175,6 +175,7 @@ IF GEN_2_GRAPHICS
 	db PAL_MAGMAR               ;MAGMORTAR
 	db PAL_GENGAR	  			;GLISCOR
 	db PAL_IVYSAUR              ;GALLADE
+	db PAL_VERMILION            ;ROTOM
 	db PAL_KABUTOPS             ;TYRUNT
 	db PAL_SPEAROW              ;TYRANTRUM
 	db PAL_ARTICUNO             ;AMAURA

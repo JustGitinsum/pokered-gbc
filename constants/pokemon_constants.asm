@@ -162,7 +162,7 @@
 	const BULBASAUR          ; $99
 	const VENUSAUR           ; $9A
 	const TENTACRUEL         ; $9B
-	const_skip               ; $9C
+	const ROTOM               ; $9C
 	const GOLDEEN            ; $9D
 	const SEAKING            ; $9E
 	const RALTS               ; $9F

@@ -265,6 +265,7 @@ IF GEN_2_GRAPHICS
 	; const PAL_MAGMORTAR
 	; const PAL_GLISCOR
 	; const PAL_GALLADE               ; $A2
+	; const PAL_ROTOM
 	; const PAL_TYRUNT
 	; const PAL_TYRANTRUM
 	; const PAL_AMAURA

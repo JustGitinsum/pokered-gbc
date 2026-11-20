@@ -155,7 +155,7 @@ PokedexEntryPointers:
 	dw BulbasaurDexEntry
 	dw VenusaurDexEntry
 	dw TentacruelDexEntry
-	dw MissingNoDexEntry
+	dw RotomDexEntry
 	dw GoldeenDexEntry
 	dw SeakingDexEntry
 	dw RaltsDexEntry
@@ -1266,6 +1266,13 @@ TentacruelDexEntry:
 	db 5,3
 	dw 1210
 	;text_far _TentacruelDexEntry
+	text_end
+
+RotomDexEntry:
+	db "Plasma@"
+	db 1,0
+	dw 07
+	;text_far _RotomDexEntry
 	text_end
 
 GoldeenDexEntry:

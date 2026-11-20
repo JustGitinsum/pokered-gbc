@@ -61,6 +61,7 @@ DEF DOWN       EQU $D0
 DEF UP         EQU $D1
 DEF LEFT       EQU $D2
 DEF RIGHT      EQU $D3
+DEF ANIMATED_DOWN EQU $D4 ; STAY sprite that cycles its walking frames
 DEF NONE       EQU $FF
 
 DEF OW_POKEMON EQU $80

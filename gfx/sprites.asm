@@ -127,6 +127,10 @@ Koga2Sprite::            INCBIN "gfx/sprites/leaders/koga.2bpp"
 SabrinaSprite::          INCBIN "gfx/sprites/leaders/sabrina.2bpp"
 BlaineSprite::           INCBIN "gfx/sprites/leaders/blaine.2bpp"
 
+SECTION "Rotom Overworld Sprite", ROMX
+
+RotomSprite::            INCBIN "gfx/sprites/mons/rotom.2bpp"
+
 SECTION FRAGMENT "Mon Overworld Sprites", ROMX
 
 ; Flying and surfing sprites (see data/sprites/mon_overworld_sprites.asm)

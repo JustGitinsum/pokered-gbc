@@ -146,6 +146,18 @@ UpdateNPCSprite:
 	jp z, UpdateSpriteMovementDelay  ; [x#SPRITESTATEDATA1_MOVEMENTSTATUS] == 2
 	cp $3
 	jp z, UpdateSpriteInWalkingAnimation  ; [x#SPRITESTATEDATA1_MOVEMENTSTATUS] == 3
+	ld a, [wCurSpriteMovement2]
+	cp ANIMATED_DOWN
+	jr nz, .notAnimatedInPlace
+	; HL still points to this sprite's movement status in state data 1.
+	inc h
+	ld a, l
+	add SPRITESTATEDATA2_MOVEMENTBYTE1 - SPRITESTATEDATA1_MOVEMENTSTATUS
+	ld l, a
+	ld a, [hl]
+	inc a ; STAY; scripted movement must still run normally
+	jp z, UpdateSpriteAnimationInPlace
+.notAnimatedInPlace
 	ld a, [wWalkCounter]
 	and a
 	ret nz           ; don't do anything yet if player is currently moving
@@ -299,24 +311,35 @@ TryWalking:
 	ld [hl], $3         ; x#SPRITESTATEDATA1_MOVEMENTSTATUS
 	jp UpdateSpriteImage
 
-; update the walking animation parameters for a sprite that is currently walking
-UpdateSpriteInWalkingAnimation:
+UpdateSpriteAnimationInPlace:
+	; Scrolling adjusts screen coordinates while the player is moving.
+	ld a, [wWalkCounter]
+	and a
+	call z, InitializeSpriteScreenPosition
+	call AdvanceSpriteAnimationFrame
+	jp UpdateSpriteImage
+
+AdvanceSpriteAnimationFrame:
+	; Four animation states, each held for four sprite updates.
+	ld h, HIGH(wSpriteStateData1)
 	ldh a, [hCurrentSpriteOffset]
-	add $7
+	add SPRITESTATEDATA1_INTRAANIMFRAMECOUNTER
 	ld l, a
-	ld a, [hl]                       ; x#SPRITESTATEDATA1_INTRAANIMFRAMECOUNTER
-	inc a
-	ld [hl], a                       ; [x#SPRITESTATEDATA1_INTRAANIMFRAMECOUNTER]++
-	cp $4
-	jr nz, .noNextAnimationFrame
+	inc [hl]
+	ld a, [hl]
+	cp 4
+	ret nz
 	xor a
-	ld [hl], a                       ; [x#SPRITESTATEDATA1_INTRAANIMFRAMECOUNTER] = 0
-	inc l
-	ld a, [hl]                       ; x#SPRITESTATEDATA1_ANIMFRAMECOUNTER
+	ld [hli], a
+	ld a, [hl]
 	inc a
 	and $3
-	ld [hl], a                       ; advance to next animation frame every 4 ticks (16 ticks total for one step)
-.noNextAnimationFrame
+	ld [hl], a
+	ret
+
+; update the walking animation parameters for a sprite that is currently walking
+UpdateSpriteInWalkingAnimation:
+	call AdvanceSpriteAnimationFrame
 	ldh a, [hCurrentSpriteOffset]
 	add $3
 	ld l, a

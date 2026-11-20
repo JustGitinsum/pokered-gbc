@@ -176,6 +176,7 @@
 	const DEX_MAGMORTAR              ; $A6
 	const DEX_GLISCOR     ; $A7
 	const DEX_GALLADE               ; $A7
+	const DEX_ROTOM                ; $A7
 	const DEX_TYRUNT                ; $A8
 	const DEX_TYRANTRUM            ; $A9
 	const DEX_AMAURA               ; $AA

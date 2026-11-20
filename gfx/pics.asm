@@ -185,6 +185,8 @@ MagmortarPicFront::    INCBIN "gfx/pokemon/gsfront/magmortar.pic"
 MagmortarPicBack::     INCBIN "gfx/pokemon/gsback/magmortarb.pic"
 SirfetchdPicFront::    INCBIN "gfx/pokemon/gsfront/sirfetchd.pic"
 SirfetchdPicBack::     INCBIN "gfx/pokemon/gsback/sirfetchdb.pic"
+RotomPicFront::       INCBIN "gfx/pokemon/gsfront/rotom.pic"
+RotomPicBack::        INCBIN "gfx/pokemon/gsback/rotomb.pic"
 
 SECTION "Pics 4", ROMX
 

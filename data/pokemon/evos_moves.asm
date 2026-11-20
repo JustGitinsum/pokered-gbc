@@ -167,7 +167,7 @@ EvosMovesPointerTable:
 	dw BulbasaurEvosMoves
 	dw VenusaurEvosMoves
 	dw TentacruelEvosMoves
-	dw MissingNo9CEvosMoves
+	dw RotomEvosMoves
 	dw GoldeenEvosMoves
 	dw SeakingEvosMoves
 	dw RaltsEvosMoves
@@ -2539,10 +2539,23 @@ TentacruelEvosMoves:
 	db 50, HYDRO_PUMP
 	db 0
 
-MissingNo9CEvosMoves:
+RotomEvosMoves:
 ; Evolutions
 	db 0
-; Learnset
+; Learnset ZA
+	db 8, CONFUSE_RAY
+	db 12, CALM_MIND
+	db 15, SHOCK_WAVE
+	db 17, SWIFT
+	db 20, THUNDER_WAVE
+	db 23, PSYBEAM
+	db 25, SCREECH
+	db 30, SHADOW_BALL
+	db 34, NASTY_PLOT
+	db 40, MYSTICAL_FIRE
+	db 44, SUBSTITUTE
+	db 50, LIGHT_SCREEN
+	db 60, THUNDER
 	db 0
 
 GoldeenEvosMoves:

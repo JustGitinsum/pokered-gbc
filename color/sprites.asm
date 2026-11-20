@@ -677,6 +677,8 @@ SpritePaletteAssignments: ; Characters on the overworld
 	db SPR_PAL_ORANGE
 	; SPRITE_BLAINE
 	db SPR_PAL_BLUE
+	; SPRITE_ROTOM
+	db SPR_PAL_ORANGE
 	; 0x3d: SPRITE_BALL
 	db SPR_PAL_ORANGE
 
