@@ -799,6 +799,10 @@ DEF INDIGO_PLATEAU_EVENTS_END EQU const_value - 1
 	const_skip 2 ; event bit must match object 12 modulo 8
 	const EVENT_BEAT_SILPH_CO_5F_ROTOM
 
+; Southern Island Latios
+	const_skip 4 ; event bit must match object 1 modulo 8
+	const EVENT_BEAT_SOUTHERN_ISLAND_LATIOS
+
 ; End of events
 	const_next $A00
 DEF NUM_EVENTS EQU const_value

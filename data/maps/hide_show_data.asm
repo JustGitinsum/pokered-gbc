@@ -252,6 +252,7 @@ MapHSPointers:
 	dw NoHS
 	dw NoHS
 	dw Route9LaprasCaveHS
+	dw SouthernIslandHS
 	assert_table_length NUM_MAPS
 	dw -1 ; end
 
@@ -587,5 +588,8 @@ Route9LaprasCaveHS:
 	db ROUTE_9_LAPRAS_CAVE, ROUTE9LAPRASCAVE_LAPRAS, SHOW
 	; Keep Rotom here to preserve existing missable-object flag indices.
 	db SILPH_CO_5F, SILPHCO5F_ROTOM, SHOW
+SouthernIslandHS:
+	; Append new entries so existing saves retain their missable-object indices.
+	db SOUTHERN_ISLAND, SOUTHERNISLAND_LATIOS, SHOW
 	db $FF, $01, SHOW ; end
 	assert_table_length NUM_HS_OBJECTS + 1

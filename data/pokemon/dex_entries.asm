@@ -180,7 +180,7 @@ PokedexEntryPointers:
 	dw CharmeleonDexEntry
 	dw WartortleDexEntry
 	dw CharizardDexEntry
-	dw MissingNoDexEntry
+	dw LatiosDexEntry
 	dw MissingNoDexEntry
 	dw MissingNoDexEntry
 	dw MissingNoDexEntry
@@ -1441,6 +1441,13 @@ CharizardDexEntry:
 	db 5,7
 	dw 2000
 	;text_far _CharizardDexEntry
+	text_end
+
+LatiosDexEntry:
+	db "Eon@"
+	db 6,07
+	dw 1323
+	;text_far _LatiosDexEntry
 	text_end
 
 OddishDexEntry:

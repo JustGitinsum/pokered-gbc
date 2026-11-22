@@ -165,11 +165,12 @@ IF GEN_2_GRAPHICS
 	db PAL_BULBASAUR            ;RALTS
 	db PAL_BULBASAUR            ;KIRLIA
 	db PAL_IVYSAUR              ;GARDEVOIR
-	db PAL_TENTACRUEL           ;GIBLE
-	db PAL_TENTACRUEL           ;GABITE
+	db PAL_LATIOS
+	db PAL_GIBLE
+	db PAL_GIBLE                ;GABITE
 	db PAL_POLIWAG              ;GARCHOMP
-	db PAL_TANGELA              ;RIOLU
-	db PAL_TANGELA              ;LUCARIO
+	db PAL_GYARADOS             ;RIOLU
+	db PAL_GYARADOS             ;LUCARIO
 	db PAL_MAGNETON             ;MAGNEZONE
 	db PAL_PIKACHU              ;ELECTIVIRE
 	db PAL_MAGMAR               ;MAGMORTAR
@@ -187,7 +188,7 @@ IF GEN_2_GRAPHICS
 	db PAL_RAPIDASH				;CHARCADET
 	db PAL_RAPIDASH				;ARMAROUGE
 	db PAL_GASTLY				;CERULEDGE
-	db PAL_VILEPLUME;PAL_ANNIHILAPE
+	db PAL_VILEPLUME            ;PAL_ANNIHILAPE
 TrainerPalettes: ; Gen II trainer sprites are given their own palettes
 	db PAL_HERO
 	db PAL_YOUNGSTER

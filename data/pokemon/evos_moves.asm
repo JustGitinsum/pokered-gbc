@@ -192,7 +192,7 @@ EvosMovesPointerTable:
 	dw CharmeleonEvosMoves
 	dw WartortleEvosMoves
 	dw CharizardEvosMoves
-	dw MissingNoB5EvosMoves
+	dw LatiosEvosMoves
 	dw FossilKabutopsEvosMoves
 	dw FossilAerodactylEvosMoves
 	dw MonGhostEvosMoves
@@ -2928,10 +2928,23 @@ CharizardEvosMoves:
 	db EVOLUTION_MOVE, WING_ATTACK
 	db 0
 
-MissingNoB5EvosMoves:
+LatiosEvosMoves:
 ; Evolutions
 	db 0
-; Learnset
+; Learnset ZA
+	db 6, SWIFT
+	db 10, RECOVER
+	db 15, CONFUSION
+	db 20, PSYBEAM
+	db 25, DRAGONBREATH
+	db 30, TELEPORT
+	db 35, BUBBLEBEAM
+	db 40, ZEN_HEADBUTT
+	db 45, DRAGON_PULSE
+	db 50, AURA_SPHERE
+	db 55, MYSTICAL_FIRE
+	db 60, PSYCHIC_M
+	db 65, AIR_SLASH
 	db 0
 
 FossilKabutopsEvosMoves:

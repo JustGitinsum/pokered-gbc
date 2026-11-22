@@ -143,6 +143,8 @@ ButterfreeFlySprite::    INCBIN "gfx/sprites/mons/butterfree.2bpp"
 VenomothFlySprite::      INCBIN "gfx/sprites/mons/venomoth_fly.2bpp"
 AerodactylFlySprite::    INCBIN "gfx/sprites/mons/aerodactyl.2bpp"
 DragoniteFlySprite::     INCBIN "gfx/sprites/mons/dragonite_fly.2bpp"
+; Shared by Fly, Surf, and the Southern Island encounter.
+LatiosFlySprite::        INCBIN "gfx/sprites/mons/latios.2bpp"
 PikachuFlySprite::       INCBIN "gfx/sprites/mons/pikachu_fly.2bpp"
 MewFlySprite::           INCBIN "gfx/sprites/mons/mew.2bpp"
 SkarmoryFlySprite::      INCBIN "gfx/sprites/mons/skarmory.2bpp"

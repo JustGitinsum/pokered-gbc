@@ -1083,6 +1083,8 @@ OaksLabSecretStarter::
 	ld hl, .ChooseStarterText
 	call PrintText
 	call SaveScreenTilesToBuffer2
+	ld a, [wListScrollOffset]
+	push af
 	ld a, [wUpdateSpritesEnabled]
 	push af
 	xor a
@@ -1092,32 +1094,13 @@ OaksLabSecretStarter::
 	hlcoord 8, 0
 	lb bc, 10, 10
 	call TextBoxBorder
-	ld hl, .StarterList
-	ld bc, 0
-.printStarters
-	ld a, [hli]
-	push hl
-	push bc
-	ld [wNamedObjectIndex], a
-	call GetMonName
-	pop bc
-	hlcoord 10, 2
-	add hl, bc
-	push bc
-	ld de, wNameBuffer
-	call PlaceString
-	pop bc
-	ld hl, SCREEN_WIDTH * 2
-	add hl, bc
-	ld b, h
-	ld c, l
-	pop hl
-	ld a, c
-	cp SCREEN_WIDTH * 2 * 5
-	jr nz, .printStarters
 	xor a
+	ld [wListScrollOffset], a
 	ld [wCurrentMenuItem], a
 	ld [wLastMenuItem], a
+	ld [wMenuWrappingEnabled], a
+	ld [wMenuJoypadPollCount], a
+	inc a
 	ld [wMenuWatchMovingOutOfBounds], a
 	ld a, 2
 	ld [wTopMenuItemY], a
@@ -1130,18 +1113,91 @@ OaksLabSecretStarter::
 	pop af
 	ld [wUpdateSpritesEnabled], a
 	call UpdateSprites
-	call HandleMenuInput
-	push af
-	call LoadScreenTilesFromBuffer2
-	pop af
-	bit B_PAD_B, a
-	ret nz
-	ld a, [wCurrentMenuItem]
+.drawStarters
+	ld hl, .StarterList
+	ld a, [wListScrollOffset]
 	ld e, a
 	ld d, 0
-	ld hl, .StarterList
 	add hl, de
-	ld a, [hl]
+	ld bc, 0
+.printStarters
+	ld a, [hli]
+	push hl
+	push bc
+	ld [wNamedObjectIndex], a
+	call GetMonName
+	pop bc
+	hlcoord 10, 2
+	add hl, bc
+	push bc
+	push hl
+	ld bc, 9
+	ld a, " "
+	call FillMemory
+	pop hl
+	ld de, wNameBuffer
+	call PlaceString
+	pop bc
+	ld hl, SCREEN_WIDTH * 2
+	add hl, bc
+	ld b, h
+	ld c, l
+	pop hl
+	ld a, c
+	cp SCREEN_WIDTH * 2 * 5
+	jr nz, .printStarters
+	ld a, [wListScrollOffset]
+	cp .StarterListEnd - .StarterList - 5
+	ld a, " "
+	jr z, .setScrollArrow
+	ld a, "▼"
+.setScrollArrow
+	ldcoord_a 18, 9
+.menuInput
+	call HandleMenuInput
+	ld b, a
+	and PAD_A | PAD_B
+	ld a, b
+	jr nz, .menuDone
+	; HandleMenuInput returns Up/Down here only at a visible-list boundary.
+	bit B_PAD_UP, a
+	jr z, .checkScrollDown
+	ld a, [wListScrollOffset]
+	and a
+	jr z, .menuInput
+	dec a
+	ld [wListScrollOffset], a
+	jr .drawStarters
+.checkScrollDown
+	bit B_PAD_DOWN, a
+	jr z, .menuInput
+	ld a, [wListScrollOffset]
+	cp .StarterListEnd - .StarterList - 5
+	jr nc, .menuInput
+	inc a
+	ld [wListScrollOffset], a
+	jr .drawStarters
+.menuDone
+	ld d, a
+	ld a, [wCurrentMenuItem]
+	ld b, a
+	ld a, [wListScrollOffset]
+	add b
+	ld c, a
+	ld b, 0
+	ld hl, .StarterList
+	add hl, bc
+	ld e, [hl]
+	pop af ; original list scroll offset
+	ld [wListScrollOffset], a
+	push de ; input keys and selected species survive screen restoration
+	xor a
+	ld [wMenuWatchMovingOutOfBounds], a
+	call LoadScreenTilesFromBuffer2
+	pop de
+	bit B_PAD_B, d
+	ret nz
+	ld a, e
 	ld [wCurPartySpecies], a
 	ld [wPokedexNum], a
 	call OaksLabPreviewStarter
@@ -1156,6 +1212,7 @@ OaksLabSecretStarter::
 	ld a, [wCurrentMenuItem]
 	and a
 	ret nz
+	; Mewtwo gets Mew as its counterpick; all other secret starters get Mewtwo.
 	ld a, [wCurPartySpecies]
 	cp MEWTWO
 	ld a, MEW
@@ -1166,7 +1223,8 @@ OaksLabSecretStarter::
 	jp OaksLabGiveStarter
 
 .StarterList:
-	db MEW, MEWTWO, ARTICUNO, ZAPDOS, MOLTRES
+	db MEW, MEWTWO, ARTICUNO, ZAPDOS, MOLTRES, LATIOS
+.StarterListEnd:
 
 .DiscoveredSecretText:
 	text_far _OaksLabDiscoveredSecretText

@@ -109,6 +109,7 @@
 	const SPRITE_SABRINA
 	const SPRITE_BLAINE
 	const SPRITE_ROTOM
+	const SPRITE_LATIOS
 DEF FIRST_STILL_SPRITE EQU const_value
 ; SPRITE_ONIX is a 32x32 (16 tile) sprite loaded at vSprites tile $70.
 ; It overlaps VRAM slot 10 and both still-sprite slots, so a map using it

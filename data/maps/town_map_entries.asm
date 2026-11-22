@@ -119,4 +119,6 @@ InternalMapEntries:
 	internal_map ROUTE_10_FOSSIL_ROOM,           14,  4, Route10Name
 	internal_map AGATHAS_ROOM,                   0,  2, PokemonLeagueName
 	internal_map ROUTE_9_LAPRAS_CAVE,           13,  1, LaprasCaveName
+	; Placeholder location until an entrance to the island is added.
+	internal_map SOUTHERN_ISLAND,                2, 15, SouthernIslandName
 	db -1 ; end

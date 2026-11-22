@@ -250,4 +250,5 @@ MapHeaderPointers::
 	dw BrunosRoom_h
 	dw AgathasRoom_h
 	dw Route9LaprasCave_h
+	dw SouthernIsland_h
 	assert_table_length NUM_MAPS

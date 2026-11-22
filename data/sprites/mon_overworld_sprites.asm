@@ -25,6 +25,7 @@ FlyingMonSprites:
 	mon_sprite VENOMOTH,   VenomothFlySprite,   SPR_PAL_PURPLE
 	mon_sprite AERODACTYL, AerodactylFlySprite, SPR_PAL_PURPLE
 	mon_sprite DRAGONITE,  DragoniteFlySprite,  SPR_PAL_ORANGE
+	mon_sprite LATIOS,     LatiosFlySprite,     SPR_PAL_BLUE
 	mon_sprite PIKACHU,    PikachuFlySprite,    SPR_PAL_ORANGE
 	mon_sprite RAICHU,     PikachuFlySprite,    SPR_PAL_ORANGE
 	mon_sprite FEAROW,    FearowSprite,        SPR_PAL_BROWN
@@ -63,6 +64,7 @@ SurfingMonSprites:
 	mon_sprite DRAGONAIR, DragonairSurfSprite,   SPR_PAL_BLUE
 	mon_sprite DRATINI,   DragonairSurfSprite,   SPR_PAL_BLUE
 	mon_sprite DRAGONITE, DragoniteSurfSprite,   SPR_PAL_ORANGE
+	mon_sprite LATIOS,    LatiosFlySprite,       SPR_PAL_BLUE
 	mon_sprite SLOWBRO,   SlowbroSurfSprite,     SPR_PAL_ORANGE
 	mon_sprite TAUROS,    TaurosSurfSprite,      SPR_PAL_BROWN
 	mon_sprite SEAKING,   SeakingSurfSprite,     SPR_PAL_ORANGE

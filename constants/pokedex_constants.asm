@@ -166,6 +166,7 @@
 	const DEX_RALTS               ; $9F
 	const DEX_KIRLIA              ; $A0
 	const DEX_GARDEVOIR           ; $A1
+	const DEX_LATIOS              ; $A1
 	const DEX_GIBLE               ; $A2
 	const DEX_GABITE              ; $A3
 	const DEX_GARCHOMP            ; $A4

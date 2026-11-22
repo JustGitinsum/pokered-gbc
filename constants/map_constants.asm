@@ -268,6 +268,7 @@ DEF FIRST_INDOOR_MAP EQU const_value
 	map_const BRUNOS_ROOM,                    5,  6 ; $F6
 	map_const AGATHAS_ROOM,                   5,  6 ; $F7
 	map_const ROUTE_9_LAPRAS_CAVE,            7,  6 ; $F8
+	map_const SOUTHERN_ISLAND,                7,  6 ; $F9
 DEF NUM_MAPS EQU const_value
 
 ; Indoor maps, such as houses, use this as the Map ID in their exit warps

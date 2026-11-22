@@ -681,6 +681,12 @@ INCLUDE "data/maps/headers/Route9LaprasCave.asm"
 INCLUDE "data/maps/objects/Route9LaprasCave.asm"
 Route9LaprasCave_Blocks: INCBIN "maps/Route9LaprasCave.blk"
 
+INCLUDE "data/maps/headers/SouthernIsland.asm"
+INCLUDE "data/maps/objects/SouthernIsland.asm"
+SouthernIsland_Blocks:
+	INCBIN "maps/SouthernIsland.blk"
+	assert @ - SouthernIsland_Blocks == SOUTHERN_ISLAND_WIDTH * SOUTHERN_ISLAND_HEIGHT
+
 INCLUDE "data/maps/headers/Route13.asm"
 INCLUDE "data/maps/objects/Route13.asm"
 Route13_Blocks: INCBIN "maps/Route13.blk"
@@ -716,6 +722,7 @@ INCLUDE "scripts/Route4.asm"
 INCLUDE "scripts/Route5.asm"
 INCLUDE "scripts/Route9.asm"
 INCLUDE "scripts/Route9LaprasCave.asm"
+INCLUDE "scripts/SouthernIsland.asm"
 INCLUDE "scripts/Route13.asm"
 INCLUDE "scripts/Route14.asm"
 INCLUDE "scripts/Route17.asm"

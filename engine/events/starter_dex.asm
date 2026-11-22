@@ -1,28 +1,30 @@
-; Unlock full starter previews, preserving every modified owned byte on the stack.
+; Temporarily unlock only the selected preview; never persist preview ownership.
 StarterDex:
-	ld a, [wPokedexOwned]
+	ld a, [wPokedexNum]
 	push af
-	or 1 << (DEX_BULBASAUR - 1) | 1 << (DEX_IVYSAUR - 1) | 1 << (DEX_CHARMANDER - 1) | 1 << (DEX_SQUIRTLE - 1)
-	ld [wPokedexOwned], a
-	ld a, [wPokedexOwned + (DEX_ARTICUNO - 1) / 8]
-	push af
-	or 1 << ((DEX_ARTICUNO - 1) % 8)
-	ld [wPokedexOwned + (DEX_ARTICUNO - 1) / 8], a
-	ASSERT (DEX_MEW - 1) / 8 == (DEX_MEWTWO - 1) / 8
-	ASSERT (DEX_ZAPDOS - 1) / 8 == (DEX_MEW - 1) / 8
-	ASSERT (DEX_MOLTRES - 1) / 8 == (DEX_MEW - 1) / 8
-	ld hl, wPokedexOwned + (DEX_MEW - 1) / 8
+	predef IndexToPokedex
+	ld a, [wPokedexNum]
+	dec a
+	ld c, a
+	srl a
+	srl a
+	srl a
+	ld e, a
+	ld d, 0
+	ld hl, wPokedexOwned
+	add hl, de
+	pop af
+	ld [wPokedexNum], a ; ShowPokedexData expects the species ID, not the dex number.
 	ld a, [hl]
 	push af
-	or 1 << ((DEX_MEW - 1) % 8) | 1 << ((DEX_MEWTWO - 1) % 8) | 1 << ((DEX_ZAPDOS - 1) % 8) | 1 << ((DEX_MOLTRES - 1) % 8)
-	ld [hl], a
+	push hl
+	ld hl, wPokedexOwned
+	ld b, FLAG_SET
+	predef FlagActionPredef
 	predef ShowPokedexData
+	pop hl
 	pop af
-	ld [wPokedexOwned + (DEX_MEW - 1) / 8], a
-	pop af
-	ld [wPokedexOwned + (DEX_ARTICUNO - 1) / 8], a
-	pop af
-	ld [wPokedexOwned], a
+	ld [hl], a
 	ret
 
 PUSHS

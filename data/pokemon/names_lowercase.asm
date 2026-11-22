@@ -181,7 +181,7 @@ MonsterNamesLowercase::
 	db "Charmeleon"
 	db "Wartortle@"
 	db "Charizard@"
-	db "MissingNo."
+	db "Latios@@@@"
 	db "MissingNo."
 	db "MissingNo."
 	db "MissingNo."

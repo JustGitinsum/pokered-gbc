@@ -2062,7 +2062,7 @@ wPalletTownCurScript:: db
 wBluesHouseCurScript:: db
 wViridianCityCurScript:: db
 wRoute9LaprasCaveCurScript:: db
-	ds 1
+wSouthernIslandCurScript:: db ; reuse padding so later saved fields stay in place
 wPewterCityCurScript:: db
 wRoute3CurScript:: db
 wRoute4CurScript:: db

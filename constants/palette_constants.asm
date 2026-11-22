@@ -255,7 +255,8 @@ IF GEN_2_GRAPHICS
 	; const PAL_RALTS               ; $9F
 	; const PAL_KIRLIA              ; $A0
 	; const PAL_GARDEVOIR           ; $A1
-	; const PAL_GIBLE      ; $A2
+	const PAL_LATIOS     ; $A1
+	const PAL_GIBLE      ; $A2
 	; const PAL_GABITE     ; $A3
 	; const PAL_GARCHOMP   ; $A4
 	; const PAL_RIOLU			   ; $A2
