@@ -28,9 +28,20 @@ _Museum2FBrunetteGirlText::
 	line "to catch me one!"
 	done
 
+_Museum2FBrunetteGirlAfterTradeText::
+	text "My daddy got me a"
+	line "PIKACHU!"
+	cont "It's so cute!"
+	done
+
 _Museum2FHikerText::
 	text "Yeah, a PIKACHU"
 	line "soon, I promise!"
+	done
+
+_Museum2FHikerAfterTradeText::
+	text "I'm just glad"
+	line "she is happy."
 	done
 
 _Museum2FSpaceShuttleSignText::

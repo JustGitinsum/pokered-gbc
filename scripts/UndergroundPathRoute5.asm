@@ -11,9 +11,14 @@ UndergroundPathRoute5_TextPointers:
 	dw_const UndergroundPathRoute5LittleGirlText, TEXT_UNDERGROUNDPATHROUTE5_LITTLE_GIRL
 
 UndergroundPathRoute5LittleGirlText:
+	; text_asm
+	; ld a, TRADE_FOR_SPOOK
+	; ld [wWhichTrade], a
+	; predef DoInGameTradeDialogue
+	; ld hl, UndergroundPathEntranceRoute5_TextScriptEndingText
+	; ret
 	text_asm
-	ld a, TRADE_FOR_SPOT
+	ld a, TUTOR_BULK_UP
 	ld [wWhichTrade], a
-	predef DoInGameTradeDialogue
-	ld hl, UndergroundPathEntranceRoute5_TextScriptEndingText
-	ret
+	farcall MoveTutorScript
+	jp TextScriptEnd

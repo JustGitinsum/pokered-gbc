@@ -412,12 +412,16 @@ GengarEvosMoves:
 ; Evolutions
 	db 0
 ; Learnset
-	db 7, HYPNOSIS
-	db 11, CONFUSION
-	db 27, HAZE
-	db 36, SUCKER_PUNCH
-	db 48, SHADOW_BALL
-	db 60, DREAM_EATER
+	db 4, HYPNOSIS
+	db 8, CONFUSION
+	db 12, OMINOUS_WIND
+	db 20, CALM_MIND
+	db 24, HAZE
+	db 28, MYSTICAL_FIRE
+	db 36, DARK_PULSE
+	db 40, SHADOW_BALL
+	db 50, DREAM_EATER
+	db 55, PHANTOMFORCE
 	db 0
 
 NidoranFEvosMoves:
@@ -580,13 +584,16 @@ GastlyEvosMoves:
 ; Evolutions
 	db EVOLVE_LEVEL, 33, HAUNTER
 	db 0
-; Learnset ;from gen9
+; Learnset ;ZA
 	db 4, HYPNOSIS
 	db 8, CONFUSION
-	db 27, HAZE
-	db 32, SUCKER_PUNCH
+	db 12, OMINOUS_WIND
+	db 20, CALM_MIND
+	db 24, HAZE
+	db 28, MYSTICAL_FIRE
+	db 36, DARK_PULSE
 	db 40, SHADOW_BALL
-	db 48, DREAM_EATER
+	db 50, DREAM_EATER
 	db 0
 
 ScytherEvosMoves:
@@ -2420,12 +2427,16 @@ HaunterEvosMoves:
 	db EVOLVE_ITEM, LINK_STONE, 1, GENGAR
 	db 0
 ; Learnset
-	db 7, HYPNOSIS
-	db 11, CONFUSION
-	db 27, HAZE
-	db 36, SUCKER_PUNCH
-	db 48, SHADOW_BALL
-	db 60, DREAM_EATER
+	db 4, HYPNOSIS
+	db 8, CONFUSION
+	db 12, OMINOUS_WIND
+	db 20, CALM_MIND
+	db 24, HAZE
+	db 28, MYSTICAL_FIRE
+	db 36, DARK_PULSE
+	db 40, SHADOW_BALL
+	db 50, DREAM_EATER
+	db 55, PHANTOMFORCE
 	db 0
 
 AbraEvosMoves:

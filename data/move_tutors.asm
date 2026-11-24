@@ -53,6 +53,10 @@ MoveTutorData:
 		MoveTutorHYPER_VOICEIntroText     
 	move_tutor PLAY_ROUGH, 8000, TUTOR_EXCEPT, SubstituteTutorMons, \
 		MoveTutorJessieJamesIntroText  ; Rocket Hideout B1F (James)
+	move_tutor BULK_UP,       800, TUTOR_EXCEPT,   SubstituteTutorMons, \
+		MoveTutorBULK_UPIntroText                                      ; Underground Path Route 5
+	move_tutor CALM_MIND,       800, TUTOR_EXCEPT,   SubstituteTutorMons, \
+		MoveTutorCALM_MINDIntroText                                      ; Underground Path Route 6
 	assert_table_length NUM_MOVE_TUTORS
 	db -1 ; end
 
@@ -67,6 +71,8 @@ MoveTutorData:
 	move_tutor_text MoveTutorBELCHIntroText
 	move_tutor_text MoveTutorHYPER_VOICEIntroText
 	move_tutor_text MoveTutorJessieJamesIntroText
+	move_tutor_text MoveTutorBULK_UPIntroText
+	move_tutor_text MoveTutorCALM_MINDIntroText
 
 SwiftTutorMons: ; TUTOR_EXCEPT
 	db CATERPIE, METAPOD, WEEDLE, KAKUNA, MAGIKARP, DITTO

@@ -8,5 +8,10 @@ UndergroundPathRoute6_TextPointers:
 	dw_const UndergroundPathRoute6GirlText, TEXT_UNDERGROUNDPATHROUTE6_GIRL
 
 UndergroundPathRoute6GirlText:
-	text_far _UndergroundPathRoute6GirlText
-	text_end
+	; text_far _UndergroundPathRoute6GirlText
+	; text_end
+	text_asm
+	ld a, TUTOR_CALM_MIND
+	ld [wWhichTrade], a
+	farcall MoveTutorScript
+	jp TextScriptEnd

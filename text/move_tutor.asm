@@ -136,3 +136,31 @@ _MoveTutorJessieJamesIntroText::
 	cont "some of our skills!"
 	prompt
 
+; BULK_UP Tutor
+
+_MoveTutorBULK_UPIntroText::
+	text "I walk the"
+	line "UNDERGROUND PATH"
+	cont "daily. It helps"
+	cont "me keep my muscles"
+	cont "toned and I get"
+	cont "a great pump!"
+
+	para "Would your #MON"
+	line "like to learn"
+	cont "Bulk Up?"
+	prompt
+
+
+; CALM_MIND Tutor
+
+_MoveTutorCALM_MINDIntroText::
+	text "I love to walk the"
+	line "UNDERGROUND PATH."
+	cont "It really helps"
+	cont "me focus my mind."
+
+	para "Would your #MON"
+	line "like to learn"
+	cont "Calm Mind?"
+	prompt
