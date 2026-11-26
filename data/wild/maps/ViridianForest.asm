@@ -5,11 +5,11 @@ ViridianForestWildMons:
 	db  3, WEEDLE
 	db  3, CATERPIE
 	db  4, PIKACHU
-	db  4, EEVEE
+	db  4, TREECKO
 	db  6, WEEDLE
 	db  6, CATERPIE
 	db  6, PIKACHU
-	db  6, EEVEE
+	db  6, TREECKO
 	end_grass_wildmons
 
 	def_water_wildmons 0 ; encounter rate

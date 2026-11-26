@@ -6,8 +6,8 @@ Route2WildMons:
 	db  4, RATTATA
 	db  5, MAREEP
 	db  3, PIDGEY
-	db  2, RATTATA
-	db  5, RATTATA
+	db  2, TORCHIC
+	db  5, TORCHIC
 	db  6, NIDORAN_M
 	db  5, NIDORAN_F
 	end_grass_wildmons

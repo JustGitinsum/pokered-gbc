@@ -202,6 +202,15 @@ EvosMovesPointerTable:
 	dw BellsproutEvosMoves
 	dw WeepinbellEvosMoves
 	dw VictreebelEvosMoves
+	dw TreeckoEvosMoves
+	dw GrovyleEvosMoves
+	dw SceptileEvosMoves
+	dw TorchicEvosMoves
+	dw CombuskenEvosMoves
+	dw BlazikenEvosMoves
+	dw MudkipEvosMoves
+	dw MarshtompEvosMoves
+	dw SwampertEvosMoves
 	assert_table_length NUM_POKEMON_INDEXES
 
 RhydonEvosMoves:
@@ -3068,4 +3077,189 @@ VictreebelEvosMoves:
 	db 33, LEECH_LIFE
 	db 40, SLUDGE_BOMB
 	db 44, LEAF_BLADE
+	db 0
+
+TreeckoEvosMoves:
+; Evolutions
+	db EVOLVE_LEVEL, 16, GROVYLE
+	db 0
+; Learnset ZA
+	db 3, VINE_WHIP
+	db 6, QUICK_ATTACK
+	db 9, MEGA_DRAIN
+	db 12, LOW_SWEEP
+	db 14, LEECH_SEED
+	db 21, LEECH_LIFE
+	db 27, DOUBLE_TEAM
+	db 30, DRAGONBREATH
+	db 33, ENERGY_BALL
+	db 35, SLASH
+	db 40, SCREECH
+	db 50, SYNTHESIS
+	db 55, X_SCISSOR
+	db 0
+
+GrovyleEvosMoves:
+; Evolutions
+	db EVOLVE_LEVEL, 36, SCEPTILE
+	db 0
+; Learnset ZA
+	db 3, VINE_WHIP
+	db 6, QUICK_ATTACK
+	db 9, MEGA_DRAIN
+	db 12, LOW_SWEEP
+	db 14, LEECH_SEED
+	db 21, LEECH_LIFE
+	db 27, DOUBLE_TEAM
+	db 30, DRAGONBREATH
+	db 33, ENERGY_BALL
+	db 35, SLASH
+	db 38, LEAF_BLADE
+	db 40, SCREECH
+	db 44, OUTRAGE
+	db 50, SYNTHESIS
+	db 55, X_SCISSOR
+	db 0
+
+SceptileEvosMoves:
+; Evolutions
+	db 0
+; Learnset ZA
+	db 3, VINE_WHIP
+	db 6, QUICK_ATTACK
+	db 9, MEGA_DRAIN
+	db 12, LOW_SWEEP
+	db 14, LEECH_SEED
+	db 21, LEECH_LIFE
+	db 27, DOUBLE_TEAM
+	db 30, DRAGONBREATH
+	db 33, ENERGY_BALL
+	db 35, SLASH
+	db 38, LEAF_BLADE
+	db 40, SCREECH
+	db 44, OUTRAGE
+	db 50, SYNTHESIS
+	db 55, X_SCISSOR
+	db EVOLUTION_MOVE, CRUNCH
+	db 0
+
+TorchicEvosMoves:
+; Evolutions
+	db EVOLVE_LEVEL, 16, COMBUSKEN
+	db 0
+; Learnset ZA
+	db 3, EMBER
+	db 6, QUICK_ATTACK
+	db 9, FLAME_WHEEL
+	db 12, LOW_SWEEP
+	db 18, AERIAL_ACE
+	db 21, SLASH
+	db 24, BOUNCE
+	db 27, FOCUS_ENERGY
+	db 33, FLAMETHROWER
+	db 40, BULK_UP
+	db 44, HI_JUMP_KICK
+	db 50, AGILITY
+	db 55, HEAT_CRASH
+	db 0
+
+CombuskenEvosMoves:
+; Evolutions
+	db EVOLVE_LEVEL, 36, BLAZIKEN
+	db 0
+; Learnset ZA
+	db 3, EMBER
+	db 6, QUICK_ATTACK
+	db 9, FLAME_WHEEL
+	db 12, LOW_SWEEP
+	db 18, AERIAL_ACE
+	db 21, SLASH
+	db 24, BOUNCE
+	db 27, FOCUS_ENERGY
+	db 33, FLAMETHROWER
+	db 40, BULK_UP
+	db 44, HI_JUMP_KICK
+	db 50, AGILITY
+	db 55, HEAT_CRASH
+	db 0
+
+BlazikenEvosMoves:
+; Evolutions
+	db 0
+; Learnset ZA
+	db 3, EMBER
+	db 6, QUICK_ATTACK
+	db 9, FLAME_WHEEL
+	db 12, LOW_SWEEP
+	db 18, AERIAL_ACE
+	db 21, SLASH
+	db 24, BOUNCE
+	db 27, FOCUS_ENERGY
+	db 33, FLAMETHROWER
+	db 40, BULK_UP
+	db 44, HI_JUMP_KICK
+	db 50, AGILITY
+	db 55, HEAT_CRASH
+	db 58, SKY_ATTACK
+	db 0
+
+MudkipEvosMoves:
+; Evolutions
+	db EVOLVE_LEVEL, 16, MARSHTOMP
+	db 0
+; Learnset ZA
+	db 6, WATER_GUN
+	db 9, DOUBLE_KICK
+	db 11, ROCK_TOMB
+	db 14, SAND_TOMB
+	db 18, SUPERSONIC
+	db 22, BUBBLEBEAM
+	db 26, ROCK_SLIDE
+	db 28, BULLDOZE
+	db 30, AMNESIA
+	db 36, WATERFALL
+	db 38, SCREECH
+	db 40, SLUDGE_BOMB
+	db 55, HYDRO_PUMP
+	db 0
+
+MarshtompEvosMoves:
+; Evolutions
+	db EVOLVE_LEVEL, 36, SWAMPERT
+	db 0
+; Learnset ZA
+	db 6, WATER_GUN
+	db 9, DOUBLE_KICK
+	db 11, ROCK_TOMB
+	db 14, SAND_TOMB
+	db 18, SUPERSONIC
+	db 22, BUBBLEBEAM
+	db 26, ROCK_SLIDE
+	db 28, BULLDOZE
+	db 30, AMNESIA
+	db 36, WATERFALL
+	db 38, SCREECH
+	db 40, SLUDGE_BOMB
+	db 45, HYDRO_PUMP
+	db 50, EARTHQUAKE
+	db 0
+
+SwampertEvosMoves:
+; Evolutions
+	db 0
+; Learnset ZA
+	db 6, WATER_GUN
+	db 9, DOUBLE_KICK
+	db 11, ROCK_TOMB
+	db 14, SAND_TOMB
+	db 18, SUPERSONIC
+	db 22, BUBBLEBEAM
+	db 26, ROCK_SLIDE
+	db 28, BULLDOZE
+	db 30, AMNESIA
+	db 36, WATERFALL
+	db 38, SCREECH
+	db 40, SLUDGE_BOMB
+	db 45, HYDRO_PUMP
+	db 50, EARTHQUAKE
 	db 0

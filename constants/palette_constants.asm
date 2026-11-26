@@ -252,6 +252,15 @@ IF GEN_2_GRAPHICS
 	; const PAL_SCIZOR
 	; const PAL_SKARMORY
 	; const PAL_KINGDRA
+	; const PAL_TREECKO    ; $A8
+	; const PAL_GROVYLE   ; $A9
+	; const PAL_SCEPTILE  ; $AA
+	; const PAL_TORCHIC   ; $AB
+	; const PAL_COMBUSKEN ; $AC
+	; const PAL_BLAZIKEN  ; $AD
+	; const PAL_MUDKIP    ; $AE
+	; const PAL_MARSHTOMP ; $AF
+	; const PAL_SWAMPERT  ; $B0
 	; const PAL_RALTS               ; $9F
 	; const PAL_KIRLIA              ; $A0
 	; const PAL_GARDEVOIR           ; $A1

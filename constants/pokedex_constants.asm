@@ -163,6 +163,15 @@
 	const DEX_SCIZOR      ; 154
 	const DEX_SKARMORY     ; 154
 	const DEX_KINGDRA     ; 155
+	const DEX_TREECKO    ; $A8
+	const DEX_GROVYLE   ; $A9
+	const DEX_SCEPTILE  ; $AA
+	const DEX_TORCHIC   ; $AB
+	const DEX_COMBUSKEN ; $AC
+	const DEX_BLAZIKEN  ; $AD
+	const DEX_MUDKIP    ; $AE
+	const DEX_MARSHTOMP ; $AF
+	const DEX_SWAMPERT  ; $B0
 	const DEX_RALTS               ; $9F
 	const DEX_KIRLIA              ; $A0
 	const DEX_GARDEVOIR           ; $A1

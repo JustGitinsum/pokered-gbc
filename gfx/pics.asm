@@ -192,7 +192,24 @@ LatiosPicBack::       INCBIN "gfx/pokemon/gsback/latiosb.pic"
 
 SECTION "Pics 4", ROMX
 
-; Removed 'mon sprites from here
+TreeckoPicFront::      INCBIN "gfx/pokemon/gsfront/treecko.pic"
+TreeckoPicBack::       INCBIN "gfx/pokemon/gsback/treeckob.pic"
+GrovylePicFront::      INCBIN "gfx/pokemon/gsfront/grovyle.pic"
+GrovylePicBack::       INCBIN "gfx/pokemon/gsback/grovyleb.pic"
+SceptilePicFront::     INCBIN "gfx/pokemon/gsfront/sceptile.pic"
+SceptilePicBack::      INCBIN "gfx/pokemon/gsback/sceptileb.pic"
+TorchicPicFront::      INCBIN "gfx/pokemon/gsfront/torchic.pic"
+TorchicPicBack::       INCBIN "gfx/pokemon/gsback/torchicb.pic"
+CombuskenPicFront::    INCBIN "gfx/pokemon/gsfront/combusken.pic"
+CombuskenPicBack::     INCBIN "gfx/pokemon/gsback/combuskenb.pic"
+BlazikenPicFront::     INCBIN "gfx/pokemon/gsfront/blaziken.pic"
+BlazikenPicBack::      INCBIN "gfx/pokemon/gsback/blazikenb.pic"
+MudkipPicFront::       INCBIN "gfx/pokemon/gsfront/mudkip.pic"
+MudkipPicBack::        INCBIN "gfx/pokemon/gsback/mudkipb.pic"
+MarshtompPicFront::    INCBIN "gfx/pokemon/gsfront/marshtomp.pic"
+MarshtompPicBack::     INCBIN "gfx/pokemon/gsback/marshtompb.pic"
+SwampertPicFront::     INCBIN "gfx/pokemon/gsfront/swampert.pic"
+SwampertPicBack::      INCBIN "gfx/pokemon/gsback/swampertb.pic"
 
 
 SECTION "Pics 5", ROMX

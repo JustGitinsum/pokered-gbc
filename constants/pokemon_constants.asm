@@ -198,6 +198,16 @@
 	const WEEPINBELL         ; $BD
 	const VICTREEBEL         ; $BE
 
+	const TREECKO
+	const GROVYLE
+	const SCEPTILE
+	const TORCHIC
+	const COMBUSKEN
+	const BLAZIKEN
+	const MUDKIP
+	const MARSHTOMP
+	const SWAMPERT
+
 DEF NUM_POKEMON_INDEXES EQU const_value - 1
 
 ; starters

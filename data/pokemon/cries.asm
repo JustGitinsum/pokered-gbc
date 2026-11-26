@@ -196,4 +196,14 @@ CryData::
 	mon_cry SFX_CRY_21, $55, $01 ; Bellsprout
 	mon_cry SFX_CRY_25, $44, $20 ; Weepinbell
 	mon_cry SFX_CRY_25, $66, $CC ; Victreebel
+	mon_cry SFX_CRY_0F, $80, $01 ; Treecko
+	mon_cry SFX_CRY_0F, $20, $80 ; Grovyle
+	mon_cry SFX_CRY_0F, $00, $C0 ; Sceptile
+	mon_cry SFX_CRY_0E, $DF, $04 ; Torchic
+	mon_cry SFX_CRY_14, $28, $C0 ; Combusken
+	mon_cry SFX_CRY_14, $11, $FF ; Blaziken
+	mon_cry SFX_CRY_1D, $60, $40 ; Mudkip
+	mon_cry SFX_CRY_1D, $20, $40 ; Marshtomp
+	mon_cry SFX_CRY_13, $00, $80 ; Swampert
+
 	assert_table_length NUM_POKEMON_INDEXES

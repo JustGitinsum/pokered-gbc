@@ -190,6 +190,15 @@ PokedexEntryPointers:
 	dw BellsproutDexEntry
 	dw WeepinbellDexEntry
 	dw VictreebelDexEntry
+	dw TreeckoDexEntry
+	dw GrovyleDexEntry
+	dw SceptileDexEntry
+	dw TorchicDexEntry
+	dw CombuskenDexEntry
+	dw BlazikenDexEntry
+	dw MudkipDexEntry
+	dw MarshtompDexEntry
+	dw SwampertDexEntry
 	assert_table_length NUM_POKEMON_INDEXES
 
 ; string: species name
@@ -1490,6 +1499,69 @@ VictreebelDexEntry:
 	db 5,7
 	dw 340
 	;text_far _VictreebelDexEntry
+	text_end
+
+TreeckoDexEntry:
+	db "Wood Gecko@"
+	db 1,08
+	dw 110
+	;text_far _TreeckoDexEntry
+	text_end
+
+GrovyleDexEntry:
+	db "Wood Gecko@"
+	db 2,11
+	dw 476
+	;text_far _GrovyleDexEntry
+	text_end
+
+SceptileDexEntry:
+	db "Forest@"
+	db 5,07
+	dw 1151
+	;text_far _SceptileDexEntry
+	text_end
+
+TorchicDexEntry:
+	db "Chick@"
+	db 1,04
+	dw 55
+	;text_far _TorchicDexEntry
+	text_end
+
+CombuskenDexEntry:
+	db "Young Fowl@"
+	db 2,11
+	dw 430
+	;text_far _CombuskenDexEntry
+	text_end
+
+BlazikenDexEntry:
+	db "Blaze@"
+	db 6,03
+	dw 1146
+	;text_far _BlazikenDexEntry
+	text_end
+
+MudkipDexEntry:
+	db "Mud Fish@"
+	db 1,04
+	dw 168
+	;text_far _MudkipDexEntry
+	text_end
+
+MarshtompDexEntry:
+	db "Mud Fish@"
+	db 2,04
+	dw 617
+	;text_far _MarshtompDexEntry
+	text_end
+
+SwampertDexEntry:
+	db "Mud Fish@"
+	db 4,11
+	dw 1806
+	;text_far _SwampertDexEntry
 	text_end
 
 CrobatDexEntry:

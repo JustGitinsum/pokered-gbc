@@ -69,6 +69,7 @@ SurfingMonSprites:
 	mon_sprite TAUROS,    TaurosSurfSprite,      SPR_PAL_BROWN
 	mon_sprite SEAKING,   SeakingSurfSprite,     SPR_PAL_ORANGE
 	mon_sprite CLOYSTER,  CloysterSurfSprite,    SPR_PAL_PURPLE
+	mon_sprite SWAMPERT,  SwampertSurfSprite,   SPR_PAL_BLUE
 	mon_sprite MON_SPRITE_DEFAULT, SeelSprite,   SPR_PAL_EMOJI
 
 ; The species IDs are in switchable WRAM, which is hidden while the color code

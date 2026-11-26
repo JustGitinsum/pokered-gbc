@@ -3,10 +3,10 @@ Route22WildMons:
 	db  3, MANKEY
 	db  3, POLIWAG
 	db  3, SPEAROW
-	db  4, SLOWPOKE
+	db  4, MUDKIP
 	db  6, MEOWTH
 	db  7, MEOWTH
-	db  7, SLOWPOKE
+	db  7, MUDKIP
 	db  7, SPEAROW
 	db  7, POLIWAG
 	db  7, MANKEY

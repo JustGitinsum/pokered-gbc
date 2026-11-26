@@ -191,4 +191,13 @@ MonsterNamesLowercase::
 	db "Bellsprout"
 	db "Weepinbell"
 	db "Victreebel"
+	db "Treecko@@@"
+	db "Grovyle@@@"
+	db "Sceptile@@"
+	db "Torchic@@@"
+	db "Combusken@"
+	db "Blaziken@@"
+	db "Mudkip@@@@"
+	db "Marshtomp@"
+	db "Swampert@@"
 	assert_table_length NUM_POKEMON_INDEXES
