@@ -1524,6 +1524,53 @@ SetPal_LearnsetMonIcon:
 	ld c, 1
 	jr SetPal_MenuIcon
 
+SetPal_LearnsetEvolutionIcon:
+	ld a, [wOnSGB]
+	and a
+	ret z
+	ld a, [wPokedexNum]
+	call DeterminePaletteID
+	ld d, a
+	jr SetPal_EvolutionIcon
+
+SetPal_UnknownEvolutionIcon:
+	ld a, [wOnSGB]
+	and a
+	ret z
+	ld d, PAL_GRAYMON
+SetPal_EvolutionIcon:
+	ld a, [wLearnsetIndex]
+	add 2
+	ld e, a
+	farcall LoadSGBPalette
+	ld a, [wLearnsetIndex]
+	ld hl, W2_TilesetPaletteMap + 7 * SCREEN_WIDTH + 1
+	ld bc, 4 * SCREEN_WIDTH
+	call AddNTimes
+	ld a, [wLearnsetIndex]
+	add 2
+	ld c, a
+	jr SetPal_MenuIcon
+
+ClearPal_LearnsetEvolutionIcons:
+	ld a, [wOnSGB]
+	and a
+	ret z
+	ldh a, [rWBK]
+	ld b, a
+	ld a, 2
+	ldh [rWBK], a
+	push bc
+	ld hl, W2_TilesetPaletteMap + 7 * SCREEN_WIDTH + 1
+	lb bc, 10, 2
+	xor a
+	call FillBox
+	ld a, 3
+	ld [W2_StaticPaletteMapChanged], a
+	pop af
+	ldh [rWBK], a
+	ret
+
 ; Color the Movedex's 2x2 type icon at (1,3) with its type palette.
 SetPal_MovedexTypeIcon:
 	ld a, [wOnSGB]

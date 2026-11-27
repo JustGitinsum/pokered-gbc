@@ -218,6 +218,10 @@ LoadPartyMonSprites:
 .done
 	jp EnableLCD
 
+LoadPartyMonSprite:
+	ld [wPokedexNum], a
+	farjp LoadPartyMonSpriteFromWram
+
 PUSHS
 SECTION "Buy Menu Party Icons", ROMX
 
@@ -460,18 +464,61 @@ BuyMenuPartyMonOAM:
 
 POPS
 
+PUSHS
+SECTION "Menu Mon Icon Graphics", ROMX
+
 LoadBattleInfoMonIcon:
-	ld a, [wPokedexNum]
-	jr LoadPartyMonSprite
+	jr LoadPartyMonSpriteFromWram
 
 LoadLearnsetMonIcon:
-	; farcall clobbers a, so read the species after switching banks.
-	ld a, [wPokedexNum]
 	ld de, vChars1 tile $57
 	; fall through
 
-; copy the 8-tile icon for the mon in register a to de
-LoadPartyMonSprite:
+; Copy the 8-tile icon for wPokedexNum to de with the LCD disabled.
+LoadPartyMonSpriteFromWram:
+	ld a, [wPokedexNum]
+	call GetPartyMonSpriteGfx
+	ld bc, 8 tiles
+	jp FarCopyData
+
+; Load one evolution icon into a separate background tile slot during VBlank.
+LoadEvolutionMonIcon:
+	call EvolutionIconDestination
+	ld a, [wPokedexNum]
+	call GetPartyMonSpriteGfx
+	ld b, a
+	ld c, 8
+	push de
+	ld d, h
+	ld e, l
+	pop hl
+	jp CopyVideoData
+
+LoadUnknownEvolutionIcon:
+	call EvolutionIconDestination
+	ld h, d
+	ld l, e
+	ld de, UnknownEvolutionIcon
+	lb bc, BANK(UnknownEvolutionIcon), 8
+	jp CopyVideoData
+
+EvolutionIconDestination:
+	; Each slot is half a VRAM page, starting at $9400.
+	ASSERT LOW(vChars2 tile $40) == 0 && 8 tiles == $80
+	ld a, [wLearnsetIndex]
+	ld e, 0
+	srl a
+	rr e
+	add HIGH(vChars2 tile $40)
+	ld d, a
+	ret
+
+UnknownEvolutionIcon:
+	INCBIN "gfx/icons/wtp.2bpp"
+	ASSERT @ - UnknownEvolutionIcon == 8 tiles
+
+; a = species, de = destination; returns a:hl = graphics, de = destination.
+GetPartyMonSpriteGfx:
 	push de
 
 	ld [wPokedexNum], a
@@ -498,9 +545,10 @@ LoadPartyMonSprite:
 	inc a
 
 .gotBank
-	ld bc, 8 tiles
 	pop de
-	jp FarCopyData
+	ret
+
+POPS
 
 ; copy 1 full entry (16 bytes) from PartyMonOAM into wShadowOAM according to hPartyMonIndex
 ; and backup wShadowOAM into wMonPartySpritesSavedOAM

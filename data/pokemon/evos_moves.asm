@@ -2624,6 +2624,7 @@ RaltsEvosMoves:
 KirliaEvosMoves:
 ; Evolutions
 	db EVOLVE_LEVEL, 30, GARDEVOIR
+	db EVOLVE_ITEM, DAWN_STONE, 1, GALLADE
 	db 0
 ; Learnset
 	db 6, CONFUSION

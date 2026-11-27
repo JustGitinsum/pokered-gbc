@@ -347,7 +347,7 @@ wPredefBC:: dw
 
 wTrainerHeaderFlagBit:: db
 
-	ds 1
+wLearnsetEvolutionIconAnimationMask:: db ; bits 0-2 = visible evolution icons
 
 ; which NPC movement script pointer is being used
 ; 0 if an NPC movement script is not running

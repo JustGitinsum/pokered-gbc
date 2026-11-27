@@ -438,3 +438,4 @@ MovedexTitleDividerLine:
 
 MoveDashedLine:
 	db "-----------@"
+MoveDashedLineEnd:

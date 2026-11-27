@@ -16,7 +16,7 @@ GetLearnsetPointerInHL:
 ; presumes mon header is already loaded which we need for starting moves
 LoadLevelUpLearnsetIntoWRAM:
 	ld de, wLearnsetList
-	; first load starting moves with level = 0 from already loaded mon header
+	; Count starting moves from the already loaded mon header.
 	ld hl, wMonHMoves
 	ld b, NUM_MOVES
 	ld c, 0 ; c = length of learnset
@@ -24,13 +24,6 @@ LoadLevelUpLearnsetIntoWRAM:
 	ld a, [hli]
 	cp NO_MOVE
 	jr z, .doNotLoad
-	inc de
-	ld [de], a
-	dec de
-	xor a
-	ld [de], a
-	inc de
-	inc de
 	inc c
 .doNotLoad
 	dec b
@@ -59,7 +52,7 @@ LoadLevelUpLearnsetIntoWRAM:
 	cp MAX_LEARNSET_LENGTH + 1
 	ret z ; don't copy anything if the learnset is too long
 	ld [wDexLearnsetListCount], a
-	; Keep starting moves first, then partition the learnset without deduplicating.
+	; Keep each group in source order without deduplicating.
 	push hl
 .evolutionMovesLoop
 	ld a, [hli]
@@ -73,6 +66,24 @@ LoadLevelUpLearnsetIntoWRAM:
 	inc hl
 	jr .evolutionMovesLoop
 .levelUpMoves
+	pop hl
+	push hl
+	ld hl, wMonHMoves
+	ld b, NUM_MOVES
+.startingMovesLoop
+	ld a, [hli]
+	cp NO_MOVE
+	jr z, .skipStartingMove
+	inc de
+	ld [de], a
+	dec de
+	xor a
+	ld [de], a
+	inc de
+	inc de
+.skipStartingMove
+	dec b
+	jr nz, .startingMovesLoop
 	pop hl
 .levelUpMovesLoop
 	ld a, [hli]

@@ -68,6 +68,7 @@ SetPalFunctions:
 DeterminePaletteID:
 	ld [wPokedexNum], a
 	and a
+	jr z, .trainer ; zero denotes a trainer, not a Pokemon index
 
 	push bc
 	predef IndexToPokedex ; turn Pokemon ID number into Pokedex number
@@ -78,6 +79,7 @@ DeterminePaletteID:
 	and a
 	jr nz, .skipDexNumConversion ; Check if trainer?
 
+.trainer
 IF GEN_2_GRAPHICS ; Trainers are given individualized palettes
 	; In link battle, don't rely in wTrainerClass (for some reason it's set to
 	; OPP_GARY, so ignore it)
@@ -91,13 +93,12 @@ IF GEN_2_GRAPHICS ; Trainers are given individualized palettes
 ELSE
 	; Trainers are given a single palette (PAL_MEWMON)
 	; However, check specifically for the player's sprite in linked battle
-	ld e, a
 	ld a, [wLinkState]
 	cp LINK_STATE_BATTLING
 	ld a, PAL_REDMON
 	ret z
-
-	ld a, e
+	ld a, PAL_MEWMON
+	ret
 ENDC
 
 .skipDexNumConversion
@@ -111,6 +112,7 @@ ENDC
 DetermineBackSpritePaletteID:
 	ld [wPokedexNum], a
 	and a
+	jr z, .trainer ; zero denotes the player's trainer picture
 
 	push bc
 	predef IndexToPokedex ; turn Pokemon ID number into Pokedex number
@@ -121,6 +123,7 @@ DetermineBackSpritePaletteID:
 	and a
 	jr nz, .getPaletteID ; Check if trainer?
 
+.trainer
 IF GEN_2_GRAPHICS
 	ld a, [wBattleType]   ; Old man?
     cp 1

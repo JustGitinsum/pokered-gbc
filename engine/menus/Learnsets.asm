@@ -12,6 +12,7 @@ ChangeUpdateSpritesEnabled:
 LoadLearnsetTiles:
 	xor a
 	ld [wLearnsetMonIconAnimationCounter], a
+	ld [wLearnsetEvolutionIconAnimationMask], a
 	; call DisableSpriteUpdates
 	; wPokedexNum carries the internal species index here; use it for both
 	; the header lookup and the name lookup performed by GetMonName.
@@ -35,6 +36,11 @@ LoadLearnsetTiles:
 	ld hl, vChars2 tile $75
 	lb bc, BANK(LearnsetMenuUI1BPP), 6
 	call CopyVideoDataDouble
+	; Status screens reuse $6B for an HP bar tile.
+	ld de, PokedexTileGraphics + $0B tiles
+	ld hl, vChars2 tile $6B
+	lb bc, BANK(PokedexTileGraphics), 1
+	call CopyVideoData
 	; draw basic border tiles that will stay the same regardless of page
 	hlcoord 0, 4
 	lb bc, $CC, 7 
@@ -72,6 +78,40 @@ AnimateLearnsetMonIcon:
 	hlcoord 1, 0
 	ld a, [hl]
 	xor $0E ; Toggle the top-left tile between $D7 and $D9.
+	call DrawLearnsetMonIconFrame
+	ld a, [wLearnsetEvolutionIconAnimationMask]
+	and a
+	ret z
+	ld b, a
+	ld c, 3
+	hlcoord 1, 7
+	; Toggle only rows whose icon tiles have finished loading.
+.evolutionLoop
+	srl b
+	jr nc, .nextEvolution
+	push hl
+	ld a, [hl]
+	xor 2
+	ld [hli], a
+	ld a, [hl]
+	xor 2
+	ld [hl], a
+	ld de, SCREEN_WIDTH - 1
+	add hl, de
+	ld a, [hl]
+	xor 2
+	ld [hli], a
+	ld a, [hl]
+	xor 2
+	ld [hl], a
+	pop hl
+.nextEvolution
+	ld de, 4 * SCREEN_WIDTH
+	add hl, de
+	dec c
+	jr nz, .evolutionLoop
+	ret
+
 DrawLearnsetMonIconFrame:
 	hlcoord 1, 0
 	ld [hli], a
@@ -108,6 +148,8 @@ ShowMonLearnsetMenu:
 	ld a, 6
 	ld [hli], a ; max menu item ID
 .showLearnsetPage
+	xor a
+	ld [wLearnsetEvolutionIconAnimationMask], a
 	; clear page body tiles
 	hlcoord 0, 5
 	lb bc, 13, 19
@@ -349,7 +391,7 @@ ShowLevelUpLearnset:
 	jr .doneLevel
 .twoDigit
 	ld a, [hl]
-	cp 254
+	cp EVOLUTION_MOVE
 	pop hl
 	jr nc, .evoText
 	inc hl
@@ -470,9 +512,6 @@ LevelUpText:
 TMPlusHMText:
 	db "TM HM Learnset@"
 
-LearnsetTMDashedLine:
-	db "----@"
-
 TMLearnsetListPrint:
 	push hl
 	; get the item ID into 
@@ -545,14 +584,10 @@ ShowTMLearnset:
 	pop hl
 	ld a, [wPokedexNum]
 	push af
-	call IsLearnsetMonOwned
 	ld a, d
 	ld [wNamedObjectIndex], a
 	push af
-	ld de, LearnsetTMDashedLine
-	jr z, .printTMName
 	call GetItemName
-.printTMName
 	call PlaceString
 	inc hl
 	inc hl
@@ -672,7 +707,6 @@ NoneText:
 IntoLearnsetText:
 	db "into @"
 
-
 ShowEvolutions:
 	; ld a, SFX_LEDGE
 	; call PlaySound
@@ -711,6 +745,8 @@ ShowEvolutions:
 	call .drawSeparator
 	pop bc
 	ld de, wLearnsetList
+	xor a
+	ld [wLearnsetIndex], a
 .drawEvosLoop
 	ld a, [wPokedexNum]
 	push af
@@ -789,11 +825,64 @@ ShowEvolutions:
 	ld [wNamedObjectIndex], a
 	; if not dont show its name
 	pop hl
-	ld [hl], "?"
-	jr z, .skipGetName
+	jr z, .unknownEvolution
 	; otherwise show its name
 	call GetMonName
 	call PlaceString
+	ld a, [wLearnsetIndex]
+	cp 3 ; only three evolution rows fit on screen
+	jr nc, .skipGetName
+	ld a, [wPokedexNum]
+	push af
+	farcall LoadEvolutionMonIcon
+	pop af
+	ld [wPokedexNum], a
+	farcall SetPal_LearnsetEvolutionIcon
+	; The original menu species is restored from the stack after this row.
+	jr .drawEvolutionIcon
+.unknownEvolution
+	; Reuse the last four dashes and terminator from the hidden move name.
+	ASSERT BANK(MoveDashedLine) == BANK(ShowEvolutions)
+	ASSERT MoveDashedLineEnd - MoveDashedLine >= 5
+	ld de, MoveDashedLineEnd - 5
+	call PlaceString
+	ld a, [wLearnsetIndex]
+	cp 3
+	jr nc, .skipGetName
+	farcall LoadUnknownEvolutionIcon
+	farcall SetPal_UnknownEvolutionIcon
+.drawEvolutionIcon
+	pop hl
+	push hl
+	ld bc, -SCREEN_WIDTH - 8
+	add hl, bc
+	ld a, [wLearnsetIndex]
+	add a
+	add a
+	add a
+	add $40
+	ld [hli], a
+	inc a
+	ld [hl], a
+	ld bc, SCREEN_WIDTH - 1
+	add hl, bc
+	add 3
+	ld [hli], a
+	inc a
+	ld [hl], a
+	ld a, [wLearnsetIndex]
+	ld b, a
+	inc b
+	ld a, 1
+.animationBit
+	dec b
+	jr z, .enableAnimation
+	add a
+	jr .animationBit
+.enableAnimation
+	ld hl, wLearnsetEvolutionIconAnimationMask
+	or [hl]
+	ld [hl], a
 .skipGetName
 	pop hl
 .doneEvoEntryGoToNext
@@ -805,6 +894,10 @@ ShowEvolutions:
 	pop bc
 	pop af
 	ld [wPokedexNum], a
+	push hl
+	ld hl, wLearnsetIndex
+	inc [hl]
+	pop hl
 	dec b
 	jp nz, .drawEvosLoop
 .waitForButtonPress
@@ -814,6 +907,15 @@ ShowEvolutions:
 	ldh a, [hJoy5]
 	and c
 	jr z, .waitForButtonPress
+	push af
+	xor a
+	ld [wLearnsetEvolutionIconAnimationMask], a
+	ld a, [wLearnsetPage]
+	cp 2
+	jr nz, .skipEvolutionPaletteCleanup
+	farcall ClearPal_LearnsetEvolutionIcons
+.skipEvolutionPaletteCleanup
+	pop af
 	bit B_PAD_B, a
 	jp nz, CheckPageLeftRight.buttonBPressed
 	jp CheckPageLeftRight
