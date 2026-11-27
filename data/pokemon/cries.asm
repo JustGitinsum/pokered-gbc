@@ -196,6 +196,8 @@ CryData::
 	mon_cry SFX_CRY_21, $55, $01 ; Bellsprout
 	mon_cry SFX_CRY_25, $44, $20 ; Weepinbell
 	mon_cry SFX_CRY_25, $66, $CC ; Victreebel
+	mon_cry SFX_CRY_1F, $20, $40 ; Houndour
+	mon_cry SFX_CRY_15, $00, $80 ; Houndoom
 	mon_cry SFX_CRY_0F, $80, $01 ; Treecko
 	mon_cry SFX_CRY_0F, $20, $80 ; Grovyle
 	mon_cry SFX_CRY_0F, $00, $C0 ; Sceptile

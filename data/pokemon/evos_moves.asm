@@ -202,6 +202,8 @@ EvosMovesPointerTable:
 	dw BellsproutEvosMoves
 	dw WeepinbellEvosMoves
 	dw VictreebelEvosMoves
+	dw HoundourEvosMoves
+	dw HoundoomEvosMoves
 	dw TreeckoEvosMoves
 	dw GrovyleEvosMoves
 	dw SceptileEvosMoves
@@ -3078,6 +3080,39 @@ VictreebelEvosMoves:
 	db 33, LEECH_LIFE
 	db 40, SLUDGE_BOMB
 	db 44, LEAF_BLADE
+	db 0
+
+HoundourEvosMoves:
+; Evolutions
+	db EVOLVE_LEVEL, 24, HOUNDOOM
+	db 0
+; Learnset
+	db 6, EMBER
+	db 13, ROAR
+	db 16, BITE
+	db 21, FURY_SWIPES
+	db 24, BODY_SLAM
+	db 28, FIRE_FANG
+	db 40, NASTY_PLOT
+	db 44, FLAMETHROWER
+	db 49, CRUNCH
+	db 0
+
+HoundoomEvosMoves:
+; Evolutions
+	db 0
+; Learnset ZA
+	db 6, EMBER
+	db 13, ROAR
+	db 16, BITE
+	db 21, FURY_SWIPES
+	db 24, BODY_SLAM
+	db 28, FIRE_FANG
+	db 34, DARK_PULSE
+	db 40, NASTY_PLOT
+	db 44, FLAMETHROWER
+	db 49, CRUNCH
+	db 55, FIRE_BLAST
 	db 0
 
 TreeckoEvosMoves:

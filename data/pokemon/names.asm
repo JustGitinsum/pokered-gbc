@@ -190,6 +190,8 @@ MonsterNames::
 	db "BELLSPROUT"
 	db "WEEPINBELL"
 	db "VICTREEBEL"
+	db "HOUNDOUR@@"
+	db "HOUNDOOM@@"
 	db "TREECKO@@@"
 	db "GROVYLE@@@"
 	db "SCEPTILE@@"

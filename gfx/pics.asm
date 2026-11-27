@@ -192,6 +192,10 @@ LatiosPicBack::       INCBIN "gfx/pokemon/gsback/latiosb.pic"
 
 SECTION "Pics 4", ROMX
 
+HoundourPicFront::    INCBIN "gfx/pokemon/gsfront/houndour.pic"
+HoundourPicBack::     INCBIN "gfx/pokemon/gsback/houndourb.pic"
+HoundoomPicFront::    INCBIN "gfx/pokemon/gsfront/houndoom.pic"
+HoundoomPicBack::     INCBIN "gfx/pokemon/gsback/houndoomb.pic"
 TreeckoPicFront::      INCBIN "gfx/pokemon/gsfront/treecko.pic"
 TreeckoPicBack::       INCBIN "gfx/pokemon/gsback/treeckob.pic"
 GrovylePicFront::      INCBIN "gfx/pokemon/gsfront/grovyle.pic"

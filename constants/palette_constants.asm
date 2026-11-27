@@ -251,6 +251,8 @@ IF GEN_2_GRAPHICS
 	; const PAL_STEELIX
 	; const PAL_SCIZOR
 	; const PAL_SKARMORY
+	; const PAL_HOUNDOUR
+	; const PAL_HOUNDOOM
 	; const PAL_KINGDRA
 	; const PAL_TREECKO    ; $A8
 	; const PAL_GROVYLE   ; $A9

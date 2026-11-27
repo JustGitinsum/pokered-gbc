@@ -198,6 +198,8 @@
 	const WEEPINBELL         ; $BD
 	const VICTREEBEL         ; $BE
 
+	const HOUNDOUR             ; $BF
+	const HOUNDOOM             ; $C0
 	const TREECKO
 	const GROVYLE
 	const SCEPTILE

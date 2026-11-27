@@ -191,6 +191,8 @@ MonsterNamesLowercase::
 	db "Bellsprout"
 	db "Weepinbell"
 	db "Victreebel"
+	db "Houndour@@"
+	db "Houndoom@@"
 	db "Treecko@@@"
 	db "Grovyle@@@"
 	db "Sceptile@@"

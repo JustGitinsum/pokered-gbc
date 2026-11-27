@@ -162,6 +162,8 @@
 	const DEX_STEELIX     ; 153
 	const DEX_SCIZOR      ; 154
 	const DEX_SKARMORY     ; 154
+	const DEX_HOUNDOUR     ; 155
+	const DEX_HOUNDOOM     ; 156
 	const DEX_KINGDRA     ; 155
 	const DEX_TREECKO    ; $A8
 	const DEX_GROVYLE   ; $A9

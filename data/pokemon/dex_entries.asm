@@ -190,6 +190,8 @@ PokedexEntryPointers:
 	dw BellsproutDexEntry
 	dw WeepinbellDexEntry
 	dw VictreebelDexEntry
+	dw HoundourDexEntry
+	dw HoundoomDexEntry
 	dw TreeckoDexEntry
 	dw GrovyleDexEntry
 	dw SceptileDexEntry
@@ -1499,6 +1501,20 @@ VictreebelDexEntry:
 	db 5,7
 	dw 340
 	;text_far _VictreebelDexEntry
+	text_end
+
+HoundourDexEntry:
+	db "Dark@"
+	db 2,0
+	dw 238
+	;text_far _HoundourDexEntry
+	text_end
+
+HoundoomDexEntry:
+	db "Dark@"
+	db 4,07
+	dw 772
+	;text_far _HoundoomDexEntry
 	text_end
 
 TreeckoDexEntry:
