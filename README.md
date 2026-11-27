@@ -161,12 +161,14 @@ All three Learnset pages display the Pokemon's menu icon to the left of its
 species name, alternating its two animation frames every 10 V-blanks.
 Animation pauses in Movedex and stops when leaving the Learnset menu.
 On Game Boy Color, the icon uses its species palette from
-`MonsterPalettes`; the rest of the menu uses `PAL_CELADON` for LevelUp,
+`MonsterPalettes`; the rest of the menu uses `PAL_VIRIDIAN` for LevelUp,
 `PAL_LAVENDER` for TM/HM, and `PAL_INDIGO` for Evolution.
 Opening Movedex clears the icon's palette assignments; returning restores them
 and the current tab's palette.
-On Game Boy Color, the Movedex type icon uses the move type's palette from
-`MoveTypeExpBarPalette`.
+Movedex displays the move's type using the eight-tile type icon. On Game Boy
+Color, the menu uses `PAL_TOWNMAP` and the type and category icons use their
+respective palettes.
+The Movedex UI graphics support four grayscale shades.
 Returning to the status screen clears sprites and reloads the font and textbox
 tiles reused by the Learnset menu.
 The same species palettes color menu icons in the party list, nickname/Name

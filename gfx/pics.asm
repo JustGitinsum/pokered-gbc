@@ -637,28 +637,6 @@ FlareonPicFront::     INCBIN "gfx/pokemon/front/flareon.pic"
 FlareonPicBack::      INCBIN "gfx/pokemon/back/flareonb.pic"
 ENDC
 
-SECTION "Type Icons", ROMX
-
-NormalTypeIcon::     INCBIN "gfx/movedex/type_icons/normal.2bpp"
-FightingTypeIcon::   INCBIN "gfx/movedex/type_icons/fighting.2bpp"
-FlyingTypeIcon::     INCBIN "gfx/movedex/type_icons/flying.2bpp"
-PoisonTypeIcon::     INCBIN "gfx/movedex/type_icons/poison.2bpp"
-GroundTypeIcon::     INCBIN "gfx/movedex/type_icons/ground.2bpp"
-RockTypeIcon::       INCBIN "gfx/movedex/type_icons/rock.2bpp"
-TypelessIcon::       INCBIN "gfx/movedex/type_icons/typeless.2bpp"
-BugTypeIcon::        INCBIN "gfx/movedex/type_icons/bug.2bpp"
-GhostTypeIcon::      INCBIN "gfx/movedex/type_icons/ghost.2bpp"
-FireTypeIcon::       INCBIN "gfx/movedex/type_icons/fire.2bpp"
-WaterTypeIcon::      INCBIN "gfx/movedex/type_icons/water.2bpp"
-GrassTypeIcon::      INCBIN "gfx/movedex/type_icons/grass.2bpp"
-ElectricTypeIcon::   INCBIN "gfx/movedex/type_icons/electric.2bpp"
-PsychicTypeIcon::    INCBIN "gfx/movedex/type_icons/psychic.2bpp"
-DarkTypeIcon::       INCBIN "gfx/movedex/type_icons/dark.2bpp"
-IceTypeIcon::        INCBIN "gfx/movedex/type_icons/ice.2bpp"
-DragonTypeIcon::     INCBIN "gfx/movedex/type_icons/dragon.2bpp"
-SteelTypeIcon::        INCBIN "gfx/movedex/type_icons/steel.2bpp"
-FairyTypeIcon::       INCBIN "gfx/movedex/type_icons/fairy.2bpp"
-
 SECTION "Menu GFX", ROMX
 
 NormalTypeIcon8Tile::     INCBIN "gfx/type/normal.2bpp"
@@ -685,8 +663,10 @@ ASSERT TypeIcon4TileEnd - TypeIcon4Tile == 20 * 4 tiles
 LearnsetMenuUI2BPP:: INCBIN "gfx/pokedex/learnset_menu_2bpp.2bpp"
 LearnsetMenuUI1BPP:: INCBIN "gfx/pokedex/learnset_menu_1bpp.1bpp"
 StatExpPrompt:: INCBIN "gfx/font/stat_exp.1bpp"
-MovedexUI::          INCBIN "gfx/movedex/movedex_ui.1bpp"
-MovedexUIEnd::
+; The first nine tiles are unused previous/next navigation graphics.
+MovedexCategoryIcons:: INCBIN "gfx/movedex/movedex_ui.2bpp", 9 tiles
+MovedexCategoryIconsEnd::
+ASSERT MovedexCategoryIconsEnd - MovedexCategoryIcons == 12 tiles
 
 SECTION "Pics 10", ROMX
 

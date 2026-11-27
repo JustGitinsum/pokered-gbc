@@ -87,13 +87,13 @@ ShowMoveDataFromPokedex:
 ; display the move data itself - if switching between moves with left/right, we don't need to reload the above stuff
 
 ShowNextMoveData:
-	; load movedex data page UI tiles
-	ld de, MovedexUI
-	lb bc, BANK(MovedexUI), 21
-	ld hl, vChars1 tile $44
-	call CopyVideoDataDouble
+	; The category markers occupy tiles $CD-$D8.
+	ld de, MovedexCategoryIcons
+	lb bc, BANK(MovedexCategoryIcons), 12
+	ld hl, vChars1 tile $4d
+	call CopyVideoData
 
-	; Reserve the unused tile after MovedexUI for a dedicated sword glyph.
+	; Reserve the tile after the category markers for a dedicated sword glyph.
 	ld de, FontGraphics + $57 * 8
 	ld hl, vChars1 tile $59
 	lb bc, BANK(FontGraphics), 1
@@ -102,7 +102,11 @@ ShowNextMoveData:
 	call DrawDataBorder
 
 	ld de, MoveTypeText
-	hlcoord 4, 3
+	hlcoord 1, 3
+	call PlaceString
+
+	ld de, MoveCategoryText
+	hlcoord 13, 3
 	call PlaceString
 
 	ld de, MovePPText
@@ -126,59 +130,17 @@ ShowNextMoveData:
 	ld a, [wMovedexMoveID] ; move ID
 	push af
 	call LoadMoveDexMoveData
-	ld a, [wPlayerMoveType]
-	ld d, a
-	call LoadTypeIcon
 	pop af
 	ld [wMovedexMoveID], a
 
-	hlcoord 1, 3
-	ld a, $C0 ; type icon first tile
-	ld [hli], a
-	inc a
-	ld [hl], a
-	inc a
-	hlcoord 1, 4
-	ld [hli], a
-	inc a
-	ld [hl], a
-	farcall SetPal_MovedexTypeIcon
 	farcall DetermineMoveCategory
 	ld a, [wPlayerMoveCategory]
 	cp MOVE_PHYSICAL
 	jr z, .physicalAttack
 	cp MOVE_SPECIAL
 	jr z, .specialAttack
-	; ld a, [wPlayerMovePower]
-	; and a
-	; jr nz, .needsMarker
 	ld b, $D5 ; Status icon
 	jr .copyMarker
-; .needsMarker ;;; is the Move Special or Physical?
-; 	ld a, [wPlayerMoveType]
-; 	cp SPECIAL ; types >= SPECIAL are all special
-; 	ld a, [wPlayerMoveNum]
-; 	ld b, a
-; 	jr nc, .isSpecialActuallyPhysical
-; 	jr .isPhysicalActuallySpecial
-; .isSpecialActuallyPhysical
-; 	ld hl, SpecialToPhysicalMovesIcon
-; .specialPhysicalLoop
-; 	ld a, [hli]
-; 	cp b
-; 	jr z, .physicalAttack
-; 	cp $ff ; end of list
-; 	jr nz, .specialPhysicalLoop ; keep checking list
-; 	jr .specialAttack ; Not actually a physical move
-; .isPhysicalActuallySpecial
-; 	ld hl, PhysicalToSpecialMovesIcon
-; .physicalSpecialLoop
-; 	ld a, [hli]
-; 	cp b
-; 	jr z, .specialAttack ; the physical move is actually special
-; 	cp $ff ; end of list
-; 	jr nz, .physicalSpecialLoop ; keep checking list
-	; fallthrough
 .physicalAttack
 	ld b, $D1 ; Physical icon
 	jr .copyMarker
@@ -186,11 +148,10 @@ ShowNextMoveData:
 	ld b, $CD ; Special icon
 	; fallthrough
 .copyMarker
-	hlcoord 15, 3
+	hlcoord 14, 4
 	ld c, 4
 	ld de, 1
 	call DrawTileLineIncrement
-; .doneMarker
 	call DrawBottomDataBorder
 
 	call GetMoveName
@@ -206,10 +167,15 @@ ShowNextMoveData:
 ; 	lb bc, LEADING_ZEROES | 1, 3
 ; 	call PrintNumber ; print move number
 
-	hlcoord 5, 4
-	ld d, h
-	ld e, l ; de = coordinate to print the type at
-	callfar FarPrintType ; print the move type
+	ld a, [wPlayerMoveType]
+	ld d, a
+	ld e, $40
+	call LoadTypeIcon8TileAt
+	farcall SetPal_Movedex
+	hlcoord 2, 4
+	lb bc, $40, 8
+	ld de, 1
+	call DrawTileLineIncrement
 
 	hlcoord 7, 6 ; location we will print power number
 
@@ -393,8 +359,8 @@ ClearBasicMoveData:
 	hlcoord 1, 1
 	lb bc, 1, 13
 	call ClearScreenArea
-	hlcoord 3, 4
-	lb bc, 1, 16
+	hlcoord 2, 4
+	lb bc, 1, 17
 	call ClearScreenArea
 	hlcoord 7, 6
 	lb bc, 1, 3
@@ -413,6 +379,9 @@ INCLUDE "data/moves/movedex_entries.asm"
 
 MoveTypeText:
 	db "TYPE/@"
+
+MoveCategoryText:
+	db "CAT/@"
 
 MovePowerText:
 	db "POWER:@"

@@ -278,7 +278,7 @@ ENDC
     jr z, .specialAttack
 	jr .moveStatus
 .physicalAttack
-	ld d, PAL_REDMON
+	ld d, PAL_PIKACHU
 	jr .nextStep
 .specialAttack
 	ld d, PAL_BLUEMON
@@ -614,7 +614,7 @@ LoadMoveCategoryPaletteAt:
     ld d, PAL_GRAYMON
     jr .loadCategoryPalette
 .physical
-    ld d, PAL_REDMON
+    ld d, PAL_PIKACHU
     jr .loadCategoryPalette
 .special
     ld d, PAL_BLUEMON
@@ -1571,22 +1571,53 @@ ClearPal_LearnsetEvolutionIcons:
 	ldh [rWBK], a
 	ret
 
-; Color the Movedex's 2x2 type icon at (1,3) with its type palette.
-SetPal_MovedexTypeIcon:
+PUSHS
+SECTION "Movedex Palettes", ROMX, BANK[$1c]
+
+; Keep the type and category colors separate from the Movedex menu palette.
+SetPal_Movedex:
+	ASSERT BANK(SetPal_Movedex) == BANK(GetBattleInfoTypePalette)
+	ASSERT BANK(SetPal_Movedex) == BANK(LoadMoveCategoryPaletteAt)
 	ld a, [wOnSGB]
 	and a
 	ret z
-	ld a, [wPlayerMoveType]
-	ld hl, MoveTypeExpBarPalette
-	ld c, a
-	ld b, 0
-	add hl, bc
-	ld d, [hl]
-	ld e, 5 ; Keep the type palette separate from the generic menu slots.
+	ld d, PAL_TOWNMAP
+	ld e, 0
 	farcall LoadSGBPalette
 
-	ld hl, W2_TilesetPaletteMap + 3 * SCREEN_WIDTH + 1
-	ld c, 5
+	ld a, [wPlayerMoveType]
+	ld d, a
+	call GetBattleInfoTypePalette
+	ld e, 5
+	farcall LoadSGBPalette
+
+	ld a, [wPlayerMoveCategory]
+	ld e, 6
+	call LoadMoveCategoryPaletteAt
+
+	; Preserve the WRAM bank before pushing, since the stack is banked too.
+	ldh a, [rWBK]
+	ld b, a
+	ld a, 2
+	ldh [rWBK], a
+	push bc
+	ld hl, W2_TilesetPaletteMap + 4 * SCREEN_WIDTH + 2
+	ld bc, 8
+	ld a, 5
+	call FillMemory
+	ld hl, W2_TilesetPaletteMap + 4 * SCREEN_WIDTH + 14
+	ld bc, 4
+	ld a, 6
+	call FillMemory
+	ld a, 3
+	ld [W2_StaticPaletteMapChanged], a
+	ld a, 1
+	ld [W2_ForceBGPUpdate], a
+	pop af
+	ldh [rWBK], a
+	ret
+
+POPS
 
 ; HL = top-left palette-map address, C = palette slot for a 2x2 BG icon.
 SetPal_MenuIcon:
